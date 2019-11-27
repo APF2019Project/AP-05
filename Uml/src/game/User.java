@@ -3,30 +3,38 @@ package game;
 import java.util.HashSet;
 
 public class User {
-    private int SunInGame;
-    private boolean zombie;
+
     private int coin;
+    private String userName;
+    private String passWorld;
+
     private HashSet<String> unLockedPlant;
     private HashSet<String> getUnLockedZombie;
-    private Deck ChosenDeckInGame;
-    private int killingEnemy;
+    private Player player;
 
-    public Deck getChosenDeckInGame() {
-        return ChosenDeckInGame;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setChosenDeckInGame(Deck chosenDeckInGame) {
-        ChosenDeckInGame = chosenDeckInGame;
+    public String getUserName() {
+        return userName;
     }
 
-    public int getKillingEnemy() {
-        return killingEnemy;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setKillingEnemy(int killingEnemy) {
-        this.killingEnemy = killingEnemy;
+    public String getPassWorld() {
+        return passWorld;
     }
 
+    public void setPassWorld(String passWorld) {
+        this.passWorld = passWorld;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public HashSet<String> getUnLockedPlant() {
         return unLockedPlant;
@@ -46,21 +54,6 @@ public class User {
 
     public void StartGame(boolean zombieMode){
 
-    }
-    public int getSunInGame() {
-        return SunInGame;
-    }
-
-    public void setSunInGame(int sunInGame) {
-        SunInGame = sunInGame;
-    }
-
-    public boolean isZombie() {
-        return zombie;
-    }
-
-    public void setZombie(boolean zombie) {
-        this.zombie = zombie;
     }
 
     public int getCoin() {

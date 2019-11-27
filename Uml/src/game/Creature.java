@@ -1,10 +1,17 @@
 package game;
 public class Creature {
-    private int id;
     private String name;
     private int fullHp;
-
+    private int  coolDown;
     private boolean disposable;
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
 
     public boolean isDisposable() {
         return disposable;
@@ -12,13 +19,6 @@ public class Creature {
 
     public void setDisposable(boolean disposable) {
         this.disposable = disposable;
-    }
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
