@@ -4,7 +4,25 @@ public class Plant extends Creature {
     private int coolDown;
     private int remainingCoolDown;
     private int sunCost;
-    private boolean disposable;
+
+    private boolean cactus;
+    private boolean peppery;
+
+    public boolean isCactus() {
+        return cactus;
+    }
+
+    public void setCactus(boolean cactus) {
+        this.cactus = cactus;
+    }
+
+    public boolean isPeppery() {
+        return peppery;
+    }
+
+    public void setPeppery(boolean peppery) {
+        this.peppery = peppery;
+    }
 
     public int getCoolDown() {
         return coolDown;
@@ -14,13 +32,6 @@ public class Plant extends Creature {
         this.coolDown = coolDown;
     }
 
-    public boolean isDisposable() {
-        return disposable;
-    }
-
-    public void setDisposable(boolean disposable) {
-        this.disposable = disposable;
-    }
 
     public int getRemainingCoolDown() {
         return remainingCoolDown;

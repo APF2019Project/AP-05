@@ -18,4 +18,11 @@ public class ActiveCard extends Card {
     public void setY(int y) {
         this.y = y;
     }
+    public void doAction() {
+        if(this.getCreature() instanceof Zombie) {
+            Zombie zombie = (Zombie)this.getCreature();
+            zombie.move(x, y);
+        }
+        this.getCreature().doAction();
+    }
 }

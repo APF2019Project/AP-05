@@ -1,9 +1,57 @@
 package game;
 
 public class Gun {
-    int id;
+    private String name;
     private int damage;
     private int reloadTime;
+    private int gunshotsPerRound;
+    private boolean icy;
+    private boolean sleepy;
+    private boolean projectile;
+
+
+    public boolean isIcy() {
+        return icy;
+    }
+
+    public void setIcy(boolean icy) {
+        this.icy = icy;
+    }
+
+    public boolean isSleepy() {
+        return sleepy;
+    }
+
+    public void setSleepy(boolean sleepy) {
+        this.sleepy = sleepy;
+    }
+
+    public boolean isScaredy() {
+        return scaredy;
+    }
+
+    public void setScaredy(boolean scaredy) {
+        this.scaredy = scaredy;
+    }
+
+    private boolean scaredy;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getGunshotsPerRound() {
+        return gunshotsPerRound;
+    }
+
+    public void setGunshotsPerRound(int gunshotsPerRound) {
+        this.gunshotsPerRound = gunshotsPerRound;
+    }
+
     private int remainingReloadTime;
 
 
@@ -29,6 +77,10 @@ public class Gun {
 
     public void setRemainingReloadTime(int remainingReloadTime) {
         this.remainingReloadTime = remainingReloadTime;
+    }
+
+    public void shoot() {
+
     }
 
     public void doAction() {

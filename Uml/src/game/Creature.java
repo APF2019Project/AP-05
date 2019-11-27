@@ -4,7 +4,15 @@ public class Creature {
     private String name;
     private int fullHp;
     private int remainingHp;
+    private boolean disposable;
 
+    public boolean isDisposable() {
+        return disposable;
+    }
+
+    public void setDisposable(boolean disposable) {
+        this.disposable = disposable;
+    }
     public int getId() {
         return id;
     }
@@ -40,5 +48,7 @@ public class Creature {
     public void getHit(int damage) {
 
     }
+    public void doAction() {
 
+    }
 }
