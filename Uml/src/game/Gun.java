@@ -9,6 +9,13 @@ public class Gun {
     private boolean sleepy;
     private boolean projectile;
 
+    public boolean isProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(boolean projectile) {
+        this.projectile = projectile;
+    }
 
     public boolean isIcy() {
         return icy;

@@ -1,8 +1,11 @@
 package game;
 
+import java.util.HashMap;
+
 public class Plant extends Creature {
-    private int coolDown;
-    private int remainingCoolDown;
+    private static HashMap<String,Integer> remainingCoolDown;
+    private static HashMap<String,Integer> coolDown;
+
     private int sunCost;
 
     private boolean cactus;
@@ -24,21 +27,17 @@ public class Plant extends Creature {
         this.peppery = peppery;
     }
 
-    public int getCoolDown() {
-        return coolDown;
+    public static void setCoolDown(String name,int coolDown){
+
     }
+    public static void getCoolDown(String name,int coolDown){
 
-    public void setCoolDown(int coolDown) {
-        this.coolDown = coolDown;
     }
+    public static void setRemainCoolDown(String name,int coolDown){
 
-
-    public int getRemainingCoolDown() {
-        return remainingCoolDown;
     }
+    public static void getRemainCoolDown(String name,int coolDown){
 
-    public void setRemainingCoolDown(int remainingCoolDown) {
-        this.remainingCoolDown = remainingCoolDown;
     }
 
     public int getSunCost() {

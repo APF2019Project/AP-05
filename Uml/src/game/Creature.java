@@ -3,7 +3,7 @@ public class Creature {
     private int id;
     private String name;
     private int fullHp;
-    private int remainingHp;
+
     private boolean disposable;
 
     public boolean isDisposable() {
@@ -37,13 +37,6 @@ public class Creature {
         this.fullHp = fullHp;
     }
 
-    public int getRemainingHp() {
-        return remainingHp;
-    }
-
-    public void setRemainingHp(int remainingHp) {
-        this.remainingHp = remainingHp;
-    }
 
     public void getHit(int damage) {
 

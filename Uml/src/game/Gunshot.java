@@ -9,6 +9,24 @@ public class Gunshot {
     private boolean icy;
     private boolean sleepy;
     private boolean projectile;
+    private Zombie target;
+
+
+    public boolean isProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(boolean projectile) {
+        this.projectile = projectile;
+    }
+
+    public Zombie getTarget() {
+        return target;
+    }
+
+    public void setTarget(Zombie target) {
+        this.target = target;
+    }
 
     public String getName() {
         return name;

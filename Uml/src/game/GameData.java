@@ -8,28 +8,32 @@ public class GameData {
     HashMap<String,ArrayList<String> > zombieData;
     HashMap<String,ArrayList<String> > plantData;
 
+
+    public void ReadGameData(String gameData){
+
+    }
     public ArrayList<String > getGunData(String name){
 
     }
-    public void  setGunData(String name,ArrayList<String> data){
+    private void  setGunData(String name,ArrayList<String> data){
 
     }
     public ArrayList<String > getGunShotData(String name){
 
     }
-    public void  setGunShotData(String name,ArrayList<String> data){
+    private void  setGunShotData(String name,ArrayList<String> data){
 
     }
     public ArrayList<String > getGunData(String name){
 
     }
-    public void  setZombieData(String name,ArrayList<String> data){
+    private void  setZombieData(String name,ArrayList<String> data){
 
     }
     public ArrayList<String > getZombieData(String name){
 
     }
-    public void  setPlantData(String name,ArrayList<String> data){
+    private void  setPlantData(String name,ArrayList<String> data){
 
     }
     public ArrayList<String > getPlantData(String name){

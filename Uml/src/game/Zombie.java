@@ -8,7 +8,7 @@ public class Zombie extends Creature {
     private boolean inAir;
     private boolean haveShield;
     private boolean seaZombie;
-    private int crateTime;
+
 
     public int getSpeed() {
         return speed;
@@ -66,13 +66,6 @@ public class Zombie extends Creature {
         this.seaZombie = seaZombie;
     }
 
-    public int getCrateTime() {
-        return crateTime;
-    }
-
-    public void setCrateTime(int crateTime) {
-        this.crateTime = crateTime;
-    }
 
     public  void attack(Plant plant){
 

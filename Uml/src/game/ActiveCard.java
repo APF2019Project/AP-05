@@ -2,6 +2,24 @@ package game;
 
 public class ActiveCard extends Card {
     private int x , y;
+    private int remainingHp;
+    private int crateTime;
+
+    public int getCrateTime() {
+        return crateTime;
+    }
+
+    public void setCrateTime(int crateTime) {
+        this.crateTime = crateTime;
+    }
+
+    public int getRemainingHp() {
+        return remainingHp;
+    }
+
+    public void setRemainingHp(int remainingHp) {
+        this.remainingHp = remainingHp;
+    }
 
     public int getX() {
         return x;

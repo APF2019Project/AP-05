@@ -3,6 +3,25 @@ package game;
 import java.util.ArrayList;
 
 public class Map {
-    ArrayList<ActiveCard> activeCardArrayList;
+    private String gameMode;
+    private ArrayList<ActiveCard> activeCardArrayList;
+    private ArrayList<Gunshot> GunShot;
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public void addActiveCard(ActiveCard activeCard){
+
+    }
+
+    public void runThisTurn(){
+
+    }
+
 
 }
