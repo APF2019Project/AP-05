@@ -1,11 +1,8 @@
 package game;
 
-import java.util.ArrayList;
-
 public class Menu {
     private Menu lastMenu;
     private CommandHandler commandHandler;
-    private ArrayList<Button> buttons;
 
     public CommandHandler getCommandHandler() {
         return commandHandler;
@@ -13,14 +10,6 @@ public class Menu {
 
     public void setCommandHandler(CommandHandler commandHandler) {
         this.commandHandler = commandHandler;
-    }
-
-    public ArrayList<Button> getButtons() {
-        return buttons;
-    }
-
-    public void setButtons(ArrayList<Button> buttons) {
-        this.buttons = buttons;
     }
 
     public Menu getLastMenu() {

@@ -1,5 +1,8 @@
 package game;
 public class Main {
-    private Menu currentMenu;
+    static private Menu currentMenu;
 
+    public static void main(String[] args) {
+
+    }
 }
