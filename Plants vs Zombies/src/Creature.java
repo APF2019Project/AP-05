@@ -2,14 +2,24 @@ public class Creature {
     private String name;
     private boolean disposable;
     private int coolDown, fullHp, remainingCoolDown, reloadTime;
+    private Shield shield;
 
-    public Creature(String name, boolean disposable, int coolDown, int fullHp, int reloadTime) {
+    public Creature(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime, Shield shield) {
         this.name = name;
         this.disposable = disposable;
         this.coolDown = coolDown;
         this.fullHp = fullHp;
-        this.remainingCoolDown = 0;
+        this.remainingCoolDown = remainingCoolDown;
         this.reloadTime = reloadTime;
+        this.shield = shield;
+    }
+
+    public int getReloadTime() {
+        return reloadTime;
+    }
+
+    public Shield getShield() {
+        return shield;
     }
 
     public String getName() {
