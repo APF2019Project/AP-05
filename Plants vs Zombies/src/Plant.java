@@ -1,4 +1,4 @@
-public class Plant extends Creature {
+public abstract class Plant extends Creature {
     private int sunCost;
     private boolean cactus, peppery;
 
@@ -21,4 +21,7 @@ public class Plant extends Creature {
     public boolean isPeppery() {
         return peppery;
     }
+
+    @Override
+    public abstract void doAction(ActiveCard activeCard);
 }

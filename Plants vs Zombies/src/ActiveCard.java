@@ -68,4 +68,7 @@ public class ActiveCard {
     public void setY(int y) {
         this.y = y;
     }
+    public void doAction(){
+        creature.doAction(this);
+    }
 }
