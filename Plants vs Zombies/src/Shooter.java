@@ -11,4 +11,8 @@ public class Shooter extends Plant {
         return gun;
     }
 
+    @Override
+    public void doAction(ActiveCard activeCard) {
+
+    }
 }
