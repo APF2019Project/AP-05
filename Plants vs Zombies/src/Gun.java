@@ -37,8 +37,20 @@ public class Gun {
     public int getDamage() {
         return damage;
     }
-
-    void doAction(ActiveCard activeCard) {
-
+    private boolean isShyes(ActiveCard activeCard,Map map){
+        for(ActiveCard activeCard1:map.activeCardArrayList){
+            if (activeCard.getDistance(activeCard1)<=GameData.shyDistanceLimit) {
+                return true;
+            }
+        }
+        return false;
+    }
+    void doAction(ActiveCard activeCard,Map map) {
+        if(!shy || !isShyes(activeCard,map)){
+            for(int i=0;i<gunShotsPerRound;i++){
+                map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY()
+                        ,GameData.speedOfGunShot,activeCard.getOwner()));
+            }
+        }
     }
 }

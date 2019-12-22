@@ -3,18 +3,32 @@ public class ActiveCard {
     private int remainingHp, x, y;
     private int shieldRemainingHp = 0;
     private int remainingSlowDown = 0, slowDownPercent = 0;
-
-    public ActiveCard(Creature creature, int remainingHp, int x, int y) {
+    private int remainReloadTime=0;
+    private Player owner;
+    public ActiveCard(Creature creature, int remainingHp, int x, int y,Player player) {
         this.creature = creature;
         this.remainingHp = remainingHp;
         this.x = x;
         this.y = y;
         if (creature.getShield() != null)
             shieldRemainingHp = creature.getShield().getFullHp();
+        owner=player;
+        remainReloadTime=creature.getReloadTime();
     }
-    public  Player findOwner(){
+    public int getDistance(ActiveCard activeCard){
+        return Math.abs(activeCard.getX()-this.getX())+Math.abs(activeCard.getY()-this.getY());
+    }
+    public Player getOwner() {
+        return owner;
+    }
 
+    public int getRemainReloadTime() {
+        return remainReloadTime;
     }
+    public void setRemainReloadTime(int remainReloadTime) {
+        this.remainReloadTime = remainReloadTime;
+    }
+
     public int getSlowDownPercent() {
         return slowDownPercent;
     }
@@ -71,6 +85,11 @@ public class ActiveCard {
         this.y = y;
     }
     public void doAction(){
-        creature.doAction(this);
+        if(remainReloadTime==0) {
+            creature.doAction(this);
+            remainReloadTime=creature.getReloadTime();
+        }else{
+            remainReloadTime--;
+        }
     }
 }

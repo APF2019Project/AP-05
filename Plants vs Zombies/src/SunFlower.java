@@ -8,7 +8,6 @@ public class SunFlower extends Plant {
     }
 
     public void doAction(ActiveCard activeCard) {
-        Player player=activeCard.findOwner();
-        if(activeCard.)
+        activeCard.getOwner().addSun(numberOfSons);
     }
 }

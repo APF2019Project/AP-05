@@ -19,6 +19,7 @@ public class Map {
             gunShotArrayList.add(gunShot);
         }
     }
+
     public void run(){
 
     }

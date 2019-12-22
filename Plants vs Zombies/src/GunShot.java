@@ -2,12 +2,18 @@ public class GunShot {
     private Gun gun;
     private int x, y;
     private int vx;
+    private Player owner;
 
-    public GunShot(Gun gun, int x, int y,int vx) {
+    public GunShot(Gun gun, int x, int y,int vx,Player player) {
         this.gun = gun;
         this.x = x;
         this.y = y;
         this.vx=vx;
+        this.owner=player;
+    }
+
+    public Player getOwner() {
+        return owner;
     }
 
     public int getVx() {
