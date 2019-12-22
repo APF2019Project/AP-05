@@ -19,11 +19,16 @@ public class Map {
             gunShotArrayList.add(gunShot);
         }
     }
-
-    public void run(){
-
+    public ActiveCard getZombieIn(int y,int xl,int xr){
+        // To-Do
+        return null;
     }
-    public void checkCollisions(){
-
+    public void run(){
+        for(GunShot gunShot:gunShotArrayList){
+            gunShot.doAction(this);
+        }
+        for(ActiveCard activeCard:activeCardArrayList){
+            activeCard.doAction(this);
+        }
     }
 }

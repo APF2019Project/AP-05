@@ -1,3 +1,5 @@
+import org.w3c.dom.views.AbstractView;
+
 public class GunShot {
     private Gun gun;
     private int x, y;
@@ -39,6 +41,16 @@ public class GunShot {
         this.y = y;
     }
 
-    public void doAction(){
+    public void collision(ActiveCard activeCard){
+        // To-Do
+    }
+
+    public void doAction(Map map){
+        ActiveCard activeCard=map.getZombieIn(this.y,this.x,this.x+this.vx);
+        if(activeCard==null){
+            this.x+=this.vx;
+        }else{
+            collision(activeCard);
+        }
     }
 }

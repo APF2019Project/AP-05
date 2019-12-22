@@ -84,9 +84,9 @@ public class ActiveCard {
     public void setY(int y) {
         this.y = y;
     }
-    public void doAction(){
+    public void doAction(Map map){
         if(remainReloadTime==0) {
-            creature.doAction(this);
+            creature.doAction(this,map);
             remainReloadTime=creature.getReloadTime();
         }else{
             remainReloadTime--;

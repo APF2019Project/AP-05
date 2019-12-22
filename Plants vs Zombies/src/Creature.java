@@ -13,7 +13,7 @@ public class Creature {
         this.reloadTime = reloadTime;
         this.shield = shield;
     }
-    public void doAction(ActiveCard activeCard){
+    public void doAction(ActiveCard activeCard,Map map){
 
     }
 

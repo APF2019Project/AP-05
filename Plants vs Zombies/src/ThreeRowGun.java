@@ -5,8 +5,10 @@ public class ThreeRowGun extends Gun {
     }
 
     public void doAction(ActiveCard activeCard,Map map) {
-        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY(),GameData.speedOfGunShot,activeCard.getOwner()));
-        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY()-1,GameData.speedOfGunShot,activeCard.getOwner()));
-        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY()+1,GameData.speedOfGunShot,activeCard.getOwner()));
+        if(!this.isShy() || !this.isShyes(activeCard,map)) {
+            map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY(), GameData.speedOfGunShot, activeCard.getOwner()));
+            map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY() - 1, GameData.speedOfGunShot, activeCard.getOwner()));
+            map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY() + 1, GameData.speedOfGunShot, activeCard.getOwner()));
+        }
     }
 }

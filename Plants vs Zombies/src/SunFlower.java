@@ -7,7 +7,7 @@ public class SunFlower extends Plant {
         this.numberOfSons = numberOfSons;
     }
 
-    public void doAction(ActiveCard activeCard) {
+    public void doAction(ActiveCard activeCard,Map map) {
         activeCard.getOwner().addSun(numberOfSons);
     }
 }
