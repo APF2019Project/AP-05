@@ -1,13 +1,21 @@
 import java.util.ArrayList;
 
 public class Map {
+    private int row, col;
     ArrayList<ActiveCard> activeCardArrayList;
     ArrayList<GunShot> gunShotArrayList;
+    boolean[] isWater;
 
-    void run(){
+    public Map(int row, int col) {
+        this.row = row;
+        this.col = col;
+        isWater = new boolean[row];
+    }
+
+    public void run(){
 
     }
-    void checkCollisions(){
+    public void checkCollisions(){
 
     }
 }
