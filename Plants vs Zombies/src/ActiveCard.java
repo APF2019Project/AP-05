@@ -12,7 +12,9 @@ public class ActiveCard {
         if (creature.getShield() != null)
             shieldRemainingHp = creature.getShield().getFullHp();
     }
+    public  Player findOwner(){
 
+    }
     public int getSlowDownPercent() {
         return slowDownPercent;
     }

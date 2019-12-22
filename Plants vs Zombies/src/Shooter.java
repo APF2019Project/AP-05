@@ -13,6 +13,6 @@ public class Shooter extends Plant {
 
     @Override
     public void doAction(ActiveCard activeCard) {
-
+            gun.doAction(activeCard);
     }
 }

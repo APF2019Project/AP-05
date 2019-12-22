@@ -7,7 +7,8 @@ public class SunFlower extends Plant {
         this.numberOfSons = numberOfSons;
     }
 
-    public int getNumberOfSons() {
-        return numberOfSons;
+    public void doAction(ActiveCard activeCard) {
+        Player player=activeCard.findOwner();
+        if(activeCard.)
     }
 }

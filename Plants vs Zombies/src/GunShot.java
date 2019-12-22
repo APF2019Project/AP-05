@@ -34,6 +34,5 @@ public class GunShot {
     }
 
     public void doAction(){
-
     }
 }
