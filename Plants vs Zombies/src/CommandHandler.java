@@ -1,9 +1,9 @@
 public class CommandHandler {
     protected Command[] commands;
 
-    public void accept(User user, String inputCommand) throws Exception {
+    public void accept(String inputCommand) throws Exception {
         for (Command command : commands)
-            if (command.accept(user, inputCommand))
+            if (command.accept(inputCommand))
                 return;
         throw new Exception("invalid command");
     }
