@@ -6,6 +6,6 @@ public class LilyPad extends Plant {
 
     @Override
     public void doAction(ActiveCard activeCard) {
-
+        // noting
     }
 }

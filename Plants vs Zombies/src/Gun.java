@@ -38,7 +38,7 @@ public class Gun {
         return damage;
     }
 
-    void doAction() {
+    void doAction(ActiveCard activeCard) {
 
     }
 }

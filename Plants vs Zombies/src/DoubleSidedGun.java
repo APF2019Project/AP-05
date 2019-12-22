@@ -4,7 +4,9 @@ public class DoubleSidedGun extends Gun {
         super(name, icy, shy, sleepy, damage, gunShotsPerRound, hasEffectOnShield);
     }
 
-    public void doAction() {
-
+    public void doAction(ActiveCard activeCard,Map map) {
+        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY(),3));
+        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY(),-3));
+        map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY(),-3));
     }
 }
