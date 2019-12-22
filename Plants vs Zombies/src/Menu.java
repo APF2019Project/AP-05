@@ -1,7 +1,6 @@
 public class Menu {
     private Menu lastMenu;
     CommandHandler commandHandler;
-
     public Menu(Menu lastMenu, CommandHandler commandHandler) {
         this.lastMenu = lastMenu;
         this.commandHandler = commandHandler;

@@ -1,12 +1,28 @@
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
+interface Function {
+    void accept(String string) throws Exception;
+}
+
+interface BiFunction {
+    void accept(User user, String string) throws Exception;
+}
+
 public class Command {
-    final private BiConsumer<User, String> function;
     final private String regex;
     final private String help;
+    private BiFunction biFunction;
+    private Function function;
 
-    public Command(BiConsumer<User, String> function, String regex, String help) {
+    public Command(BiFunction biFunction, String regex, String help) {
+        this.biFunction = biFunction;
+        this.regex = regex;
+        this.help = help;
+    }
+
+    public Command(Function function, String regex, String help) {
         this.function = function;
         this.regex = regex;
         this.help = help;
@@ -16,9 +32,17 @@ public class Command {
         return help;
     }
 
+    public boolean accept(String command) throws Exception {
+        if (Pattern.matches(regex, command)) {
+            function.accept(command);
+            return true;
+        }
+        return false;
+    }
+
     public boolean accept(User user, String command) throws Exception {
         if (Pattern.matches(regex, command)) {
-            function.accept(user, command);
+            biFunction.accept(user, command);
             return true;
         }
         return false;

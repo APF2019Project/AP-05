@@ -1,7 +1,5 @@
 public class CommandHandler {
-    protected Command[] commands = {
-
-    };
+    protected Command[] commands;
 
     public void accept(User user, String inputCommand) throws Exception {
         for (Command command : commands)
