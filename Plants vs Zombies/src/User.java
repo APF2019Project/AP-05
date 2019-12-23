@@ -17,7 +17,13 @@ public class User {
         throw new Exception("username of password is invalid");
     }
 
-    public void
+    public static void deleteUser(String username,String password) throws Exception {
+        User user=getUserByUsernameAndPassword(username,password);
+        if(user==null){
+            throw new Exception("incorrect username or password");
+        }
+        allUsers.remove(user);
+    }
 
     public String getUsername() {
         return username;
