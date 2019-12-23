@@ -1,6 +1,5 @@
 package Main;
 
-import MainPackage.Main;
 
 public class GunShot {
     private Gun gun;
@@ -50,7 +49,15 @@ public class GunShot {
         if(gun.isSleepy()){
             activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime,GameData.sleepySlowDownPercent);
         }
-        //if()
+        if(gun.isHasEffectOnShield()){
+            if(activeCard.getShieldRemainingHp()>0){
+                activeCard.setShieldRemainingHp(activeCard.getShieldRemainingHp()-gun.getDamage());
+            }else{
+                activeCard.setRemainingHp(activeCard.getRemainingHp()-gun.getDamage());
+            }
+        }else{
+            activeCard.setRemainingHp(activeCard.getRemainingHp()-gun.getDamage());
+        }
     }
 
     public void doAction(Map map){

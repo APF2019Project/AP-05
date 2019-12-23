@@ -1,6 +1,5 @@
 package Main;
 
-import MainPackage.Main;
 
 public class ActiveCard {
     private Creature creature;
@@ -54,7 +53,14 @@ public class ActiveCard {
     }
 
     public void setShieldRemainingHp(int shieldRemainingHp) {
-        this.shieldRemainingHp = shieldRemainingHp;
+        if(shieldRemainingHp<=0){
+            if(creature.getName().equals("Buckethead Zombie") && remainingHp>=2){
+                remainingHp--;
+            }
+            this.shieldRemainingHp=0;
+        }else {
+            this.shieldRemainingHp = shieldRemainingHp;
+        }
     }
 
     public Creature getCreature() {
@@ -70,7 +76,11 @@ public class ActiveCard {
     }
 
     public void setRemainingHp(int remainingHp) {
-        this.remainingHp = remainingHp;
+        if(remainingHp<=0){
+            this.remainingHp=0;
+        }else {
+            this.remainingHp = remainingHp;
+        }
     }
 
     public int getX() {
@@ -91,7 +101,7 @@ public class ActiveCard {
     public void doAction(Map map){
         if(remainReloadTime==0) {
             creature.doAction(this,map);
-            if(creature instanceof Minh){
+            if(creature instanceof Mine){
                 remainReloadTime = 0;
             }else {
                 remainReloadTime = creature.getReloadTime();

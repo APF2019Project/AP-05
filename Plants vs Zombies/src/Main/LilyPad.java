@@ -1,6 +1,5 @@
 package Main;
 
-import MainPackage.Main;
 
 public class LilyPad extends Plant {
     public LilyPad(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown,

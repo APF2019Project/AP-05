@@ -89,5 +89,14 @@ public class Map {
                 }
             }
         }
+        ArrayList<ActiveCard> dies=new ArrayList<ActiveCard>();
+        for(ActiveCard activeCard:activeCardArrayList){
+            if(activeCard.getRemainingHp()==0){
+                dies.add(activeCard);
+            }
+        }
+        for(ActiveCard activeCard:dies){
+            activeCardArrayList.remove(activeCard);
+        }
     }
 }

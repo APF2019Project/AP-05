@@ -30,6 +30,9 @@ public class Zombie extends Creature {
         return speed;
     }
 
+    public boolean isWinning(ActiveCard activeCard){
+        return (activeCard.getX()<0);
+    }
     public void doAction(ActiveCard activeCard) {
 
     }

@@ -1,7 +1,5 @@
 package Main;
 
-import MainPackage.Main;
-
 public class Gun {
     private String name;
     private boolean icy, shy, sleepy, hasEffectOnShield;
