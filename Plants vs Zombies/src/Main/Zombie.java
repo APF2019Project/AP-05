@@ -1,8 +1,11 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed;
+    private ArrayList<Zombie> allZombies=new ArrayList<>();
 
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
                   Shield shield, boolean swimmer, boolean cactusHasEffect,
@@ -24,6 +27,10 @@ public class Zombie extends Creature {
 
     public boolean isPeaHasEffect() {
         return peaHasEffect;
+    }
+
+    public ArrayList<Zombie> getAllZombies() {
+        return allZombies;
     }
 
     public int getSpeed() {

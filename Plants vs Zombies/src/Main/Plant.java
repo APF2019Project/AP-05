@@ -1,9 +1,17 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Plant extends Creature {
     private int sunCost;
     private boolean cactus, peppery;
     private boolean waterProof;
+    private ArrayList<Plant> allPlant=new ArrayList<>();
+
+    ArrayList<Plant> getAllPlant(){
+        return allPlant;
+    }
+
     public int getSunCost() {
         return sunCost;
     }
