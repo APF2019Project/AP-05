@@ -1,4 +1,4 @@
-public abstract class Plant extends Creature {
+public class Plant extends Creature {
     private int sunCost;
     private boolean cactus, peppery;
 
@@ -23,5 +23,7 @@ public abstract class Plant extends Creature {
     }
 
     @Override
-    public abstract void doAction(ActiveCard activeCard);
+    public void doAction(ActiveCard activeCard){
+
+    }
 }
