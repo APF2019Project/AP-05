@@ -48,7 +48,7 @@ public class GunShot {
         if(gun.isSleepy()){
             activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime,GameData.sleepySlowDownPercent);
         }
-        // to-do
+        //if()
     }
 
     public void doAction(Map map){

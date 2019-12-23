@@ -87,7 +87,11 @@ public class ActiveCard {
     public void doAction(Map map){
         if(remainReloadTime==0) {
             creature.doAction(this,map);
-            remainReloadTime=creature.getReloadTime();
+            if(creature instanceof Minh){
+                remainReloadTime = 0;
+            }else {
+                remainReloadTime = creature.getReloadTime();
+            }
         }else{
             remainReloadTime--;
         }
