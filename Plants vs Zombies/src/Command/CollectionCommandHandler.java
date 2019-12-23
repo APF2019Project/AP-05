@@ -15,7 +15,8 @@ public class CollectionCommandHandler extends CommandHandler {
                 new Command(this::showHand, "show hand", ""),
                 new Command(this::showCollection, "show collection", ""),
                 new Command(this::selectCard, "select (.+)", ""),
-                new Command(this::removeCard, "remove (.+)", "")
+                new Command(this::removeCard, "remove (.+)", ""),
+                new Command(this::play, "play", "")
         };
     }
 
@@ -61,7 +62,7 @@ public class CollectionCommandHandler extends CommandHandler {
         Player.getCurrentPlayer().removeCreaturesOnHand(creature);
     }
 
-    public void play(){
+    public void play(String command){
         onEnd();
         Player.getCurrentPlayer().setCurrentMenu(nextMenu);
     }
