@@ -1,7 +1,6 @@
-package Main;
+package Command;
 
-import Command.CollectionCommandHandler;
-import Command.CommandHandler;
+import Main.*;
 
 public class PlayCommandHandler extends CommandHandler {
     {
@@ -19,7 +18,7 @@ public class PlayCommandHandler extends CommandHandler {
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-        collectionCommandHandler.nextMenu = Main.dayAndWaterGameModeMenu;
+        collectionCommandHandler.nextMenu=Main.dayAndWaterGameModeMenu;
 
         DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
                 (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
@@ -55,7 +54,7 @@ public class PlayCommandHandler extends CommandHandler {
 
     public void playPvPMode(String command) throws Exception {
         String username = Main.scanLine();
-        User opponentUser=User.getUserByUsername(username);
+        User opponentUser= User.getUserByUsername(username);
         if(opponentUser==null){
             throw new Exception("invalid username");
         }

@@ -3,9 +3,7 @@ package Command;
 import Main.CollectionMode;
 import Main.Main;
 import Main.Player;
-
-import java.awt.*;
-
+import Main.Menu;
 public class CollectionCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
@@ -14,6 +12,7 @@ public class CollectionCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "")
         };
     }
+
     public Menu nextMenu;
     public CollectionMode collectionMode;
 

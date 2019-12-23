@@ -1,5 +1,10 @@
 package Main;
 
+import Command.LeaderboardCommandHandler;
+import Command.LoginCommandHandler;
+import Command.MainMenuCommandHandler;
+import Command.ProfileCommandHandler;
+
 import java.util.Scanner;
 
 public class Main {

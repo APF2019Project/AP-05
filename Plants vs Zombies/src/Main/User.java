@@ -65,14 +65,14 @@ public class User {
         allUsers.add(this);
     }
 
-    void changeUsername(String username) throws Exception {
+    public void changeUsername(String username) throws Exception {
         if (!validNewUsername(username)) {
             throw new Exception("username invalid");
         }
         this.username = username;
     }
 
-    void changePassword(String password) throws Exception {
+    public void changePassword(String password) throws Exception {
         if (!validNewPassword(password)) {
             throw new Exception("password invalid");
         }

@@ -1,6 +1,7 @@
-package Main;
+package Command;
 
 import Command.CommandHandler;
+import Main.Player;
 
 public class PvPGameModeCommandHandler extends CommandHandler {
     {

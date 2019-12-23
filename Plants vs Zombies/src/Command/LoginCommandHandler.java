@@ -1,7 +1,9 @@
-package Main;
+package Command;
 
-import Command.CommandHandler;
-import MainPackage.Main;
+import Main.Main;
+import Main.User;
+import Main.Player;
+import Main.PlantPlayer;
 
 public class LoginCommandHandler extends CommandHandler {
     {

@@ -1,9 +1,7 @@
-package Main;
+package Command;
 
-import Command.CommandHandler;
-import Command.Command;
-import MainPackage.Main;
-
+import Main.Main;
+import Main.User;
 import java.util.Comparator;
 
 public class LeaderboardCommandHandler extends CommandHandler {
