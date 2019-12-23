@@ -14,11 +14,11 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playDayMode(String command) {
-        Menu collectionMenu=new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-        collectionCommandHandler.nextMenu=Main.dayAndWaterGameModeMenu;
+        collectionCommandHandler.nextMenu = Main.dayAndWaterGameModeMenu;
 
         DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
                 (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
@@ -27,7 +27,7 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playWaterMode(String command) {
-        Menu collectionMenu=new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
@@ -44,7 +44,7 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playZombieMode(String command) {
-        Menu collectionMenu=new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.zombiesCollection;
@@ -54,19 +54,29 @@ public class PlayCommandHandler extends CommandHandler {
 
     public void playPvPMode(String command) throws Exception {
         String username = Main.scanLine();
-        User opponentUser= User.getUserByUsername(username);
-        if(opponentUser==null){
+        User opponentUser = User.getUserByUsername(username);
+        if (opponentUser == null) {
             throw new Exception("invalid username");
         }
-        ZombiePlayer opponentPlayer=new ZombiePlayer(opponentUser);
+        ZombiePlayer zombiePlayer = new ZombiePlayer(opponentUser);
+        PlantPlayer plantPlayer = (PlantPlayer) Player.getCurrentPlayer();
 
         PvPGameModeCommandHandler pvpGameModeCommandHandler =
                 (PvPGameModeCommandHandler) Main.pvpGameModeMenu.getCommandHandler();
-        pvpGameModeCommandHandler.zombiePlayer = opponentPlayer;
+        pvpGameModeCommandHandler.zombiePlayer = zombiePlayer;
 
+        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu zombieCollectionMenu = new Menu(plantCollectionMenu, new CollectionCommandHandler() {
+            public void onStart() {
+                Player.setCurrentPlayer(zombiePlayer);
+                super.onStart();
+            }
 
-        Menu plantCollectionMenu=new Menu(Main.playMenu, new CollectionCommandHandler());
-        Menu zombieCollectionMenu=new Menu(plantCollectionMenu, new CollectionCommandHandler());
+            public void onEnd() {
+                Player.setCurrentPlayer(plantPlayer);
+                super.onEnd();
+            }
+        });
 
         CollectionCommandHandler plantCollectionMenuCommandHandler =
                 (CollectionCommandHandler) plantCollectionMenu.getCommandHandler();
@@ -75,7 +85,7 @@ public class PlayCommandHandler extends CommandHandler {
 
         CollectionCommandHandler zombieCollectionMenuCommandHandler =
                 (CollectionCommandHandler) zombieCollectionMenu.getCommandHandler();
-        zombieCollectionMenuCommandHandler.collectionMode = CollectionMode.plantsCollection;
+        zombieCollectionMenuCommandHandler.collectionMode = CollectionMode.zombiesCollection;
         zombieCollectionMenuCommandHandler.nextMenu = Main.pvpGameModeMenu;
 
         Player.getCurrentPlayer().setCurrentMenu(plantCollectionMenu);
