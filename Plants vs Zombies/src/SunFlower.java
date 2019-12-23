@@ -6,11 +6,8 @@ public class SunFlower extends Plant {
         super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield, sunCost, cactus, peppery);
         this.numberOfSons = numberOfSons;
     }
-    public int getNumberOfSons() {
-        return numberOfSons;
-    }
 
-    public void doAction(ActiveCard activeCard) {
-
+    public void doAction(ActiveCard activeCard,Map map) {
+        activeCard.getOwner().addSun(numberOfSons);
     }
 }

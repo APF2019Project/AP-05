@@ -1,4 +1,4 @@
-public abstract class Creature {
+public class Creature {
     private String name;
     private boolean disposable;
     private int coolDown, fullHp, remainingCoolDown, reloadTime;
@@ -13,7 +13,7 @@ public abstract class Creature {
         this.reloadTime = reloadTime;
         this.shield = shield;
     }
-    public void doAction(ActiveCard activeCard){
+    public void doAction(ActiveCard activeCard,Map map){
 
     }
 

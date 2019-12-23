@@ -23,7 +23,7 @@ public class Plant extends Creature {
     }
 
     @Override
-    public void doAction(ActiveCard activeCard){
+    public void doAction(ActiveCard activeCard,Map map){
 
     }
 }

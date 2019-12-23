@@ -12,7 +12,7 @@ public class Shooter extends Plant {
     }
 
     @Override
-    public void doAction(ActiveCard activeCard) {
-
+    public void doAction(ActiveCard activeCard,Map map) {
+            gun.doAction(activeCard,map);
     }
 }
