@@ -11,17 +11,17 @@ public class LoginCommandHandler extends CommandHandler {
         String username = Main.scanLine();
         String password = Main.scanLine();
         new User(username, password);
-        Main.currentUser.setCurrentMenu(Main.loginMenu);
+        Player.getCurrentPlayer().setCurrentMenu(Main.loginMenu);
     }
 
     public void login(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        Main.currentUser = User.login(username, password);
-        Main.currentUser.setCurrentMenu(Main.mainMenu);
+        Player.setCurrentPlayer(new PlantPlayer(User.login(username, password)));
+        Player.getCurrentPlayer().setCurrentMenu(Main.mainMenu);
     }
 
     public void leaderboard(String command) throws Exception{
-        Main.currentUser.setCurrentMenu(Main.leaderboard);
+        Player.getCurrentPlayer().setCurrentMenu(Main.leaderboard);
     }
 }

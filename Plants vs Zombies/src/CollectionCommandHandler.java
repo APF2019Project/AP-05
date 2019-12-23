@@ -1,4 +1,4 @@
-public class MainMenuCommandHandler extends CommandHandler {
+public class CollectionCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::play, "play", ""),
@@ -6,6 +6,8 @@ public class MainMenuCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "")
         };
     }
+    public Menu nextMenu;
+    public CollectionMode collectionMode;
 
     public void play(String command) throws Exception {
         Player.getCurrentPlayer().setCurrentMenu(Main.playMenu);

@@ -6,7 +6,7 @@ public class User {
     private int coin = 0;
     private String username, password;
     private int killingEnemyCount;
-    private Menu currentMenu = Main.loginMenu;
+    private Menu currentMenu;
 
     public static User login(String username, String password) throws Exception {
         for (User user : allUsers) {

@@ -28,7 +28,6 @@ public class Zombie extends Creature {
         return speed;
     }
 
-    @Override
     public void doAction(ActiveCard activeCard) {
 
     }

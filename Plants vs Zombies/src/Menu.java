@@ -1,9 +1,13 @@
 public class Menu {
     private Menu lastMenu;
-    CommandHandler commandHandler;
+    private CommandHandler commandHandler;
 
     public Menu getLastMenu(){
         return  lastMenu;
+    }
+
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
     }
 
     public void setLastMenu(Menu lastMenu) {
@@ -21,7 +25,7 @@ public class Menu {
             return;
         }
         if(command.equals("exit")){
-            Main.currentUser.setCurrentMenu(lastMenu);
+            Player.getCurrentPlayer().setCurrentMenu(lastMenu);
         }
         commandHandler.accept(command);
     }

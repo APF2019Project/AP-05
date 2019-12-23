@@ -1,4 +1,4 @@
-public class MainMenuCommandHandler extends CommandHandler {
+public class DayAndWaterGameModeCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::play, "play", ""),
@@ -6,6 +6,7 @@ public class MainMenuCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "")
         };
     }
+    public boolean haveWater;
 
     public void play(String command) throws Exception {
         Player.getCurrentPlayer().setCurrentMenu(Main.playMenu);
