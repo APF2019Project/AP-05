@@ -114,6 +114,9 @@ public class ActiveCard {
             if(remainingSlowDown==0)
                 slowDownPercent=0;
         }
+        if(creature instanceof Zombie){
+            ((Zombie)creature).eatPlant(this,map);
+        }
     }
     public void collisionSlowingGunShot(int slowDownTime,int slowDownPercent){
         if(slowDownPercent>this.slowDownPercent){
