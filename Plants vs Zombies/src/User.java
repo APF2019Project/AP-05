@@ -8,25 +8,70 @@ public class User {
     private int killingEnemyCount;
     private Menu currentMenu = Main.loginMenu;
 
-    public static User login(String username,String password) throws Exception {
-        for(User user:allUsers){
-            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+    public static User login(String username, String password) throws Exception {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }
         }
         throw new Exception("username of password is invalid");
     }
 
+    public void
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    private boolean validNewUsername(String username) {
+        return getUserByUsername(username) != null && username.length() >= 3 && username.length() <= 20;
+    }
+
+    private boolean validNewPassword(String password) {
+        return getUserByUsername(password) != null && password.length() >= 3 && password.length() <= 20;
+    }
+
     public User(String username, String password) throws Exception {
-        if(getUserByUsername(username) != null) {
-            throw new Exception("username invalid");
+        if (!validNewUsername(username) || !validNewPassword(password)) {
+            throw new Exception("username or password invalid");
         }
         this.username = username;
         this.password = password;
         allUsers.add(this);
     }
 
-    private static void addUser(User user){
+    void changeUsername(String username) throws Exception {
+        if (!validNewUsername(username)) {
+            throw new Exception("username invalid");
+        }
+        this.username = username;
+    }
+
+    void changePassword(String password) throws Exception {
+        if (!validNewPassword(password)) {
+            throw new Exception("password invalid");
+        }
+        this.password = password;
+    }
+
+    private static void addUser(User user) {
         allUsers.add(user);
     }
 
@@ -45,6 +90,14 @@ public class User {
         return null;
     }
 
+    public static User getUserByUsernameAndPassword(String username, String password) {
+        for (User user : allUsers)
+            if (user.getUsername().equals(username) && user.getPassword().equals(password))
+                return user;
+        return null;
+    }
+
+
     public static boolean usernameIsValid(String username) {
         return getUserByUsername(username) != null && !username.contains(" ");
     }
@@ -55,26 +108,6 @@ public class User {
 
     public void setCurrentMenu(Menu currentMenu) {
         this.currentMenu = currentMenu;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {

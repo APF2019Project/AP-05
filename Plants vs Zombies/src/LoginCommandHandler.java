@@ -1,4 +1,4 @@
-public class loginCommandHandler extends CommandHandler {
+public class LoginCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::createAccount, "create account", ""),
