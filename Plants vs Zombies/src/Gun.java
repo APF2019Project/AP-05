@@ -35,6 +35,10 @@ public class Gun {
         return sleepy;
     }
 
+    public boolean isHasEffectOnShield() {
+        return hasEffectOnShield;
+    }
+
     public int getDamage() {
         return damage;
     }
