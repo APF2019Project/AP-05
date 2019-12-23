@@ -50,15 +50,21 @@ public class CollectionCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    public void selectCard(String command) {
+    public void selectCard(String command) throws Exception {
         String cardName=Pattern.compile("select (.+)").matcher(command).group(1);
-        Creature creature=Player.getCurrentPlayer().getUser().getCreatureByName(cardName);
+        Creature creature=Player.getCurrentPlayer().getUser().getUnlockedCreatureByName(cardName);
+        if(creature==null){
+            throw new Exception("invalid cardName");
+        }
         Player.getCurrentPlayer().addCreaturesOnHand(creature);
     }
 
-    public void removeCard(String command) {
+    public void removeCard(String command) throws Exception {
         String cardName=Pattern.compile("remove (.+)").matcher(command).group(1);
-        Creature creature=Player.getCurrentPlayer().getUser().getCreatureByName(cardName);
+        Creature creature=Player.getCurrentPlayer().getUser().getUnlockedCreatureByName(cardName);
+        if(creature==null){
+            throw new Exception("invalid cardName");
+        }
         Player.getCurrentPlayer().removeCreaturesOnHand(creature);
     }
 

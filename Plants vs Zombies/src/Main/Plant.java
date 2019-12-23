@@ -6,10 +6,10 @@ public class Plant extends Creature {
     private int sunCost;
     private boolean cactus, peppery;
     private boolean waterProof;
-    private ArrayList<Plant> allPlant=new ArrayList<>();
+    private static ArrayList<Plant> allPlants=new ArrayList<>();
 
-    ArrayList<Plant> getAllPlant(){
-        return allPlant;
+    public static ArrayList<Plant> getAllPlants(){
+        return allPlants;
     }
 
     public int getSunCost() {
