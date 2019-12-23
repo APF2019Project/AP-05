@@ -5,6 +5,7 @@ public class User {
     private ArrayList<Creature> unlockedCreatures;
     private int coin = 0;
     private String username, password;
+    private int killingEnemyCount;
     private Menu currentMenu = Main.loginMenu;
 
     public static User login(String username,String password) throws Exception {
@@ -27,6 +28,14 @@ public class User {
 
     private static void addUser(User user){
         allUsers.add(user);
+    }
+
+    public static ArrayList<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public int getKillingEnemyCount() {
+        return killingEnemyCount;
     }
 
     public static User getUserByUsername(String username) {
