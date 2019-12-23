@@ -1,7 +1,5 @@
 package Main;
 
-import MainPackage.Main;
-
 public class ActiveCard {
     private Creature creature;
     private int remainingHp, x, y;

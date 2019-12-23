@@ -1,7 +1,5 @@
 package Main;
 
-import MainPackage.Main;
-
 public class Creature {
     private String name;
     private boolean disposable;

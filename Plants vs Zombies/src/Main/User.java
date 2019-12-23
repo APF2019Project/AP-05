@@ -10,6 +10,15 @@ public class User {
     private int killingEnemyCount;
     private Menu currentMenu;
 
+    public Creature getCreatureByName(String creatureName){
+        for(Creature creature:unlockedCreatures){
+            if(creature.getName().equals(creatureName)){
+                return creature;
+            }
+        }
+        return null;
+    }
+
     public static User login(String username, String password) throws Exception {
         for (User user : allUsers) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
