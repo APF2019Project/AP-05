@@ -6,7 +6,7 @@ public class Main {
 
     public static Menu loginMenu=new Menu(null,new loginCommandHandler());
     public static Menu mainMenu=new Menu(loginMenu,new MainMenuCommandHandler());
-    public static Menu leaderboard=;
+    public static Menu leaderboard;
     public static Menu profileMenu;
     public static Menu playMenu;
     public static Menu collectionMenu;

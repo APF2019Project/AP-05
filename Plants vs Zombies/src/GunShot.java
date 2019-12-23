@@ -46,7 +46,7 @@ public class GunShot {
     }
 
     public void doAction(Map map){
-        ActiveCard activeCard=map.getZombieIn(this.y,this.x,this.x+this.vx);
+        ActiveCard activeCard=map.getZombieIn(this.y,this.x,this.vx);
         if(activeCard==null){
             this.x+=this.vx;
         }else{

@@ -1,13 +1,13 @@
 public class SunFlower extends Plant {
     private int numberOfSons;
 
-    public SunFlower(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
-                     Shield shield, int sunCost, boolean cactus, boolean peppery, int numberOfSons) {
-        super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield, sunCost, cactus, peppery);
+    public SunFlower(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown,
+                     int reloadTime, Shield shield, int sunCost, boolean cactus, boolean peppery, boolean waterProof, int numberOfSons) {
+        super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield, sunCost, cactus, peppery, waterProof);
         this.numberOfSons = numberOfSons;
     }
 
-    public void doAction(ActiveCard activeCard,Map map) {
+    public void doAction(ActiveCard activeCard, Map map) {
         activeCard.getOwner().addSun(numberOfSons);
     }
 }
