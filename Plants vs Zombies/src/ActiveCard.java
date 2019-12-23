@@ -3,7 +3,7 @@ public class ActiveCard {
     private int remainingHp, x, y;
     private int shieldRemainingHp = 0;
     private int remainingSlowDown = 0, slowDownPercent = 0;
-    private int remainReloadTime=0;
+    private int remainReloadTime;
     private Player owner;
     public ActiveCard(Creature creature, int remainingHp, int x, int y,Player player) {
         this.creature = creature;
@@ -90,6 +90,17 @@ public class ActiveCard {
             remainReloadTime=creature.getReloadTime();
         }else{
             remainReloadTime--;
+        }
+        if(remainingSlowDown>0){
+            remainingSlowDown--;
+            if(remainingSlowDown==0)
+                slowDownPercent=0;
+        }
+    }
+    public void collisionSlowingGunShot(int slowDownTime,int slowDownPercent){
+        if(slowDownPercent>this.slowDownPercent){
+            this.slowDownPercent=slowDownPercent;
+            this.remainingSlowDown=slowDownTime;
         }
     }
 }

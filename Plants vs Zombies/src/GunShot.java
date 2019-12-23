@@ -42,7 +42,13 @@ public class GunShot {
     }
 
     public void collision(ActiveCard activeCard){
-        // To-Do
+        if(gun.isIcy()){
+            activeCard.collisionSlowingGunShot(GameData.iceSlowDownTime,GameData.iceSlowDownPercent);
+        }
+        if(gun.isSleepy()){
+            activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime,GameData.sleepySlowDownPercent);
+        }
+        // to-do
     }
 
     public void doAction(Map map){

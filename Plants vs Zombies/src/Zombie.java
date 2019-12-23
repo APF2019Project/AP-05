@@ -32,4 +32,7 @@ public class Zombie extends Creature {
     public void doAction(ActiveCard activeCard,Map map) {
 
     }
+    public boolean isWinning(ActiveCard activeCard){
+        return (activeCard.getX()<0);
+    }
 }

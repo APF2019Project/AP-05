@@ -1,3 +1,4 @@
+import java.nio.file.attribute.AttributeView;
 import java.util.ArrayList;
 
 public class Map {
@@ -77,6 +78,15 @@ public class Map {
         }
         for(ActiveCard activeCard:activeCardArrayList){
             activeCard.doAction(this);
+        }
+        for(ActiveCard activeCard:activeCardArrayList){
+            if(activeCard.getCreature() instanceof Zombie){
+                if(((Zombie) activeCard.getCreature()).isWinning(activeCard)){
+                    // zombies wining
+
+                    return;
+                }
+            }
         }
     }
 }
