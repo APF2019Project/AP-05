@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 <<<<<<< HEAD
-<<<<<<< HEAD
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11.0.4 (3)" project-jdk-type="JavaSDK">
-=======
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11.0.4" project-jdk-type="JavaSDK">
->>>>>>> origin/arshia
-=======
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
 =======
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11.0.4" project-jdk-type="JavaSDK">
 >>>>>>> ed3cc7b2fead9d79a50279ffb8ad2b3e62d8f999
->>>>>>> baefe927b327c856b93b249431031d0e42e5638f
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
