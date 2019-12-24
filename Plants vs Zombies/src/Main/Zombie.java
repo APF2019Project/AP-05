@@ -49,7 +49,6 @@ public class Zombie extends Creature {
             if(((Plant)eatedPlant.getCreature()).isPeppery()) {
                 activeCard.damaged(GameData.PepperDamage);
             }
-
         }
     }
 
