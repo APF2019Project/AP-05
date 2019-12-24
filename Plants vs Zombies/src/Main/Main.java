@@ -10,10 +10,10 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static Menu loginMenu=new Menu(null,new LoginCommandHandler());
-    public static Menu mainMenu=new Menu(loginMenu,new MainMenuCommandHandler());
-    public static Menu leaderboard=new Menu(loginMenu, new LeaderboardCommandHandler());
-    public static Menu profileMenu=new Menu(mainMenu, new ProfileCommandHandler());
+    public static Menu loginMenu = new Menu(null, new LoginCommandHandler());
+    public static Menu mainMenu = new Menu(loginMenu, new MainMenuCommandHandler());
+    public static Menu leaderboard = new Menu(loginMenu, new LeaderboardCommandHandler());
+    public static Menu profileMenu = new Menu(mainMenu, new ProfileCommandHandler());
     public static Menu playMenu;
     public static Menu shopMenu;
     public static Menu dayAndWaterGameModeMenu;

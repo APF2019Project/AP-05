@@ -8,19 +8,22 @@ public class ActiveCard {
     private int remainingSlowDown = 0, slowDownPercent = 0;
     private int remainReloadTime;
     private Player owner;
-    public ActiveCard(Creature creature, int remainingHp, int x, int y,Player player) {
+
+    public ActiveCard(Creature creature, int remainingHp, int x, int y, Player player) {
         this.creature = creature;
         this.remainingHp = remainingHp;
         this.x = x;
         this.y = y;
         if (creature.getShield() != null)
             shieldRemainingHp = creature.getShield().getFullHp();
-        owner=player;
-        remainReloadTime=creature.getReloadTime();
+        owner = player;
+        remainReloadTime = creature.getReloadTime();
     }
-    public int getDistance(ActiveCard activeCard){
-        return Math.abs(activeCard.getX()-this.getX())+Math.abs(activeCard.getY()-this.getY());
+
+    public int getDistance(ActiveCard activeCard) {
+        return Math.abs(activeCard.getX() - this.getX()) + Math.abs(activeCard.getY() - this.getY());
     }
+
     public Player getOwner() {
         return owner;
     }
@@ -28,6 +31,7 @@ public class ActiveCard {
     public int getRemainReloadTime() {
         return remainReloadTime;
     }
+
     public void setRemainReloadTime(int remainReloadTime) {
         this.remainReloadTime = remainReloadTime;
     }
@@ -53,12 +57,13 @@ public class ActiveCard {
     }
 
     public void setShieldRemainingHp(int shieldRemainingHp) {
-        if(shieldRemainingHp<=0){
-            if(creature.getName().equals("Buckethead Zombie") && remainingHp>=2){
+        if (shieldRemainingHp <= 0) {
+            if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
             }
-            this.shieldRemainingHp=0;
-        }else {
+            this.shieldRemainingHp = 0;
+        }
+        else {
             this.shieldRemainingHp = shieldRemainingHp;
         }
     }
@@ -76,11 +81,7 @@ public class ActiveCard {
     }
 
     public void setRemainingHp(int remainingHp) {
-        if(remainingHp<=0){
-            this.remainingHp=0;
-        }else {
-            this.remainingHp = remainingHp;
-        }
+        this.remainingHp = Math.max(remainingHp, 0);
     }
 
     public int getX() {
@@ -98,27 +99,31 @@ public class ActiveCard {
     public void setY(int y) {
         this.y = y;
     }
-    public void doAction(Map map){
-        if(remainReloadTime==0) {
-            creature.doAction(this,map);
-            if(creature instanceof Mine){
+
+    public void doAction(Map map) {
+        if (remainReloadTime == 0) {
+            creature.doAction(this, map);
+            if (creature instanceof Mine) {
                 remainReloadTime = 0;
-            }else {
+            }
+            else {
                 remainReloadTime = creature.getReloadTime();
             }
-        }else{
+        }
+        else {
             remainReloadTime--;
         }
-        if(remainingSlowDown>0){
+        if (remainingSlowDown > 0) {
             remainingSlowDown--;
-            if(remainingSlowDown==0)
-                slowDownPercent=0;
+            if (remainingSlowDown == 0)
+                slowDownPercent = 0;
         }
     }
-    public void collisionSlowingGunShot(int slowDownTime,int slowDownPercent){
-        if(slowDownPercent>this.slowDownPercent){
-            this.slowDownPercent=slowDownPercent;
-            this.remainingSlowDown=slowDownTime;
+
+    public void collisionSlowingGunShot(int slowDownTime, int slowDownPercent) {
+        if (slowDownPercent > this.slowDownPercent) {
+            this.slowDownPercent = slowDownPercent;
+            this.remainingSlowDown = slowDownTime;
         }
     }
 }

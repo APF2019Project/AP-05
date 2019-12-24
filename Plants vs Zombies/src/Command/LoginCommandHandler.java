@@ -1,9 +1,9 @@
 package Command;
 
 import Main.Main;
-import Main.User;
-import Main.Player;
 import Main.PlantPlayer;
+import Main.Player;
+import Main.User;
 
 public class LoginCommandHandler extends CommandHandler {
     {
@@ -28,7 +28,7 @@ public class LoginCommandHandler extends CommandHandler {
         Player.getCurrentPlayer().setCurrentMenu(Main.mainMenu);
     }
 
-    public void leaderboard(String command) throws Exception{
+    public void leaderboard(String command) throws Exception {
         Player.getCurrentPlayer().setCurrentMenu(Main.leaderboard);
     }
 }

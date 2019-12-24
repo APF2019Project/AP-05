@@ -6,9 +6,9 @@ public class Plant extends Creature {
     private int sunCost;
     private boolean cactus, peppery;
     private boolean waterProof;
-    private static ArrayList<Plant> allPlants=new ArrayList<>();
+    private static ArrayList<Plant> allPlants = new ArrayList<>();
 
-    public static ArrayList<Plant> getAllPlants(){
+    public static ArrayList<Plant> getAllPlants() {
         return allPlants;
     }
 
@@ -28,6 +28,7 @@ public class Plant extends Creature {
     public boolean isWaterProof() {
         return waterProof;
     }
+
     public boolean isCactus() {
         return cactus;
     }
@@ -37,7 +38,7 @@ public class Plant extends Creature {
     }
 
     @Override
-    public void doAction(ActiveCard activeCard,Map map){
+    public void doAction(ActiveCard activeCard, Map map) {
 
     }
 }

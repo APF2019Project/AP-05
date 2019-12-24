@@ -1,9 +1,7 @@
 package Command;
 
-import Command.CommandHandler;
 import Main.Main;
 import Main.Player;
-import MainPackage.Main;
 
 public class DayAndWaterGameModeCommandHandler extends CommandHandler {
     {
@@ -13,6 +11,7 @@ public class DayAndWaterGameModeCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "")
         };
     }
+
     public boolean haveWater;
 
     public void play(String command) throws Exception {

@@ -6,8 +6,8 @@ public class Menu {
     private Menu lastMenu;
     private CommandHandler commandHandler;
 
-    public Menu getLastMenu(){
-        return  lastMenu;
+    public Menu getLastMenu() {
+        return lastMenu;
     }
 
     public CommandHandler getCommandHandler() {
@@ -24,11 +24,11 @@ public class Menu {
     }
 
     public void accept(String command) throws Exception {
-        if(command.equals("help")){
+        if (command.equals("help")) {
             Main.print(commandHandler.help());
             return;
         }
-        if(command.equals("exit")){
+        if (command.equals("exit")) {
             Player.getCurrentPlayer().setCurrentMenu(lastMenu);
         }
         commandHandler.accept(command);

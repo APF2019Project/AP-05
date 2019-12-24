@@ -6,13 +6,13 @@ public abstract class Player {
     private static Player currentPlayer;
     private int sunInGame;
     private User user;
-    private ArrayList<Creature> creaturesOnHand=new ArrayList<>();
+    private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
-    public void addCreaturesOnHand(Creature creature){
+    public void addCreaturesOnHand(Creature creature) {
         creaturesOnHand.add(creature);
     }
 
-    public void removeCreaturesOnHand(Creature creature){
+    public void removeCreaturesOnHand(Creature creature) {
         creaturesOnHand.remove(creature);
     }
 
@@ -36,12 +36,13 @@ public abstract class Player {
         return user;
     }
 
-    public void setCurrentMenu(Menu menu){
+    public void setCurrentMenu(Menu menu) {
         user.setCurrentMenu(menu);
     }
 
     abstract void doAction();
-    public void addSun(int sun){
-        this.sunInGame+=sun;
+
+    public void addSun(int sun) {
+        this.sunInGame += sun;
     }
 }

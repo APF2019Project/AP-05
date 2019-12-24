@@ -10,34 +10,34 @@ public class User {
     private int killingEnemyCount;
     private Menu currentMenu;
 
-    public Creature getUnlockedCreatureByName(String creatureName){
-        for(Creature creature:unlockedCreatures){
-            if(creature.getName().equals(creatureName)){
+    public Creature getUnlockedCreatureByName(String creatureName) {
+        for (Creature creature : unlockedCreatures) {
+            if (creature.getName().equals(creatureName)) {
                 return creature;
             }
         }
         return null;
     }
 
-    public ArrayList<Creature> getLockedCreatures(){
+    public ArrayList<Creature> getLockedCreatures() {
         ArrayList<Creature> lockedCreatures = new ArrayList<>();
-        for(Plant plant:Plant.getAllPlants()){
-            if(getUnlockedCreatureByName(plant.getName())==null){
+        for (Plant plant : Plant.getAllPlants()) {
+            if (getUnlockedCreatureByName(plant.getName()) == null) {
                 lockedCreatures.add(plant);
             }
         }
-        for(Zombie zombie:Zombie.getAllZombies()){
-            if(getUnlockedCreatureByName(zombie.getName())==null){
+        for (Zombie zombie : Zombie.getAllZombies()) {
+            if (getUnlockedCreatureByName(zombie.getName()) == null) {
                 lockedCreatures.add(zombie);
             }
         }
         return lockedCreatures;
     }
 
-    void buyCreature(Creature creature){
+    void buyCreature(Creature creature) {
 
     }
-    
+
 
     public static User login(String username, String password) throws Exception {
         for (User user : allUsers) {
@@ -48,9 +48,9 @@ public class User {
         throw new Exception("username of password is invalid");
     }
 
-    public static void deleteUser(String username,String password) throws Exception {
-        User user=getUserByUsernameAndPassword(username,password);
-        if(user==null){
+    public static void deleteUser(String username, String password) throws Exception {
+        User user = getUserByUsernameAndPassword(username, password);
+        if (user == null) {
             throw new Exception("incorrect username or password");
         }
         allUsers.remove(user);

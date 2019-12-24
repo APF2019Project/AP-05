@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed;
-    private static ArrayList<Zombie> allZombies=new ArrayList<>();
+    private static ArrayList<Zombie> allZombies = new ArrayList<>();
 
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
                   Shield shield, boolean swimmer, boolean cactusHasEffect,
@@ -37,9 +37,10 @@ public class Zombie extends Creature {
         return speed;
     }
 
-    public boolean isWinning(ActiveCard activeCard){
-        return (activeCard.getX()<0);
+    public boolean isWinning(ActiveCard activeCard) {
+        return (activeCard.getX() < 0);
     }
+
     public void doAction(ActiveCard activeCard) {
 
     }

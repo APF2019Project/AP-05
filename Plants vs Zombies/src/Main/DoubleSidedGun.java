@@ -6,8 +6,8 @@ public class DoubleSidedGun extends Gun {
         super(name, icy, shy, sleepy, damage, gunShotsPerRound, hasEffectOnShield);
     }
 
-    public void doAction(ActiveCard activeCard,Map map) {
-        if(!this.isShy() || !this.isShyes(activeCard,map)) {
+    public void doAction(ActiveCard activeCard, Map map) {
+        if (!this.isShy() || !this.isShyes(activeCard, map)) {
             map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY(), GameData.speedOfGunShot, activeCard.getOwner()));
             map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY(), -GameData.speedOfGunShot, activeCard.getOwner()));
             map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY(), -GameData.speedOfGunShot, activeCard.getOwner()));

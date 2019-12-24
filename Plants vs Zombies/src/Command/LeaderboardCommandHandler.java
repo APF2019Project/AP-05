@@ -2,6 +2,7 @@ package Command;
 
 import Main.Main;
 import Main.User;
+
 import java.util.Comparator;
 
 public class LeaderboardCommandHandler extends CommandHandler {
@@ -13,8 +14,8 @@ public class LeaderboardCommandHandler extends CommandHandler {
 
     public void showLeaderboard(String command) throws Exception {
         User.getAllUsers().sort(Comparator.comparingInt(User::getKillingEnemyCount));
-        StringBuilder stringBuilder=new StringBuilder();
-        for(User user:User.getAllUsers()){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (User user : User.getAllUsers()) {
             stringBuilder.append(user.getUsername()).append(' ').append(user.getKillingEnemyCount()).append('\n');
         }
         Main.print(stringBuilder.toString());

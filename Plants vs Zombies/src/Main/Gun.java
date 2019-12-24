@@ -44,19 +44,21 @@ public class Gun {
     public int getDamage() {
         return damage;
     }
-    public boolean isShyes(ActiveCard activeCard,Map map){
-        for(ActiveCard activeCard1:map.activeCardArrayList){
-            if (activeCard.getDistance(activeCard1)<=GameData.shyDistanceLimit) {
+
+    public boolean isShyes(ActiveCard activeCard, Map map) {
+        for (ActiveCard activeCard1 : map.activeCardArrayList) {
+            if (activeCard.getDistance(activeCard1) <= GameData.shyDistanceLimit) {
                 return true;
             }
         }
         return false;
     }
-    void doAction(ActiveCard activeCard,Map map) {
-        if(!this.isShy() || !this.isShyes(activeCard,map)) {
-            for(int i=0;i<gunShotsPerRound;i++){
-                map.addGunShot(new GunShot(this,activeCard.getX(),activeCard.getY()
-                        ,GameData.speedOfGunShot,activeCard.getOwner()));
+
+    void doAction(ActiveCard activeCard, Map map) {
+        if (!this.isShy() || !this.isShyes(activeCard, map)) {
+            for (int i = 0; i < gunShotsPerRound; i++) {
+                map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY()
+                        , GameData.speedOfGunShot, activeCard.getOwner()));
             }
         }
     }

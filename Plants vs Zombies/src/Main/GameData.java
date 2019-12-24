@@ -1,7 +1,5 @@
 package Main;
 
-import MainPackage.Main;
-
 public class GameData {
     static int speedOfGunShot;
     static int shyDistanceLimit;
@@ -9,7 +7,8 @@ public class GameData {
     static int iceSlowDownPercent;
     static int sleepySlowDownTime;
     static int sleepySlowDownPercent;
-    public void  readData(){
+
+    public void readData() {
 
     }
 }
