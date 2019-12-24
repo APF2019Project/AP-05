@@ -1,5 +1,6 @@
 package Main;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 
 public class Map {
@@ -79,7 +80,33 @@ public class Map {
             throw new Error("add ActiveCard have a bog");
         }
     }
-
+    ActiveCard findPlantIn(int x, int y){
+        for(ActiveCard activeCard:activeCardArrayList){
+            if(activeCard.getCreature() instanceof Plant){
+                if(activeCard.getX()==x && activeCard.getY()==y){
+                    return activeCard;
+                }
+            }
+        }
+        return null;
+    }
+    GunShot getGunShotIn(int y,int xl,int xr){
+        for(GunShot gunshot:gunShotArrayList){
+            if(gunshot.getY()==y && xl<=gunshot.getX() && gunshot.getX()<=xr){
+                return gunshot;
+            }
+        }
+        return null;
+    }
+    int hasNoPlantIn(int y,int x){
+        int maxX=-1;
+        for(ActiveCard activeCard:activeCardArrayList){
+            if(activeCard.getCreature() instanceof  Plant){
+                maxX= Math.max(maxX,activeCard.getX());
+            }
+        }
+        return maxX;
+    }
     public void run() {
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);

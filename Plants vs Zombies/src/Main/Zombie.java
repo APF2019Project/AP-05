@@ -48,6 +48,11 @@ public class Zombie extends Creature {
 
     public void doAction(ActiveCard activeCard, Map map) {
         int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - speed);
+        while(activeCard.getRemainingHp()>0){
+            GunShot gunShot=map.getGunShotIn(activeCard.getY(),finalX,activeCard.getX());
+            if(gunShot==null)break;
+            gunShot.collision(activeCard);
+        }
         activeCard.setX(finalX);
     }
 }
