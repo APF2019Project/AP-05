@@ -9,6 +9,7 @@ public class GameData {
     static int sleepySlowDownPercent=100;
     static int cactusDamage=1;
     static int PepperDamage=1;
+    static int maxMagnetRange,MagnetEatingTime;
     public void readData() {
 
     }
