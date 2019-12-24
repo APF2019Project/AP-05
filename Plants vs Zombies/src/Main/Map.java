@@ -33,32 +33,10 @@ public class Map {
             gunShotArrayList.add(gunShot);
         }
     }
-    public int hasNoPlantIn(int y,int xr){
-        int maxX=-2;
-        for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof  Plant){
-                if(activeCard.getY()==y && activeCard.getX()<=xr){
-                    maxX=Math.max(maxX,activeCard.getX());
-                }
-            }
-        }
-        return maxX;
-    }
-    public  ActiveCard findPlantIn(int x,int y){
-        for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof  Plant){
-                if(activeCard.getY()==y && activeCard.getX()==x){
-                    return activeCard;
-                }
-            }
-        }
-        return null;
-    }
-    public ActiveCard getZombieIn(int y,int xl,int vx,boolean zombieShouldInGround){
+    public ActiveCard getZombieIn(int y,int xl,int vx){
         ActiveCard nearest=null;
         for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof Zombie && activeCard.getY()==y &&
-                    (zombieShouldInGround==false || ((Zombie)(activeCard.getCreature())).isPeaHasEffect())){
+            if(activeCard.getY()==y){
                 if(vx<0){
                     if(activeCard.getX()<=xl && xl+vx<=activeCard.getX()){
                         if(nearest==null || nearest.getX()<activeCard.getX()){

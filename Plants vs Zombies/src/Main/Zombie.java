@@ -16,10 +16,7 @@ public class Zombie extends Creature {
         this.peaHasEffect = peaHasEffect;
         this.speed = speed;
     }
-    public int getDamage(boolean hasShield){
-        // to_do
-        return 1;
-    }
+
     public boolean isSwimmer() {
         return swimmer;
     }
@@ -43,15 +40,7 @@ public class Zombie extends Creature {
     public boolean isWinning(ActiveCard activeCard){
         return (activeCard.getX()<0);
     }
-    public void eatPlant(ActiveCard activeCard,Map map){
-        ActiveCard eatedPlant=map.findPlantIn(activeCard.getX(),activeCard.getY());
-        if(eatedPlant!=null){
-            eatedPlant.setRemainingHp(eatedPlant.getRemainingHp()-getDamage(activeCard.getShieldRemainingHp()>0));
-        }
-    }
+    public void doAction(ActiveCard activeCard) {
 
-    public void doAction(ActiveCard activeCard,Map map) {
-        int finalX=Math.max(map.hasNoPlantIn(activeCard.getY(),activeCard.getX()),activeCard.getX()-speed);
-        activeCard.setX(finalX);
     }
 }
