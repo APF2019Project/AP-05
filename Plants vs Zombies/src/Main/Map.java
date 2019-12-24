@@ -62,6 +62,9 @@ public class Map {
     }
 
     public void addActiveCard(ActiveCard activeCard) {
+        if(activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
+            throw new Error("you don't have Enough money");
+        }
         if (activeCard.getCreature() instanceof Plant) {
             if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())) {
                 activeCardArrayList.add(activeCard);
@@ -79,6 +82,7 @@ public class Map {
         } else {
             throw new Error("add ActiveCard have a bog");
         }
+        activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
     }
     ActiveCard findPlantIn(int x, int y){
         for(ActiveCard activeCard:activeCardArrayList){

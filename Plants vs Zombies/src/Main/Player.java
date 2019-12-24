@@ -8,6 +8,14 @@ public abstract class Player {
     private User user;
     private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
+    public int getSunInGame() {
+        return sunInGame;
+    }
+
+    public void setSunInGame(int sunInGame) {
+        this.sunInGame = sunInGame;
+    }
+
     public Player(User user) {
         this.user = user;
     }
