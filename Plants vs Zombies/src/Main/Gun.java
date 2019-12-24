@@ -1,11 +1,10 @@
 package Main;
 
-import MainPackage.Main;
-
 public class Gun {
     private String name;
     private boolean icy, shy, sleepy, hasEffectOnShield;
     private int damage, gunShotsPerRound;
+
 
     public Gun(String name, boolean icy, boolean shy, boolean sleepy, int damage,
                int gunShotsPerRound, boolean hasEffectOnShield) {

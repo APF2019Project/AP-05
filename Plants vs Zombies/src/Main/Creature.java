@@ -3,7 +3,16 @@ package Main;
 public class Creature {
     private String name;
     private boolean disposable;
-    private int coolDown, fullHp, remainingCoolDown, reloadTime;
+    private int coolDown;
+    private int fullHp;
+    private int remainingCoolDown;
+    private int reloadTime;
+
+    public int getGetPrice() {
+        return getPrice;
+    }
+
+    private int getPrice;
     private Shield shield;
 
     public Creature(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime, Shield shield) {
@@ -15,7 +24,8 @@ public class Creature {
         this.reloadTime = reloadTime;
         this.shield = shield;
     }
-    public void doAction(ActiveCard activeCard,Map map){
+
+    public void doAction(ActiveCard activeCard, Map map) {
 
     }
 
