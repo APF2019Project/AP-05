@@ -2,21 +2,23 @@ package Main;
 
 public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect;
-    private int speed;
+    private int speed,power,powerWithShield;
 
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
-                  Shield shield, boolean swimmer, boolean cactusHasEffect,
-                  boolean peaHasEffect, int speed) {
+                  Shield shield, boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect,
+                  int speed, int power, int powerWithShield) {
         super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield);
         this.swimmer = swimmer;
         this.cactusHasEffect = cactusHasEffect;
         this.peaHasEffect = peaHasEffect;
         this.speed = speed;
+        this.power = power;
+        this.powerWithShield = powerWithShield;
     }
 
-    public int getDamage(boolean hasShield) {
-        // to_do
-        return 1;
+    public int getPower(boolean hasShield) {
+        if(hasShield)return powerWithShield;
+        else return  power;
     }
 
     public boolean isSwimmer() {
@@ -42,7 +44,7 @@ public class Zombie extends Creature {
     public void eatPlant(ActiveCard activeCard, Map map) {
         ActiveCard eatedPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
         if (eatedPlant != null) {
-            eatedPlant.damaged(getDamage(activeCard.getShieldRemainingHp() > 0));
+            eatedPlant.damaged(getPower(activeCard.getShieldRemainingHp() > 0));
             if(((Plant)eatedPlant.getCreature()).isCactus() && ((Zombie)activeCard.getCreature()).cactusHasEffect) {
                 activeCard.damaged(GameData.cactusDamage);
             }
