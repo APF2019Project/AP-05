@@ -8,16 +8,8 @@ public abstract class Player {
     private User user;
     private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
-    public void addCreaturesOnHand(Creature creature) {
-        creaturesOnHand.add(creature);
-    }
-
-    public void removeCreaturesOnHand(Creature creature) {
-        creaturesOnHand.remove(creature);
-    }
-
-    public ArrayList<Creature> getCreaturesOnHand() {
-        return creaturesOnHand;
+    public Player(User user) {
+        this.user = user;
     }
 
     public static Player getCurrentPlayer() {
@@ -28,8 +20,16 @@ public abstract class Player {
         Player.currentPlayer = currentPlayer;
     }
 
-    public Player(User user) {
-        this.user = user;
+    public void addCreaturesOnHand(Creature creature) {
+        creaturesOnHand.add(creature);
+    }
+
+    public void removeCreaturesOnHand(Creature creature) {
+        creaturesOnHand.remove(creature);
+    }
+
+    public ArrayList<Creature> getCreaturesOnHand() {
+        return creaturesOnHand;
     }
 
     public User getUser() {

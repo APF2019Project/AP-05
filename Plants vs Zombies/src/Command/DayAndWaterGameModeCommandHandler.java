@@ -4,6 +4,8 @@ import Main.Main;
 import Main.Player;
 
 public class DayAndWaterGameModeCommandHandler extends CommandHandler {
+    public boolean haveWater;
+
     {
         this.commands = new Command[]{
                 new Command(this::play, "play", ""),
@@ -11,8 +13,6 @@ public class DayAndWaterGameModeCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "")
         };
     }
-
-    public boolean haveWater;
 
     public void play(String command) throws Exception {
         Player.getCurrentPlayer().setCurrentMenu(Main.playMenu);

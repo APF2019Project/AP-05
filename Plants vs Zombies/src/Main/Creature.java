@@ -7,14 +7,8 @@ public class Creature {
     private int fullHp;
     private int remainingCoolDown;
     private int reloadTime;
-
-    public int getGetPrice() {
-        return getPrice;
-    }
-
     private int getPrice;
     private Shield shield;
-
     public Creature(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime, Shield shield) {
         this.name = name;
         this.disposable = disposable;
@@ -23,6 +17,10 @@ public class Creature {
         this.remainingCoolDown = remainingCoolDown;
         this.reloadTime = reloadTime;
         this.shield = shield;
+    }
+
+    public int getGetPrice() {
+        return getPrice;
     }
 
     public void doAction(ActiveCard activeCard, Map map) {

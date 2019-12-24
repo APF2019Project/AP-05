@@ -53,12 +53,10 @@ public class GunShot {
         if (gun.isHasEffectOnShield()) {
             if (activeCard.getShieldRemainingHp() > 0) {
                 activeCard.setShieldRemainingHp(activeCard.getShieldRemainingHp() - gun.getDamage());
-            }
-            else {
+            } else {
                 activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
             }
-        }
-        else {
+        } else {
             activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
         }
     }
@@ -67,8 +65,7 @@ public class GunShot {
         ActiveCard activeCard = map.getZombieIn(this.y, this.x, this.vx);
         if (activeCard == null) {
             this.x += this.vx;
-        }
-        else {
+        } else {
             collision(activeCard);
         }
     }

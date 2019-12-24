@@ -62,8 +62,7 @@ public class ActiveCard {
                 remainingHp--;
             }
             this.shieldRemainingHp = 0;
-        }
-        else {
+        } else {
             this.shieldRemainingHp = shieldRemainingHp;
         }
     }
@@ -105,12 +104,10 @@ public class ActiveCard {
             creature.doAction(this, map);
             if (creature instanceof Mine) {
                 remainReloadTime = 0;
-            }
-            else {
+            } else {
                 remainReloadTime = creature.getReloadTime();
             }
-        }
-        else {
+        } else {
             remainReloadTime--;
         }
         if (remainingSlowDown > 0) {

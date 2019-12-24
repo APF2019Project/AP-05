@@ -3,18 +3,10 @@ package Main;
 import java.util.ArrayList;
 
 public class Plant extends Creature {
+    private static ArrayList<Plant> allPlants = new ArrayList<>();
     private int sunCost;
     private boolean cactus, peppery;
     private boolean waterProof;
-    private static ArrayList<Plant> allPlants = new ArrayList<>();
-
-    public static ArrayList<Plant> getAllPlants() {
-        return allPlants;
-    }
-
-    public int getSunCost() {
-        return sunCost;
-    }
 
     public Plant(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown,
                  int reloadTime, Shield shield, int sunCost, boolean cactus, boolean peppery, boolean waterProof) {
@@ -23,6 +15,14 @@ public class Plant extends Creature {
         this.cactus = cactus;
         this.peppery = peppery;
         this.waterProof = waterProof;
+    }
+
+    public static ArrayList<Plant> getAllPlants() {
+        return allPlants;
+    }
+
+    public int getSunCost() {
+        return sunCost;
     }
 
     public boolean isWaterProof() {

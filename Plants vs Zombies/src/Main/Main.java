@@ -8,8 +8,6 @@ import Command.ProfileCommandHandler;
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-
     public static Menu loginMenu = new Menu(null, new LoginCommandHandler());
     public static Menu mainMenu = new Menu(loginMenu, new MainMenuCommandHandler());
     public static Menu leaderboard = new Menu(loginMenu, new LeaderboardCommandHandler());
@@ -20,7 +18,7 @@ public class Main {
     public static Menu railGameModeMenu;
     public static Menu zombieGameModeMenu;
     public static Menu pvpGameModeMenu;
-
+    private static Scanner scanner = new Scanner(System.in);
 
     // in do func baraye fazaye baadi bayad styleshoon kolan avaz she
     public static String scanLine() {

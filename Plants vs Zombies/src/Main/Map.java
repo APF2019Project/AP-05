@@ -3,10 +3,16 @@ package Main;
 import java.util.ArrayList;
 
 public class Map {
-    private int row, col;
     ArrayList<ActiveCard> activeCardArrayList;
     ArrayList<GunShot> gunShotArrayList;
     boolean[] isWater;
+    private int row, col;
+
+    public Map(int row, int col) {
+        this.row = row;
+        this.col = col;
+        isWater = new boolean[row];
+    }
 
     public boolean isWater(int x) {
         return this.isWater[x];
@@ -26,12 +32,6 @@ public class Map {
         return !(x < 0 || x >= row || y < 0 || y >= col);
     }
 
-    public Map(int row, int col) {
-        this.row = row;
-        this.col = col;
-        isWater = new boolean[row];
-    }
-
     public void addGunShot(GunShot gunShot) {
         if (isInMap(gunShot.getX(), gunShot.getY())) {
             gunShotArrayList.add(gunShot);
@@ -48,8 +48,7 @@ public class Map {
                             nearest = activeCard;
                         }
                     }
-                }
-                else {
+                } else {
                     if (xl <= activeCard.getX() && activeCard.getX() <= xl + vx) {
                         if (nearest == null || nearest.getX() > activeCard.getX()) {
                             nearest = activeCard;
@@ -65,22 +64,18 @@ public class Map {
         if (activeCard.getCreature() instanceof Plant) {
             if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())) {
                 activeCardArrayList.add(activeCard);
-            }
-            else {
+            } else {
                 throw new Error("your can't put your plant here");
             }
-        }
-        else if (activeCard.getCreature() instanceof Zombie) {
+        } else if (activeCard.getCreature() instanceof Zombie) {
             if (((Zombie) activeCard.getCreature()).isSwimmer()) {
                 if (((Zombie) activeCard.getCreature()).isSwimmer() ^ !isWater(activeCard.getX())) {
                     activeCardArrayList.add(activeCard);
-                }
-                else {
+                } else {
                     throw new Error("your can't put your zombie here");
                 }
             }
-        }
-        else {
+        } else {
             throw new Error("add ActiveCard have a bog");
         }
     }

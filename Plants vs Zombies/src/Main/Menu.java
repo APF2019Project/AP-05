@@ -6,21 +6,21 @@ public class Menu {
     private Menu lastMenu;
     private CommandHandler commandHandler;
 
-    public Menu getLastMenu() {
-        return lastMenu;
+    public Menu(Menu lastMenu, CommandHandler commandHandler) {
+        this.lastMenu = lastMenu;
+        this.commandHandler = commandHandler;
     }
 
-    public CommandHandler getCommandHandler() {
-        return commandHandler;
+    public Menu getLastMenu() {
+        return lastMenu;
     }
 
     public void setLastMenu(Menu lastMenu) {
         this.lastMenu = lastMenu;
     }
 
-    public Menu(Menu lastMenu, CommandHandler commandHandler) {
-        this.lastMenu = lastMenu;
-        this.commandHandler = commandHandler;
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
     }
 
     public void accept(String command) throws Exception {

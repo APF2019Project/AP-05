@@ -5,6 +5,9 @@ import Main.*;
 import java.util.regex.Pattern;
 
 public class CollectionCommandHandler extends CommandHandler {
+    public Menu nextMenu;
+    public CollectionMode collectionMode;
+
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To show your selected cards"),
@@ -28,9 +31,6 @@ public class CollectionCommandHandler extends CommandHandler {
 
     public void onEnd() {
     }
-
-    public Menu nextMenu;
-    public CollectionMode collectionMode;
 
     public void showHand(String command) {
         StringBuilder stringBuilder = new StringBuilder();

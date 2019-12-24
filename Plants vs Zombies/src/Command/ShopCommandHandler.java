@@ -5,6 +5,9 @@ import Main.*;
 import java.util.regex.Pattern;
 
 public class ShopCommandHandler extends CommandHandler {
+    public Menu nextMenu;
+    public CollectionMode collectionMode;
+
     {
         this.commands = new Command[]{
                 new Command(this::showShop, "show shop", "show shop: To see your " +
@@ -15,9 +18,6 @@ public class ShopCommandHandler extends CommandHandler {
                 new Command(this::money, "money", "money: To see your amount of coins.")
         };
     }
-
-    public Menu nextMenu;
-    public CollectionMode collectionMode;
 
     public void showShop(String command) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -44,6 +44,6 @@ public class ShopCommandHandler extends CommandHandler {
     }
 
     public void money(String command) {
-        
+
     }
 }
