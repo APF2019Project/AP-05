@@ -13,7 +13,7 @@ public class Mine  extends Plant{
     @Override
     public void doAction(ActiveCard activeCard,Map map){
         for(ActiveCard activeCard1:map.activeCardArrayList){
-            if(activeCard.getOwner()!=activeCard1.getOwner() && Math.abs(activeCard.getX()-activeCard1.getX())<=deltaX
+            if((activeCard.getCreature() instanceof  Zombie) && Math.abs(activeCard.getX()-activeCard1.getX())<=deltaX
                     && Math.abs(activeCard.getY()-activeCard1.getY())<=deltaY){
                 activeCard1.setRemainingHp(0);
             }
