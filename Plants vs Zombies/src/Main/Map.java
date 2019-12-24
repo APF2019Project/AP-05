@@ -124,10 +124,14 @@ public class Map {
             }
         }
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
-        for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getRemainingHp() == 0) {
-                dies.add(activeCard);
+        ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
+        for (GunShot gunShot : gunShotArrayList) {
+            if(gunShot.isUsed()){
+                usedGunShot.add(gunShot);
             }
+        }
+        for (GunShot gunShot : usedGunShot) {
+            gunShotArrayList.remove(gunShot);
         }
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);

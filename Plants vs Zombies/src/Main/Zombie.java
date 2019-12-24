@@ -42,12 +42,23 @@ public class Zombie extends Creature {
     public void eatPlant(ActiveCard activeCard, Map map) {
         ActiveCard eatedPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
         if (eatedPlant != null) {
-            eatedPlant.setRemainingHp(eatedPlant.getRemainingHp() - getDamage(activeCard.getShieldRemainingHp() > 0));
+            eatedPlant.damaged(getDamage(activeCard.getShieldRemainingHp() > 0));
+            if(((Plant)eatedPlant.getCreature()).isCactus() && ((Zombie)activeCard.getCreature()).cactusHasEffect) {
+                activeCard.damaged(GameData.cactusDamage);
+            }
+            if(((Plant)eatedPlant.getCreature()).isPeppery()) {
+                activeCard.damaged(GameData.PepperDamage);
+            }
+
         }
     }
 
     public void doAction(ActiveCard activeCard, Map map) {
-        int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - speed);
+        int deltaX=speed;
+        if(activeCard.getRemainingSlowDown()>0){
+            deltaX*=(100-activeCard.getSlowDownPercent())/100.0;
+        }
+        int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - deltaX);
         while(activeCard.getRemainingHp()>0){
             GunShot gunShot=map.getGunShotIn(activeCard.getY(),finalX,activeCard.getX());
             if(gunShot==null)break;

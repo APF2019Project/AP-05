@@ -2,7 +2,7 @@ package Main;
 
 public class Gun {
     private String name;
-    private boolean icy, shy, sleepy, hasEffectOnShield;
+    private boolean icy, shy, sleepy, projectile;
     private int damage, gunShotsPerRound;
 
     public Gun(String name, boolean icy, boolean shy, boolean sleepy, int damage,
@@ -13,7 +13,7 @@ public class Gun {
         this.sleepy = sleepy;
         this.damage = damage;
         this.gunShotsPerRound = gunShotsPerRound;
-        this.hasEffectOnShield = hasEffectOnShield;
+        this.projectile = hasEffectOnShield;
     }
 
 
@@ -37,8 +37,8 @@ public class Gun {
         return sleepy;
     }
 
-    public boolean isHasEffectOnShield() {
-        return hasEffectOnShield;
+    public boolean isProjectile() {
+        return projectile;
     }
 
     public int getDamage() {

@@ -83,6 +83,14 @@ public class ActiveCard {
         this.remainingHp = Math.max(remainingHp, 0);
     }
 
+    public void damaged(int Hp){
+        if(shieldRemainingHp>0){
+            int res=Math.min(Hp,shieldRemainingHp);
+            Hp-=res;
+            this.setShieldRemainingHp(shieldRemainingHp-res);
+        }
+        this.setRemainingHp(this.getRemainingHp()-Hp);
+    }
     public int getX() {
         return x;
     }

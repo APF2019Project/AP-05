@@ -4,10 +4,11 @@ public class GameData {
     static int speedOfGunShot = 3;
     static int shyDistanceLimit;
     static int iceSlowDownTime;
-    static int iceSlowDownPercent;
+    static int iceSlowDownPercent=50;
     static int sleepySlowDownTime;
-    static int sleepySlowDownPercent;
-
+    static int sleepySlowDownPercent=100;
+    static int cactusDamage=1;
+    static int PepperDamage=1;
     public void readData() {
 
     }

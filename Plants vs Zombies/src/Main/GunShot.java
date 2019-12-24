@@ -6,6 +6,7 @@ public class GunShot {
     private int x, y;
     private int vx;
     private Player owner;
+    private boolean used=false;
 
     public GunShot(Gun gun, int x, int y, int vx, Player player) {
         this.gun = gun;
@@ -13,6 +14,10 @@ public class GunShot {
         this.y = y;
         this.vx = vx;
         this.owner = player;
+    }
+
+    public boolean isUsed() {
+        return used;
     }
 
     public Player getOwner() {
@@ -50,7 +55,7 @@ public class GunShot {
         if (gun.isSleepy()) {
             activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime, GameData.sleepySlowDownPercent);
         }
-        if (gun.isHasEffectOnShield()) {
+        if (gun.isProjectile()) {
             if (activeCard.getShieldRemainingHp() > 0) {
                 activeCard.setShieldRemainingHp(activeCard.getShieldRemainingHp() - gun.getDamage());
             } else {
@@ -59,6 +64,7 @@ public class GunShot {
         } else {
             activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
         }
+        used=true;
     }
 
     public void doAction(Map map) {
