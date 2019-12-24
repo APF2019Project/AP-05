@@ -7,11 +7,14 @@ import java.util.regex.Pattern;
 public class CollectionCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::showHand, "show hand", ""),
-                new Command(this::showCollection, "show collection", ""),
-                new Command(this::selectCard, "select (.+)", ""),
-                new Command(this::removeCard, "remove (.+)", ""),
-                new Command(this::play, "play", "")
+                new Command(this::showHand, "show hand", "show hand: To show your selected cards"),
+                new Command(this::showCollection, "show collection", "show collection: " +
+                        "To show your not selected cards"),
+                new Command(this::selectCard, "select (.+)", "select [name]: To select " +
+                        "a card with the given name"),
+                new Command(this::removeCard, "remove (.+)", "remove [name]: To remove " +
+                        "a card from your hand"),
+                new Command(this::play, "play", "play: To start the game")
         };
     }
 

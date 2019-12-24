@@ -7,10 +7,12 @@ import java.util.regex.Pattern;
 public class ShopCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::showShop, "show shop", ""),
-                new Command(this::showCollection, "show collection", ""),
-                new Command(this::buy, "buy (.+)", ""),
-                new Command(this::money, "money", "")
+                new Command(this::showShop, "show shop", "show shop: To see your " +
+                        "not bought cards."),
+                new Command(this::showCollection, "show collection", "show collection: To see your " +
+                        "bought cards."),
+                new Command(this::buy, "buy (.+)", "buy [name]: To buy card with given name."),
+                new Command(this::money, "money", "money: To see your amount of coins.")
         };
     }
 
@@ -42,8 +44,6 @@ public class ShopCommandHandler extends CommandHandler {
     }
 
     public void money(String command) {
-        String cardName = Pattern.compile("remove (.+)").matcher(command).group(1);
-        Creature creature = Player.getCurrentPlayer().getUser().getCreatureByName(cardName);
-        Player.getCurrentPlayer().removeCreaturesOnHand(creature);
+        
     }
 }

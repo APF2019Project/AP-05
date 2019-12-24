@@ -6,9 +6,9 @@ import Main.Player;
 public class MainMenuCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::play, "play", ""),
-                new Command(this::profile, "profile", ""),
-                new Command(this::shop, "shop", "")
+                new Command(this::play, "play", "play: To enter play menu and select game type."),
+                new Command(this::profile, "profile", "profile: To enter your profile."),
+                new Command(this::shop, "shop", "shop: To enter shop.")
         };
     }
 

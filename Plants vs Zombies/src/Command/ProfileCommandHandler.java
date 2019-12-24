@@ -8,10 +8,13 @@ public class ProfileCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::changeUsernameAndPassword, "change", ""),
-                new Command(this::deleteUser, "delete", ""),
-                new Command(this::renameUser, "rename", ""),
-                new Command(this::createUser, "create", ""),
-                new Command(this::showUser, "show", ""),
+                new Command(this::deleteUser, "delete", "delete: To delete a user. " +
+                        "Enter a username and its password in two different lines."),
+                new Command(this::renameUser, "rename", "rename: To rename your current username. " +
+                        "Enter a username in a different line."),
+                new Command(this::createUser, "create", "create account: To create " +
+                        "a new user. Enter a username and a password in two different lines after this command"),
+                new Command(this::showUser, "show", "show: To see your username."),
         };
     }
 

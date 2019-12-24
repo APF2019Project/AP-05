@@ -8,9 +8,12 @@ import Main.User;
 public class LoginCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::createAccount, "create account", ""),
-                new Command(this::login, "login", ""),
-                new Command(this::leaderboard, "leaderboard", "")
+                new Command(this::createAccount, "create account", "create account: To create " +
+                        "a new account. Enter a username and a password in two different lines after this command"),
+                new Command(this::login, "login", "login: To login in an account. " +
+                        "Enter a username and a password in two different lines after this command."),
+                new Command(this::leaderboard, "leaderboard", "leaderboard: To see " +
+                        "leaderboard of all users.")
         };
     }
 

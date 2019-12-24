@@ -1,7 +1,7 @@
 package Main;
 
 public class GameData {
-    static int speedOfGunShot;
+    static int speedOfGunShot = 3;
     static int shyDistanceLimit;
     static int iceSlowDownTime;
     static int iceSlowDownPercent;

@@ -5,11 +5,11 @@ import Main.*;
 public class PlayCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::playDayMode, "day", ""),
-                new Command(this::playWaterMode, "water", ""),
-                new Command(this::playRailMode, "rail", ""),
-                new Command(this::playZombieMode, "zombie", ""),
-                new Command(this::playPvPMode, "pvp", ""),
+                new Command(this::playDayMode, "day", "day: To enter \"day\" type game."),
+                new Command(this::playWaterMode, "water", "water: To enter \"water\" type game."),
+                new Command(this::playRailMode, "rail", "rail: To enter \"rail\" type game."),
+                new Command(this::playZombieMode, "zombie", "zombie: To enter \"zombie\" type game."),
+                new Command(this::playPvPMode, "pvp", "pvp: To enter multiplayer type game."),
         };
     }
 
