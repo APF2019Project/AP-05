@@ -13,6 +13,7 @@ public class Plant extends Creature {
         this.cactus = cactus;
         this.peppery = peppery;
         this.waterProof = waterProof;
+        allPlants.add(this);
     }
 
     public static ArrayList<Plant> getAllPlants() {

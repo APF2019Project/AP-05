@@ -1,7 +1,7 @@
 package Command;
 
 import Main.Main;
-import Main.Player;
+import Player.Player;
 
 public class DayAndWaterGameModeCommandHandler extends CommandHandler {
     public boolean haveWater;

@@ -3,7 +3,7 @@ package Main;
 import java.util.ArrayList;
 
 public class Creature {
-    private static ArrayList<Creature> allCreature=new ArrayList<Creature>();
+    private static ArrayList<Creature> allCreatures=new ArrayList<Creature>();
 
     private String name;
     private boolean disposable;
@@ -14,13 +14,17 @@ public class Creature {
     private int price;
     private Shield shield;
 
-    static Creature getByName(String name){
-        for(Creature creature:allCreature){
+    static Creature getCreatureByName(String name){
+        for(Creature creature:allCreatures){
             if(creature.getName().equals(name)){
                 return  creature;
             }
         }
         return null;
+    }
+
+    static ArrayList<Creature> getAllCreatures(){
+        return allCreatures;
     }
 
     public Creature(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime, Shield shield) {
@@ -31,7 +35,7 @@ public class Creature {
         this.remainingCoolDown = remainingCoolDown;
         this.reloadTime = reloadTime;
         this.shield = shield;
-        allCreature.add(this);
+        allCreatures.add(this);
     }
 
     public int getPrice() {

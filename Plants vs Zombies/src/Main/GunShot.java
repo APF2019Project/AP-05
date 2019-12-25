@@ -1,6 +1,8 @@
 package Main;
 
 
+import Player.Player;
+
 public class GunShot {
     private Gun gun;
     private int x, y;

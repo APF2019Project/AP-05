@@ -1,6 +1,7 @@
 package Command;
 
 import Main.*;
+import Player.Player;
 
 public class PlayCommandHandler extends CommandHandler {
     {
@@ -9,16 +10,23 @@ public class PlayCommandHandler extends CommandHandler {
                 new Command(this::playWaterMode, "water", "water: To enter \"water\" type game."),
                 new Command(this::playRailMode, "rail", "rail: To enter \"rail\" type game."),
                 new Command(this::playZombieMode, "zombie", "zombie: To enter \"zombie\" type game."),
-                new Command(this::playPvPMode, "pvp", "pvp: To enter multiplayer type game."),
+                new Command(this::playPvPMode, "pvp", "pvp: To enter multiPlayer type game."),
         };
     }
 
     public void playDayMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
+        GameMenuSwitcher gameMenuSwitcher=new GameMenuSwitcher(Player.getCurrentPlayer(),new ZombieAIPleyer());
+
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+            @Override
+            public void onEnd() {
+                Player.getCurrentPlayer().setCurrentMenu(Main.dayAndWaterGameModeMenu);
+                super.onEnd();
+            }
+        });
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-        collectionCommandHandler.nextMenu = Main.dayAndWaterGameModeMenu;
 
         DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
                 (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
@@ -27,11 +35,16 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playWaterMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+            @Override
+            public void onEnd() {
+                Player.getCurrentPlayer().setCurrentMenu(Main.dayAndWaterGameModeMenu);
+                super.onEnd();
+            }
+        });
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-        collectionCommandHandler.nextMenu = Main.dayAndWaterGameModeMenu;
 
         DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
                 (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
@@ -44,11 +57,16 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playZombieMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+            @Override
+            public void onEnd() {
+                Player.getCurrentPlayer().setCurrentMenu(Main.zombieGameModeMenu);
+                super.onEnd();
+            }
+        });
         CollectionCommandHandler collectionCommandHandler =
                 (CollectionCommandHandler) collectionMenu.getCommandHandler();
         collectionCommandHandler.collectionMode = CollectionMode.zombiesCollection;
-        collectionCommandHandler.nextMenu = Main.zombieGameModeMenu;
         Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
     }
 
@@ -64,9 +82,16 @@ public class PlayCommandHandler extends CommandHandler {
         PvPGameModeCommandHandler pvpGameModeCommandHandler =
                 (PvPGameModeCommandHandler) Main.pvpGameModeMenu.getCommandHandler();
         pvpGameModeCommandHandler.zombiePlayer = zombiePlayer;
+        Menu zombieCollectionMenu = null;
+        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+            public void onEnd() {
+                Player.setCurrentPlayer(plantPlayer);
+                Player.getCurrentPlayer().setCurrentMenu(zombieCollectionMenu);
+                super.onEnd();
+            }
+        });
 
-        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
-        Menu zombieCollectionMenu = new Menu(plantCollectionMenu, new CollectionCommandHandler() {
+        zombieCollectionMenu = new Menu(plantCollectionMenu, new CollectionCommandHandler() {
             public void onStart() {
                 Player.setCurrentPlayer(zombiePlayer);
                 super.onStart();
@@ -74,10 +99,10 @@ public class PlayCommandHandler extends CommandHandler {
 
             public void onEnd() {
                 Player.setCurrentPlayer(plantPlayer);
+                Player.getCurrentPlayer().setCurrentMenu(Main.pvpGameModeMenu);
                 super.onEnd();
             }
         });
-
         CollectionCommandHandler plantCollectionMenuCommandHandler =
                 (CollectionCommandHandler) plantCollectionMenu.getCommandHandler();
         plantCollectionMenuCommandHandler.collectionMode = CollectionMode.plantsCollection;

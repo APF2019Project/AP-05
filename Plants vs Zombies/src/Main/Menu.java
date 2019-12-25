@@ -1,6 +1,8 @@
 package Main;
 
 import Command.CommandHandler;
+import Player.Player;
+
 
 public class Menu {
     private Menu lastMenu;
@@ -30,7 +32,16 @@ public class Menu {
         }
         if (command.equals("exit")) {
             Player.getCurrentPlayer().setCurrentMenu(lastMenu);
+            return;
         }
         commandHandler.accept(command);
+    }
+
+    public void run() throws Exception {
+        String command=Main.scanLine();
+        accept(command);
+        if (!command.equals("exit")){
+            run();
+        }
     }
 }

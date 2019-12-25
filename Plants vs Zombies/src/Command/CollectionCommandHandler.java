@@ -1,11 +1,11 @@
 package Command;
 
 import Main.*;
+import Player.Player;
 
 import java.util.regex.Pattern;
 
 public class CollectionCommandHandler extends CommandHandler {
-    public Menu nextMenu;
     public CollectionMode collectionMode;
 
     {
@@ -21,7 +21,7 @@ public class CollectionCommandHandler extends CommandHandler {
         };
     }
 
-    CollectionCommandHandler() {
+    public CollectionCommandHandler() {
         super();
         onStart();
     }
@@ -68,6 +68,5 @@ public class CollectionCommandHandler extends CommandHandler {
 
     public void play(String command) {
         onEnd();
-        Player.getCurrentPlayer().setCurrentMenu(nextMenu);
     }
 }

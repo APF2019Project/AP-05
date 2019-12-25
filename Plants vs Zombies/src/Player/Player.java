@@ -1,4 +1,8 @@
-package Main;
+package Player;
+
+import Main.Creature;
+import Main.Menu;
+import Main.User;
 
 import java.util.ArrayList;
 
@@ -44,11 +48,17 @@ public abstract class Player {
         return user;
     }
 
-    public void setCurrentMenu(Menu menu) {
+    public void setCurrentMenu(Menu menu) throws Exception {
         user.setCurrentMenu(menu);
     }
 
     abstract void doAction();
+
+    abstract void pickCards();
+
+    public void setMeCurrentPlayer(){
+        setCurrentPlayer(this);
+    }
 
     public void addSun(int sun) {
         this.sunInGame += sun;

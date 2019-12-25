@@ -1,8 +1,11 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed,power,powerWithShield;
+    private static ArrayList<Zombie> allZombies = new ArrayList<>();
 
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
                   Shield shield, boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect,
@@ -14,6 +17,7 @@ public class Zombie extends Creature {
         this.speed = speed;
         this.power = power;
         this.powerWithShield = powerWithShield;
+        allZombies.add(this);
     }
 
     public int getPower(boolean hasShield) {
@@ -42,13 +46,13 @@ public class Zombie extends Creature {
     }
 
     public void eatPlant(ActiveCard activeCard, Map map) {
-        ActiveCard eatedPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
-        if (eatedPlant != null) {
-            eatedPlant.damaged(getPower(activeCard.getShieldRemainingHp() > 0));
-            if(((Plant)eatedPlant.getCreature()).isCactus() && ((Zombie)activeCard.getCreature()).cactusHasEffect) {
+        ActiveCard eatenPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
+        if (eatenPlant != null) {
+            eatenPlant.damaged(getPower(activeCard.getShieldRemainingHp() > 0));
+            if(((Plant)eatenPlant.getCreature()).isCactus() && ((Zombie)activeCard.getCreature()).cactusHasEffect) {
                 activeCard.damaged(GameData.cactusDamage);
             }
-            if(((Plant)eatedPlant.getCreature()).isPeppery()) {
+            if(((Plant)eatenPlant.getCreature()).isPeppery()) {
                 activeCard.damaged(GameData.PepperDamage);
             }
         }

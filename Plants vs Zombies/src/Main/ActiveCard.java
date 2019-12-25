@@ -1,6 +1,8 @@
 package Main;
 
 
+import Player.Player;
+
 public class ActiveCard {
     private Creature creature;
     private int remainingHp, x, y;

@@ -14,10 +14,7 @@ public class Main {
     public static Menu profileMenu = new Menu(mainMenu, new ProfileCommandHandler());
     public static Menu playMenu;
     public static Menu shopMenu;
-    public static Menu dayAndWaterGameModeMenu;
-    public static Menu railGameModeMenu;
-    public static Menu zombieGameModeMenu;
-    public static Menu pvpGameModeMenu;
+
     private static Scanner scanner = new Scanner(System.in);
 
     // in do func baraye fazaye baadi bayad styleshoon kolan avaz she

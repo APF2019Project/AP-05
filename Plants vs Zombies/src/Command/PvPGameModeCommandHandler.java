@@ -1,6 +1,6 @@
 package Command;
 
-import Main.Player;
+import Player.Player;
 
 public class PvPGameModeCommandHandler extends CommandHandler {
     public Player plantPlayer, zombiePlayer;

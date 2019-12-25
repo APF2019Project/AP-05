@@ -73,14 +73,9 @@ public class User {
 
     public ArrayList<Creature> getLockedCreatures() {
         ArrayList<Creature> lockedCreatures = new ArrayList<>();
-        for (Plant plant : Plant.getAllPlants()) {
-            if (getUnlockedCreatureByName(plant.getName()) == null) {
-                lockedCreatures.add(plant);
-            }
-        }
-        for (Zombie zombie : Zombie.getAllZombies()) {
-            if (getUnlockedCreatureByName(zombie.getName()) == null) {
-                lockedCreatures.add(zombie);
+        for (Creature creature : Creature.getAllCreatures()) {
+            if (getUnlockedCreatureByName(creature.getName()) == null) {
+                lockedCreatures.add(creature);
             }
         }
         return lockedCreatures;
@@ -144,8 +139,9 @@ public class User {
         return currentMenu;
     }
 
-    public void setCurrentMenu(Menu currentMenu) {
+    public void setCurrentMenu(Menu currentMenu) throws Exception {
         this.currentMenu = currentMenu;
+        currentMenu.run();
     }
 
     public ArrayList<Creature> getUnlockedCreatures() {

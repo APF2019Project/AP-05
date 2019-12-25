@@ -1,6 +1,7 @@
 package Command;
 
 import Main.*;
+import Player.Player;
 
 import java.util.regex.Pattern;
 
@@ -22,7 +23,7 @@ public class ShopCommandHandler extends CommandHandler {
     public void showShop(String command) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : Player.getCurrentPlayer().getUser().getLockedCreatures()) {
-            stringBuilder.append(creature.getName()).append(" ").append(creature.getGetPrice()).append('\n');
+            stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
         }
         Main.print(stringBuilder.toString());
     }
@@ -30,7 +31,7 @@ public class ShopCommandHandler extends CommandHandler {
     public void showCollection(String command) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : Player.getCurrentPlayer().getUser().getUnlockedCreatures()) {
-            stringBuilder.append(creature.getName()).append(" ").append(creature.getGetPrice()).append('\n');
+            stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
         }
         Main.print(stringBuilder.toString());
     }
