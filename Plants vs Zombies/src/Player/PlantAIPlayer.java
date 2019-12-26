@@ -6,20 +6,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlantAIPlayer extends PlantPlayer {
-    public PlantAIPlayer(Map map) {
-        super(map);
+    public PlantAIPlayer(Map map,User user) {
+        super(map,user);
     }
 
     @Override
     public void doAction() {
 
     }
-
     @Override
     public void gameAction() {
 
     }
-
     @Override
     public void pickCards() throws Exception {
         Random random=new Random();
