@@ -51,7 +51,7 @@ public class PlayCommandHandler extends CommandHandler {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
         String opponentUsername = Main.scanLine();
-        int numberOfWaves = Integer.parseInt(Main.scanLine().substring(1));
+        int numberOfWaves = Integer.parseInt(Main.scanLine());
         User opponentUser = User.getUserByUsername(opponentUsername);
         ZombieHumanPlayer zombieHumanPlayer =
                 new ZombieHumanPlayer(map, opponentUser);
