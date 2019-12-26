@@ -15,6 +15,20 @@ public class Map {
         isWater = new boolean[row];
     }
 
+    public int getRow() {
+        return row;
+    }
+    public boolean hasWater(){
+        boolean hasWater=false;
+        for(int i=0;i<row;i++){
+            hasWater|=isWater[i];
+        }
+        return hasWater;
+    }
+    public int getCol() {
+        return col;
+    }
+
     public boolean isWater(int x) {
         return this.isWater[x];
     }

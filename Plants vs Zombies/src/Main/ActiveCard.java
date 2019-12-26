@@ -11,9 +11,9 @@ public class ActiveCard {
     private int remainReloadTime;
     private Player owner;
 
-    public ActiveCard(Creature creature, int remainingHp, int x, int y, Player player) {
+    public ActiveCard(Creature creature, int x, int y, Player player) {
         this.creature = creature;
-        this.remainingHp = remainingHp;
+        this.remainingHp = creature.getFullHp();
         this.x = x;
         this.y = y;
         if (creature.getShield() != null)
