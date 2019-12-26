@@ -46,20 +46,6 @@ public class PlayCommandHandler extends CommandHandler {
         gameMenuSwitcher.runGame();
     }
 
-    /*
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler() {
-            @Override
-            public void onEnd() {
-                Player.getCurrentPlayer().setCurrentMenu(Main.zombieGameModeMenu);
-                super.onEnd();
-            }
-        });
-        CollectionCommandHandler collectionCommandHandler =
-                (CollectionCommandHandler) collectionMenu.getCommandHandler();
-        collectionCommandHandler.collectionMode = CollectionMode.zombiesCollection;
-        Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
-    */
-
     public void playPvPMode(String command) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =

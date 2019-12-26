@@ -22,6 +22,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer{
 
     @Override
     public void pickCards() throws Exception {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(Menu.getCurrentMenu(), new CollectionCommandHandler());
+        collectionMenu.run();
     }
 }

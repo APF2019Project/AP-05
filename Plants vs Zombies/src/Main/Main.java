@@ -1,6 +1,5 @@
 package Main;
 
-import Command.LeaderboardCommandHandler;
 import Command.LoginCommandHandler;
 import Command.MainMenuCommandHandler;
 import Command.ProfileCommandHandler;
@@ -10,7 +9,6 @@ import java.util.Scanner;
 public class Main {
     public static Menu loginMenu = new Menu(null, new LoginCommandHandler());
     public static Menu mainMenu = new Menu(loginMenu, new MainMenuCommandHandler());
-    public static Menu leaderboard = new Menu(loginMenu, new LeaderboardCommandHandler());
     public static Menu profileMenu = new Menu(mainMenu, new ProfileCommandHandler());
     public static Menu playMenu;
     public static Menu shopMenu;

@@ -1,6 +1,7 @@
 package Command;
 
 import Main.Main;
+import Main.Menu;
 import Player.Player;
 
 public class MainMenuCommandHandler extends CommandHandler {
@@ -13,14 +14,14 @@ public class MainMenuCommandHandler extends CommandHandler {
     }
 
     public void play(String command) throws Exception {
-        Player.getCurrentPlayer().setCurrentMenu(Main.playMenu);
+        menu.exitAndOpen(new Menu(menu.getUser(),menu,new PlayCommandHandler()));
     }
 
     public void profile(String command) throws Exception {
-        Player.getCurrentPlayer().setCurrentMenu(Main.profileMenu);
+        menu.exitAndOpen(new Menu(menu.getUser(),menu,new ProfileCommandHandler()));
     }
 
     public void shop(String command) throws Exception {
-        Player.getCurrentPlayer().setCurrentMenu(Main.shopMenu);
+        menu.exitAndOpen(new Menu(menu.getUser(),menu,new ShopCommandHandler()));
     }
 }

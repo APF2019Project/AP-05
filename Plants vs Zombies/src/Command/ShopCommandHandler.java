@@ -22,7 +22,7 @@ public class ShopCommandHandler extends CommandHandler {
 
     public void showShop(String command) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : Player.getCurrentPlayer().getUser().getLockedCreatures()) {
+        for (Creature creature : menu.getUser().getLockedCreatures()) {
             stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
         }
         Main.print(stringBuilder.toString());
@@ -30,7 +30,7 @@ public class ShopCommandHandler extends CommandHandler {
 
     public void showCollection(String command) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : Player.getCurrentPlayer().getUser().getUnlockedCreatures()) {
+        for (Creature creature : menu.getUser().getUnlockedCreatures()) {
             stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
         }
         Main.print(stringBuilder.toString());
@@ -38,7 +38,7 @@ public class ShopCommandHandler extends CommandHandler {
 
     public void buy(String command) throws Exception {
         String cardName = Pattern.compile("buy (.+)").matcher(command).group(1);
-        if (Player.getCurrentPlayer().getUser().getUnlockedCreatureByName(cardName) != null) {
+        if (menu.getUser().getUnlockedCreatureByName(cardName) != null) {
             throw new Exception("invalid cardName");
         }
 
