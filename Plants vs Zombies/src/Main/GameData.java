@@ -10,6 +10,8 @@ public class GameData {
     static int cactusDamage=1;
     static int PepperDamage=1;
     static int maxMagnetRange,MagnetEatingTime;
+    public final static int mapRowCount=6;
+    public final static int mapColCount=10;
     public void readData() {
 
     }

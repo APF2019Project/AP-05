@@ -15,9 +15,10 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playDayMode(String command) throws Exception {
+        Map map=new Map(GameData.mapRowCount,GameData.mapColCount);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(Player.getCurrentPlayer().getUser());
-        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer());
+                new PlantOnDayAndWaterModeHumanPlayer(map);
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(map));
         gameMenuSwitcher.runGame();
     }
 

@@ -47,6 +47,8 @@ public abstract class Player {
 
     public abstract void doAction();
 
+    public abstract void gameAction();
+
     public abstract void pickCards() throws Exception;
 
     public void addSun(int sun) {

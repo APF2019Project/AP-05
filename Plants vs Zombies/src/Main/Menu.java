@@ -13,6 +13,10 @@ public class Menu {
         return currentMenu;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public static void setCurrentMenu(Menu currentMenu) {
         Menu.currentMenu = currentMenu;
     }
@@ -40,7 +44,7 @@ public class Menu {
             return;
         }
         if (command.equals("exit")) {
-            Player.getCurrentPlayer().setCurrentMenu(lastMenu);
+            setCurrentMenu(lastMenu);
             return;
         }
         commandHandler.accept(command);

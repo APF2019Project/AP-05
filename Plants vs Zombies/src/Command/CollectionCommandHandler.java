@@ -34,7 +34,7 @@ public class CollectionCommandHandler extends CommandHandler {
 
     public void showHand(String command) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : Player.getCurrentPlayer().getCreaturesOnHand()) {
+        for (Creature creature : Menu.getCurrentMenu().get.getCreaturesOnHand()) {
             stringBuilder.append(creature.getName()).append('\n');
         }
         Main.print(stringBuilder.toString());

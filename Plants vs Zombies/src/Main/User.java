@@ -12,6 +12,10 @@ public class User {
     private int killingEnemyCount;
     private Player player;
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public User(String username, String password) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
             throw new Exception("username or password invalid");
