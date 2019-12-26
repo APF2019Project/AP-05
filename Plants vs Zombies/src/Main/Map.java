@@ -12,7 +12,17 @@ public class Map {
     public Map(int row, int col) {
         this.row = row;
         this.col = col;
-        isWater = new boolean[row];
+        isWater=GameData.isWaterInDayMapMode.clone();
+    }
+
+    public Map(int row, int col,MapMode mapMode) {
+        this.row = row;
+        this.col = col;
+        if(mapMode.equals(MapMode.Water)){
+            isWater=GameData.isWaterInWaterMapMode.clone();
+        }else {
+            isWater=GameData.isWaterInDayMapMode.clone();
+        }
     }
 
     public int getRow() {

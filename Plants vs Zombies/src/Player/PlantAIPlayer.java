@@ -1,11 +1,10 @@
 package Player;
 
 import Main.Map;
-import Main.User;
 
-public class ZombieHumanPlayer extends ZombiePlayer{
-    public ZombieHumanPlayer(Map map, User user) {
-        super(map,user);
+public class PlantAIPlayer extends PlantPlayer {
+    public PlantAIPlayer(Map map) {
+        super(map);
     }
 
     @Override

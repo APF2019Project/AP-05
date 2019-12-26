@@ -1,6 +1,7 @@
 package Command;
 
 import Main.Main;
+import Main.Menu;
 import Player.Player;
 import Main.User;
 
@@ -21,33 +22,29 @@ public class ProfileCommandHandler extends CommandHandler {
     public void changeUsernameAndPassword(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        Player.getCurrentPlayer().getUser().changeUsername(username);
-        Player.getCurrentPlayer().getUser().changePassword(password);
-        Player.getCurrentPlayer().getUser().setCurrentMenu(Main.profileMenu);
+        menu.getUser().changeUsername(username);
+        menu.getUser().changePassword(password);
     }
 
     public void deleteUser(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         User.deleteUser(username, password);
-        Player.getCurrentPlayer().setCurrentMenu(Main.profileMenu);
     }
 
     public void renameUser(String command) throws Exception {
         String username = Main.scanLine();
-        Player.getCurrentPlayer().getUser().changeUsername(username);
-        Player.getCurrentPlayer().setCurrentMenu(Main.profileMenu);
+        menu.getUser().changeUsername(username);
     }
 
     public void createUser(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         new User(username, password);
-        Player.getCurrentPlayer().setCurrentMenu(Main.profileMenu);
+        // inja bayad current user avaz she???
     }
 
     public void showUser(String command) {
-        Main.print(Player.getCurrentPlayer().getUser().getUsername());
-        Player.getCurrentPlayer().setCurrentMenu(Main.profileMenu);
+        Main.print(menu.getUser().getUsername());
     }
 }

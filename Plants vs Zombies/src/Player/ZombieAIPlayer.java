@@ -10,9 +10,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
+import Main.User;
+
 public class ZombieAIPlayer extends ZombiePlayer {
-    public ZombieAIPlayer(Map map) {
-        super(map);
+    public ZombieAIPlayer(Map map, User user) {
+        super(map,user);
     }
 
     public void doAction(){

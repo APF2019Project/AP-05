@@ -15,82 +15,47 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playDayMode(String command) throws Exception {
-        Map map=new Map(GameData.mapRowCount,GameData.mapColCount);
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(map);
-        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(map));
+                new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(map,GameData.getAIUser()));
         gameMenuSwitcher.runGame();
     }
 
     public void playWaterMode(String command) throws Exception {
-        Map map=new Map(GameData.mapRowCount,GameData.mapColCount);
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(map);
-        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(map));
+                new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(map,GameData.getAIUser()));
         gameMenuSwitcher.runGame();
     }
 
-    public void playRailMode(String command) {
-        Menu.setCurrentMenu(Main.railGameModeMenu);
+    public void playRailMode(String command) throws Exception {
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water);
+        PlantOnRailGameModeHumanPlayer plantOnRailGameModeHumanPlayer =
+                new PlantOnRailGameModeHumanPlayer(map, menu.getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnRailGameModeHumanPlayer, new ZombieAIPlayer(map,GameData.getAIUser()));
+        gameMenuSwitcher.runGame();
     }
 
-    public void playZombieMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler() {
-            @Override
-            public void onEnd() {
-                Player.getCurrentPlayer().setCurrentMenu(Main.zombieGameModeMenu);
-                super.onEnd();
-            }
-        });
-        CollectionCommandHandler collectionCommandHandler =
-                (CollectionCommandHandler) collectionMenu.getCommandHandler();
-        collectionCommandHandler.collectionMode = CollectionMode.zombiesCollection;
-        Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
+    public void playZombieMode(String command) throws Exception {
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
+        ZombieHumanPlayer zombieHumanPlayer =
+                new ZombieHumanPlayer(map, menu.getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(new PlantAIPlayer(map), zombieHumanPlayer);
+        gameMenuSwitcher.runGame();
     }
 
     public void playPvPMode(String command) throws Exception {
-        String username = Main.scanLine();
-        User opponentUser = User.getUserByUsername(username);
-        if (opponentUser == null) {
-            throw new Exception("invalid username");
-        }
-        ZombiePlayer zombiePlayer = new ZombiePlayer(opponentUser);
-        PlantPlayer plantPlayer = (PlantPlayer) Player.getCurrentPlayer();
-
-        PvPGameModeCommandHandler pvpGameModeCommandHandler =
-                (PvPGameModeCommandHandler) Main.pvpGameModeMenu.getCommandHandler();
-        pvpGameModeCommandHandler.zombiePlayer = zombiePlayer;
-        Menu zombieCollectionMenu = null;
-        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler() {
-            public void onEnd() {
-                Player.setCurrentPlayer(plantPlayer);
-                Player.getCurrentPlayer().setCurrentMenu(zombieCollectionMenu);
-                super.onEnd();
-            }
-        });
-
-        zombieCollectionMenu = new Menu(plantCollectionMenu, new CollectionCommandHandler() {
-            public void onStart() {
-                Player.setCurrentPlayer(zombiePlayer);
-                super.onStart();
-            }
-
-            public void onEnd() {
-                Player.setCurrentPlayer(plantPlayer);
-                Player.getCurrentPlayer().setCurrentMenu(Main.pvpGameModeMenu);
-                super.onEnd();
-            }
-        });
-        CollectionCommandHandler plantCollectionMenuCommandHandler =
-                (CollectionCommandHandler) plantCollectionMenu.getCommandHandler();
-        plantCollectionMenuCommandHandler.collectionMode = CollectionMode.plantsCollection;
-        plantCollectionMenuCommandHandler.nextMenu = zombieCollectionMenu;
-
-        CollectionCommandHandler zombieCollectionMenuCommandHandler =
-                (CollectionCommandHandler) zombieCollectionMenu.getCommandHandler();
-        zombieCollectionMenuCommandHandler.collectionMode = CollectionMode.zombiesCollection;
-        zombieCollectionMenuCommandHandler.nextMenu = Main.pvpGameModeMenu;
-
-        Player.getCurrentPlayer().setCurrentMenu(plantCollectionMenu);
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
+        PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
+                new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
+        String opponentUsername = Main.scanLine();
+        int numberOfWaves = Integer.parseInt(Main.scanLine().substring(1));
+        User opponentUser = User.getUserByUsername(opponentUsername);
+        ZombieHumanPlayer zombieHumanPlayer =
+                new ZombieHumanPlayer(map, opponentUser);
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, zombieHumanPlayer, numberOfWaves);
+        gameMenuSwitcher.runGame();
     }
 }

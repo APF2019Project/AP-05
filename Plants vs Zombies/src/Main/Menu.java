@@ -8,6 +8,7 @@ public class Menu {
     private CommandHandler commandHandler;
     private static Menu currentMenu;
     private User user;
+    private boolean isOpen = false;
 
     public static Menu getCurrentMenu() {
         return currentMenu;
@@ -21,9 +22,11 @@ public class Menu {
         Menu.currentMenu = currentMenu;
     }
 
-    public Menu(Menu lastMenu, CommandHandler commandHandler) {
+    public Menu(User user, Menu lastMenu, CommandHandler commandHandler) {
+        this.user=user;
         this.lastMenu = lastMenu;
         this.commandHandler = commandHandler;
+        commandHandler.setMenu(this);
     }
 
     public Menu getLastMenu() {
@@ -38,23 +41,35 @@ public class Menu {
         return commandHandler;
     }
 
+    public void exit() throws Exception {
+        isOpen = false;
+    }
+
+    public void exitAndOpen(Menu menu) throws Exception {
+        isOpen = false;
+        if (menu != null) {
+            menu.run();
+        }
+    }
+
     public void accept(String command) throws Exception {
         if (command.equals("help")) {
             Main.print(commandHandler.help());
             return;
         }
         if (command.equals("exit")) {
-            setCurrentMenu(lastMenu);
+            exitAndOpen(lastMenu);
             return;
         }
         commandHandler.accept(command);
     }
 
     public void run() throws Exception {
-        String command=Main.scanLine();
-        accept(command);
-        if (!command.equals("exit")){
-            run();
+        isOpen = true;
+        setCurrentMenu(this);
+        while (isOpen) {
+            String command = Main.scanLine();
+            accept(command);
         }
     }
 }

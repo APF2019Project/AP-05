@@ -1,9 +1,10 @@
 package Command;
 
 import Main.Main;
-import PlantPlayer;
-import Player.Player;
+import Main.Menu;
 import Main.User;
+
+import java.util.Comparator;
 
 public class LoginCommandHandler extends CommandHandler {
     {
@@ -20,18 +21,21 @@ public class LoginCommandHandler extends CommandHandler {
     public void createAccount(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        new User(username, password);
-        Player.getCurrentPlayer().setCurrentMenu(Main.loginMenu);
+        menu.exitAndOpen(new Menu(new User(username, password), menu, new LoginCommandHandler()));
     }
 
     public void login(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        Player.setCurrentPlayer(new PlantPlayer(User.login(username, password)));
-        Player.getCurrentPlayer().setCurrentMenu(Main.mainMenu);
+        menu.exitAndOpen(new Menu(User.login(username, password), menu, new MainMenuCommandHandler()));
     }
 
     public void leaderboard(String command) throws Exception {
-        Player.getCurrentPlayer().setCurrentMenu(Main.leaderboard);
+        User.getAllUsers().sort(Comparator.comparingInt(User::getKillingEnemyCount));
+        StringBuilder stringBuilder = new StringBuilder();
+        for (User user : User.getAllUsers()) {
+            stringBuilder.append(user.getUsername()).append(' ').append(user.getKillingEnemyCount()).append('\n');
+        }
+        Main.print(stringBuilder.toString());
     }
 }
