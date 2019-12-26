@@ -14,7 +14,7 @@ public class Creature {
     private int price;
     private Shield shield;
 
-    static Creature getCreatureByName(String name){
+    static public  Creature getCreatureByName(String name){
         for(Creature creature:allCreatures){
             if(creature.getName().equals(name)){
                 return  creature;

@@ -26,6 +26,10 @@ public abstract class Player {
         user.setPlayer(this);
     }
 
+    public Map getMap() {
+        return map;
+    }
+
     public void addCreaturesOnHand(Creature creature) {
         creaturesOnHand.add(creature);
     }

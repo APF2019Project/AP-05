@@ -75,6 +75,5 @@ public class ZombieAIPlayer extends ZombiePlayer {
         for(int i=0;i<dry;i++){
             this.addCreaturesOnHand(dryZombie.get(i));
         }
-
     }
 }
