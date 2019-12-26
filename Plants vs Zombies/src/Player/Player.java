@@ -2,14 +2,14 @@ package Player;
 
 import Main.Creature;
 import Main.Map;
-import Main.Menu;
 import Main.User;
 
 import java.util.ArrayList;
 
 public abstract class Player {
     private int sunInGame;
-    private Map map;
+    final private Map map;
+    final User user;
     private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
     public int getSunInGame() {
@@ -20,8 +20,9 @@ public abstract class Player {
         this.sunInGame = sunInGame;
     }
 
-    public Player(Map map) {
+    public Player(Map map, User user) {
         this.map = map;
+        this.user = user;
     }
 
     public void addCreaturesOnHand(Creature creature) {
@@ -37,8 +38,8 @@ public abstract class Player {
     }
 
     public Creature getCreatureOnHandByName(String creatureName) {
-        for(Creature creature:creaturesOnHand){
-            if(creature.getName().equals(creatureName)){
+        for (Creature creature : creaturesOnHand) {
+            if (creature.getName().equals(creatureName)) {
                 return creature;
             }
         }

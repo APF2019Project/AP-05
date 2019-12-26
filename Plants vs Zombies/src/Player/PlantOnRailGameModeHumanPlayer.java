@@ -1,10 +1,11 @@
 package Player;
 
 import Main.Map;
+import Main.User;
 
 public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
-    public PlantOnRailGameModeHumanPlayer(Map map) {
-        super(map);
+    public PlantOnRailGameModeHumanPlayer(Map map, User user) {
+        super(map, user);
     }
 
     @Override
