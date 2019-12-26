@@ -14,6 +14,19 @@ public class GameData {
     public final static int mapColCount = 10;
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
+    private static User AIUser = null;
+
+    static {
+        try {
+            AIUser = new User("AI User","Some Strong Password!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static User getAIUser(){
+        return AIUser;
+    }
 
     public void readData() {
 

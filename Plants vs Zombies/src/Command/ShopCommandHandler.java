@@ -45,6 +45,6 @@ public class ShopCommandHandler extends CommandHandler {
     }
 
     public void money(String command) {
-
+        Main.print(String.valueOf(menu.getUser().getCoin()));
     }
 }

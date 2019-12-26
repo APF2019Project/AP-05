@@ -23,6 +23,7 @@ public abstract class Player {
     public Player(Map map, User user) {
         this.map = map;
         this.user = user;
+        user.setPlayer(this);
     }
 
     public void addCreaturesOnHand(Creature creature) {

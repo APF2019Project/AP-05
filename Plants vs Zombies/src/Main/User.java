@@ -16,6 +16,10 @@ public class User {
         return player;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public User(String username, String password) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
             throw new Exception("username or password invalid");
