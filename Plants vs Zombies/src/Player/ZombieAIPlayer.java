@@ -12,6 +12,11 @@ public class ZombieAIPlayer extends ZombiePlayer {
     }
 
     @Override
+    public void gameAction() {
+
+    }
+
+    @Override
     public void pickCards() {
 
     }
