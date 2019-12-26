@@ -25,6 +25,20 @@ public class Map {
         }
     }
 
+    public int getRow() {
+        return row;
+    }
+    public boolean hasWater(){
+        boolean hasWater=false;
+        for(int i=0;i<row;i++){
+            hasWater|=isWater[i];
+        }
+        return hasWater;
+    }
+    public int getCol() {
+        return col;
+    }
+
     public boolean isWater(int x) {
         return this.isWater[x];
     }
@@ -76,7 +90,8 @@ public class Map {
             throw new Error("you don't have Enough money");
         }
         if (activeCard.getCreature() instanceof Plant) {
-            if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())) {
+            if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())
+            && findPlantIn(activeCard.getX(),activeCard.getY())==null) {
                 activeCardArrayList.add(activeCard);
             } else {
                 throw new Error("your can't put your plant here");

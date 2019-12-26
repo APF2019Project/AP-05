@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class GameData {
     static int speedOfGunShot = 3;
     static int shyDistanceLimit;
@@ -16,6 +18,9 @@ public class GameData {
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
     public final static String positiveNumber="([0-9]{1,20})";
     private static User AIUser = null;
+    static public ArrayList<String>DryModeAvailablePlantName;
+    static public ArrayList<String> WetModeAvailablePlantName;
+    static public int inf=100000000;
 
     static {
         try {

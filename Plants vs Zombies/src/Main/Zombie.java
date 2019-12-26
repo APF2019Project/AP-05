@@ -20,6 +20,10 @@ public class Zombie extends Creature {
         allZombies.add(this);
     }
 
+    public static ArrayList<Zombie> getAllZombies() {
+        return allZombies;
+    }
+
     public int getPower(boolean hasShield) {
         if(hasShield)return powerWithShield;
         else return  power;
@@ -54,6 +58,9 @@ public class Zombie extends Creature {
             }
             if(((Plant)eatenPlant.getCreature()).isPeppery()) {
                 activeCard.damaged(GameData.PepperDamage);
+            }
+            if(eatenPlant.getRemainingHp()==0){
+                activeCard.getOwner().addSun(eatenPlant.getCreature().getFullHp()*10);////////// should add to GameData
             }
         }
     }
