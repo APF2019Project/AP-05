@@ -3,15 +3,15 @@ package Main;
 import java.util.ArrayList;
 
 public class Zombie extends Creature {
-    private boolean swimmer, cactusHasEffect, peaHasEffect;
+    private boolean swimmer, cactusHasEffect, peaHasEffect,hasLadder;
     private int speed,power,powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
-
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
                   Shield shield, boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect,
-                  int speed, int power, int powerWithShield) {
+                  int speed, int power, int powerWithShield,boolean hasLadder) {
         super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield);
         this.swimmer = swimmer;
+        this.hasLadder=hasLadder;
         this.cactusHasEffect = cactusHasEffect;
         this.peaHasEffect = peaHasEffect;
         this.speed = speed;
@@ -20,6 +20,9 @@ public class Zombie extends Creature {
         allZombies.add(this);
     }
 
+    public boolean isHasLadder() {
+        return hasLadder;
+    }
     public static ArrayList<Zombie> getAllZombies() {
         return allZombies;
     }
@@ -30,7 +33,7 @@ public class Zombie extends Creature {
     }
 
     public boolean isSwimmer() {
-        return swimmer;
+        return (swimmer || this.getShield().getName().equals(GameData.ordakSheildName));
     }
 
     public boolean isCactusHasEffect() {

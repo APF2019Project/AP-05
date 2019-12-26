@@ -10,9 +10,15 @@ public class ActiveCard {
     private int remainingSlowDown = 0, slowDownPercent = 0;
     private int remainReloadTime;
     private Player owner;
+    private boolean hasLadder;
 
     public ActiveCard(Creature creature, int x, int y, Player player) {
         this.creature = creature;
+        if(creature instanceof Zombie){
+            hasLadder=(((Zombie)creature).isHasLadder());
+        }else{
+            hasLadder=false;
+        }
         this.remainingHp = creature.getFullHp();
         this.x = x;
         this.y = y;
@@ -22,6 +28,12 @@ public class ActiveCard {
         remainReloadTime = creature.getReloadTime();
     }
 
+    public void setHasLadder(boolean hasLadder) {
+        this.hasLadder = hasLadder;
+    }
+    public boolean isHasLadder() {
+        return hasLadder;
+    }
     public int getDistance(ActiveCard activeCard) {
         return Math.abs(activeCard.getX() - this.getX()) + Math.abs(activeCard.getY() - this.getY());
     }
@@ -62,6 +74,9 @@ public class ActiveCard {
         if (shieldRemainingHp <= 0) {
             if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
+            }
+            if(creature.getShield().getName().equals(GameData.ordakSheildName)){
+                remainingHp=0;
             }
             this.shieldRemainingHp = 0;
         } else {

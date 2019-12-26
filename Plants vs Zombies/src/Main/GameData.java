@@ -20,6 +20,7 @@ public class GameData {
     static public ArrayList<String>DryModeAvailablePlantName;
     static public ArrayList<String> WetModeAvailablePlantName;
     static public int inf=100000000;
+    static public String ordakSheildName="ordak";
 
     static {
         try {

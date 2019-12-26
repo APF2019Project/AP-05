@@ -6,7 +6,7 @@ public class Plant extends Creature {
     private static ArrayList<Plant> allPlants = new ArrayList<>();
     private boolean cactus, peppery;
     private boolean waterProof;
-
+    
     public Plant(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown,
                  int reloadTime, Shield shield, boolean cactus, boolean peppery, boolean waterProof) {
         super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield);
