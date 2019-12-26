@@ -1,17 +1,19 @@
 package Main;
 
+import Player.PlantPlayer;
+import Player.ZombiePlayer;
 import Player.Player;
 
 public class GameMenuSwitcher {
-    public Player plantPlayer, zombiePlayer;
-    public boolean onGame=true;
+    private Player plantPlayer, zombiePlayer;
+    private boolean onGame=true;
 
     public GameMenuSwitcher(PlantPlayer plantPlayer, ZombiePlayer zombiePlayer){
         this.plantPlayer=plantPlayer;
         this.zombiePlayer=zombiePlayer;
     }
 
-    void runGame(){
+    public void runGame() throws Exception {
         plantPlayer.pickCards();
         zombiePlayer.pickCards();
 

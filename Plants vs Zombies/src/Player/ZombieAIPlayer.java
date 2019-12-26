@@ -1,8 +1,10 @@
 package Player;
 
+import Main.Map;
+
 public class ZombieAIPlayer extends ZombiePlayer {
-    public ZombieAIPlayer() {
-        super(null);
+    public ZombieAIPlayer(Map map) {
+        super(map);
     }
 
     public void doAction(){
@@ -10,7 +12,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
     }
 
     @Override
-    void pickCards() {
+    public void pickCards() {
 
     }
 }

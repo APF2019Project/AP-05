@@ -1,20 +1,19 @@
 package Player;
 
+import Main.Map;
 import Main.User;
 import Player.Player;
 
 public class ZombiePlayer extends Player {
 
-    public ZombiePlayer(User user) {
-        super(user);
+    public ZombiePlayer(Map map) {
+        super(map);
     }
 
-    void doAction() {
-        super.setMeCurrentPlayer();
+    public void doAction() {
     }
 
     @Override
-    void pickCards() {
-        super.setMeCurrentPlayer();
+    public void pickCards() {
     }
 }

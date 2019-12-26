@@ -1,7 +1,7 @@
 package Command;
 
 import Main.*;
-import Player.Player;
+import Player.*;
 
 public class PlayCommandHandler extends CommandHandler {
     {
@@ -14,42 +14,18 @@ public class PlayCommandHandler extends CommandHandler {
         };
     }
 
-    public void playDayMode(String command) {
-        GameMenuSwitcher gameMenuSwitcher=new GameMenuSwitcher(Player.getCurrentPlayer(),new ZombieAIPleyer());
-
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
-            @Override
-            public void onEnd() {
-                Player.getCurrentPlayer().setCurrentMenu(Main.dayAndWaterGameModeMenu);
-                super.onEnd();
-            }
-        });
-        CollectionCommandHandler collectionCommandHandler =
-                (CollectionCommandHandler) collectionMenu.getCommandHandler();
-        collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-
-        DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
-                (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
-        dayAndWaterGameModeCommandHandler.haveWater = false;
-        Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
+    public void playDayMode(String command) throws Exception {
+        PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
+                new PlantOnDayAndWaterModeHumanPlayer(Player.getCurrentPlayer().getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer());
+        gameMenuSwitcher.runGame();
     }
 
     public void playWaterMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
-            @Override
-            public void onEnd() {
-                Player.getCurrentPlayer().setCurrentMenu(Main.dayAndWaterGameModeMenu);
-                super.onEnd();
-            }
-        });
-        CollectionCommandHandler collectionCommandHandler =
-                (CollectionCommandHandler) collectionMenu.getCommandHandler();
-        collectionCommandHandler.collectionMode = CollectionMode.plantsCollection;
-
-        DayAndWaterGameModeCommandHandler dayAndWaterGameModeCommandHandler =
-                (DayAndWaterGameModeCommandHandler) Main.dayAndWaterGameModeMenu.getCommandHandler();
-        dayAndWaterGameModeCommandHandler.haveWater = true;
-        Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
+        PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
+                new PlantOnDayAndWaterModeHumanPlayer(Player.getCurrentPlayer().getUser());
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer());
+        gameMenuSwitcher.runGame();
     }
 
     public void playRailMode(String command) {
@@ -57,7 +33,7 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playZombieMode(String command) {
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler() {
             @Override
             public void onEnd() {
                 Player.getCurrentPlayer().setCurrentMenu(Main.zombieGameModeMenu);
@@ -83,7 +59,7 @@ public class PlayCommandHandler extends CommandHandler {
                 (PvPGameModeCommandHandler) Main.pvpGameModeMenu.getCommandHandler();
         pvpGameModeCommandHandler.zombiePlayer = zombiePlayer;
         Menu zombieCollectionMenu = null;
-        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler(){
+        Menu plantCollectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler() {
             public void onEnd() {
                 Player.setCurrentPlayer(plantPlayer);
                 Player.getCurrentPlayer().setCurrentMenu(zombieCollectionMenu);

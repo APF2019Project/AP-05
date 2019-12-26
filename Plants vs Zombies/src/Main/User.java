@@ -1,5 +1,7 @@
 package Main;
 
+import Player.Player;
+
 import java.util.ArrayList;
 
 public class User {
@@ -8,7 +10,7 @@ public class User {
     private int coin = 0;
     private String username, password;
     private int killingEnemyCount;
-    private Menu currentMenu;
+    private Player player;
 
     public User(String username, String password) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
@@ -133,15 +135,6 @@ public class User {
 
     public int getKillingEnemyCount() {
         return killingEnemyCount;
-    }
-
-    public Menu getCurrentMenu() {
-        return currentMenu;
-    }
-
-    public void setCurrentMenu(Menu currentMenu) throws Exception {
-        this.currentMenu = currentMenu;
-        currentMenu.run();
     }
 
     public ArrayList<Creature> getUnlockedCreatures() {

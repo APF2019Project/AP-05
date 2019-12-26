@@ -3,10 +3,19 @@ package Main;
 import Command.CommandHandler;
 import Player.Player;
 
-
 public class Menu {
     private Menu lastMenu;
     private CommandHandler commandHandler;
+    private static Menu currentMenu;
+    private User user;
+
+    public static Menu getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public static void setCurrentMenu(Menu currentMenu) {
+        Menu.currentMenu = currentMenu;
+    }
 
     public Menu(Menu lastMenu, CommandHandler commandHandler) {
         this.lastMenu = lastMenu;

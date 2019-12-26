@@ -1,25 +1,15 @@
 package Player;
 
-import Command.CollectionCommandHandler;
-import Main.Main;
-import Main.Menu;
-import Main.User;
-import Player.Player;
+import Main.Map;
 
-public class PlantPlayer extends Player {
-    public PlantPlayer(User user) {
-        super(user);
+public abstract class PlantPlayer extends Player {
+    public PlantPlayer(Map map) {
+        super(map);
     }
 
     @Override
-    void doAction() {
-        super.setMeCurrentPlayer();
+    public void doAction() {
     }
 
-    @Override
-    void pickCards() {
-        super.setMeCurrentPlayer();
-        Menu collectionMenu = new Menu(Main.playMenu, new CollectionCommandHandler());
-        Player.getCurrentPlayer().setCurrentMenu(collectionMenu);
-    }
+    abstract public void pickCards() throws Exception;
 }
