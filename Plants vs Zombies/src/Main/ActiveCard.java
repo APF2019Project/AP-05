@@ -27,7 +27,6 @@ public class ActiveCard {
         owner = player;
         remainReloadTime = creature.getReloadTime();
     }
-
     public void setHasLadder(boolean hasLadder) {
         this.hasLadder = hasLadder;
     }
@@ -127,6 +126,11 @@ public class ActiveCard {
     public void doAction(Map map) {
         if (remainReloadTime == 0) {
             creature.doAction(this, map);
+            if(creature.isDisposable()){
+                remainingHp=0;
+                shieldRemainingHp=0;
+                return;
+            }
             if (creature instanceof Mine) {
                 remainReloadTime = 0;
             } else {
@@ -140,6 +144,7 @@ public class ActiveCard {
             if (remainingSlowDown == 0)
                 slowDownPercent = 0;
         }
+
     }
 
     public void collisionSlowingGunShot(int slowDownTime, int slowDownPercent) {

@@ -130,7 +130,7 @@ public class Map {
     int hasNoPlantIn(int y,int x){
         int maxX=-1;
         for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof  Plant){
+            if(activeCard.getCreature() instanceof  Plant && !activeCard.isHasLadder()){
                 maxX= Math.max(maxX,activeCard.getX());
             }
         }
