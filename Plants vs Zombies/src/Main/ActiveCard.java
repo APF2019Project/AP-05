@@ -128,17 +128,16 @@ public class ActiveCard {
 
     public void doAction(Map map) {
         if (remainReloadTime == 0) {
-            creature.doAction(this, map);
+            boolean isAct=creature.doAction(this, map);
+            if(!isAct){
+                return ;
+            }
             if(creature.isDisposable()){
                 remainingHp=0;
                 shieldRemainingHp=0;
                 return;
             }
-            if (creature instanceof Mine) {
-                remainReloadTime = 0;
-            } else {
-                remainReloadTime = creature.getReloadTime();
-            }
+            remainReloadTime = creature.getReloadTime();
         } else {
             remainReloadTime--;
         }
