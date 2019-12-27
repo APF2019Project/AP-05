@@ -2,7 +2,7 @@ package Main;
 
 import java.util.ArrayList;
 
-public class Creature {
+public abstract class Creature {
     private static ArrayList<Creature> allCreatures = new ArrayList<Creature>();
 
     private String name;
@@ -14,7 +14,7 @@ public class Creature {
     private int price;
     private Shield shield;
 
-    public Creature(String name, boolean disposable, int coolDown, int fullHp, int reloadTime, Shield shield) {
+    public Creature(String name, boolean disposable, int coolDown, int fullHp, int reloadTime,Shield shield) {
         this.name = name;
         this.disposable = disposable;
         this.coolDown = coolDown;
@@ -41,9 +41,7 @@ public class Creature {
         return price;
     }
 
-    public void doAction(ActiveCard activeCard, Map map) {
-
-    }
+    abstract public boolean doAction(ActiveCard activeCard, Map map);
 
     public int getReloadTime() {
         return reloadTime;

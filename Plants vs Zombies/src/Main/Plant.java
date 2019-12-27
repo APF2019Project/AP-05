@@ -2,14 +2,13 @@ package Main;
 
 import java.util.ArrayList;
 
-public class Plant extends Creature {
+public abstract class Plant extends Creature {
     private static ArrayList<Plant> allPlants = new ArrayList<>();
     private boolean cactus, peppery;
     private boolean waterProof;
-    
-    public Plant(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown,
-                 int reloadTime, Shield shield, boolean cactus, boolean peppery, boolean waterProof) {
-        super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield);
+
+    public Plant(String name, boolean disposable, int coolDown, int fullHp, int reloadTime, Shield shield, boolean cactus, boolean peppery, boolean waterProof) {
+        super(name, disposable, coolDown, fullHp, reloadTime, shield);
         this.cactus = cactus;
         this.peppery = peppery;
         this.waterProof = waterProof;
@@ -32,8 +31,5 @@ public class Plant extends Creature {
         return peppery;
     }
 
-    @Override
-    public void doAction(ActiveCard activeCard, Map map) {
-
-    }
+    abstract public boolean doAction(ActiveCard activeCard, Map map);
 }

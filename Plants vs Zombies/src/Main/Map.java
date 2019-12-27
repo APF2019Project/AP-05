@@ -166,4 +166,17 @@ public class Map {
             activeCardArrayList.remove(activeCard);
         }
     }
+    ActiveCard getNearestZombie(ActiveCard activeCard){
+        ActiveCard nearestZombie=null;
+        int distance=GameData.inf;
+        for(ActiveCard zombie:activeCardArrayList){
+            if(zombie.getCreature() instanceof Zombie){
+                if(activeCard.getDistance(zombie)>distance){
+                    distance=activeCard.getDistance(zombie);
+                    nearestZombie=zombie;
+                }
+            }
+        }
+        return nearestZombie;
+    }
 }

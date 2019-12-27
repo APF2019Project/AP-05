@@ -7,18 +7,18 @@ public class Zombie extends Creature {
     private int speed,power,powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
 
-    public Zombie(String name, boolean disposable, int coolDown, int fullHp, int remainingCoolDown, int reloadTime,
-                  Shield shield, boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect,
-                  int speed, int power, int powerWithShield,boolean hasLadder) {
-        super(name, disposable, coolDown, fullHp, remainingCoolDown, reloadTime, shield);
+    public Zombie(String name, boolean disposable, int coolDown, int fullHp, int reloadTime, Shield shield,
+                  boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect, boolean hasLadder, int speed,
+                  int power, int powerWithShield) {
+
+        super(name, disposable, coolDown, fullHp, reloadTime, shield);
         this.swimmer = swimmer;
-        this.hasLadder=hasLadder;
         this.cactusHasEffect = cactusHasEffect;
         this.peaHasEffect = peaHasEffect;
+        this.hasLadder = hasLadder;
         this.speed = speed;
         this.power = power;
         this.powerWithShield = powerWithShield;
-        allZombies.add(this);
     }
 
     public boolean isHasLadder() {
@@ -55,14 +55,13 @@ public class Zombie extends Creature {
         return (activeCard.getX() < 0);
     }
 
-    public void eatPlant(ActiveCard activeCard, Map map) {
-
+    public boolean eatPlant(ActiveCard activeCard, Map map) {
         ActiveCard eatenPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
-        if (eatenPlant != null) {
-            if(isHasLadder()==true){
+        if (eatenPlant != null && !eatenPlant.isHasLadder()) {
+            if(isHasLadder()){
                 hasLadder=false;
                 eatenPlant.setHasLadder(true);
-                return;
+                return false;
             }
             eatenPlant.damaged(getPower(activeCard.getShieldRemainingHp() > 0));
             if(((Plant)eatenPlant.getCreature()).isCactus() && ((Zombie)activeCard.getCreature()).cactusHasEffect) {
@@ -74,10 +73,12 @@ public class Zombie extends Creature {
             if(eatenPlant.getRemainingHp()==0){
                 activeCard.getOwner().addSun(eatenPlant.getCreature().getFullHp()*10);////////// should add to GameData
             }
+            return true;
         }
+        return false;
     }
 
-    public void doAction(ActiveCard activeCard, Map map) {
+    public boolean doAction(ActiveCard activeCard, Map map) {
         int deltaX=speed;
         if(activeCard.getRemainingSlowDown()>0){
             deltaX*=(100-activeCard.getSlowDownPercent())/100.0;
@@ -89,5 +90,6 @@ public class Zombie extends Creature {
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);
+        return true;
     }
 }

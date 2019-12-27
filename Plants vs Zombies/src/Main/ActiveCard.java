@@ -34,6 +34,9 @@ public class ActiveCard {
         return hasLadder;
     }
     public int getDistance(ActiveCard activeCard) {
+        if(activeCard==null){
+            return GameData.inf;
+        }
         return Math.abs(activeCard.getX() - this.getX()) + Math.abs(activeCard.getY() - this.getY());
     }
 
