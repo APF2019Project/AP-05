@@ -33,7 +33,7 @@ public class PlantAIPlayer extends PlantPlayer {
             availablePlant.add((Plant) Creature.getCreatureByName(name));
         }
         this.setSunInGame(GameData.inf);
-        while(true){
+        while(availablePlant.size()>0){
             Plant plant=availablePlant.get(0);
             int x=random.nextInt(3);
             int y=random.nextInt(map.getRow());
@@ -42,7 +42,7 @@ public class PlantAIPlayer extends PlantPlayer {
                 map.addActiveCard(activeCard);
                 availablePlant.remove(0);
             }catch (Error e){
-
+                // its really should be empty
             }
         }
     }
