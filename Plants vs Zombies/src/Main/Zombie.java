@@ -89,6 +89,7 @@ public class Zombie extends Creature {
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);
+        eatPlant(activeCard,map);
         return true;
     }
 }
