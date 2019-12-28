@@ -7,8 +7,9 @@ public abstract class Plant extends Creature {
     private boolean cactus, peppery;
     private boolean waterProof;
 
-    public Plant(String name, boolean disposable, int coolDown, int fullHp, int reloadTime, Shield shield, boolean cactus, boolean peppery, boolean waterProof) {
-        super(name, disposable, coolDown, fullHp, reloadTime, shield);
+    public Plant(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield,
+                 boolean cactus, boolean peppery, boolean waterProof) {
+        super(name, disposable, coolDown, fullHp, price, reloadTime, shield);
         this.cactus = cactus;
         this.peppery = peppery;
         this.waterProof = waterProof;
@@ -31,5 +32,5 @@ public abstract class Plant extends Creature {
         return peppery;
     }
 
-    abstract public boolean doAction(ActiveCard activeCard, Map map);
+    abstract public void doAction(ActiveCard activeCard, Map map);
 }

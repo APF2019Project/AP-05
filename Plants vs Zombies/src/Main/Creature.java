@@ -14,11 +14,12 @@ public abstract class Creature {
     private int price;
     private Shield shield;
 
-    public Creature(String name, boolean disposable, int coolDown, int fullHp, int reloadTime,Shield shield) {
+    public Creature(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield) {
         this.name = name;
         this.disposable = disposable;
         this.coolDown = coolDown;
         this.fullHp = fullHp;
+        this.price = price;
         this.reloadTime = reloadTime;
         this.shield = shield;
         allCreatures.add(this);

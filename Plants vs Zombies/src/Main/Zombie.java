@@ -7,11 +7,10 @@ public class Zombie extends Creature {
     private int speed,power,powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
 
-    public Zombie(String name, boolean disposable, int coolDown, int fullHp, int reloadTime, Shield shield,
-                  boolean swimmer, boolean cactusHasEffect, boolean peaHasEffect, boolean hasLadder, int speed,
-                  int power, int powerWithShield) {
-
-        super(name, disposable, coolDown, fullHp, reloadTime, shield);
+    public Zombie(String name, boolean disposable, int coolDown, int fullHp, int reloadTime,
+                  Shield shield, boolean swimmer, boolean cactusHasEffect,
+                  boolean peaHasEffect, boolean hasLadder, int speed, int power, int powerWithShield) {
+        super(name, disposable, coolDown, fullHp, fullHp * 10, reloadTime, shield);
         this.swimmer = swimmer;
         this.cactusHasEffect = cactusHasEffect;
         this.peaHasEffect = peaHasEffect;

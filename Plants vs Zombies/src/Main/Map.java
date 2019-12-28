@@ -85,27 +85,27 @@ public class Map {
         return nearest;
     }
 
-    public void addActiveCard(ActiveCard activeCard) {
+    public void addActiveCard(ActiveCard activeCard) throws Exception {
         if(activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
-            throw new Error("you don't have Enough money");
+            throw new Exception("you don't have Enough money");
         }
         if (activeCard.getCreature() instanceof Plant) {
             if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())
             && findPlantIn(activeCard.getX(),activeCard.getY())==null) {
                 activeCardArrayList.add(activeCard);
             } else {
-                throw new Error("your can't put your plant here");
+                throw new Exception("your can't put your plant here");
             }
         } else if (activeCard.getCreature() instanceof Zombie) {
             if (((Zombie) activeCard.getCreature()).isSwimmer()) {
                 if (((Zombie) activeCard.getCreature()).isSwimmer() ^ !isWater(activeCard.getX())) {
                     activeCardArrayList.add(activeCard);
                 } else {
-                    throw new Error("your can't put your zombie here");
+                    throw new Exception("your can't put your zombie here");
                 }
             }
         } else {
-            throw new Error("add ActiveCard have a bog");
+            throw new Exception("add ActiveCard have a bog");
         }
         activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
     }
