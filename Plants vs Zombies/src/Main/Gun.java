@@ -54,12 +54,14 @@ public class Gun {
         return false;
     }
 
-    void doAction(ActiveCard activeCard, Map map) {
+    boolean doAction(ActiveCard activeCard, Map map) {
         if (!this.isShy() || !this.isShyes(activeCard, map)) {
             for (int i = 0; i < gunShotsPerRound; i++) {
                 map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY()
                         , GameData.speedOfGunShot, activeCard.getOwner()));
             }
+            return true;
         }
+        return false;
     }
 }

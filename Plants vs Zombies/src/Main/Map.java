@@ -17,6 +17,7 @@ public class Map {
     public Map(int row, int col,MapMode mapMode) {
         this.row = row;
         this.col = col;
+
         this.mapMode=mapMode;
         if(mapMode.equals(MapMode.Water)){
             isWater=GameData.isWaterInWaterMapMode.clone();
@@ -89,27 +90,27 @@ public class Map {
         activeCardArrayList.remove(activeCard);
     }
 
-    public void addActiveCard(ActiveCard activeCard) {
+    public void addActiveCard(ActiveCard activeCard) throws Exception {
         if(!mapMode.equals(MapMode.Rail) && activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
-            throw new Error("you don't have Enough money");
+            throw new Exception("you don't have Enough money");
         }
         if (activeCard.getCreature() instanceof Plant) {
             if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())
             && findPlantIn(activeCard.getX(),activeCard.getY())==null) {
                 activeCardArrayList.add(activeCard);
             } else {
-                throw new Error("your can't put your plant here");
+                throw new Exception("your can't put your plant here");
             }
         } else if (activeCard.getCreature() instanceof Zombie) {
             if (((Zombie) activeCard.getCreature()).isSwimmer()) {
                 if (((Zombie) activeCard.getCreature()).isSwimmer() ^ !isWater(activeCard.getX())) {
                     activeCardArrayList.add(activeCard);
                 } else {
-                    throw new Error("your can't put your zombie here");
+                    throw new Exception("your can't put your zombie here");
                 }
             }
         } else {
-            throw new Error("add ActiveCard have a bog");
+            throw new Exception("add ActiveCard have a bog");
         }
         if(!mapMode.equals(MapMode.Rail)){
             activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
@@ -136,7 +137,7 @@ public class Map {
     int hasNoPlantIn(int y,int x){
         int maxX=-1;
         for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof  Plant){
+            if(activeCard.getCreature() instanceof  Plant && !activeCard.isHasLadder()){
                 maxX= Math.max(maxX,activeCard.getX());
             }
         }
@@ -171,5 +172,18 @@ public class Map {
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);
         }
+    }
+    ActiveCard getNearestZombie(ActiveCard activeCard){
+        ActiveCard nearestZombie=null;
+        int distance=GameData.inf;
+        for(ActiveCard zombie:activeCardArrayList){
+            if(zombie.getCreature() instanceof Zombie){
+                if(activeCard.getDistance(zombie)>distance){
+                    distance=activeCard.getDistance(zombie);
+                    nearestZombie=zombie;
+                }
+            }
+        }
+        return nearestZombie;
     }
 }

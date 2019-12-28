@@ -10,12 +10,18 @@ public class ActiveCard {
     private int remainingSlowDown = 0, slowDownPercent = 0;
     private int remainReloadTime;
     private Player owner;
+    private boolean hasLadder;
 
     public ActiveCard(Creature creature, int x, int y, Player player) throws Exception {
         if(creature.getRemainingCoolDown()!=0){
             throw new Exception("couldn't add this creature cool down is not 0");
         }
         this.creature = creature;
+        if(creature instanceof Zombie){
+            hasLadder=(((Zombie)creature).isHasLadder());
+        }else{
+            hasLadder=false;
+        }
         this.remainingHp = creature.getFullHp();
         this.x = x;
         this.y = y;
@@ -24,8 +30,16 @@ public class ActiveCard {
         owner = player;
         remainReloadTime = creature.getReloadTime();
     }
-
+    public void setHasLadder(boolean hasLadder) {
+        this.hasLadder = hasLadder;
+    }
+    public boolean isHasLadder() {
+        return hasLadder;
+    }
     public int getDistance(ActiveCard activeCard) {
+        if(activeCard==null){
+            return GameData.inf;
+        }
         return Math.abs(activeCard.getX() - this.getX()) + Math.abs(activeCard.getY() - this.getY());
     }
 
@@ -65,6 +79,9 @@ public class ActiveCard {
         if (shieldRemainingHp <= 0) {
             if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
+            }
+            if(creature.getShield().getName().equals(GameData.ordakSheildName)){
+                remainingHp=0;
             }
             this.shieldRemainingHp = 0;
         } else {
@@ -114,12 +131,16 @@ public class ActiveCard {
 
     public void doAction(Map map) {
         if (remainReloadTime == 0) {
-            creature.doAction(this, map);
-            if (creature instanceof Mine) {
-                remainReloadTime = 0;
-            } else {
-                remainReloadTime = creature.getReloadTime();
+            boolean isAct=creature.doAction(this, map);
+            if(!isAct){
+                return ;
             }
+            if(creature.isDisposable()){
+                remainingHp=0;
+                shieldRemainingHp=0;
+                return;
+            }
+            remainReloadTime = creature.getReloadTime();
         } else {
             remainReloadTime--;
         }
@@ -128,6 +149,7 @@ public class ActiveCard {
             if (remainingSlowDown == 0)
                 slowDownPercent = 0;
         }
+
     }
 
     public void collisionSlowingGunShot(int slowDownTime, int slowDownPercent) {
