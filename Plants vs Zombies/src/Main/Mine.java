@@ -13,7 +13,7 @@ public class Mine extends Plant {
     }
 
     @Override
-    public void doAction(ActiveCard activeCard, Map map) {
+    public boolean doAction(ActiveCard activeCard, Map map) {
         if(activeCard.getDistance(map.getNearestZombie(activeCard))<=activeRange) {
             for (ActiveCard activeCard1 : map.activeCardArrayList) {
                 if ((activeCard.getCreature() instanceof Zombie) && Math.abs(activeCard.getX() - activeCard1.getX()) <= deltaX

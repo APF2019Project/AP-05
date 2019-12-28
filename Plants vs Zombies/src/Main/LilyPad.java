@@ -7,7 +7,7 @@ public class LilyPad extends Plant {
     }
 
     @Override
-    public void doAction(ActiveCard activeCard, Map map) {
+    public boolean doAction(ActiveCard activeCard, Map map) {
         return true;
         // noting
     }

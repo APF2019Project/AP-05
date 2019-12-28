@@ -5,7 +5,7 @@ public class MagnetShroom extends Plant {
                         int reloadTime, Shield shield, boolean cactus, boolean peppery, boolean waterProof) {
         super(name, disposable, coolDown, fullHp, price, reloadTime, shield, cactus, peppery, waterProof);
     }
-    public void doAction(ActiveCard magnet, Map map) {
+    public boolean doAction(ActiveCard magnet, Map map) {
         for(ActiveCard zombie:map.activeCardArrayList){
             if(zombie.getCreature() instanceof  Zombie) {
                 if (magnet.getDistance(zombie) <= GameData.maxMagnetRange &&
@@ -15,6 +15,7 @@ public class MagnetShroom extends Plant {
                 }
             }
         }
+        return false;
     }
 }
 
