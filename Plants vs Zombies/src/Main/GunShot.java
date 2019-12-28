@@ -8,7 +8,7 @@ public class GunShot {
     private int x, y;
     private int vx;
     private Player owner;
-    private boolean used=false;
+    private int destination = -1;
 
     public GunShot(Gun gun, int x, int y, int vx, Player player) {
         this.gun = gun;
@@ -19,7 +19,7 @@ public class GunShot {
     }
 
     public boolean isUsed() {
-        return used;
+        return (destination != -1);
     }
 
     public Player getOwner() {
@@ -66,7 +66,7 @@ public class GunShot {
         } else {
             activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
         }
-        used=true;
+        destination = activeCard.getX();
     }
 
     public void doAction(Map map) {

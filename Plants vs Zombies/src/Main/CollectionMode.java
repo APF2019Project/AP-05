@@ -1,5 +1,5 @@
 package Main;
 
-public enum CollectionMode {
+public enum DCollectionMode {
     plantsCollection, zombiesCollection
 }
