@@ -8,7 +8,7 @@ import Main.User;
 
 public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
     public PlantOnDayAndWaterModeHumanPlayer(Map map, User user) {
-        super(map,user);
+        super(map, user);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void pickCards() throws Exception {
-        Menu collectionMenu = new Menu(user, Menu.getCurrentMenu(), new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(user, new CollectionCommandHandler());
         collectionMenu.run();
     }
 }

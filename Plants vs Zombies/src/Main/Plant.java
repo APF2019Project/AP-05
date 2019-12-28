@@ -20,6 +20,15 @@ public class Plant extends Creature {
         return allPlants;
     }
 
+    public static Plant getPlantByName(String plantName){
+        for(Plant plant:allPlants){
+            if(plant.getName().equals(plantName)){
+                return plant;
+            }
+        }
+        return null;
+    }
+
     public boolean isWaterProof() {
         return waterProof;
     }

@@ -11,7 +11,10 @@ public class ActiveCard {
     private int remainReloadTime;
     private Player owner;
 
-    public ActiveCard(Creature creature, int x, int y, Player player) {
+    public ActiveCard(Creature creature, int x, int y, Player player) throws Exception {
+        if(creature.getRemainingCoolDown()!=0){
+            throw new Exception("couldn't add this creature cool down is not 0");
+        }
         this.creature = creature;
         this.remainingHp = creature.getFullHp();
         this.x = x;

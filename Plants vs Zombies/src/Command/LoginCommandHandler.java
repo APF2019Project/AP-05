@@ -21,13 +21,13 @@ public class LoginCommandHandler extends CommandHandler {
     public void createAccount(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        menu.exitAndOpen(new Menu(new User(username, password), menu, new LoginCommandHandler()));
+        new Menu(new User(username, password), new LoginCommandHandler()).run();
     }
 
     public void login(String command) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
-        menu.exitAndOpen(new Menu(User.login(username, password), menu, new MainMenuCommandHandler()));
+        new Menu(User.login(username, password), new MainMenuCommandHandler()).run();
     }
 
     public void leaderboard(String command) throws Exception {

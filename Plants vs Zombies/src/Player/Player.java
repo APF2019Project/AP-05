@@ -9,8 +9,17 @@ import java.util.ArrayList;
 public abstract class Player {
     private int sunInGame;
     final private Map map;
+    private int killingEnemyCount;
     final User user;
     private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
+
+    public int getKillingEnemyCount() {
+        return killingEnemyCount;
+    }
+
+    public void setKillingEnemyCount(int killingEnemyCount) {
+        this.killingEnemyCount = killingEnemyCount;
+    }
 
     public int getSunInGame() {
         return sunInGame;

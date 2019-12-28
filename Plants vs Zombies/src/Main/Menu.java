@@ -4,7 +4,7 @@ import Command.CommandHandler;
 import Player.Player;
 
 public class Menu {
-    private Menu lastMenu;
+    //private Menu lastMenu;
     private CommandHandler commandHandler;
     private static Menu currentMenu;
     private User user;
@@ -22,34 +22,27 @@ public class Menu {
         Menu.currentMenu = currentMenu;
     }
 
-    public Menu(User user, Menu lastMenu, CommandHandler commandHandler) {
-        this.user=user;
-        this.lastMenu = lastMenu;
+    public Menu(User user, CommandHandler commandHandler) {
+        this.user = user;
+        //this.lastMenu = lastMenu;
         this.commandHandler = commandHandler;
         commandHandler.setMenu(this);
     }
 
-    public Menu getLastMenu() {
+    /*public Menu getLastMenu() {
         return lastMenu;
     }
 
     public void setLastMenu(Menu lastMenu) {
         this.lastMenu = lastMenu;
-    }
+    }*/
 
     public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
-    public void exit() throws Exception {
+    public void exit() {
         isOpen = false;
-    }
-
-    public void exitAndOpen(Menu menu) throws Exception {
-        isOpen = false;
-        if (menu != null) {
-            menu.run();
-        }
     }
 
     public void accept(String command) throws Exception {
@@ -58,7 +51,7 @@ public class Menu {
             return;
         }
         if (command.equals("exit")) {
-            exitAndOpen(lastMenu);
+            exit();
             return;
         }
         commandHandler.accept(command);

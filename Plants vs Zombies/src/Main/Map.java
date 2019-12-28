@@ -8,16 +8,16 @@ public class Map {
     ArrayList<GunShot> gunShotArrayList;
     boolean[] isWater;
     private int row, col;
+    MapMode mapMode;
 
-    public Map(int row, int col) {
-        this.row = row;
-        this.col = col;
-        isWater=GameData.isWaterInDayMapMode.clone();
+    public ArrayList<ActiveCard> getActiveCardArrayList() {
+        return activeCardArrayList;
     }
 
     public Map(int row, int col,MapMode mapMode) {
         this.row = row;
         this.col = col;
+        this.mapMode=mapMode;
         if(mapMode.equals(MapMode.Water)){
             isWater=GameData.isWaterInWaterMapMode.clone();
         }else {
@@ -85,8 +85,12 @@ public class Map {
         return nearest;
     }
 
+    public void removeActiveCard(ActiveCard activeCard){
+        activeCardArrayList.remove(activeCard);
+    }
+
     public void addActiveCard(ActiveCard activeCard) {
-        if(activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
+        if(!mapMode.equals(MapMode.Rail) && activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
             throw new Error("you don't have Enough money");
         }
         if (activeCard.getCreature() instanceof Plant) {
@@ -107,9 +111,11 @@ public class Map {
         } else {
             throw new Error("add ActiveCard have a bog");
         }
-        activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
+        if(!mapMode.equals(MapMode.Rail)){
+            activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
+        }
     }
-    ActiveCard findPlantIn(int x, int y){
+    public ActiveCard findPlantIn(int x, int y){
         for(ActiveCard activeCard:activeCardArrayList){
             if(activeCard.getCreature() instanceof Plant){
                 if(activeCard.getX()==x && activeCard.getY()==y){
