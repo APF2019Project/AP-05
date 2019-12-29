@@ -93,34 +93,31 @@ public class Map {
         }
         return nearest;
     }
-    public void removeActiveCard(ActiveCard activeCard) {
-        activeCardArrayList.remove(activeCard);
-    }
-    public void addActiveCard(ActiveCard activeCard) throws Exception {
+    public boolean canAddActiveCard(ActiveCard activeCard){
         if (activeCard.getCreature() instanceof Plant) {
             if(activeCard.getX()%2==1){
-                throw new Exception("your can't put your plant here");
+                return false;
             }
             if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
                     != null && findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad) {
-                activeCardArrayList.add(activeCard);
+                return true;
             } else if (!((Plant) activeCard.getCreature()).isWaterProof() &&
                     findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
-                activeCardArrayList.add(activeCard);
+                return  true;
             } else {
-                throw new Exception("your can't put your plant here");
+                return false;
             }
-        } else if (activeCard.getCreature() instanceof Zombie) {
+        } else  {
             if (((Zombie) activeCard.getCreature()).isSwimmer(activeCard)) {
-                if (((Zombie) activeCard.getCreature()).isSwimmer(activeCard) == isWater(activeCard.getX())) {
-                    activeCardArrayList.add(activeCard);
-                } else {
-                    throw new Exception("your can't put your zombie here");
-                }
+                return(((Zombie) activeCard.getCreature()).isSwimmer(activeCard) == isWater(activeCard.getX()));
             }
-        } else {
-            throw new Exception("add ActiveCard have a bog");
         }
+    }
+    public void removeActiveCard(ActiveCard activeCard) {
+        activeCardArrayList.remove(activeCard);
+    }
+    public void addActiveCard(ActiveCard activeCard){
+        activeCardArrayList.add(activeCard);
     }
 
     public ActiveCard findPlantIn(int x, int y) {
@@ -165,7 +162,7 @@ public class Map {
         return maxX;
     }
 
-    public void run() {
+    public GameStatus run() {
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
@@ -175,9 +172,7 @@ public class Map {
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
                 if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
-                    // zombies wining
-
-                    return;
+                    return GameStatus.ZombiePlayerWins;
                 }
             }
         }
@@ -205,6 +200,7 @@ public class Map {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
             }
         }
+        return GameStatus.OnGame;
     }
 
     ActiveCard getNearestZombie(ActiveCard activeCard) {
