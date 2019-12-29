@@ -1,6 +1,5 @@
 package Main;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 
 public class Map {
@@ -15,28 +14,30 @@ public class Map {
         return activeCardArrayList;
     }
 
-    public Map(int row, int col,MapMode mapMode) {
+    public Map(int row, int col, MapMode mapMode) {
         this.row = row;
         this.col = col;
 
-        this.mapMode=mapMode;
-        if(mapMode.equals(MapMode.Water)){
-            isWater=GameData.isWaterInWaterMapMode.clone();
-        }else {
-            isWater=GameData.isWaterInDayMapMode.clone();
+        this.mapMode = mapMode;
+        if (mapMode.equals(MapMode.Water)) {
+            isWater = GameData.isWaterInWaterMapMode.clone();
+        } else {
+            isWater = GameData.isWaterInDayMapMode.clone();
         }
     }
 
     public int getRow() {
         return row;
     }
-    public boolean hasWater(){
-        boolean hasWater=false;
-        for(int i=0;i<row;i++){
-            hasWater|=isWater[i];
+
+    public boolean hasWater() {
+        boolean hasWater = false;
+        for (int i = 0; i < row; i++) {
+            hasWater |= isWater[i];
         }
         return hasWater;
     }
+
     public int getCol() {
         return col;
     }
@@ -87,14 +88,17 @@ public class Map {
         return nearest;
     }
 
-    public void removeActiveCard(ActiveCard activeCard){
+    public void removeActiveCard(ActiveCard activeCard) {
         activeCardArrayList.remove(activeCard);
     }
 
     public void addActiveCard(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature() instanceof Plant) {
-            if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())
-            && findPlantIn(activeCard.getX(),activeCard.getY())==null) {
+            if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
+                    != null && findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad) {
+                activeCardArrayList.add(activeCard);
+            } else if (!((Plant) activeCard.getCreature()).isWaterProof() &&
+                    findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
                 activeCardArrayList.add(activeCard);
             } else {
                 throw new Exception("your can't put your plant here");
@@ -111,33 +115,49 @@ public class Map {
             throw new Exception("add ActiveCard have a bog");
         }
     }
-    public ActiveCard findPlantIn(int x, int y){
-        for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof Plant){
-                if(activeCard.getX()==x && activeCard.getY()==y){
-                    return activeCard;
+
+    public ActiveCard findPlantIn(int x, int y) {
+        ArrayList<ActiveCard> option = new ArrayList<ActiveCard>();
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if (activeCard.getCreature() instanceof Plant) {
+                if (activeCard.getX() == x && activeCard.getY() == y) {
+                    option.add(activeCard);
                 }
+            }
+        }
+        if (option.isEmpty()) {
+            return null;
+        }
+        if (option.size() == 1) {
+            return option.get(0);
+        }
+        for (int i = 0; i < option.size(); i++) {
+            if (!(option.get(i).getCreature() instanceof LilyPad)) {
+                return option.get(i);
             }
         }
         return null;
     }
-    GunShot getGunShotIn(int y,int xl,int xr){
-        for(GunShot gunshot:gunShotArrayList){
-            if(gunshot.getY()==y && xl<=gunshot.getX() && gunshot.getX()<=xr){
+
+    GunShot getGunShotIn(int y, int xl, int xr) {
+        for (GunShot gunshot : gunShotArrayList) {
+            if (gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
                 return gunshot;
             }
         }
         return null;
     }
-    int hasNoPlantIn(int y,int x){
-        int maxX=-1;
-        for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof  Plant && !activeCard.isHasLadder()){
-                maxX= Math.max(maxX,activeCard.getX());
+
+    int hasNoPlantIn(int y, int x) {
+        int maxX = -1;
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if (activeCard.getCreature() instanceof Plant && !activeCard.isHasLadder()) {
+                maxX = Math.max(maxX, activeCard.getX());
             }
         }
         return maxX;
     }
+
     public void run() {
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
@@ -157,7 +177,7 @@ public class Map {
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
         ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
         for (GunShot gunShot : gunShotArrayList) {
-            if(gunShot.isUsed()){
+            if (gunShot.isUsed()) {
                 usedGunShot.add(gunShot);
             }
         }
@@ -168,14 +188,15 @@ public class Map {
             activeCardArrayList.remove(activeCard);
         }
     }
-    ActiveCard getNearestZombie(ActiveCard activeCard){
-        ActiveCard nearestZombie=null;
-        int distance=GameData.inf;
-        for(ActiveCard zombie:activeCardArrayList){
-            if(zombie.getCreature() instanceof Zombie){
-                if(activeCard.getDistance(zombie)>distance){
-                    distance=activeCard.getDistance(zombie);
-                    nearestZombie=zombie;
+
+    ActiveCard getNearestZombie(ActiveCard activeCard) {
+        ActiveCard nearestZombie = null;
+        int distance = GameData.inf;
+        for (ActiveCard zombie : activeCardArrayList) {
+            if (zombie.getCreature() instanceof Zombie) {
+                if (activeCard.getDistance(zombie) > distance) {
+                    distance = activeCard.getDistance(zombie);
+                    nearestZombie = zombie;
                 }
             }
         }

@@ -2,7 +2,7 @@ package Main;
 
 import java.util.ArrayList;
 
-public abstract class Plant extends Creature {
+public class Plant extends Creature {
     private static ArrayList<Plant> allPlants = new ArrayList<>();
     private boolean cactus, peppery;
     private boolean waterProof;
@@ -41,5 +41,7 @@ public abstract class Plant extends Creature {
         return peppery;
     }
 
-    abstract public boolean doAction(ActiveCard activeCard, Map map);
+    public boolean doAction(ActiveCard activeCard, Map map) {
+        return false;
+    }
 }
