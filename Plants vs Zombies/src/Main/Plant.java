@@ -7,6 +7,14 @@ public class Plant extends Creature {
     private boolean cactus, peppery;
     private boolean waterProof;
 
+    @Override
+    public int getPriceInShop() {
+        return this.getPrice()* this.getCoolDown() * this.getFullHp() + 1;
+    }
+    @Override
+    public int getKillingReward(){
+        return 10*getFullHp();
+    }
     public Plant(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield,
                  boolean cactus, boolean peppery, boolean waterProof) {
         super(name, disposable, coolDown, fullHp, price, reloadTime, shield);
