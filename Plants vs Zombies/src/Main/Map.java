@@ -222,4 +222,34 @@ public class Map {
         }
         return nearestZombie;
     }
+    void mapSimpleShow(){
+        char jad[][]=new char[row][col];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(isWater[i]){
+                    jad[i][j]='~';
+                }else {
+                    jad[i][j] = ' ';
+                }
+            }
+        }
+        for(GunShot gunShot:gunShotArrayList){
+            jad[gunShot.getX()][gunShot.getY()]='*';
+        }
+        for(ActiveCard activeCard:activeCardArrayList){
+            if(activeCard.getCreature() instanceof Zombie){
+                jad[activeCard.getX()][activeCard.getY()]='Z';
+            }else{
+                jad[activeCard.getX()][activeCard.getY()]='P';
+            }
+        }
+        System.out.println("/////////////////////////////////////////");
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                System.out.print(jad[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("/////////////////////////////////////////");
+    }
 }
