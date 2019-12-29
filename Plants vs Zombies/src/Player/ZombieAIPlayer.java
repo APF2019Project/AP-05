@@ -19,6 +19,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
 
 
     public void doAction() throws Exception {
+        super.doAction();
         Random rand = new Random();
         while(true) {
             ArrayList<Creature> available = new ArrayList<Creature>();
@@ -33,10 +34,8 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 int x = rand.nextInt(map.getRow());
                 int y = map.getRow() - 1;
                 ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
-                try {
-                    map.addActiveCard(zombie);
-                }catch (Error | Exception e){
-                    // zombie is not ok with location (zombie is swimmer and its location is dry or visa visa)
+                if(map.canAddActiveCard(zombie)){
+                    zombieCardsInNextWave.add(zombie);
                 }
             }else{
                 break;

@@ -13,10 +13,20 @@ public abstract class ZombiePlayer extends Player {
         super(map, user);
     }
 
-    private ArrayList<ActiveCard> zombieCardsInNextWave = new ArrayList<>();
+    protected ArrayList<ActiveCard> zombieCardsInNextWave = new ArrayList<>();
+    protected boolean isWaveRunning;
+
     public void startWave() throws Exception {
-        for(ActiveCard activeCard:zombieCardsInNextWave) {
+        isWaveRunning = true;
+        for (ActiveCard activeCard : zombieCardsInNextWave) {
             getMap().addActiveCard(activeCard);
+        }
+    }
+
+    public void doAction() throws Exception {
+        if (isWaveRunning && !zombieCardsInNextWave.isEmpty()) {
+            getMap().addActiveCard(zombieCardsInNextWave.get(0));
+            zombieCardsInNextWave.remove(0);
         }
     }
 }

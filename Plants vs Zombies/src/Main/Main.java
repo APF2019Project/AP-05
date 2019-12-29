@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class Main {
     public static Menu loginMenu = new Menu(null, new LoginCommandHandler());
-    public static Menu mainMenu = new Menu(loginMenu, new MainMenuCommandHandler());
-    public static Menu profileMenu = new Menu(mainMenu, new ProfileCommandHandler());
     public static Menu playMenu;
     public static Menu shopMenu;
 

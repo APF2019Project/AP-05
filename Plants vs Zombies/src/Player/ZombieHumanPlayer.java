@@ -10,7 +10,8 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     }
 
     @Override
-    public void doAction() {
+    public void doAction() throws Exception {
+        super.doAction();
 
     }
 
