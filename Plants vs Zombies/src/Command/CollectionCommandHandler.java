@@ -31,7 +31,7 @@ public class CollectionCommandHandler extends CommandHandler {
     public void onEnd() {
     }
 
-    public void showHand(String command) {
+    public void showHand(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             stringBuilder.append(creature.getName()).append('\n');
@@ -39,7 +39,7 @@ public class CollectionCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    public void showCollection(String command) {
+    public void showCollection(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
             stringBuilder.append(creature.getName()).append('\n');
@@ -47,8 +47,8 @@ public class CollectionCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    public void selectCard(String command) throws Exception {
-        String cardName = Pattern.compile("select (.+)").matcher(command).group(1);
+    public void selectCard(InputCommand inputCommand) throws Exception {
+        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
         if (creature == null) {
             throw new Exception("invalid cardName");
@@ -56,8 +56,8 @@ public class CollectionCommandHandler extends CommandHandler {
         menu.getUser().getPlayer().addCreaturesOnHand(creature);
     }
 
-    public void removeCard(String command) throws Exception {
-        String cardName = Pattern.compile("remove (.+)").matcher(command).group(1);
+    public void removeCard(InputCommand inputCommand) throws Exception {
+        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
         if (creature == null) {
             throw new Exception("invalid cardName");
@@ -65,7 +65,7 @@ public class CollectionCommandHandler extends CommandHandler {
         menu.getUser().getPlayer().removeCreaturesOnHand(creature);
     }
 
-    public void play(String command) throws Exception {
+    public void play(InputCommand inputCommand) throws Exception {
         onEnd();
         menu.exit();
     }

@@ -168,7 +168,7 @@ public class Map {
         return maxX;
     }
 
-    public GameStatus run() {
+    public GameStatus run() throws Exception {
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
