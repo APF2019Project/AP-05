@@ -13,7 +13,7 @@ public class ActiveCard {
     private boolean hasLadder;
     private boolean hasOrdak;
 
-    public ActiveCard(Creature creature, int x, int y, Player player,boolean hasOrdak) throws Exception {
+    public ActiveCard(Creature creature, int x, int y, Player player) throws Exception {
         if(creature.getRemainingCoolDown()!=0){
             throw new Exception("couldn't add this creature cool down is not 0");
         }
@@ -30,9 +30,11 @@ public class ActiveCard {
             shieldRemainingHp = creature.getShield().getFullHp();
         owner = player;
         remainReloadTime = creature.getReloadTime();
-        this.hasOrdak=hasOrdak;
     }
 
+    public void setHasOrdak(boolean hasOrdak) {
+        this.hasOrdak = hasOrdak;
+    }
     public boolean isHasOrdak() {
         return hasOrdak;
     }
