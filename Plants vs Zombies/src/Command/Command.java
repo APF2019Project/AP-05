@@ -13,13 +13,21 @@ public class Command {
         this.help = help;
     }
 
+    public Function getFunction() {
+        return function;
+    }
+
+    public String getRegex() {
+        return regex;
+    }
+
     public String getHelp() {
         return help;
     }
 
-    public boolean accept(String command) throws Exception {
-        if (Pattern.matches(regex, command)) {
-            function.accept(command);
+    public boolean accept(String input) throws Exception {
+        if (Pattern.matches(regex, input)) {
+            function.accept(new InputCommand(this, input));
             return true;
         }
         return false;

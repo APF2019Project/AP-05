@@ -26,7 +26,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
 
     private Plant selectedPlant = null;
 
-    void list(String command) {
+    void list(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
@@ -35,26 +35,26 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    void select(String command) {
-        int plantIndex = Integer.parseInt(Pattern.compile("select " + GameData.positiveNumber).matcher(command).group(1));
+    void select(InputCommand inputCommand) {
+        int plantIndex = Integer.parseInt(Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1));
         selectedPlant = (Plant) menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex);
     }
 
-    void record(String command) {
+    void record(InputCommand inputCommand) {
         Main.print(String.valueOf(menu.getUser().getPlayer().getKillingEnemyCount()));
     }
 
-    void plant(String command) throws Exception {
-        Matcher matcher = Pattern.compile("plant " + GameData.positiveNumber + "," + GameData.positiveNumber)
-                .matcher(command);
+    void plant(InputCommand inputCommand) throws Exception {
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
+                .matcher(inputCommand.getInput());
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
         menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
         selectedPlant = null;
     }
 
-    void remove(String command) throws Exception {
-        Matcher matcher = Pattern.compile("remove " + GameData.positiveNumber + "," + GameData.positiveNumber)
-                .matcher(command);
+    void remove(InputCommand inputCommand) throws Exception {
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
+                .matcher(inputCommand.getInput());
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
         ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
@@ -63,11 +63,11 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         menu.getUser().getPlayer().getMap().removeActiveCard(activeCard);
     }
 
-    void endTurn(String command) {
+    void endTurn(InputCommand inputCommand) {
         menu.exit();
     }
 
-    void showLawn(String command) {
+    void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
             stringBuilder.append(activeCard.getCreature().getName()).append(" (")

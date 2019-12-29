@@ -19,32 +19,32 @@ public class ProfileCommandHandler extends CommandHandler {
         };
     }
 
-    public void changeUsernameAndPassword(String command) throws Exception {
+    public void changeUsernameAndPassword(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         menu.getUser().changeUsername(username);
         menu.getUser().changePassword(password);
     }
 
-    public void deleteUser(String command) throws Exception {
+    public void deleteUser(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         User.deleteUser(username, password);
     }
 
-    public void renameUser(String command) throws Exception {
+    public void renameUser(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         menu.getUser().changeUsername(username);
     }
 
-    public void createUser(String command) throws Exception {
+    public void createUser(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         new User(username, password);
         // inja bayad current user avaz she???
     }
 
-    public void showUser(String command) {
+    public void showUser(InputCommand inputCommand) {
         Main.print(menu.getUser().getUsername());
     }
 }

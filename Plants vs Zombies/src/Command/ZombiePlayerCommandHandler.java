@@ -6,6 +6,7 @@ import Main.Main;
 import Main.Plant;
 import Main.ActiveCard;
 import Main.Zombie;
+import Player.ZombiePlayer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +22,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         };
     }
 
-    void showHand(String command) {
+    void showHand(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             Zombie zombie = (Zombie) creature;
@@ -30,7 +31,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    void showLanes(String command) {
+    void showLanes(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
             if (activeCard.getCreature() instanceof Zombie) {
@@ -41,8 +42,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    void put(String command) throws Exception {
-        Matcher matcher = Pattern.compile("put (.+)," + GameData.positiveNumber + "," + GameData.positiveNumber).matcher(command);
+    void put(InputCommand inputCommand) throws Exception {
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
         String zombieName = matcher.group(1);
         int zombieCount = Integer.parseInt(matcher.group(2));
         int y = Integer.parseInt(matcher.group(3));
@@ -52,17 +53,17 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         }
     }
 
-    void start(String command) {
-        menu.getUser().getPlayer().
+    void start(InputCommand inputCommand) throws Exception {
+        ((ZombiePlayer) menu.getUser().getPlayer()).startWave();
         menu.exit();
     }
 
-    void endTurn(String command) {
+    void endTurn(InputCommand inputCommand) {
         menu.exit();
     }
 
 
-    void showLawn(String command) {
+    void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
             stringBuilder.append(activeCard.getCreature().getName()).append(" (")

@@ -18,19 +18,19 @@ public class LoginCommandHandler extends CommandHandler {
         };
     }
 
-    public void createAccount(String command) throws Exception {
+    public void createAccount(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         new Menu(new User(username, password), new LoginCommandHandler()).run();
     }
 
-    public void login(String command) throws Exception {
+    public void login(InputCommand inputCommand) throws Exception {
         String username = Main.scanLine();
         String password = Main.scanLine();
         new Menu(User.login(username, password), new MainMenuCommandHandler()).run();
     }
 
-    public void leaderboard(String command) throws Exception {
+    public void leaderboard(InputCommand inputCommand) throws Exception {
         User.getAllUsers().sort(Comparator.comparingInt(User::getKillingEnemyCount));
         StringBuilder stringBuilder = new StringBuilder();
         for (User user : User.getAllUsers()) {

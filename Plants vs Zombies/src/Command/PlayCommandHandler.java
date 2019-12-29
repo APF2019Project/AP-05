@@ -14,7 +14,7 @@ public class PlayCommandHandler extends CommandHandler {
         };
     }
 
-    public void playDayMode(String command) throws Exception {
+    public void playDayMode(InputCommand inputCommand) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
@@ -22,7 +22,7 @@ public class PlayCommandHandler extends CommandHandler {
         gameMenuSwitcher.runGame();
     }
 
-    public void playWaterMode(String command) throws Exception {
+    public void playWaterMode(InputCommand inputCommand) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());
@@ -30,7 +30,7 @@ public class PlayCommandHandler extends CommandHandler {
         gameMenuSwitcher.runGame();
     }
 
-    public void playRailMode(String command) throws Exception {
+    public void playRailMode(InputCommand inputCommand) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Rail);
         PlantOnRailGameModeHumanPlayer plantOnRailGameModeHumanPlayer =
                 new PlantOnRailGameModeHumanPlayer(map, menu.getUser());
@@ -38,7 +38,7 @@ public class PlayCommandHandler extends CommandHandler {
         gameMenuSwitcher.runGame();
     }
 
-    public void playZombieMode(String command) throws Exception {
+    public void playZombieMode(InputCommand inputCommand) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP);
         ZombieHumanPlayer zombieHumanPlayer =
                 new ZombieHumanPlayer(map, menu.getUser());
@@ -46,7 +46,7 @@ public class PlayCommandHandler extends CommandHandler {
         gameMenuSwitcher.runGame();
     }
 
-    public void playPvPMode(String command) throws Exception {
+    public void playPvPMode(InputCommand inputCommand) throws Exception {
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day);
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(map, menu.getUser());

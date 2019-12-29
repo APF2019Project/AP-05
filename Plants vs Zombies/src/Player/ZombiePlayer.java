@@ -14,7 +14,7 @@ public abstract class ZombiePlayer extends Player {
     }
 
     private ArrayList<ActiveCard> zombieCardsInNextWave = new ArrayList<>();
-    void startWave() throws Exception {
+    public void startWave() throws Exception {
         for(ActiveCard activeCard:zombieCardsInNextWave) {
             getMap().addActiveCard(activeCard);
         }

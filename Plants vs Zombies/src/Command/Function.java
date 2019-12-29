@@ -1,5 +1,5 @@
 package Command;
 
 public interface Function {
-    void accept(String string) throws Exception;
+    void accept(InputCommand inputCommand) throws Exception;
 }

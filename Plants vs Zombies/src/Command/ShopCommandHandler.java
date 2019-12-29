@@ -20,7 +20,7 @@ public class ShopCommandHandler extends CommandHandler {
         };
     }
 
-    public void showShop(String command) {
+    public void showShop(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getLockedCreatures()) {
             stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
@@ -28,7 +28,7 @@ public class ShopCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    public void showCollection(String command) {
+    public void showCollection(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
             stringBuilder.append(creature.getName()).append(" ").append(creature.getPrice()).append('\n');
@@ -36,15 +36,15 @@ public class ShopCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    public void buy(String command) throws Exception {
-        String cardName = Pattern.compile("buy (.+)").matcher(command).group(1);
+    public void buy(InputCommand inputCommand) throws Exception {
+        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
         if (menu.getUser().getUnlockedCreatureByName(cardName) != null) {
             throw new Exception("invalid cardName");
         }
 
     }
 
-    public void money(String command) {
+    public void money(InputCommand inputCommand) {
         Main.print(String.valueOf(menu.getUser().getCoin()));
     }
 }
