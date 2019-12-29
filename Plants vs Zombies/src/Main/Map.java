@@ -1,23 +1,29 @@
 package Main;
 
+import Player.Player;
+
 import java.util.ArrayList;
 
 public class Map {
     ArrayList<ActiveCard> activeCardArrayList;
     ArrayList<GunShot> gunShotArrayList;
-    boolean[] isWater;
+    private boolean[] isWater;
     private int row, col;
     MapMode mapMode;
     protected int remainedWaves;
+    final private Player plantPlayer,zombiePlayer;
 
     public ArrayList<ActiveCard> getActiveCardArrayList() {
         return activeCardArrayList;
     }
 
-    public Map(int row, int col, MapMode mapMode) {
+
+
+    public Map(int row, int col, MapMode mapMode,Player plantPlayer, Player zombiePlayer) {
         this.row = row;
         this.col = col;
-
+        this.plantPlayer = plantPlayer;
+        this.zombiePlayer = zombiePlayer;
         this.mapMode = mapMode;
         if (mapMode.equals(MapMode.Water)) {
             isWater = GameData.isWaterInWaterMapMode.clone();
@@ -87,13 +93,14 @@ public class Map {
         }
         return nearest;
     }
-
     public void removeActiveCard(ActiveCard activeCard) {
         activeCardArrayList.remove(activeCard);
     }
-
     public void addActiveCard(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature() instanceof Plant) {
+            if(activeCard.getX()%2==1){
+                throw new Exception("your can't put your plant here");
+            }
             if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
                     != null && findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad) {
                 activeCardArrayList.add(activeCard);
@@ -104,8 +111,8 @@ public class Map {
                 throw new Exception("your can't put your plant here");
             }
         } else if (activeCard.getCreature() instanceof Zombie) {
-            if (((Zombie) activeCard.getCreature()).isSwimmer()) {
-                if (((Zombie) activeCard.getCreature()).isSwimmer() ^ !isWater(activeCard.getX())) {
+            if (((Zombie) activeCard.getCreature()).isSwimmer(activeCard)) {
+                if (((Zombie) activeCard.getCreature()).isSwimmer(activeCard) == isWater(activeCard.getX())) {
                     activeCardArrayList.add(activeCard);
                 } else {
                     throw new Exception("your can't put your zombie here");
@@ -181,11 +188,22 @@ public class Map {
                 usedGunShot.add(gunShot);
             }
         }
+        for(ActiveCard activeCard : activeCardArrayList){
+            if(activeCard.getRemainingHp()==0){
+                dies.add(activeCard);
+            }
+        }
         for (GunShot gunShot : usedGunShot) {
             gunShotArrayList.remove(gunShot);
         }
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);
+            if(activeCard.getCreature() instanceof Plant){
+                zombiePlayer.addSun(activeCard.getCreature().getKillingReward());
+            }
+            if(activeCard.getCreature() instanceof Zombie){
+                plantPlayer.addSun(activeCard.getCreature().getKillingReward());
+            }
         }
     }
 

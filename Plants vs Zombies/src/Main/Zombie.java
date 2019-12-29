@@ -34,8 +34,18 @@ public class Zombie extends Creature {
         else return  power;
     }
 
-    public boolean isSwimmer() {
-        return (swimmer || this.getShield().getName().equals(GameData.ordakSheildName));
+    @Override
+    public int getKillingReward(){
+        return 0;
+    }
+
+    @Override
+    public int getPriceInShop() {
+        return  (1 + this.getSpeed()) * this.getFullHp() * 10;
+    }
+
+    public boolean isSwimmer(ActiveCard activeCard) {
+        return (swimmer || activeCard.isHasOrdak());
     }
 
     public boolean isCactusHasEffect() {

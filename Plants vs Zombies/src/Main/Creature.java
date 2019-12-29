@@ -60,6 +60,8 @@ public abstract class Creature {
         return disposable;
     }
 
+    abstract public int getPriceInShop();
+    abstract public int getKillingReward();
     public int getCoolDown() {
         return coolDown;
     }

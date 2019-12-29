@@ -11,8 +11,9 @@ public class ActiveCard {
     private int remainReloadTime;
     private Player owner;
     private boolean hasLadder;
+    private boolean hasOrdak;
 
-    public ActiveCard(Creature creature, int x, int y, Player player) throws Exception {
+    public ActiveCard(Creature creature, int x, int y, Player player,boolean hasOrdak) throws Exception {
         if(creature.getRemainingCoolDown()!=0){
             throw new Exception("couldn't add this creature cool down is not 0");
         }
@@ -29,7 +30,13 @@ public class ActiveCard {
             shieldRemainingHp = creature.getShield().getFullHp();
         owner = player;
         remainReloadTime = creature.getReloadTime();
+        this.hasOrdak=hasOrdak;
     }
+
+    public boolean isHasOrdak() {
+        return hasOrdak;
+    }
+
     public void setHasLadder(boolean hasLadder) {
         this.hasLadder = hasLadder;
     }
@@ -79,9 +86,6 @@ public class ActiveCard {
         if (shieldRemainingHp <= 0) {
             if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
-            }
-            if(creature.getShield().getName().equals(GameData.ordakSheildName)){
-                remainingHp=0;
             }
             this.shieldRemainingHp = 0;
         } else {
