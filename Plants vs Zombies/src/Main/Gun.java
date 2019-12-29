@@ -47,7 +47,8 @@ public class Gun {
 
     public boolean isShyes(ActiveCard activeCard, Map map) {
         for (ActiveCard activeCard1 : map.activeCardArrayList) {
-            if (activeCard.getDistance(activeCard1) <= GameData.shyDistanceLimit) {
+            if (activeCard1.getX() == activeCard.getX() &&
+                    activeCard.getDistance(activeCard1) <= GameData.shyDistanceLimit) {
                 return true;
             }
         }

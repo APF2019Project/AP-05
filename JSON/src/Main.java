@@ -8,6 +8,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
         JSONParser jsonParser = new JSONParser();
+
         String lilypad = "{\"name\": \"Lily Pad\", \"disposable\": false" +
                 "\"coolDown\" : 1" +
                 "\"fullHp\" : 1" +
@@ -18,11 +19,7 @@ public class Main {
                 "\"peppery\" : false" +
                 "\"waterProof\" : true"
                 + "}";
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(lilypad);
-        FileWriter fileWriter = new FileWriter("plants/lilypad/lilypad");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(lilypad, "plants/lilypad/lilypad");
 
         String tall_nut = "{\"name\": \"Tall-nut\", \"disposable\": false" +
                 "\"coolDown\" : 6" +
@@ -34,11 +31,7 @@ public class Main {
                 "\"peppery\" : false" +
                 "\"waterProof\" : false"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(tall_nut);
-        fileWriter = new FileWriter("plants/tall_nut");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(tall_nut, "plants/tall_nut");
 
         String wall_nut = "{\"name\": \"Wall-nut\", \"disposable\": false" +
                 "\"coolDown\" : 4" +
@@ -50,11 +43,19 @@ public class Main {
                 "\"peppery\" : false" +
                 "\"waterProof\" : false"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(wall_nut);
-        fileWriter = new FileWriter("plants/wall_nut");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(wall_nut, "plants/wall_nut");
+
+        String explodonut = "{\"name\": \"Explode-o-nut\", \"disposable\": false" +
+                "\"coolDown\" : 5" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 4" +
+                "\"reloadTime\" : 0" +
+                "\"shield\": null" +
+                "\"cactus\": true" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(explodonut, "plants/explodonut");
 
         String magnetshroom = "{\"name\": \"Magnet-shroom\", \"disposable\": false" +
                 "\"coolDown\" : 2" +
@@ -66,11 +67,7 @@ public class Main {
                 "\"peppery\" : false" +
                 "\"waterProof\" : false"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(magnetshroom);
-        fileWriter = new FileWriter("plants/magnetshroom/magnetshroom");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(magnetshroom, "plants/magnetshroom/magnetshroom");
 
         String sunflower = "{\"name\": \"Sunflower\", \"disposable\": false" +
                 "\"coolDown\" : 2" +
@@ -83,11 +80,7 @@ public class Main {
                 "\"waterProof\" : false" +
                 "\"numberOfSuns\" : 1"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(sunflower);
-        fileWriter = new FileWriter("plants/sunflower/sunflower");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(sunflower, "plants/sunflower/sunflower");
 
         String twinsunflower = "{\"name\": \"Twin Sunflower\", \"disposable\": false" +
                 "\"coolDown\" : 5" +
@@ -100,11 +93,7 @@ public class Main {
                 "\"waterProof\" : false" +
                 "\"numberOfSuns\" : 2"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(twinsunflower);
-        fileWriter = new FileWriter("plants/sunflower/twinsunflower");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(twinsunflower, "plants/sunflower/twinsunflower");
 
         String jalapeno = "{\"name\": \"Jalapeno\", \"disposable\": true" +
                 "\"coolDown\" : 5" +
@@ -117,13 +106,9 @@ public class Main {
                 "\"waterProof\" : false" +
                 "\"deltaX\" : 1000" +
                 "\"deltaY\" : 0" +
-                "\"activeRange\" : 1000"
+                "\"activeRange\" : -1"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(jalapeno);
-        fileWriter = new FileWriter("plants/mine/jalapeno");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(jalapeno, "plants/mine/jalapeno");
 
         String cherry = "{\"name\": \"Cherry Bomb\", \"disposable\": true" +
                 "\"coolDown\" : 4" +
@@ -136,13 +121,9 @@ public class Main {
                 "\"waterProof\" : true" +
                 "\"deltaX\" : 1" +
                 "\"deltaY\" : 1" +
-                "\"activeRange\" : 5"
+                "\"activeRange\" : -1"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(cherry);
-        fileWriter = new FileWriter("plants/mine/cherry");
-        System.out.println(jsonObject.toJSONString());
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
+        parseAndSave(cherry, "plants/mine/cherry");
 
         String mine = "{\"name\": \"Potato Mine\", \"disposable\": true" +
                 "\"coolDown\" : 3" +
@@ -155,10 +136,297 @@ public class Main {
                 "\"waterProof\" : false" +
                 "\"deltaX\" : 0" +
                 "\"deltaY\" : 0" +
-                "\"activeRange\" : 2"
+                "\"activeRange\" : 0"
                 + "}";
-        jsonObject = (JSONObject) jsonParser.parse(mine);
-        fileWriter = new FileWriter("plants/mine/mine");
+        parseAndSave(mine, "plants/mine/mine");
+
+        String watermine = "{\"name\": \"Tangle Kelp\", \"disposable\": true" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 100" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 0" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : true" +
+                "\"deltaX\" : 0" +
+                "\"deltaY\" : 0" +
+                "\"activeRange\" : 0"
+                + "}";
+        parseAndSave(watermine, "plants/mine/watermine");
+
+        String Lawnmower = "{\"name\": \"Lawnmower\", \"disposable\": true" +
+                "\"coolDown\" : 0" +
+                "\"fullHp\" : 1000" +
+                "\"price\" : 0" +
+                "\"reloadTime\" : 0" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false" +
+                "\"deltaX\" : 1000" +
+                "\"deltaY\" : 0" +
+                "\"activeRange\" : 0"
+                + "}";
+        parseAndSave(watermine, "plants/mine/lawnmower");
+
+        String peashootergun = "{\"name\": \"Peashooter Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String peashooter = "{\"name\": \"Peashooter\", \"disposable\": false" +
+                "\"coolDown\" : 2" +
+                "\"fullHp\" : 2" +
+                "\"price\" : 2" +
+                "\"reloadTime\" : 2" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(peashootergun, "guns/peashootergun");
+        parseAndSave(peashooter, "plants/shooter/peashooter");
+
+        String snowpeagun = "{\"name\": \"Snow Pea Gun\", " +
+                "\"icy\": true" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String snowpea = "{\"name\": \"Snow Pea\", \"disposable\": false" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 3" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(snowpeagun, "guns/snowpeagun");
+        parseAndSave(snowpea, "plants/shooter/snowpea");
+
+        String cabbagepultgun = "{\"name\": \"Cabbage-pult Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": false" +
+                "\"damage\": 2" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String cabbagepult = "{\"name\": \"Cabbage-pult\", \"disposable\": false" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 2" +
+                "\"price\" : 2" +
+                "\"reloadTime\" : 2" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(cabbagepultgun, "guns/cabbagepultgun");
+        parseAndSave(cabbagepult, "plants/shooter/cabbagepult");
+
+        String repeatergun = "{\"name\": \"Repeater Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 2"
+                + "}";
+        String repeater = "{\"name\": \"Repeater\", \"disposable\": false" +
+                "\"coolDown\" : 4" +
+                "\"fullHp\" : 4" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 3" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(repeatergun, "guns/repeatergun");
+        parseAndSave(repeater, "plants/shooter/repeater");
+
+        String cactusgun = "{\"name\": \"Cactus Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String cactus = "{\"name\": \"Cactus\", \"disposable\": false" +
+                "\"coolDown\" : 4" +
+                "\"fullHp\" : 5" +
+                "\"price\" : 5" +
+                "\"reloadTime\" : 2" +
+                "\"shield\": null" +
+                "\"cactus\": true" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(cactusgun, "guns/cactusgun");
+        parseAndSave(cactus, "plants/shooter/cactus");
+
+        String gatlingpeagun = "{\"name\": \"Gatling Pea Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 4"
+                + "}";
+        String gatlingpea = "{\"name\": \"Gatling Pea\", \"disposable\": false" +
+                "\"coolDown\" : 4" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 5" +
+                "\"reloadTime\" : 5" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(gatlingpeagun, "guns/gatlingpeagun");
+        parseAndSave(gatlingpea, "plants/shooter/gatlingpea");
+
+        String scaredyshroomgun = "{\"name\": \"Scaredy-shroom Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": true" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String scaredyshroom = "{\"name\": \"Scaredy-shroom\", \"disposable\": false" +
+                "\"coolDown\" : 2" +
+                "\"fullHp\" : 1" +
+                "\"price\" : 1" +
+                "\"reloadTime\" : 2" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(scaredyshroomgun, "guns/scaredyshroomgun");
+        parseAndSave(scaredyshroom, "plants/shooter/scaredyshroom");
+
+        String kernelpultgun = "{\"name\": \"Kernel-pult Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": true" +
+                "\"projectile\": false" +
+                "\"damage\": 0" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String kernelpult = "{\"name\": \"Kernel-pult\", \"disposable\": false" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 2" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 4" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(kernelpultgun, "guns/kernelpultgun");
+        parseAndSave(kernelpult, "plants/shooter/kernelpult");
+
+        String splitpeagun = "{\"name\": \"Split Pea Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String splitpea = "{\"name\": \"Split Pea\", \"disposable\": false" +
+                "\"coolDown\" : 4" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 4" +
+                "\"reloadTime\" : 1" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(splitpeagun, "guns/doublesided/splitpeagun");
+        parseAndSave(splitpea, "plants/shooter/splitpea");
+
+        String melonpultgun = "{\"name\": \"Melon-pult Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": false" +
+                "\"damage\": 3" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String melonpult = "{\"name\": \"Melon-pult\", \"disposable\": false" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 4" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(melonpultgun, "guns/melonpultgun");
+        parseAndSave(melonpult, "plants/shooter/melonpult");
+
+        String icymelonpultgun = "{\"name\": \"Winter Melon Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": false" +
+                "\"damage\": 3" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String icymelonpult = "{\"name\": \"Winter Melon\", \"disposable\": false" +
+                "\"coolDown\" : 3" +
+                "\"fullHp\" : 3" +
+                "\"price\" : 3" +
+                "\"reloadTime\" : 4" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(icymelonpultgun, "guns/icymelonpultgun");
+        parseAndSave(icymelonpult, "plants/shooter/icymelonpult");
+
+        String threerowgun = "{\"name\": \"Threepeater Gun\", " +
+                "\"icy\": false" +
+                "\"shy\": false" +
+                "\"sleepy\": false" +
+                "\"projectile\": true" +
+                "\"damage\": 1" +
+                "\"gunShotsPerRound\": 1"
+                + "}";
+        String threerow = "{\"name\": \"Threepeater\", \"disposable\": false" +
+                "\"coolDown\" : 4" +
+                "\"fullHp\" : 5" +
+                "\"price\" : 4" +
+                "\"reloadTime\" : 4" +
+                "\"shield\": null" +
+                "\"cactus\": false" +
+                "\"peppery\" : false" +
+                "\"waterProof\" : false"
+                + "}";
+        parseAndSave(threerow, "guns/threerow/threerowgun");
+        parseAndSave(threerowgun, "plants/shooter/threepeater");
+    }
+
+    static void parseAndSave(String jsonString, String path) throws ParseException, IOException {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonString);
+        FileWriter fileWriter = new FileWriter(path);
         System.out.println(jsonObject.toJSONString());
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
