@@ -5,8 +5,8 @@ import Player.Player;
 import java.util.ArrayList;
 
 public class User {
-    static private ArrayList<User> allUsers;
-    private ArrayList<Creature> unlockedCreatures;
+    static private ArrayList<User> allUsers=new ArrayList<>();
+    private ArrayList<Creature> unlockedCreatures=new ArrayList<>();
     private int coin = 0;
     private String username, password;
     private int killingEnemyCount;
@@ -116,11 +116,11 @@ public class User {
     }
 
     private boolean validNewUsername(String username) {
-        return getUserByUsername(username) != null && username.length() >= 3 && username.length() <= 20;
+        return getUserByUsername(username) == null && username.length() >= 3 && username.length() <= 30;
     }
 
     private boolean validNewPassword(String password) {
-        return getUserByUsername(password) != null && password.length() >= 3 && password.length() <= 20;
+        return password.length() >= 3 && password.length() <= 30;
     }
 
     public void changeUsername(String username) throws Exception {

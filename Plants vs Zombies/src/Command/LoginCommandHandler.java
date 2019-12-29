@@ -19,13 +19,17 @@ public class LoginCommandHandler extends CommandHandler {
     }
 
     public void createAccount(InputCommand inputCommand) throws Exception {
+        Main.print("Enter your username:");
         String username = Main.scanLine();
+        Main.print("Enter your password:");
         String password = Main.scanLine();
         new Menu(new User(username, password), new LoginCommandHandler()).run();
     }
 
     public void login(InputCommand inputCommand) throws Exception {
+        Main.print("Enter your username:");
         String username = Main.scanLine();
+        Main.print("Enter your password:");
         String password = Main.scanLine();
         new Menu(User.login(username, password), new MainMenuCommandHandler()).run();
     }

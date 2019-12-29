@@ -60,6 +60,7 @@ public class Menu {
     public void run() throws Exception {
         isOpen = true;
         setCurrentMenu(this);
+        Main.print("Commands:\n" + commandHandler.help());
         while (isOpen) {
             String command = Main.scanLine();
             accept(command);
