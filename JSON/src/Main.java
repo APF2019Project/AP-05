@@ -419,8 +419,8 @@ public class Main {
                 "\"peppery\" : false" +
                 "\"waterProof\" : false"
                 + "}";
-        parseAndSave(threerow, "guns/threerow/threerowgun");
-        parseAndSave(threerowgun, "plants/shooter/threepeater");
+        parseAndSave(threerowgun, "guns/threerow/threerowgun");
+        parseAndSave(threerow, "plants/shooter/threepeater");
     }
 
     static void parseAndSave(String jsonString, String path) throws ParseException, IOException {

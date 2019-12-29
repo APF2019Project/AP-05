@@ -1,1 +1,1 @@
-{"shield":null,"reloadTime":4,"peppery":false,"fullHp":5,"price":4,"name":"Threepeater","cactus":false,"waterProof":false,"disposable":false,"coolDown":4}
+{"damage":1,"shy":false,"gunShotsPerRound":1,"name":"Threepeater Gun","sleepy":false,"projectile":true,"icy":false}
