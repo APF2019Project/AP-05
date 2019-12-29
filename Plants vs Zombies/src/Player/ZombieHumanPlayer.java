@@ -5,8 +5,8 @@ import Main.Map;
 import Main.User;
 
 public class ZombieHumanPlayer extends ZombiePlayer {
-    public ZombieHumanPlayer(Map map, User user) {
-        super(map, user);
+    public ZombieHumanPlayer(User user) {
+        super(user);
     }
 
     @Override

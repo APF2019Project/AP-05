@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class ZombiePlayer extends Player {
-    public ZombiePlayer(Map map, User user) {
-        super(map, user);
+    public ZombiePlayer(User user) {
+        super(user);
     }
 
     protected ArrayList<ActiveCard> zombieCardsInNextWave = new ArrayList<>();

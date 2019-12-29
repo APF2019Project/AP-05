@@ -13,8 +13,8 @@ import java.util.Random;
 import Main.User;
 
 public class ZombieAIPlayer extends ZombiePlayer {
-    public ZombieAIPlayer(Map map, User user) {
-        super(map,user);
+    public ZombieAIPlayer(User user) {
+        super(user);
     }
 
 

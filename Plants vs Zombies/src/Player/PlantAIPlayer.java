@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlantAIPlayer extends PlantPlayer {
-    public PlantAIPlayer(Map map,User user) {
-        super(map,user);
+    public PlantAIPlayer(User user) {
+        super(user);
     }
 
     @Override

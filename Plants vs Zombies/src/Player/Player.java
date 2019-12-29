@@ -8,9 +8,14 @@ import java.util.ArrayList;
 
 public abstract class Player {
     private int sunInGame;
-    final private Map map;
+    private Map map;
     private int killingEnemyCount;
     final User user;
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
     private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
     public int getKillingEnemyCount() {
@@ -29,8 +34,7 @@ public abstract class Player {
         this.sunInGame = sunInGame;
     }
 
-    public Player(Map map, User user) {
-        this.map = map;
+    public Player(User user) {
         this.user = user;
         user.setPlayer(this);
     }

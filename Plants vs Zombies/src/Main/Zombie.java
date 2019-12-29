@@ -44,8 +44,12 @@ public class Zombie extends Creature {
         return  (1 + this.getSpeed()) * this.getFullHp() * 10;
     }
 
-    public boolean isSwimmer(ActiveCard activeCard) {
+    public boolean isSwimmerWithActiveCard(ActiveCard activeCard) {
         return (swimmer || activeCard.isHasOrdak());
+    }
+
+    public boolean isSwimmer() {
+        return swimmer;
     }
 
     public boolean isCactusHasEffect() {
@@ -64,7 +68,7 @@ public class Zombie extends Creature {
         return (activeCard.getX() < 0);
     }
 
-    public boolean eatPlant(ActiveCard activeCard, Map map) {
+    public boolean eatPlant(ActiveCard activeCard, Map map) throws Exception {
         ActiveCard eatenPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
         if (eatenPlant != null && !eatenPlant.isHasLadder()) {
             if(isHasLadder()){
@@ -80,14 +84,14 @@ public class Zombie extends Creature {
                 activeCard.damaged(GameData.PepperDamage);
             }
             if(eatenPlant.getRemainingHp()==0){
-                activeCard.getOwner().addSun(eatenPlant.getCreature().getFullHp()*10);////////// should add to GameData
+                activeCard.getOwner().addSun(eatenPlant.getCreature().getKillingReward());
             }
             return true;
         }
         return false;
     }
 
-    public boolean doAction(ActiveCard activeCard, Map map) {
+    public boolean doAction(ActiveCard activeCard, Map map) throws Exception {
         int deltaX=speed;
         if(activeCard.getRemainingSlowDown()>0){
             deltaX*=(100-activeCard.getSlowDownPercent())/100.0;

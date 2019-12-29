@@ -39,8 +39,12 @@ public class ActiveCard {
         return hasOrdak;
     }
 
-    public void setHasLadder(boolean hasLadder) {
+    public void setHasLadder(boolean hasLadder) throws Exception {
+        if(((Zombie)creature).isSwimmer(this)){
+            throw new Exception("this zombie is already swimmer");
+        }
         this.hasLadder = hasLadder;
+
     }
     public boolean isHasLadder() {
         return hasLadder;

@@ -17,14 +17,22 @@ public class Map {
         return activeCardArrayList;
     }
 
+    public Player getPlantPlayer() {
+        return plantPlayer;
+    }
 
+    public Player getZombiePlayer() {
+        return zombiePlayer;
+    }
 
-    public Map(int row, int col, MapMode mapMode,Player plantPlayer, Player zombiePlayer) {
+    public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer) {
         this.row = row;
         this.col = col;
         this.plantPlayer = plantPlayer;
         this.zombiePlayer = zombiePlayer;
         this.mapMode = mapMode;
+        plantPlayer.setMap(this);
+        zombiePlayer.setMap(this);
         if (mapMode.equals(MapMode.Water)) {
             isWater = GameData.isWaterInWaterMapMode.clone();
         } else {
@@ -108,9 +116,7 @@ public class Map {
                 return false;
             }
         } else  {
-            if (((Zombie) activeCard.getCreature()).isSwimmer(activeCard)) {
-                return(((Zombie) activeCard.getCreature()).isSwimmer(activeCard) == isWater(activeCard.getX()));
-            }
+            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getX()));
         }
     }
     public void removeActiveCard(ActiveCard activeCard) {

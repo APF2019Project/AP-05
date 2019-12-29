@@ -8,8 +8,8 @@ import Main.User;
 import Main.Creature;
 
 public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
-    public PlantOnDayAndWaterModeHumanPlayer(Map map, User user) {
-        super(map, user);
+    public PlantOnDayAndWaterModeHumanPlayer(User user) {
+        super(user);
     }
 
     @Override

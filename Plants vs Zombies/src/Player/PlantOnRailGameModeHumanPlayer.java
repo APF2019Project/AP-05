@@ -5,8 +5,8 @@ import Main.Map;
 import Main.User;
 
 public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
-    public PlantOnRailGameModeHumanPlayer(Map map, User user) {
-        super(map, user);
+    public PlantOnRailGameModeHumanPlayer(User user) {
+        super(user);
     }
 
     @Override
