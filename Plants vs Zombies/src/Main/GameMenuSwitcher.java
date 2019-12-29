@@ -6,16 +6,19 @@ import Player.Player;
 
 public class GameMenuSwitcher {
     private Player plantPlayer, zombiePlayer;
-    private boolean onGame=true;
+    private Map map;
+    private GameStatus gameStatus=GameStatus.OnGame;
     private int numberOfRemainedWaves=-1;
 
-    public GameMenuSwitcher(PlantPlayer plantPlayer, ZombiePlayer zombiePlayer){
+    public GameMenuSwitcher(PlantPlayer plantPlayer, ZombiePlayer zombiePlayer,Map map){
         this.plantPlayer=plantPlayer;
         this.zombiePlayer=zombiePlayer;
+        this.map=map;
     }
-    public GameMenuSwitcher(PlantPlayer plantPlayer, ZombiePlayer zombiePlayer,int numberOfWaves){
+    public GameMenuSwitcher(PlantPlayer plantPlayer, ZombiePlayer zombiePlayer,Map map,int numberOfWaves){
         this.plantPlayer=plantPlayer;
         this.zombiePlayer=zombiePlayer;
+        this.map=map;
         this.numberOfRemainedWaves=numberOfWaves;
     }
 
@@ -24,9 +27,10 @@ public class GameMenuSwitcher {
         zombiePlayer.pickCards();
 
         // this part is incomplete
-        while(onGame){
+        while(gameStatus.equals(GameStatus.OnGame)){
             plantPlayer.doAction();
             zombiePlayer.doAction();
+            gameStatus=map.run();
         }
     }
 }
