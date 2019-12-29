@@ -17,7 +17,8 @@ public class ZombieAIPlayer extends ZombiePlayer {
         super(map,user);
     }
 
-    public void doAction(){
+
+    public void doAction() throws Exception {
         Random rand = new Random();
         while(true) {
             ArrayList<Creature> available = new ArrayList<Creature>();
@@ -34,7 +35,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
                 try {
                     map.addActiveCard(zombie);
-                }catch (Error e){
+                }catch (Error | Exception e){
                     // zombie is not ok with location (zombie is swimmer and its location is dry or visa visa)
                 }
             }else{
@@ -45,6 +46,11 @@ public class ZombieAIPlayer extends ZombiePlayer {
     @Override
     public void gameAction() {
 
+    }
+
+    @Override
+    public boolean pickCreature(Creature creature) throws Exception {
+        return true;
     }
 
     @Override

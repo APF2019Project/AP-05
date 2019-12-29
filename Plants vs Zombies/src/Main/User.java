@@ -91,10 +91,6 @@ public class User {
         return lockedCreatures;
     }
 
-    void buyCreature(Creature creature) {
-
-    }
-
     public String getUsername() {
         return username;
     }

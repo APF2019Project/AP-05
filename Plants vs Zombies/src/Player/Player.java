@@ -60,9 +60,11 @@ public abstract class Player {
         return null;
     }
 
-    public abstract void doAction();
+    public abstract void doAction() throws Exception;
 
     public abstract void gameAction();
+
+    public abstract boolean pickCreature(Creature creature) throws Exception;
 
     public abstract void pickCards() throws Exception;
 

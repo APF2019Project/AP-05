@@ -9,6 +9,7 @@ public class Map {
     boolean[] isWater;
     private int row, col;
     MapMode mapMode;
+    protected int remainedWaves;
 
     public ArrayList<ActiveCard> getActiveCardArrayList() {
         return activeCardArrayList;
@@ -91,9 +92,6 @@ public class Map {
     }
 
     public void addActiveCard(ActiveCard activeCard) throws Exception {
-        if(!mapMode.equals(MapMode.Rail) && activeCard.getOwner().getSunInGame()<activeCard.getCreature().getPrice()){
-            throw new Exception("you don't have Enough money");
-        }
         if (activeCard.getCreature() instanceof Plant) {
             if (((Plant) activeCard.getCreature()).isWaterProof() ^ isDry(activeCard.getX(), activeCard.getY())
             && findPlantIn(activeCard.getX(),activeCard.getY())==null) {
@@ -111,9 +109,6 @@ public class Map {
             }
         } else {
             throw new Exception("add ActiveCard have a bog");
-        }
-        if(!mapMode.equals(MapMode.Rail)){
-            activeCard.getOwner().setSunInGame(activeCard.getOwner().getSunInGame()-activeCard.getCreature().getPrice());
         }
     }
     public ActiveCard findPlantIn(int x, int y){

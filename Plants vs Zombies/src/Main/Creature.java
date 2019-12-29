@@ -42,7 +42,7 @@ public abstract class Creature {
         return price;
     }
 
-    abstract public void doAction(ActiveCard activeCard, Map map);
+    abstract public boolean doAction(ActiveCard activeCard, Map map);
 
     public int getReloadTime() {
         return reloadTime;

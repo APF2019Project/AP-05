@@ -1,5 +1,6 @@
 package Player;
 
+import Main.Creature;
 import Main.Map;
 import Main.User;
 
@@ -16,6 +17,11 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     @Override
     public void gameAction() {
 
+    }
+
+    @Override
+    public boolean pickCreature(Creature creature) throws Exception {
+        return true;
     }
 
     @Override

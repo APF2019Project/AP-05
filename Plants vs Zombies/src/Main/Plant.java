@@ -41,5 +41,5 @@ public abstract class Plant extends Creature {
         return peppery;
     }
 
-    abstract public void doAction(ActiveCard activeCard, Map map);
+    abstract public boolean doAction(ActiveCard activeCard, Map map);
 }

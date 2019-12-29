@@ -18,6 +18,12 @@ public class PlantAIPlayer extends PlantPlayer {
     public void gameAction() {
 
     }
+
+    @Override
+    public boolean pickCreature(Creature creature) throws Exception {
+        return true;
+    }
+
     @Override
     public void pickCards() throws Exception {
         Random random=new Random();

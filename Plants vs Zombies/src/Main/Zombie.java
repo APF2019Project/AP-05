@@ -77,7 +77,7 @@ public class Zombie extends Creature {
         return false;
     }
 
-    public void doAction(ActiveCard activeCard, Map map) {
+    public boolean doAction(ActiveCard activeCard, Map map) {
         int deltaX=speed;
         if(activeCard.getRemainingSlowDown()>0){
             deltaX*=(100-activeCard.getSlowDownPercent())/100.0;
