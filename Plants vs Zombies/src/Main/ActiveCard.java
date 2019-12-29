@@ -40,7 +40,7 @@ public class ActiveCard {
     }
 
     public void setHasLadder(boolean hasLadder) throws Exception {
-        if(((Zombie)creature).isSwimmer(this)){
+        if(((Zombie)creature).isSwimmerWithActiveCard(this)){
             throw new Exception("this zombie is already swimmer");
         }
         this.hasLadder = hasLadder;
@@ -139,7 +139,7 @@ public class ActiveCard {
         this.y = y;
     }
 
-    public void doAction(Map map) {
+    public void doAction(Map map) throws Exception {
         if (remainReloadTime == 0) {
             boolean isAct=creature.doAction(this, map);
             if(!isAct){

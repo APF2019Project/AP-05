@@ -34,7 +34,12 @@ public class GameData {
         return AIUser;
     }
 
-    public void readData() {
+    private static void readData() {
 
     }
+
+    public static void run(){
+
+    }
+
 }

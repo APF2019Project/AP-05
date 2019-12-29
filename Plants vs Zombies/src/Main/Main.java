@@ -7,9 +7,6 @@ import Command.ProfileCommandHandler;
 import java.util.Scanner;
 
 public class Main {
-    public static Menu loginMenu = new Menu(null, new LoginCommandHandler());
-    public static Menu playMenu;
-    public static Menu shopMenu;
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +19,9 @@ public class Main {
         System.out.println(string);
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        GameData.run();
+        Menu loginMenu = new Menu(null, new LoginCommandHandler());
+        loginMenu.run();
     }
 }
