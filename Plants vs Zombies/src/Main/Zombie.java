@@ -3,7 +3,7 @@ package Main;
 import java.util.ArrayList;
 
 public class Zombie extends Creature {
-    private boolean swimmer, cactusHasEffect, peaHasEffect, hasLadder;
+    private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed, power, powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
     /*
@@ -25,16 +25,9 @@ public class Zombie extends Creature {
         this.swimmer = jsonHandler.getBoolean(FieldNames.swimmer);
         this.cactusHasEffect = jsonHandler.getBoolean(FieldNames.cactusHasEffect);
         this.peaHasEffect = jsonHandler.getBoolean(FieldNames.peaHasEffect);
-        this.hasLadder = jsonHandler.getBoolean(FieldNames.hasLadder);
         this.speed = jsonHandler.getInt(FieldNames.speed);
         this.power = jsonHandler.getInt(FieldNames.power);
         this.powerWithShield = jsonHandler.getInt(FieldNames.powerWithShield);
-    }
-
-    public boolean isHasLadder() {
-        Shield shield;
-
-        return hasLadder;
     }
 
     public static ArrayList<Zombie> getAllZombies() {
@@ -83,8 +76,8 @@ public class Zombie extends Creature {
     public boolean eatPlant(ActiveCard activeCard, Map map) throws Exception {
         ActiveCard eatenPlant = map.findPlantIn(activeCard.getX(), activeCard.getY());
         if (eatenPlant != null && !eatenPlant.isHasLadder()) {
-            if (isHasLadder()) {
-                hasLadder = false;
+            if (activeCard.isHasLadder()) {
+                activeCard.setHasLadder(false);
                 eatenPlant.setHasLadder(true);
                 return false;
             }
