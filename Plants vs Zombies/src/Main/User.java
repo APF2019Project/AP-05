@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class User {
     static private ArrayList<User> allUsers=new ArrayList<>();
     private ArrayList<Creature> unlockedCreatures=new ArrayList<>();
-    private int coin = 0;
+    private int coinForShop = 0;
     private String username, password;
     private int killingEnemyCount;
     private Player player;
@@ -81,6 +81,15 @@ public class User {
         return null;
     }
 
+    public boolean buyCreatureFromShop(Creature creature){
+        if(getCoinForShop()<creature.getPriceInShop()){
+            return false;
+        }
+        setCoinForShop(getCoinForShop()-creature.getPriceInShop());
+        unlockedCreatures.add(creature);
+        return true;
+    }
+
     public ArrayList<Creature> getLockedCreatures() {
         ArrayList<Creature> lockedCreatures = new ArrayList<>();
         for (Creature creature : Creature.getAllCreatures()) {
@@ -99,12 +108,12 @@ public class User {
         this.username = username;
     }
 
-    public int getCoin() {
-        return coin;
+    public int getCoinForShop() {
+        return coinForShop;
     }
 
-    public void setCoin(int coin) {
-        this.coin = coin;
+    public void setCoinForShop(int coinForShop) {
+        this.coinForShop = coinForShop;
     }
 
     public String getPassword() {
