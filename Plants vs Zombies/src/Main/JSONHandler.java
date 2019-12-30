@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class JSONHandler {
@@ -13,6 +12,7 @@ public class JSONHandler {
     JSONHandler(File file) throws Exception {
         JSONParser jsonParser = new JSONParser();
         jsonObject = (JSONObject) jsonParser.parse(new FileReader(file));
+        //System.out.println(file.getName());
     }
 
     JSONHandler(String string) throws Exception {

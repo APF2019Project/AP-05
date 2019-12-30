@@ -68,7 +68,7 @@ public class GameData {
     private static void addShooterClass() throws Exception {
         for (File file : Objects.requireNonNull(new File("JSON/plants/shooter").listFiles())) {
             if (file.isFile()) {
-                new Mine(new JSONHandler(file));
+                new Shooter(new JSONHandler(file));
             }
         }
     }
