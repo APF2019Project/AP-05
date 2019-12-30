@@ -5,10 +5,8 @@ import org.json.simple.parser.ParseException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Main {
+public class Plants {
     public static void main(String[] args) throws ParseException, IOException {
-        JSONParser jsonParser = new JSONParser();
-
         String lilypad = "{\"name\": \"Lily Pad\", \"disposable\": false" +
                 "\"coolDown\" : 1" +
                 "\"fullHp\" : 1" +
@@ -51,8 +49,8 @@ public class Main {
                 "\"price\" : 4" +
                 "\"reloadTime\" : 0" +
                 "\"shield\": null" +
-                "\"cactus\": true" +
-                "\"peppery\" : false" +
+                "\"cactus\": false" +
+                "\"peppery\" : true" +
                 "\"waterProof\" : false"
                 + "}";
         parseAndSave(explodonut, "plants/explodonut");
@@ -168,7 +166,7 @@ public class Main {
                 "\"deltaY\" : 0" +
                 "\"activeRange\" : 0"
                 + "}";
-        parseAndSave(watermine, "plants/mine/lawnmower");
+        parseAndSave(Lawnmower, "plants/mine/lawnmower");
 
         String peashootergun = "{\"name\": \"Peashooter Gun\", " +
                 "\"icy\": false" +
@@ -381,7 +379,7 @@ public class Main {
         parseAndSave(melonpult, "plants/shooter/melonpult");
 
         String icymelonpultgun = "{\"name\": \"Winter Melon Gun\", " +
-                "\"icy\": false" +
+                "\"icy\": true" +
                 "\"shy\": false" +
                 "\"sleepy\": false" +
                 "\"projectile\": false" +
@@ -401,7 +399,7 @@ public class Main {
         parseAndSave(icymelonpultgun, "guns/icymelonpultgun");
         parseAndSave(icymelonpult, "plants/shooter/icymelonpult");
 
-        String threerowgun = "{\"name\": \"Threepeater Gun\", " +
+        String threerowgun = "{\"name\": \"Threepeater Gun\", \"disposable\": false" +
                 "\"icy\": false" +
                 "\"shy\": false" +
                 "\"sleepy\": false" +
