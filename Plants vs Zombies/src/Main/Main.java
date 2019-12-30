@@ -4,6 +4,7 @@ import Command.LoginCommandHandler;
 import Command.MainMenuCommandHandler;
 import Command.ProfileCommandHandler;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,11 @@ public class Main {
 
     public static void print(String string) {
         System.out.println(string);
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public static void main(String[] args) throws Exception {

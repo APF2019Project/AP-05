@@ -14,23 +14,16 @@ public class GameData {
     static int cactusDamage = 1;
     static int PepperDamage = 1;
     static int maxMagnetRange, MagnetEatingTime;
+    static String usersJSONFilePath="JSON/users";
     public final static int mapRowCount = 6;
     public final static int mapColCount = 10;
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
     public final static String positiveNumber = "([0-9]{1,20})";
-    private static User AIUser = null;
+    private static User AIUser;
     static public ArrayList<String> DryModeAvailablePlantName;
     static public ArrayList<String> WetModeAvailablePlantName;
     static public int inf = 100000000;
-
-    static {
-        try {
-            AIUser = new User("AI User", "Some Strong Password!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static User getAIUser() {
         return AIUser;
@@ -119,8 +112,8 @@ public class GameData {
     }
 
     public static void run() throws Exception {
+        AIUser = User.getUserByUsername("AI User");
         addAllGuns();
         addAllPlants();
     }
-
 }

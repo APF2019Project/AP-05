@@ -50,8 +50,9 @@ public class Menu {
 
     public void run() throws Exception {
         isOpen = true;
-        Main.print("Commands:\n" + commandHandler.help());
         while (isOpen) {
+            Main.clearScreen();
+            Main.print("Commands:\n" + commandHandler.help());
             String command = Main.scanLine();
             accept(command);
         }

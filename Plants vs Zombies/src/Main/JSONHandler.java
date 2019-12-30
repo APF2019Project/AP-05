@@ -1,18 +1,24 @@
 package Main;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class JSONHandler {
     private JSONObject jsonObject;
+    private File file;
 
     JSONHandler(File file) throws Exception {
         JSONParser jsonParser = new JSONParser();
-        jsonObject = (JSONObject) jsonParser.parse(new FileReader(file));
-        //System.out.println(file.getName());
+        this.file = file;
+        FileReader fileReader = new FileReader(file);
+        jsonObject = (JSONObject) jsonParser.parse(fileReader);
+        fileReader.close();
     }
 
     JSONHandler(String string) throws Exception {
@@ -20,7 +26,7 @@ public class JSONHandler {
         jsonObject = (JSONObject) jsonParser.parse(string);
     }
 
-    private Object getFromJSONObject(FieldNames key) throws Exception {
+    Object getFromJSONObject(FieldNames key) throws Exception {
         if (jsonObject.containsKey(key.name())) {
             return jsonObject.get(key.name());
         } else {
@@ -41,8 +47,14 @@ public class JSONHandler {
         return (boolean) getFromJSONObject(key);
     }
 
-    JSONHandler getJSONHandler(FieldNames key) throws Exception {
-        return new JSONHandler(getString(key));
+    void set(FieldNames key, Object value) throws Exception {
+        if(file==null){
+            throw new Exception("File is null");
+        }
+        jsonObject.put(key.name(), value);
+        System.out.println(jsonObject.toJSONString());
+        FileWriter fileWriter=new FileWriter(file);
+        fileWriter.write(jsonObject.toJSONString());
+        fileWriter.close();
     }
-
 }

@@ -1,16 +1,34 @@
 package Main;
 
 import Player.Player;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class User {
-    static private ArrayList<User> allUsers=new ArrayList<>();
-    private ArrayList<Creature> unlockedCreatures=new ArrayList<>();
+    static private ArrayList<User> allUsers = new ArrayList<>();
+    private ArrayList<Creature> unlockedCreatures = new ArrayList<>();
     private int coinForShop = 0;
     private String username, password;
     private int killingEnemyCount;
     private Player player;
+    private static JSONHandler usersJsonHandler;
+
+    static {
+        try {
+            usersJsonHandler = new JSONHandler(new File(GameData.usersJSONFilePath));
+            JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+            for (Object object : jsonArray) {
+                JSONObject userJsonObject = (JSONObject) object;
+                new User((String) userJsonObject.get(FieldNames.username.name()),
+                        (String) userJsonObject.get(FieldNames.password.name()), true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public Player getPlayer() {
         return player;
@@ -20,10 +38,23 @@ public class User {
         this.player = player;
     }
 
+    public User(String username, String password, boolean addFromFile) throws Exception {
+        this.username = username;
+        this.password = password;
+        allUsers.add(this);
+    }
+
     public User(String username, String password) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
             throw new Exception("username or password invalid");
         }
+        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(FieldNames.username, username);
+        jsonObject.put(FieldNames.password, password);
+        jsonArray.add(jsonObject);
+        usersJsonHandler.set(FieldNames.users, jsonArray);
+        System.out.println(jsonArray.size());
         this.username = username;
         this.password = password;
         allUsers.add(this);
@@ -81,11 +112,11 @@ public class User {
         return null;
     }
 
-    public boolean buyCreatureFromShop(Creature creature){
-        if(getCoinForShop()<creature.getPriceInShop()){
+    public boolean buyCreatureFromShop(Creature creature) {
+        if (getCoinForShop() < creature.getPriceInShop()) {
             return false;
         }
-        setCoinForShop(getCoinForShop()-creature.getPriceInShop());
+        setCoinForShop(getCoinForShop() - creature.getPriceInShop());
         unlockedCreatures.add(creature);
         return true;
     }
@@ -104,8 +135,20 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) throws Exception {
+        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject userJsonObject = (JSONObject) jsonArray.get(i);
+            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username);
+            if (usernameOfIthUser.equals(this.username)) {
+                this.username = username;
+                userJsonObject.put(FieldNames.username, username);
+                jsonArray.set(i, userJsonObject);
+                usersJsonHandler.set(FieldNames.users, jsonArray);
+                return;
+            }
+        }
+        throw new Exception("bug in User class setUsername method");
     }
 
     public int getCoinForShop() {
@@ -120,8 +163,20 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws Exception {
+        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject userJsonObject = (JSONObject) jsonArray.get(i);
+            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username);
+            if (usernameOfIthUser.equals(this.username)) {
+                this.password = password;
+                userJsonObject.put(FieldNames.password, password);
+                jsonArray.set(i, userJsonObject);
+                usersJsonHandler.set(FieldNames.users, jsonArray);
+                return;
+            }
+        }
+        throw new Exception("bug in User class setUsername method");
     }
 
     private boolean validNewUsername(String username) {
@@ -136,14 +191,14 @@ public class User {
         if (!validNewUsername(username)) {
             throw new Exception("username invalid");
         }
-        this.username = username;
+        setUsername(username);
     }
 
     public void changePassword(String password) throws Exception {
         if (!validNewPassword(password)) {
             throw new Exception("password invalid");
         }
-        this.password = password;
+        setPassword(password);
     }
 
     public int getKillingEnemyCount() {
