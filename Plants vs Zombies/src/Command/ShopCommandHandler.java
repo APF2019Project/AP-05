@@ -37,14 +37,17 @@ public class ShopCommandHandler extends CommandHandler {
     }
 
     public void buy(InputCommand inputCommand) throws Exception {
-        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
-        if (menu.getUser().getUnlockedCreatureByName(cardName) != null) {
+        String creatureName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
+        Creature creature=Creature.getCreatureByName(creatureName);
+        if (creature==null || menu.getUser().getUnlockedCreatureByName(creatureName) != null) {
             throw new Exception("invalid cardName");
         }
-
+        if(!menu.getUser().buyCreatureFromShop(creature)){
+            throw new Exception("you don't have enough money");
+        }
     }
 
     public void money(InputCommand inputCommand) {
-        Main.print(String.valueOf(menu.getUser().getCoin()));
+        Main.print(String.valueOf(menu.getUser().getCoinForShop()));
     }
 }

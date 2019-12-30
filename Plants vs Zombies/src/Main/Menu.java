@@ -6,20 +6,11 @@ import Player.Player;
 public class Menu {
     //private Menu lastMenu;
     private CommandHandler commandHandler;
-    private static Menu currentMenu;
     private User user;
     private boolean isOpen = false;
 
-    public static Menu getCurrentMenu() {
-        return currentMenu;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public static void setCurrentMenu(Menu currentMenu) {
-        Menu.currentMenu = currentMenu;
     }
 
     public Menu(User user, CommandHandler commandHandler) {
@@ -59,7 +50,6 @@ public class Menu {
 
     public void run() throws Exception {
         isOpen = true;
-        setCurrentMenu(this);
         Main.print("Commands:\n" + commandHandler.help());
         while (isOpen) {
             String command = Main.scanLine();
