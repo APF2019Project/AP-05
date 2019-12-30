@@ -7,16 +7,16 @@ public class Shield {
     private String name;
     private int fullHp;
     private String material;
-
+/*
     private Shield(String name, int fullHp, String material) {
         this.name = name;
         this.fullHp = fullHp;
         this.material = material;
         allShields.add(this);
     }
-
+*/
     public Shield(JSONHandler jsonHandler) throws Exception {
-        this.name = jsonHandler.getString(FieldNames.name);
+        this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.fullHp = jsonHandler.getInt(FieldNames.fullHp);
         this.material = jsonHandler.getString(FieldNames.material);
         allShields.add(this);

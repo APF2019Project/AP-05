@@ -14,6 +14,7 @@ public abstract class Creature {
     private int price;
     private Shield shield;
 
+    /*
     public Creature(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield) {
         this.name = name;
         this.disposable = disposable;
@@ -24,9 +25,9 @@ public abstract class Creature {
         this.shield = shield;
         allCreatures.add(this);
     }
-
+*/
     public Creature(JSONHandler jsonHandler) throws Exception {
-        this.name = jsonHandler.getString(FieldNames.name);
+        this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.disposable = jsonHandler.getBoolean(FieldNames.disposable);
         this.coolDown = jsonHandler.getInt(FieldNames.coolDown);
         this.fullHp = jsonHandler.getInt(FieldNames.fullHp);

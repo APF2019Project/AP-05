@@ -13,7 +13,9 @@ public class Main {
 
     // in do func baraye fazaye baadi bayad styleshoon kolan avaz she
     public static String scanLine() {
-        return scanner.nextLine();
+        String line = scanner.nextLine();
+        clearScreen();
+        return line;
     }
 
     public static void print(String string) {
@@ -26,8 +28,13 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        GameData.run();
-        Menu loginMenu = new Menu(null, new LoginCommandHandler());
-        loginMenu.run();
+        try{
+            GameData.run();
+            Menu loginMenu = new Menu(null, new LoginCommandHandler());
+            loginMenu.run();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        User.saveAllUsers();
     }
 }

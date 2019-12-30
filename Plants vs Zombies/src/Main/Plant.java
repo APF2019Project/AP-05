@@ -15,6 +15,8 @@ public class Plant extends Creature {
     public int getKillingReward(){
         return 10*getFullHp();
     }
+
+    /*
     public Plant(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield,
                  boolean cactus, boolean peppery, boolean waterProof) {
         super(name, disposable, coolDown, fullHp, price, reloadTime, shield);
@@ -22,7 +24,7 @@ public class Plant extends Creature {
         this.peppery = peppery;
         this.waterProof = waterProof;
         allPlants.add(this);
-    }
+    }*/
 
     public Plant(JSONHandler jsonHandler) throws Exception{
         super(jsonHandler);
