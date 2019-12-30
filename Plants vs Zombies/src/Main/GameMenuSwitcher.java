@@ -22,12 +22,13 @@ public class GameMenuSwitcher {
         map.getZombiePlayer().pickCards();
 
         // this part is incomplete
-        while(gameStatus.equals(GameStatus.OnGame)){
+        while(gameStatus.equals(GameStatus.OnGame) && numberOfRemainedWaves>0){
             map.getPlantPlayer().doAction();
             map.getZombiePlayer().doAction();
             gameStatus=map.run();
             map.getPlantPlayer().gameAction();
             map.getZombiePlayer().gameAction();
         }
+        gameStatus=GameStatus.PlantPlayerWins;
     }
 }

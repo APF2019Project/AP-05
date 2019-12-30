@@ -24,6 +24,14 @@ public class Plant extends Creature {
         allPlants.add(this);
     }
 
+    public Plant(JSONHandler jsonHandler) throws Exception{
+        super(jsonHandler);
+        this.cactus = jsonHandler.getBoolean(FieldNames.cactus);
+        this.peppery = jsonHandler.getBoolean(FieldNames.peppery);
+        this.waterProof = jsonHandler.getBoolean(FieldNames.waterProof);
+        allPlants.add(this);
+    }
+
     public static ArrayList<Plant> getAllPlants() {
         return allPlants;
     }

@@ -25,6 +25,18 @@ public abstract class Creature {
         allCreatures.add(this);
     }
 
+    public Creature(JSONHandler jsonHandler) throws Exception {
+        this.name = jsonHandler.getString(FieldNames.name);
+        this.disposable = jsonHandler.getBoolean(FieldNames.disposable);
+        this.coolDown = jsonHandler.getInt(FieldNames.coolDown);
+        this.fullHp = jsonHandler.getInt(FieldNames.fullHp);
+        this.price = jsonHandler.getInt(FieldNames.price);
+        this.reloadTime = jsonHandler.getInt(FieldNames.reloadTime);
+        this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
+        allCreatures.add(this);
+
+    }
+
     static public Creature getCreatureByName(String name) {
         for (Creature creature : allCreatures) {
             if (creature.getName().equals(name)) {
@@ -61,7 +73,9 @@ public abstract class Creature {
     }
 
     abstract public int getPriceInShop();
+
     abstract public int getKillingReward();
+
     public int getCoolDown() {
         return coolDown;
     }

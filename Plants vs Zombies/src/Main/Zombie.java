@@ -6,7 +6,7 @@ public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect, hasLadder;
     private int speed, power, powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
-
+    /*
     public Zombie(String name, boolean disposable, int coolDown, int fullHp, int reloadTime,
                   Shield shield, boolean swimmer, boolean cactusHasEffect,
                   boolean peaHasEffect, boolean hasLadder, int speed, int power, int powerWithShield) {
@@ -18,6 +18,17 @@ public class Zombie extends Creature {
         this.speed = speed;
         this.power = power;
         this.powerWithShield = powerWithShield;
+    }
+*/
+    public Zombie(JSONHandler jsonHandler) throws Exception {
+        super(jsonHandler);
+        this.swimmer = jsonHandler.getBoolean(FieldNames.swimmer);
+        this.cactusHasEffect = jsonHandler.getBoolean(FieldNames.cactusHasEffect);
+        this.peaHasEffect = jsonHandler.getBoolean(FieldNames.peaHasEffect);
+        this.hasLadder = jsonHandler.getBoolean(FieldNames.hasLadder);
+        this.speed = jsonHandler.getInt(FieldNames.speed);
+        this.power = jsonHandler.getInt(FieldNames.power);
+        this.powerWithShield = jsonHandler.getInt(FieldNames.powerWithShield);
     }
 
     public boolean isHasLadder() {

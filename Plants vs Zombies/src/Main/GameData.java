@@ -1,6 +1,8 @@
 package Main;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameData {
     static int speedOfGunShot = 3;
@@ -38,10 +40,87 @@ public class GameData {
 
     }
 
-    public static void run() {
-        // this is for test
-        `new Plant("sun", false, 3, 100, 100, 10, null, false, false, false);
-        new Plant("Peashooter", false, 3, 100, 100, 10, null, false, false, false);
+    private static void addLilyPadClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/lilypad").listFiles())) {
+            if (file.isFile()) {
+                new LilyPad(new JSONHandler(file));
+            } else {
+                throw new Exception("there are some unknown folders in json directory");
+            }
+        }
+    }
+
+    private static void addMagnetShroomClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/magnetshroom").listFiles())) {
+            if (file.isFile()) {
+                new MagnetShroom(new JSONHandler(file));
+            }
+        }
+    }
+
+    private static void addMineClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/mine").listFiles())) {
+            if (file.isFile()) {
+                new Mine(new JSONHandler(file));
+            }
+        }
+    }
+    private static void addShooterClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/shooter").listFiles())) {
+            if (file.isFile()) {
+                new Mine(new JSONHandler(file));
+            }
+        }
+    }
+    private static void addSunFlowerClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/sunflower").listFiles())) {
+            if (file.isFile()) {
+                new SunFlower(new JSONHandler(file));
+            }
+        }
+    }
+
+    private static void addAllPlants() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/plants/").listFiles())) {
+            if (file.isFile()) {
+                new Plant(new JSONHandler(file));
+            }
+        }
+        addLilyPadClass();
+        addMagnetShroomClass();
+        addMineClass();
+        addShooterClass();
+        addSunFlowerClass();
+    }
+
+    private static void addDoubleSidedGunClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/guns/doublesided").listFiles())) {
+            if (file.isFile()) {
+                new DoubleSidedGun(new JSONHandler(file));
+            }
+        }
+    }
+    private static void addThreeRowGunClass() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/guns/threerow").listFiles())) {
+            if (file.isFile()) {
+                new ThreeRowGun(new JSONHandler(file));
+            }
+        }
+    }
+
+    private static void addAllGuns() throws Exception {
+        for (File file : Objects.requireNonNull(new File("JSON/guns/").listFiles())) {
+            if (file.isFile()) {
+                new Gun(new JSONHandler(file));
+            }
+        }
+        addDoubleSidedGunClass();
+        addThreeRowGunClass();
+    }
+
+    public static void run() throws Exception {
+        addAllGuns();
+        addAllPlants();
     }
 
 }

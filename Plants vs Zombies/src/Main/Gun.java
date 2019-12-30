@@ -1,10 +1,13 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Gun {
+    private static ArrayList<Gun> allGuns=new ArrayList<>();
     private String name;
     private boolean icy, shy, sleepy, projectile;
     private int damage, gunShotsPerRound;
-
+    /*
     public Gun(String name, boolean icy, boolean shy, boolean sleepy, int damage,
                int gunShotsPerRound, boolean hasEffectOnShield) {
         this.name = name;
@@ -14,8 +17,28 @@ public class Gun {
         this.damage = damage;
         this.gunShotsPerRound = gunShotsPerRound;
         this.projectile = hasEffectOnShield;
+        allGuns.add(this);
+    }
+    */
+    public Gun(JSONHandler jsonHandler) throws Exception {
+        this.name = jsonHandler.getString(FieldNames.name);
+        this.icy = jsonHandler.getBoolean(FieldNames.icy);
+        this.shy = jsonHandler.getBoolean(FieldNames.shy);
+        this.sleepy = jsonHandler.getBoolean(FieldNames.sleepy);
+        this.projectile = jsonHandler.getBoolean(FieldNames.projectile);
+        this.damage =  jsonHandler.getInt(FieldNames.damage);;
+        this.gunShotsPerRound =  jsonHandler.getInt(FieldNames.gunShotsPerRound);
+        allGuns.add(this);
     }
 
+    public static Gun getGunByName(String gunName){
+        for(Gun gun:allGuns){
+            if(gun.getName().equals(gunName)){
+                return gun;
+            }
+        }
+        return null;
+    }
 
     public int getGunShotsPerRound() {
         return gunShotsPerRound;

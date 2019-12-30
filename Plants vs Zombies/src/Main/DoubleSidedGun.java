@@ -1,9 +1,14 @@
 package Main;
 
 public class DoubleSidedGun extends Gun {
+    /*
     public DoubleSidedGun(String name, boolean icy, boolean shy, boolean sleepy, int damage,
                           int gunShotsPerRound, boolean hasEffectOnShield) {
         super(name, icy, shy, sleepy, damage, gunShotsPerRound, hasEffectOnShield);
+    }
+    */
+    public DoubleSidedGun(JSONHandler jsonHandler) throws Exception {
+        super(jsonHandler);
     }
 
     public boolean doAction(ActiveCard activeCard, Map map) {
