@@ -250,6 +250,7 @@ public class Zombie {
                 "\"power\": 10000" +
                 "\"powerWithShield\": 1" +
                 "}";
+        parseAndSave(bungee, "zombie/bungee");
     }
 
     static void parseAndSave(String jsonString, String path) throws ParseException, IOException {
