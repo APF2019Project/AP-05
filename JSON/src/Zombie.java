@@ -7,7 +7,11 @@ import java.io.IOException;
 
 public class Zombie {
     public static void main(String[] args) {
-        String zombie = "{";
+        String zombie = "{\"name\": \"Zombie\", " +
+                "\"swimmer\": false" +
+                "\"cactusHasEffect\": true" +
+                "\"peaHasEffect\": true" +
+                "\"hasLadder    ";
     }
 
     static void parseAndSave(String jsonString, String path) throws ParseException, IOException {
