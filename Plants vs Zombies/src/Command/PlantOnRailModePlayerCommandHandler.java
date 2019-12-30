@@ -37,8 +37,12 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    void select(InputCommand inputCommand) {
-        int plantIndex = Integer.parseInt(Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1));
+    void select(InputCommand inputCommand) throws Exception {
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler select method");
+        }
+        int plantIndex = Integer.parseInt(matcher.group(1));
         selectedPlant = (Plant) menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex);
     }
 
@@ -47,16 +51,21 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     }
 
     void plant(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
-                .matcher(inputCommand.getInput());
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler plant method");
+        }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
-        menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
+        menu.getUser().getPlayer().getMap()
+                .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
         selectedPlant = null;
     }
 
     void remove(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
-                .matcher(inputCommand.getInput());
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler remove method");
+        }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
         ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {

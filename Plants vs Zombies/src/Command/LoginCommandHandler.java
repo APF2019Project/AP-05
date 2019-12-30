@@ -23,7 +23,7 @@ public class LoginCommandHandler extends CommandHandler {
         String username = Main.scanLine();
         Main.print("Enter your password:");
         String password = Main.scanLine();
-        new Menu(new User(username, password), new LoginCommandHandler()).run();
+        menu.showHelp();
     }
 
     public void login(InputCommand inputCommand) throws Exception {

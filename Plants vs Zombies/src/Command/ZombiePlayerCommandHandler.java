@@ -46,6 +46,9 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void put(InputCommand inputCommand) throws Exception {
         Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in ZombiePlayerCommandHandler put method");
+        }
         String zombieName = matcher.group(1);
         int zombieCount = Integer.parseInt(matcher.group(2));
         int y = Integer.parseInt(matcher.group(3));

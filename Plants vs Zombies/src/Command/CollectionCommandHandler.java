@@ -3,6 +3,7 @@ package Command;
 import Main.*;
 import Player.Player;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CollectionCommandHandler extends CommandHandler {
@@ -48,7 +49,11 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void selectCard(InputCommand inputCommand) throws Exception {
-        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in CollectionCommandHandler selectCard method");
+        }
+        String cardName = matcher.group(1);
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
         if (creature == null) {
             throw new Exception("invalid cardName");
@@ -57,7 +62,11 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void removeCard(InputCommand inputCommand) throws Exception {
-        String cardName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in CollectionCommandHandler removeCard method");
+        }
+        String cardName = matcher.group(1);
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
         if (creature == null) {
             throw new Exception("invalid cardName");

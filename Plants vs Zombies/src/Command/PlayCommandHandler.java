@@ -17,7 +17,8 @@ public class PlayCommandHandler extends CommandHandler {
     public void playDayMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day,plantOnDayAndWaterModeHumanPlayer,new ZombieAIPlayer(GameData.getAIUser()));
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day,plantOnDayAndWaterModeHumanPlayer,
+                new ZombieAIPlayer(GameData.getAIUser()));
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
@@ -25,7 +26,8 @@ public class PlayCommandHandler extends CommandHandler {
     public void playWaterMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water,plantOnDayAndWaterModeHumanPlayer, new ZombieAIPlayer(GameData.getAIUser()));
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water,plantOnDayAndWaterModeHumanPlayer,
+                new ZombieAIPlayer(GameData.getAIUser()));
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
@@ -33,14 +35,16 @@ public class PlayCommandHandler extends CommandHandler {
     public void playRailMode(InputCommand inputCommand) throws Exception {
         PlantOnRailGameModeHumanPlayer plantOnRailGameModeHumanPlayer =
                 new PlantOnRailGameModeHumanPlayer(menu.getUser());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Rail,plantOnRailGameModeHumanPlayer, new ZombieAIPlayer(GameData.getAIUser()));
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Rail,plantOnRailGameModeHumanPlayer,
+                new ZombieAIPlayer(GameData.getAIUser()));
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
 
     public void playZombieMode(InputCommand inputCommand) throws Exception {
         ZombieHumanPlayer zombieHumanPlayer = new ZombieHumanPlayer(menu.getUser());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP,new PlantAIPlayer(menu.getUser()), zombieHumanPlayer);
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP,new PlantAIPlayer(menu.getUser()),
+                zombieHumanPlayer);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
@@ -53,7 +57,8 @@ public class PlayCommandHandler extends CommandHandler {
         User opponentUser = User.getUserByUsername(opponentUsername);
         ZombieHumanPlayer zombieHumanPlayer =
                 new ZombieHumanPlayer(opponentUser);
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day,plantOnDayAndWaterModeHumanPlayer, zombieHumanPlayer);
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day,plantOnDayAndWaterModeHumanPlayer,
+                zombieHumanPlayer);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map, numberOfWaves);
         gameMenuSwitcher.runGame();
     }

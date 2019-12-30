@@ -35,8 +35,12 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         Main.print(stringBuilder.toString());
     }
 
-    void select(InputCommand inputCommand) {
-        String plantName = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput()).group(1);
+    void select(InputCommand inputCommand) throws Exception {
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler select method");
+        }
+        String plantName = matcher.group(1);
         Plant plant = (Plant) menu.getUser().getPlayer().getCreatureOnHandByName(plantName);
         if (menu.getUser().getPlayer().getSunInGame() < plant.getPrice()) {
             throw new Error("you don't have Enough money");
@@ -45,16 +49,21 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     void plant(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
-                .matcher(inputCommand.getInput());
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler plant method");
+        }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
-        menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
+        menu.getUser().getPlayer().getMap()
+                .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
         selectedPlant = null;
     }
 
     void remove(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex())
-                .matcher(inputCommand.getInput());
+        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
+        if (!matcher.find()) {
+            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler remove method");
+        }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
         ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
