@@ -236,6 +236,20 @@ public class Zombie {
                 "}";
         parseAndSave(dolphinridershield, "shield/dolphinridershield");
         parseAndSave(dolphinrider, "zombie/dolphinrider");
+
+        String bungee = "{\"name\": \"Bungee Zombie\", " +
+                "\"disposable\": false" +
+                "\"coolDown\": 0" +
+                "\"fullHp\": 3" +
+                "\"reloadTime\": 3" +
+                "\"shield\": null" +
+                "\"swimmer\": false" +
+                "\"cactusHasEffect\": true" +
+                "\"peaHasEffect\": true" +
+                "\"speed\": 0" +
+                "\"power\": 10000" +
+                "\"powerWithShield\": 1" +
+                "}";
     }
 
     static void parseAndSave(String jsonString, String path) throws ParseException, IOException {
