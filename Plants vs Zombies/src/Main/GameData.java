@@ -16,21 +16,21 @@ public class GameData {
     public final static int mapColCount = 10;
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
-    public final static String positiveNumber="([0-9]{1,20})";
+    public final static String positiveNumber = "([0-9]{1,20})";
     private static User AIUser = null;
-    static public ArrayList<String>DryModeAvailablePlantName;
+    static public ArrayList<String> DryModeAvailablePlantName;
     static public ArrayList<String> WetModeAvailablePlantName;
-    static public int inf=100000000;
+    static public int inf = 100000000;
 
     static {
         try {
-            AIUser = new User("AI User","Some Strong Password!");
+            AIUser = new User("AI User", "Some Strong Password!");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static User getAIUser(){
+    public static User getAIUser() {
         return AIUser;
     }
 
@@ -38,8 +38,10 @@ public class GameData {
 
     }
 
-    public static void run(){
-
+    public static void run() {
+        // this is for test
+        `new Plant("sun", false, 3, 100, 100, 10, null, false, false, false);
+        new Plant("Peashooter", false, 3, 100, 100, 10, null, false, false, false);
     }
 
 }
