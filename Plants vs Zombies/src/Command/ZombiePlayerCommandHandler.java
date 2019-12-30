@@ -14,11 +14,13 @@ import java.util.regex.Pattern;
 public class ZombiePlayerCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::showHand, "show hand", ""),
-                new Command(this::showLanes, "show lanes", ""),
-                new Command(this::put, "put (.+)," + GameData.positiveNumber + "," + GameData.positiveNumber, ""),
-                new Command(this::start, "record", ""),
-                new Command(this::endTurn, "end turn", ""),
+                new Command(this::showHand, "show hand", "show hand: To see selected cards."),
+                new Command(this::showLanes, "show lanes", "show lanes: To see " +
+                        "rows and zombies to go there."),
+                new Command(this::put, "put (.+)," + GameData.positiveNumber + "," + GameData.positiveNumber,
+                        "put [name],[number of zombies to put],[row]: to put zombies."),
+                new Command(this::start, "start", "start: To start current wave."),
+                new Command(this::endTurn, "end turn", "end turn: To end turn."),
         };
     }
 

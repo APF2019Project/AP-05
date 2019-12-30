@@ -12,15 +12,17 @@ import java.util.regex.Pattern;
 public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::list, "list", ""),
-                new Command(this::select, "select " + GameData.positiveNumber, ""),
-                new Command(this::record, "record", ""),
+                new Command(this::list, "list", "list: To see your current cards."),
+                new Command(this::select, "select " + GameData.positiveNumber, "select [number]: To select " +
+                        "number'th card."),
+                new Command(this::record, "record", "record: To see number of killed zombies."),
                 new Command(this::plant, "plant " + GameData.positiveNumber + "," + GameData.positiveNumber,
-                        ""),
+                        "plant [row],[column]: To plant your selected plant in the given coordination."),
                 new Command(this::remove, "remove " + GameData.positiveNumber + "," + GameData.positiveNumber,
-                        ""),
-                new Command(this::endTurn, "end turn", ""),
-                new Command(this::showLawn, "show lawn", ""),
+                        "remove [row],[column]: To remove a plant from given coordination."),
+                new Command(this::endTurn, "end turn", "end turn: To end turn."),
+                new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
+                        "zombies and plants.")
         };
     }
 

@@ -8,9 +8,10 @@ import Main.User;
 public class ProfileCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::changeUsernameAndPassword, "change", ""),
+                new Command(this::changeUsernameAndPassword, "change", "change: To change your account." +
+                        "Enter a username and its password in tow different lines after this command."),
                 new Command(this::deleteUser, "delete", "delete: To delete a user. " +
-                        "Enter a username and its password in two different lines."),
+                        "Enter a username and its password in two different lines after this command."),
                 new Command(this::renameUser, "rename", "rename: To rename your current username. " +
                         "Enter a username in a different line."),
                 new Command(this::createUser, "create", "create account: To create " +
