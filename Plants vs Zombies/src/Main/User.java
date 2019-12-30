@@ -14,16 +14,24 @@ public class User {
     private String username, password;
     private int killingEnemyCount;
     private Player player;
-    private static JSONHandler usersJsonHandler;
 
     static {
         try {
-            usersJsonHandler = new JSONHandler(new File(GameData.usersJSONFilePath));
+            JSONHandler usersJsonHandler = new JSONHandler(new File(GameData.usersJSONFilePath));
             JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
             for (Object object : jsonArray) {
                 JSONObject userJsonObject = (JSONObject) object;
-                new User((String) userJsonObject.get(FieldNames.username.name()),
-                        (String) userJsonObject.get(FieldNames.password.name()), true);
+                User user = new User((String) userJsonObject.get(FieldNames.username.name()),
+                        (String) userJsonObject.get(FieldNames.password.name()));
+                user.setKillingEnemyCount(((Long) userJsonObject.get(FieldNames.killingEnemyCount.name())).intValue());
+                user.setCoinForShop(((Long) userJsonObject.get(FieldNames.coinForShop.name())).intValue());
+                JSONArray unlockedCreaturesJsonArray =
+                        (JSONArray) userJsonObject.get(FieldNames.unlockedCreatures.name());
+                for (Object creatureObject : unlockedCreaturesJsonArray) {
+                    String creatureName = (String) creatureObject;
+                    user.unlockedCreatures.add(Creature.getCreatureByName(creatureName));
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,22 +46,28 @@ public class User {
         this.player = player;
     }
 
-    public User(String username, String password, boolean addFromFile) throws Exception {
-        this.username = username;
-        this.password = password;
-        allUsers.add(this);
+    public static void saveAllUsers() throws Exception {
+        JSONArray usersJsonArray = new JSONArray();
+        for (User user : allUsers) {
+            JSONObject userJsonObject = new JSONObject();
+            userJsonObject.put(FieldNames.username.name(), user.getUsername());
+            userJsonObject.put(FieldNames.password.name(), user.getPassword());
+            JSONArray unlockedCreaturesJsonArray = new JSONArray();
+            for (Creature unlockedCreature : user.unlockedCreatures) {
+                unlockedCreaturesJsonArray.add(unlockedCreature.getName());
+            }
+            userJsonObject.put(FieldNames.unlockedCreatures.name(), unlockedCreaturesJsonArray);
+            userJsonObject.put(FieldNames.killingEnemyCount.name(), user.getKillingEnemyCount());
+            userJsonObject.put(FieldNames.coinForShop.name(), user.getCoinForShop());
+            usersJsonArray.add(userJsonObject);
+        }
+        new JSONHandler(new File(GameData.usersJSONFilePath)).set(FieldNames.users, usersJsonArray);
     }
 
     public User(String username, String password) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
             throw new Exception("username or password invalid");
         }
-        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FieldNames.username, username);
-        jsonObject.put(FieldNames.password, password);
-        jsonArray.add(jsonObject);
-        usersJsonHandler.set(FieldNames.users, jsonArray);
         this.username = username;
         this.password = password;
         allUsers.add(this);
@@ -73,18 +87,7 @@ public class User {
         if (user == null) {
             throw new Exception("incorrect username or password");
         }
-        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        int index = getIndexOfUserInFile(username);
-        if (index == -1) {
-            throw new Exception("bug in User class deleteUser method");
-        }
-        jsonArray.remove(index);
-        usersJsonHandler.set(FieldNames.users, jsonArray);
         allUsers.remove(user);
-    }
-
-    private static void addUser(User user) {
-        allUsers.add(user);
     }
 
     public static ArrayList<User> getAllUsers() {
@@ -105,10 +108,6 @@ public class User {
         return null;
     }
 
-    public static boolean usernameIsValid(String username) {
-        return getUserByUsername(username) != null && !username.contains(" ");
-    }
-
     public Creature getUnlockedCreatureByName(String creatureName) {
         for (Creature creature : unlockedCreatures) {
             if (creature.getName().equals(creatureName)) {
@@ -118,7 +117,11 @@ public class User {
         return null;
     }
 
-    public boolean buyCreatureFromShop(Creature creature) {
+    public void setKillingEnemyCount(int killingEnemyCount) throws Exception {
+        this.killingEnemyCount = killingEnemyCount;
+    }
+
+    public boolean buyCreatureFromShop(Creature creature) throws Exception {
         if (getCoinForShop() < creature.getPriceInShop()) {
             return false;
         }
@@ -141,37 +144,15 @@ public class User {
         return username;
     }
 
-    public static int getIndexOfUserInFile(String username) throws Exception {
-        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject userJsonObject = (JSONObject) jsonArray.get(i);
-            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
-            if (usernameOfIthUser.equals(username)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void setUsername(String username) throws Exception {
-        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        int index = getIndexOfUserInFile(this.username);
-        if (index == -1) {
-            throw new Exception("bug in User class setUsername method");
-        }
-        JSONObject userJsonObject = (JSONObject) jsonArray.get(index);
-        String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
         this.username = username;
-        userJsonObject.put(FieldNames.username.name(), username);
-        jsonArray.set(index, userJsonObject);
-        usersJsonHandler.set(FieldNames.users, jsonArray);
     }
 
     public int getCoinForShop() {
         return coinForShop;
     }
 
-    public void setCoinForShop(int coinForShop) {
+    public void setCoinForShop(int coinForShop) throws Exception {
         this.coinForShop = coinForShop;
     }
 
@@ -180,17 +161,7 @@ public class User {
     }
 
     public void setPassword(String password) throws Exception {
-        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        int index = getIndexOfUserInFile(this.username);
-        if (index == -1) {
-            throw new Exception("bug in User class setPassword method");
-        }
-        JSONObject userJsonObject = (JSONObject) jsonArray.get(index);
-        String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
         this.password = password;
-        userJsonObject.put(FieldNames.password.name(), password);
-        jsonArray.set(index, userJsonObject);
-        usersJsonHandler.set(FieldNames.users, jsonArray);
     }
 
     private boolean validNewUsername(String username) {
@@ -221,8 +192,5 @@ public class User {
 
     public ArrayList<Creature> getUnlockedCreatures() {
         return unlockedCreatures;
-    }
-
-    public void UnlockCreature(Creature creature) {
     }
 }

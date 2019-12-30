@@ -2,7 +2,7 @@ package Main;
 
 public class Mine extends Plant {
     private int deltaX, deltaY, activeRange;
-
+/*
     public Mine(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime,
                 Shield shield, boolean cactus, boolean peppery, boolean waterProof,
                 int deltaX, int deltaY, int activeRange) {
@@ -11,7 +11,7 @@ public class Mine extends Plant {
         this.deltaY = deltaY;
         this.activeRange = activeRange;
     }
-
+*/
     public Mine(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
         this.deltaX = jsonHandler.getInt(FieldNames.deltaX);

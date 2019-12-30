@@ -21,7 +21,7 @@ public class Gun {
     }
     */
     public Gun(JSONHandler jsonHandler) throws Exception {
-        this.name = jsonHandler.getString(FieldNames.name);
+        this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.icy = jsonHandler.getBoolean(FieldNames.icy);
         this.shy = jsonHandler.getBoolean(FieldNames.shy);
         this.sleepy = jsonHandler.getBoolean(FieldNames.sleepy);

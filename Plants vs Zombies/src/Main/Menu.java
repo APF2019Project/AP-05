@@ -48,12 +48,15 @@ public class Menu {
         commandHandler.accept(command);
     }
 
+    public void showHelp() throws Exception {
+        Main.print("Commands:\n" + commandHandler.help());
+    }
+
     public void run() throws Exception {
         isOpen = true;
         while (isOpen) {
-            Main.clearScreen();
-            Main.print("Commands:\n" + commandHandler.help());
-            String command = Main.scanLine();
+            showHelp();
+            String command = Main.scanLine().toLowerCase();
             accept(command);
         }
     }
