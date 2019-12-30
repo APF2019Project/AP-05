@@ -47,6 +47,10 @@ public class JSONHandler {
         return (boolean) getFromJSONObject(key);
     }
 
+    void put(FieldNames key, Object value){
+        jsonObject.put(key.name(), value);
+    }
+
     void set(FieldNames key, Object value) throws Exception {
         if(file==null){
             throw new Exception("File is null");

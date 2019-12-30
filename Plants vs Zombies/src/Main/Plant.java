@@ -3,17 +3,29 @@ package Main;
 import java.util.ArrayList;
 
 public class Plant extends Creature {
-    private static ArrayList<Plant> allPlants = new ArrayList<>();
+    private final static ArrayList<Plant> allPlants = new ArrayList<>();
+
+    public static ArrayList<Plant> getFirstPlants() {
+        return firstPlants;
+    }
+
+    private final static ArrayList<Plant> firstPlants = new ArrayList<>();
+
     private boolean cactus, peppery;
     private boolean waterProof;
 
     @Override
     public int getPriceInShop() {
-        return this.getPrice()* this.getCoolDown() * this.getFullHp() + 1;
+        return this.getPrice() * this.getCoolDown() * this.getFullHp() + 1;
     }
+
     @Override
-    public int getKillingReward(){
-        return 10*getFullHp();
+    public int getKillingReward() {
+        return 10 * getFullHp();
+    }
+
+    public static void addFirstPlant(Plant plant) {
+        firstPlants.add(plant);
     }
 
     /*
@@ -26,7 +38,7 @@ public class Plant extends Creature {
         allPlants.add(this);
     }*/
 
-    public Plant(JSONHandler jsonHandler) throws Exception{
+    public Plant(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
         this.cactus = jsonHandler.getBoolean(FieldNames.cactus);
         this.peppery = jsonHandler.getBoolean(FieldNames.peppery);
@@ -38,9 +50,9 @@ public class Plant extends Creature {
         return allPlants;
     }
 
-    public static Plant getPlantByName(String plantName){
-        for(Plant plant:allPlants){
-            if(plant.getName().equals(plantName)){
+    public static Plant getPlantByName(String plantName) {
+        for (Plant plant : allPlants) {
+            if (plant.getName().equals(plantName)) {
                 return plant;
             }
         }
