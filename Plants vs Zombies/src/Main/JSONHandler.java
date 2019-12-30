@@ -52,7 +52,7 @@ public class JSONHandler {
             throw new Exception("File is null");
         }
         jsonObject.put(key.name(), value);
-        System.out.println(jsonObject.toJSONString());
+        //System.out.println(jsonObject.toJSONString());
         FileWriter fileWriter=new FileWriter(file);
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();

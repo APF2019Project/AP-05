@@ -54,7 +54,6 @@ public class User {
         jsonObject.put(FieldNames.password, password);
         jsonArray.add(jsonObject);
         usersJsonHandler.set(FieldNames.users, jsonArray);
-        System.out.println(jsonArray.size());
         this.username = username;
         this.password = password;
         allUsers.add(this);
@@ -74,6 +73,13 @@ public class User {
         if (user == null) {
             throw new Exception("incorrect username or password");
         }
+        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+        int index = getIndexOfUserInFile(username);
+        if (index == -1) {
+            throw new Exception("bug in User class deleteUser method");
+        }
+        jsonArray.remove(index);
+        usersJsonHandler.set(FieldNames.users, jsonArray);
         allUsers.remove(user);
     }
 
@@ -135,20 +141,30 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) throws Exception {
+    public static int getIndexOfUserInFile(String username) throws Exception {
         JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject userJsonObject = (JSONObject) jsonArray.get(i);
-            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username);
-            if (usernameOfIthUser.equals(this.username)) {
-                this.username = username;
-                userJsonObject.put(FieldNames.username, username);
-                jsonArray.set(i, userJsonObject);
-                usersJsonHandler.set(FieldNames.users, jsonArray);
-                return;
+            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
+            if (usernameOfIthUser.equals(username)) {
+                return i;
             }
         }
-        throw new Exception("bug in User class setUsername method");
+        return -1;
+    }
+
+    public void setUsername(String username) throws Exception {
+        JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
+        int index = getIndexOfUserInFile(this.username);
+        if (index == -1) {
+            throw new Exception("bug in User class setUsername method");
+        }
+        JSONObject userJsonObject = (JSONObject) jsonArray.get(index);
+        String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
+        this.username = username;
+        userJsonObject.put(FieldNames.username.name(), username);
+        jsonArray.set(index, userJsonObject);
+        usersJsonHandler.set(FieldNames.users, jsonArray);
     }
 
     public int getCoinForShop() {
@@ -165,18 +181,16 @@ public class User {
 
     public void setPassword(String password) throws Exception {
         JSONArray jsonArray = (JSONArray) usersJsonHandler.getFromJSONObject(FieldNames.users);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject userJsonObject = (JSONObject) jsonArray.get(i);
-            String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username);
-            if (usernameOfIthUser.equals(this.username)) {
-                this.password = password;
-                userJsonObject.put(FieldNames.password, password);
-                jsonArray.set(i, userJsonObject);
-                usersJsonHandler.set(FieldNames.users, jsonArray);
-                return;
-            }
+        int index = getIndexOfUserInFile(this.username);
+        if (index == -1) {
+            throw new Exception("bug in User class setPassword method");
         }
-        throw new Exception("bug in User class setUsername method");
+        JSONObject userJsonObject = (JSONObject) jsonArray.get(index);
+        String usernameOfIthUser = (String) userJsonObject.get(FieldNames.username.name());
+        this.password = password;
+        userJsonObject.put(FieldNames.password.name(), password);
+        jsonArray.set(index, userJsonObject);
+        usersJsonHandler.set(FieldNames.users, jsonArray);
     }
 
     private boolean validNewUsername(String username) {
