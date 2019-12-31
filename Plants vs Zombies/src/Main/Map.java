@@ -281,13 +281,14 @@ public class Map {
             }
         }
         for (GunShot gunShot : gunShotArrayList) {
-            jad[gunShot.getX()][gunShot.getY()] = '*';
+            System.out.println(gunShot.getX()+":"+gunShot.getY());
+            jad[gunShot.getY()][gunShot.getX()] = '*';
         }
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
-                jad[activeCard.getX()][activeCard.getY()] = 'Z';
+                jad[activeCard.getY()][activeCard.getX()] = 'Z';
             } else {
-                jad[activeCard.getX()][activeCard.getY()] = 'P';
+                jad[activeCard.getY()][activeCard.getX()] = 'P';
             }
         }
         System.out.println("/////////////////////////////////////////");

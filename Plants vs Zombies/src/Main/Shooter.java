@@ -12,7 +12,12 @@ public class Shooter extends Plant {
 
     public Shooter(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
+        
         this.gun = Gun.getGunByName(jsonHandler.getString(FieldNames.name).toLowerCase() + " gun");
+
+        if(gun==null){
+            throw new Exception("gun is empty, json files have bug");
+        }
     }
 
     public Gun getGun() {
