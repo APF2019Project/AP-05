@@ -34,7 +34,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 int x = rand.nextInt(map.getRow());
                 int y = map.getRow() - 1;
                 ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
-                if(map.canAddActiveCard(zombie)){
+                if(map.canAddActiveCardAndBuy(zombie)){
                     zombieCardsInNextWave.add(zombie);
                 }
             }else{
@@ -49,6 +49,10 @@ public class ZombieAIPlayer extends ZombiePlayer {
 
     @Override
     public boolean pickCreature(Creature creature) throws Exception {
+        if (getSunInGame() < creature.getPrice()) {
+            return false;
+        }
+        setSunInGame(getSunInGame() - creature.getPrice());
         return true;
     }
 

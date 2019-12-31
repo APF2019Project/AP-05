@@ -43,7 +43,7 @@ public class User {
 
     private void addFirstCreatures() {
         unlockedCreatures.addAll(Plant.getFirstPlants());
-        unlockedCreatures.addAll(Zombie.getAllZombies());
+        unlockedCreatures.addAll(Zombie.getFirstZombies());
     }
 
     public User(String username, String password, Void addFromFile) throws Exception {

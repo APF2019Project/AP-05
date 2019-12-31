@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Map {
     ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
-    ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
+    private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
     private int row, col, numberOfRemainedWaves, turnNumber;
     MapMode mapMode;
@@ -75,8 +75,11 @@ public class Map {
     }
 
     public void addGunShot(GunShot gunShot) {
+        System.out.println(gunShot.getX()+' '+gunShot.getY());
         if (isInMap(gunShot.getX(), gunShot.getY())) {
             gunShotArrayList.add(gunShot);
+        }else{
+            System.out.println("Pashhmam");
         }
     }
 
@@ -106,22 +109,23 @@ public class Map {
         numberOfRemainedWaves--;
     }
 
-    public boolean canAddActiveCard(ActiveCard activeCard) {
+    public boolean canAddActiveCardAndBuy(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature() instanceof Plant) {
             if (activeCard.getX() % 2 == 1) {
                 return false;
             }
             if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
                     != null && findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad) {
-                return true;
+                return activeCard.getOwner().pickCreature(activeCard.getCreature());
             } else if (!((Plant) activeCard.getCreature()).isWaterProof() &&
                     findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
-                return true;
+                return activeCard.getOwner().pickCreature(activeCard.getCreature());
             } else {
                 return false;
             }
         } else {
-            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getX()));
+            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getX()))
+                    &&  activeCard.getOwner().pickCreature(activeCard.getCreature());
         }
     }
 
@@ -187,19 +191,25 @@ public class Map {
     }
 
     public GameStatus run() throws Exception {
+        System.out.println("STARTTTTTTTTTT1");
         turnNumber++;
         for(Creature creature:Creature.getAllCreatures()){
             creature.setRemainingCoolDown(Math.max(0,creature.getRemainingCoolDown()-1));
         }
+        System.out.println("STARTTTTTTTTTT20");
         if(numberOfRemainedWaves<0){
+            System.out.println("SSS");
             return GameStatus.PlantPlayerWins;
         }
+        System.out.println("STARTTTTTTTTTT21");
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
+        System.out.println("STARTTTTTTTTTT22");
         for (ActiveCard activeCard : activeCardArrayList) {
             activeCard.doAction(this);
         }
+        System.out.println("STARTTTTTTTTTT2");
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
                 if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
@@ -207,6 +217,7 @@ public class Map {
                 }
             }
         }
+        System.out.println("STARTTTTTTTTTT3");
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
         ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
         for (GunShot gunShot : gunShotArrayList) {
@@ -214,14 +225,17 @@ public class Map {
                 usedGunShot.add(gunShot);
             }
         }
+        System.out.println("STARTTTTTTTTTT4");
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getRemainingHp() == 0) {
                 dies.add(activeCard);
             }
         }
+        System.out.println("STARTTTTTTTTTT5");
         for (GunShot gunShot : usedGunShot) {
             gunShotArrayList.remove(gunShot);
         }
+        System.out.println("STARTTTTTTTTTT6");
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);
             if (activeCard.getCreature() instanceof Plant) {
@@ -231,13 +245,16 @@ public class Map {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
             }
         }
-        if(mapMode!=mapMode.Rail){
+        System.out.println("STARTTTTTTTTTT7");
+        if(mapMode.equals(MapMode.Rail)){
             Random random=new Random();
             if(random.nextInt()%3==0){
                 plantPlayer.addSun(random.nextInt(4)+2);
             }
         }
+        System.out.println("STARTTTTTTTTTT8");
         mapSimpleShow();
+        System.out.println("ENDDDD");
         return GameStatus.OnGame;
     }
 

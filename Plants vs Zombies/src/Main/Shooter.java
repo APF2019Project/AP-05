@@ -21,6 +21,7 @@ public class Shooter extends Plant {
 
     @Override
     public boolean doAction(ActiveCard activeCard, Map map) {
+        System.out.println("RESIID");
         return gun.doAction(activeCard, map);
     }
 }
