@@ -60,12 +60,12 @@ public class Map {
         return col;
     }
 
-    public boolean isWater(int x) {
-        return this.isWater[x];
+    public boolean isWater(int y) {
+        return this.isWater[y];
     }
 
     public boolean isDry(int x, int y) {
-        if (!isWater(x)) return true;
+        if (!isWater(y)) return true;
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getX() == x && activeCard.getY() == y && activeCard.getCreature() instanceof LilyPad) {
                 return true;
@@ -126,7 +126,7 @@ public class Map {
                 return false;
             }
         } else {
-            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getX()))
+            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getY()))
                     &&  activeCard.getOwner().pickCreature(activeCard.getCreature());
         }
     }
