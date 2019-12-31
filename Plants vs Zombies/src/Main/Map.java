@@ -1,7 +1,6 @@
 package Main;
 
 import Player.Player;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -131,11 +130,16 @@ public class Map {
     }
 
     public void addActiveCard(ActiveCard activeCard) {
+        if(activeCard.getCreature().getName().equals("Bungee Zombie")){
+            Random random=new Random();
+            activeCard.setX(random.nextInt(col));
+            activeCard.setY(random.nextInt(row));
+        }
         if(activeCard.getCreature().getRemainingCoolDown()==0){
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
         }else{
-            /// cooldown handel nist
+            /// cool down is not handel:D
         }
 
     }
@@ -249,7 +253,6 @@ public class Map {
         }
         return nearestZombie;
     }
-
     void mapSimpleShow() {
         char jad[][] = new char[row][col];
         for (int i = 0; i < row; i++) {
