@@ -10,7 +10,11 @@ public abstract class Player {
     private int sunInGame=50;
     private Map map;
     private int killingEnemyCount;
-    final User user;
+    protected final User user;
+
+    public User getUser() {
+        return user;
+    }
 
     public void setMap(Map map) {
         this.map = map;

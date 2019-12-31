@@ -26,5 +26,3 @@ select kernel-pult
 plant 2,6
 end turn
 end turn
-select snow pea
-plant 2,6
