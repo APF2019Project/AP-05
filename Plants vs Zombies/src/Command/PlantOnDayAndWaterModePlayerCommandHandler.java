@@ -43,7 +43,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         }
         String plantName = matcher.group(1);
         Plant plant = (Plant) menu.getUser().getPlayer().getCreatureOnHandByName(plantName);
-        if(plant==null){
+        if (plant == null) {
             throw new Exception("invalid plant name");
         }
         if (menu.getUser().getPlayer().getSunInGame() < plant.getPrice()) {
@@ -57,12 +57,12 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler plant method");
         }
-        if(selectedPlant==null){
+        if (selectedPlant == null) {
             throw new Exception("you select nothing!");
         }
-        int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
-        ActiveCard activeCard=new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer());
-        if(!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)){
+        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
+        ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer());
+        if (!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
             throw new Exception("inja nekar pedar sag");
         }
         menu.getUser().getPlayer().getMap()
@@ -75,7 +75,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler remove method");
         }
-        int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
+        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
         ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
             throw new Exception("there is no plant here to remove");
