@@ -51,10 +51,10 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         }
         String zombieName = matcher.group(1);
         int zombieCount = Integer.parseInt(matcher.group(2));
-        int y = Integer.parseInt(matcher.group(3));
+        int y = Integer.parseInt(matcher.group(3)) - 1;
         Zombie zombie = (Zombie) menu.getUser().getPlayer().getCreatureOnHandByName(zombieName);
         for (int i = 0; i < zombieCount; i++) {
-            menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapRowCount, y, menu.getUser().getPlayer()));
+            menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getUser().getPlayer()));
         }
     }
 

@@ -42,7 +42,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler select method");
         }
-        int plantIndex = Integer.parseInt(matcher.group(1));
+        int plantIndex = Integer.parseInt(matcher.group(1)); // input is 0-base
         selectedPlant = (Plant) menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex);
     }
 
@@ -55,7 +55,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler plant method");
         }
-        int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
+        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
         menu.getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
         selectedPlant = null;
@@ -66,7 +66,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler remove method");
         }
-        int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
+        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
         ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
             throw new Exception("there is no plant here to remove");
