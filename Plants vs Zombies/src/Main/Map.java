@@ -183,9 +183,10 @@ public class Map {
     }
 
     int hasNoPlantIn(int y, int x) {
-        int maxX = -1;
+        int maxX = -10000;
         for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getCreature() instanceof Plant && !activeCard.isHasLadder()) {
+            if (activeCard.getCreature() instanceof Plant && !activeCard.isHasLadder()
+                    && activeCard.getY()==y && activeCard.getX()<=x) {
                 maxX = Math.max(maxX, activeCard.getX());
             }
         }
