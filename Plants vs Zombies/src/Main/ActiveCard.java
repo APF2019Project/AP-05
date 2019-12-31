@@ -143,7 +143,7 @@ public class ActiveCard {
     }
 
     public void doAction(Map map) throws Exception {
-        if (remainReloadTime == 0) {
+        if (remainReloadTime <= 0) {
             boolean isAct=creature.doAction(this, map);
             if(!isAct){
                 return ;
@@ -153,7 +153,7 @@ public class ActiveCard {
                 shieldRemainingHp=0;
                 return;
             }
-            remainReloadTime = creature.getReloadTime();
+            remainReloadTime = creature.getReloadTime()-1;
         } else {
             remainReloadTime--;
         }
