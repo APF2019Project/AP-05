@@ -1,6 +1,6 @@
 package Main;
 
-import Player.Player;
+import Player.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,7 +8,7 @@ public class Map {
     ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
     private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
-    private int row, col, numberOfRemainedWaves, turnNumber;
+    private int row, col, numberOfRemainedWaves;
     MapMode mapMode;
     final private Player plantPlayer, zombiePlayer;
 
@@ -22,6 +22,10 @@ public class Map {
 
     public Player getZombiePlayer() {
         return zombiePlayer;
+    }
+
+    public MapMode getMapMode() {
+        return mapMode;
     }
 
     public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
@@ -187,9 +191,23 @@ public class Map {
         }
         return maxX;
     }
-
+    public void gameActionForEachTurn(){
+        if(mapMode.equals(MapMode.Rail)){
+            Random random=new Random();
+            if(random.nextInt()%3==0){
+                plantPlayer.addSun(random.nextInt(4)+2);
+            }
+        }
+    }
+    public boolean isMapHasZombie(){
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if(activeCard.getCreature() instanceof Zombie){
+                return true;
+            }
+        }
+        return false;
+    }
     public GameStatus run() throws Exception {
-        turnNumber++;
         for(Creature creature:Creature.getAllCreatures()){
             creature.setRemainingCoolDown(Math.max(0,creature.getRemainingCoolDown()-1));
         }
@@ -233,12 +251,7 @@ public class Map {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
             }
         }
-        if(mapMode.equals(MapMode.Rail)){
-            Random random=new Random();
-            if(random.nextInt()%3==0){
-                plantPlayer.addSun(random.nextInt(4)+2);
-            }
-        }
+        gameActionForEachTurn();
         mapSimpleShow();
         return GameStatus.OnGame;
     }

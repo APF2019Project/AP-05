@@ -1,47 +1,98 @@
 package Player;
 
-import Main.ActiveCard;
-import Main.Creature;
-import Main.Map;
-import Main.Zombie;
+import Main.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
-import Main.User;
-
 public class ZombieAIPlayer extends ZombiePlayer {
+    private int whenPutZombie,lastZombieDie;
+    private boolean isStart;
+    Random random;
+
     public ZombieAIPlayer(User user) {
         super(user);
+        random=new Random();
+        isStart=false;
+        lastZombieDie=0;
+        whenPutZombie=random.nextInt(3)+3;
     }
 
 
     public void doAction() throws Exception {
         super.doAction();
-        Random rand = new Random();
-        while(true) {
-            ArrayList<Creature> available = new ArrayList<Creature>();
-            for (Creature creature : this.getCreaturesOnHand()) {
-                if (creature.getPrice() <= this.getSunInGame()) {
-                    available.add(creature);
+        if(user.getPlayer().getMap().getMapMode().equals(MapMode.Rail)){
+            this.addSun(1000);
+            if(whenPutZombie==0){
+                ArrayList<Creature> available = new ArrayList<Creature>();
+                for (Creature creature : this.getCreaturesOnHand()) {
+                    if (creature.getPrice() <= this.getSunInGame()) {
+                        available.add(creature);
+                    }
                 }
+                if (!available.isEmpty()) {
+                    int rand_int = random.nextInt(available.size());
+                    Map map = this.getMap();
+                    while(true) {
+                        int x = random.nextInt(map.getRow());
+                        int y = map.getRow() - 1;
+                        ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
+                        if (map.canAddActiveCardAndBuy(zombie)) {
+                            map.addActiveCard(zombie);
+                            break;
+                        }
+                    }
+                }
+                whenPutZombie=random.nextInt(3)+3;
             }
-            if (!available.isEmpty()) {
-                int rand_int = rand.nextInt(available.size());
-                Map map = this.getMap();
-                int x = rand.nextInt(map.getRow());
-                int y = map.getRow() - 1;
-                ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
-                if(map.canAddActiveCardAndBuy(zombie)){
-                    zombieCardsInNextWave.add(zombie);
-                }
+            whenPutZombie--;
+        }
+        else if(getMap().getMapMode().equals(MapMode.Day) || getMap().getMapMode().equals(MapMode.Water)) {
+            Map map = this.getMap();
+            if (!map.isMapHasZombie()) {
+                lastZombieDie++;
+                isStart=true;
             }else{
-                break;
+                lastZombieDie = 0;
+            }
+            if(!isStart && lastZombieDie==3){
+                startWave();
+            }else if(isStart && lastZombieDie==7){
+                startWave();
             }
         }
     }
+    @Override
+    public void startWave() throws Exception {
+        this.addSun(1000);
+        int numberOfZombie=random.nextInt(7)+4;
+        for(int i=0;i<numberOfZombie;i++) {
+            while (true) {
+                ArrayList<Creature> available = new ArrayList<Creature>();
+                for (Creature creature : this.getCreaturesOnHand()) {
+                    if (creature.getPrice() <= this.getSunInGame()) {
+                        available.add(creature);
+                    }
+                }
+                if (!available.isEmpty()) {
+                    int rand_int = random.nextInt(available.size());
+                    Map map = this.getMap();
+                    int x = random.nextInt(map.getRow());
+                    int y = map.getRow() - 1;
+                    ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
+                    if (map.canAddActiveCardAndBuy(zombie)) {
+                        map.addActiveCard(zombie);
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void gameAction() {
 
