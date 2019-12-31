@@ -177,7 +177,7 @@ public class Map {
 
     GunShot getGunShotIn(int y, int xl, int xr) {
         for (GunShot gunshot : gunShotArrayList) {
-            if (gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
+            if (!gunshot.isUsed()  && gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
                 return gunshot;
             }
         }

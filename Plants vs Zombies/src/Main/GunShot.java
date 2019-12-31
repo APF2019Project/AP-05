@@ -8,7 +8,7 @@ public class GunShot {
     private int x, y;
     private int vx;
     private Player owner;
-    private int destination = -1;
+    private int destination = -1000;
 
     public GunShot(Gun gun, int x, int y, int vx, Player player) {
         this.gun = gun;
@@ -19,7 +19,7 @@ public class GunShot {
     }
 
     public boolean isUsed() {
-        return (destination != -1);
+        return (destination != -1000);
     }
 
     public Player getOwner() {
@@ -51,6 +51,7 @@ public class GunShot {
     }
 
     public void collision(ActiveCard activeCard) {
+        if(isUsed())return;
         if (gun.isIcy()) {
             activeCard.collisionSlowingGunShot(GameData.iceSlowDownTime, GameData.iceSlowDownPercent);
         }
