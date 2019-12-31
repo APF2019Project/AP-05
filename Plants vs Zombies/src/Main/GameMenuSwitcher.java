@@ -24,8 +24,8 @@ public class GameMenuSwitcher {
             map.getPlantPlayer().gameAction();
             map.getZombiePlayer().gameAction();
         }
-        map.getPlantPlayer().getUser().gameEnded();
-        map.getZombiePlayer().getUser().gameEnded();
+        map.getPlantPlayer().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
+        map.getZombiePlayer().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
         Main.print(gameStatus.name());
     }
 }

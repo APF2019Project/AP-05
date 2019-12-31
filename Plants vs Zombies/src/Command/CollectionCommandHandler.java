@@ -23,7 +23,7 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public CollectionCommandHandler(CollectionMode collectionMode) {
-        this.collectionMode=collectionMode;
+        this.collectionMode = collectionMode;
     }
 
     public void showHand(InputCommand inputCommand) {
@@ -37,8 +37,11 @@ public class CollectionCommandHandler extends CommandHandler {
     public void showCollection(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
-            if((creature instanceof Plant && CollectionMode.plantsCollection.equals(collectionMode))
-            || (creature instanceof Zombie && CollectionMode.zombiesCollection.equals(collectionMode))) {
+            if (menu.getUser().getPlayer().getCreatureOnHandByName(creature.getName()) != null) {
+                continue;
+            }
+            if ((creature instanceof Plant && CollectionMode.plantsCollection.equals(collectionMode))
+                    || (creature instanceof Zombie && CollectionMode.zombiesCollection.equals(collectionMode))) {
                 stringBuilder.append(creature.getName()).append('\n');
             }
         }
@@ -76,6 +79,9 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void play(InputCommand inputCommand) throws Exception {
+        if (menu.getUser().getPlayer().getCreaturesOnHand().size() != GameData.creatureOnHandSize) {
+            throw new Exception("count of creatures on hand should be " + GameData.creatureOnHandSize);
+        }
         menu.exit();
     }
 }

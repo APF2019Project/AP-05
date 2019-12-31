@@ -23,8 +23,11 @@ public class User {
         this.player = player;
     }
 
-    public void gameEnded() throws Exception {
+    public void gameEnded(boolean win) throws Exception {
         killingEnemyCount+=player.getKillingEnemyCount();
+        if(win){
+            coinForShop+=GameData.winReward;
+        }
         saveAllUsers();
     }
 
