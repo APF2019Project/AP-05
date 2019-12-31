@@ -281,7 +281,6 @@ public class Map {
             }
         }
         for (GunShot gunShot : gunShotArrayList) {
-            System.out.println(gunShot.getX()+":"+gunShot.getY());
             jad[gunShot.getY()][gunShot.getX()] = '*';
         }
         for (ActiveCard activeCard : activeCardArrayList) {
