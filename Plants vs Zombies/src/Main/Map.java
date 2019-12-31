@@ -75,7 +75,7 @@ public class Map {
     }
 
     private boolean isInMap(int x, int y) {
-        return !(x < 0 || x >= row || y < 0 || y >= col);
+        return !(x < 0 || x >= col || y < 0 || y >= row);
     }
 
     public void addGunShot(GunShot gunShot) {
@@ -281,7 +281,6 @@ public class Map {
             }
         }
         for (GunShot gunShot : gunShotArrayList) {
-            System.out.println(gunShot.getX()+":"+gunShot.getY());
             jad[gunShot.getY()][gunShot.getX()] = '*';
         }
         for (ActiveCard activeCard : activeCardArrayList) {
