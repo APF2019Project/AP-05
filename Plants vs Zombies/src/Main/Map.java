@@ -211,15 +211,19 @@ public class Map {
         for(Creature creature:Creature.getAllCreatures()){
             creature.setRemainingCoolDown(Math.max(0,creature.getRemainingCoolDown()-1));
         }
+
         if(numberOfRemainedWaves<0){
             return GameStatus.PlantPlayerWins;
         }
+
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
+
         for (ActiveCard activeCard : activeCardArrayList) {
             activeCard.doAction(this);
         }
+
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
                 if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
@@ -227,6 +231,7 @@ public class Map {
                 }
             }
         }
+
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
         ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
         for (GunShot gunShot : gunShotArrayList) {
@@ -234,14 +239,17 @@ public class Map {
                 usedGunShot.add(gunShot);
             }
         }
+
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getRemainingHp() == 0) {
                 dies.add(activeCard);
             }
         }
+
         for (GunShot gunShot : usedGunShot) {
             gunShotArrayList.remove(gunShot);
         }
+
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);
             if (activeCard.getCreature() instanceof Plant) {
@@ -251,8 +259,11 @@ public class Map {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
             }
         }
+
         gameActionForEachTurn();
+
         mapSimpleShow();
+        
         return GameStatus.OnGame;
     }
 

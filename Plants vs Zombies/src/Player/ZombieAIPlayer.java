@@ -36,8 +36,8 @@ public class ZombieAIPlayer extends ZombiePlayer {
                     int rand_int = random.nextInt(available.size());
                     Map map = this.getMap();
                     while(true) {
-                        int x = random.nextInt(map.getCol());
-                        int y = map.getRow() - 1;
+                        int x = map.getCol()-1;
+                        int y = random.nextInt(map.getRow());
                         ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
                         if (map.canAddActiveCardAndBuy(zombie)) {
                             map.addActiveCard(zombie);
@@ -79,9 +79,10 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 if (!available.isEmpty()) {
                     int rand_int = random.nextInt(available.size());
                     Map map = this.getMap();
-                    int x = random.nextInt(map.getCol());
-                    int y = map.getRow() - 1;
+                    int x = map.getCol()-1;
+                    int y = random.nextInt(map.getRow());
                     ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
+
                     if (map.canAddActiveCardAndBuy(zombie)) {
                         map.addActiveCard(zombie);
                         break;
