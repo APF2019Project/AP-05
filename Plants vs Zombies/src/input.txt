@@ -26,7 +26,6 @@ select kernel-pult
 plant 2,6
 end turn
 end turn
-<<<<<<< HEAD
 select sunflower
 plant 2,5
 end turn
