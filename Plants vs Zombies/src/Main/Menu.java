@@ -55,13 +55,13 @@ public class Menu {
     public void run() throws Exception {
         isOpen = true;
         while (isOpen) {
-           // try {
+            try {
                 showHelp(); // bayad pak shavad
                 String command = Main.scanLine().toLowerCase();
                 accept(command);
-           // } catch (Exception e){
-           //     System.err.println(e.getMessage());
-         //   }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 }

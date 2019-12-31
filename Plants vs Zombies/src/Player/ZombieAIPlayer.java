@@ -82,6 +82,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
     }
     @Override
     public void startWave() throws Exception{
+        super.startWave();
         this.addSun(1000);
         int numberOfZombie=random.nextInt(7)+4;
         for(int i=0;i<numberOfZombie;i++) {

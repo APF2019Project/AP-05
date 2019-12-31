@@ -79,7 +79,7 @@ public class Map {
     }
 
     public void addGunShot(GunShot gunShot) {
-        System.out.println(gunShot.getX()+' '+gunShot.getY());
+        //System.out.println(gunShot.getX()+' '+gunShot.getY());
         if (isInMap(gunShot.getX(), gunShot.getY())) {
             gunShotArrayList.add(gunShot);
         }
