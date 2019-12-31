@@ -38,7 +38,7 @@ public class Menu {
 
     public void accept(String command) throws Exception {
         if (command.equals("help")) {
-            Main.print(commandHandler.help());
+            //showHelp(); // bayad ezafe shavad
             return;
         }
         if (command.equals("exit")) {
@@ -55,9 +55,13 @@ public class Menu {
     public void run() throws Exception {
         isOpen = true;
         while (isOpen) {
-            showHelp();
-            String command = Main.scanLine().toLowerCase();
-            accept(command);
+            try {
+                showHelp(); // bayad pak shavad
+                String command = Main.scanLine().toLowerCase();
+                accept(command);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

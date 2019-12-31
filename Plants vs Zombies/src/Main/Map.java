@@ -130,7 +130,7 @@ public class Map {
     }
 
     public void addActiveCard(ActiveCard activeCard) {
-        if(activeCard.getCreature().getName().equals("Bungee Zombie")){
+        if(activeCard.getCreature().getName().equals("bungee zombie")){
             Random random=new Random();
             activeCard.setX(random.nextInt(col));
             activeCard.setY(random.nextInt(row));
@@ -237,6 +237,7 @@ public class Map {
                 plantPlayer.addSun(random.nextInt(4)+2);
             }
         }
+        mapSimpleShow();
         return GameStatus.OnGame;
     }
 
