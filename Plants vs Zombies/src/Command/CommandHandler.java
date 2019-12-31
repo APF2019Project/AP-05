@@ -4,7 +4,12 @@ import Main.Menu;
 
 public class CommandHandler {
     protected Command[] commands;
+    protected String firstLineDescription="";
     protected Menu menu;
+
+    public void setFirstLineDescription() {
+        // nothing
+    }
 
     public void setMenu(Menu menu) {
         this.menu = menu;
@@ -19,6 +24,10 @@ public class CommandHandler {
 
     public String help() throws Exception {
         StringBuilder result = new StringBuilder();
+        if(!firstLineDescription.isEmpty()){
+            result.append(firstLineDescription).append("\n");
+        }
+        result.append("Commands:\n");
         for (Command command : commands)
             result.append(command.getHelp()).append("\n");
         return result.toString();

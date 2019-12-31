@@ -23,6 +23,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         };
     }
 
+    public void setFirstLineDescription() {
+        firstLineDescription = "Sun in Game: " + menu.getUser().getPlayer().getSunInGame();
+    }
+
     private Plant selectedPlant = null;
 
     void showHand(InputCommand inputCommand) {

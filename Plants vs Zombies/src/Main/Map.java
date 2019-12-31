@@ -1,6 +1,7 @@
 package Main;
 
 import Player.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -107,7 +108,7 @@ public class Map {
         return nearest;
     }
 
-    public void startWave(){
+    public void startWave() {
         numberOfRemainedWaves--;
     }
 
@@ -127,7 +128,7 @@ public class Map {
             }
         } else {
             return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getY()))
-                    &&  activeCard.getOwner().pickCreature(activeCard.getCreature());
+                    && activeCard.getOwner().pickCreature(activeCard.getCreature());
         }
     }
 
@@ -135,16 +136,17 @@ public class Map {
         activeCardArrayList.remove(activeCard);
     }
 
-    public void addActiveCard(ActiveCard activeCard){
-        if(activeCard.getCreature().getName().equals("bungee zombie")){
-            Random random=new Random();
+    public void addActiveCard(ActiveCard activeCard) throws Exception {
+        if (activeCard.getCreature().getName().equals("bungee zombie")) {
+            Random random = new Random();
             activeCard.setX(random.nextInt(col));
             activeCard.setY(random.nextInt(row));
         }
-        if(activeCard.getCreature().getRemainingCoolDown()==0){
+        if (activeCard.getCreature().getRemainingCoolDown() == 0) {
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
-        }else{
+        } else {
+            throw new Exception("cool down is not 0");
             /// cool down is not handel:D
         }
 
@@ -186,34 +188,37 @@ public class Map {
         int maxX = -10000;
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Plant && !activeCard.isHasLadder()
-                    && activeCard.getY()==y && activeCard.getX()<=x) {
+                    && activeCard.getY() == y && activeCard.getX() <= x) {
                 maxX = Math.max(maxX, activeCard.getX());
             }
         }
         return maxX;
     }
-    public void gameActionForEachTurn(){
-        if(mapMode.equals(MapMode.Rail)){
-            Random random=new Random();
-            if(random.nextInt()%3==0){
-                plantPlayer.addSun(random.nextInt(4)+2);
+
+    public void gameActionForEachTurn() {
+        if (mapMode.equals(MapMode.Rail)) {
+            Random random = new Random();
+            if (random.nextInt() % 3 == 0) {
+                plantPlayer.addSun(random.nextInt(4) + 2);
             }
         }
     }
-    public boolean isMapHasZombie(){
+
+    public boolean isMapHasZombie() {
         for (ActiveCard activeCard : activeCardArrayList) {
-            if(activeCard.getCreature() instanceof Zombie){
+            if (activeCard.getCreature() instanceof Zombie) {
                 return true;
             }
         }
         return false;
     }
+
     public GameStatus run() throws Exception {
-        for(Creature creature:Creature.getAllCreatures()){
-            creature.setRemainingCoolDown(Math.max(0,creature.getRemainingCoolDown()-1));
+        for (Creature creature : Creature.getAllCreatures()) {
+            creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
         }
 
-        if(numberOfRemainedWaves<0){
+        if (numberOfRemainedWaves < 0) {
             return GameStatus.PlantPlayerWins;
         }
 
@@ -236,7 +241,7 @@ public class Map {
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
         ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
         for (GunShot gunShot : gunShotArrayList) {
-            if (gunShot.isUsed() || !isInMap(gunShot.getX(),gunShot.getY())) {
+            if (gunShot.isUsed() || !isInMap(gunShot.getX(), gunShot.getY())) {
                 usedGunShot.add(gunShot);
             }
         }
@@ -264,7 +269,7 @@ public class Map {
         gameActionForEachTurn();
 
         mapSimpleShow();
-        
+
         return GameStatus.OnGame;
     }
 
@@ -281,6 +286,7 @@ public class Map {
         }
         return nearestZombie;
     }
+
     void mapSimpleShow() {
         char jad[][] = new char[row][col];
         for (int i = 0; i < row; i++) {
