@@ -15,18 +15,9 @@ public class Menu {
 
     public Menu(User user, CommandHandler commandHandler) {
         this.user = user;
-        //this.lastMenu = lastMenu;
         this.commandHandler = commandHandler;
         commandHandler.setMenu(this);
     }
-
-    /*public Menu getLastMenu() {
-        return lastMenu;
-    }
-
-    public void setLastMenu(Menu lastMenu) {
-        this.lastMenu = lastMenu;
-    }*/
 
     public CommandHandler getCommandHandler() {
         return commandHandler;
@@ -49,13 +40,14 @@ public class Menu {
     }
 
     public void showHelp() throws Exception {
-        Main.print("Commands:\n" + commandHandler.help());
+        Main.print(commandHandler.help());
     }
 
     public void run() throws Exception {
         isOpen = true;
         while (isOpen) {
             try {
+                commandHandler.setFirstLineDescription();
                 showHelp(); // bayad pak shavad
                 String command = Main.scanLine().toLowerCase();
                 accept(command);

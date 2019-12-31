@@ -19,7 +19,7 @@ public class GameData {
     static int cactusDamage = 1;
     static int PepperDamage = 1;
     static int maxMagnetRange, MagnetEatingTime;
-    public final static int numberOfWavesInDayAndWaterMode=10;
+    public final static int numberOfWavesInDayAndWaterMode=3;
     public final static int numberOfWavesInRailMode=10;
     public final static int numberOfWavesInZombieMode=10;
     static String usersJSONFilePath = "JSON/users";
