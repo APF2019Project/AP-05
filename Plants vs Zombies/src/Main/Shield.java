@@ -15,6 +15,9 @@ public class Shield {
         allShields.add(this);
     }
 */
+    public boolean isFullBodyShield(){
+        return false;
+    }
     public Shield(JSONHandler jsonHandler) throws Exception {
         this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.fullHp = jsonHandler.getInt(FieldNames.fullHp);

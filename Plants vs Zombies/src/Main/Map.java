@@ -130,7 +130,13 @@ public class Map {
     }
 
     public void addActiveCard(ActiveCard activeCard) {
-        activeCardArrayList.add(activeCard);
+        if(activeCard.getCreature().getRemainingCoolDown()==0){
+            activeCardArrayList.add(activeCard);
+            activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
+        }else{
+            /// cooldown handel nist
+        }
+
     }
 
     public ActiveCard findPlantIn(int x, int y) {
@@ -177,6 +183,9 @@ public class Map {
 
     public GameStatus run() throws Exception {
         turnNumber++;
+        for(Creature creature:Creature.getAllCreatures()){
+            creature.setRemainingCoolDown(Math.max(0,creature.getRemainingCoolDown()-1));
+        }
         if(numberOfRemainedWaves<0){
             return GameStatus.PlantPlayerWins;
         }
