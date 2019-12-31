@@ -8,17 +8,18 @@ select sunflower
 play
 select snow pea
 plant 2,1
+end turn
 select snow pea
 plant 2,2
+end turn
 select snow pea
 plant 2,3
+end turn
 select snow pea
 plant 2,4
+end turn
 select snow pea
 plant 2,5
+end turn
 select snow pea
 plant 2,6
-end turn
-end turn
-end turn
-end turn
