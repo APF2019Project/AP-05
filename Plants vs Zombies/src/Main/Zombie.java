@@ -122,6 +122,7 @@ public class Zombie extends Creature {
         if (activeCard.getRemainingSlowDown() > 0) {
             deltaX *= (100 - activeCard.getSlowDownPercent()) / 100.0;
         }
+        System.out.println(activeCard.getCreature().getName()+":"+deltaX);
         int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - deltaX);
         while (activeCard.getRemainingHp() > 0) {
             GunShot gunShot = map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());

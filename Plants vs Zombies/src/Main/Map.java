@@ -141,6 +141,9 @@ public class Map {
             activeCard.setX(random.nextInt(col));
             activeCard.setY(random.nextInt(row));
         }
+        if(activeCard.getCreature() instanceof Zombie){
+            System.out.println(activeCard.getCreature().getName()+":"+activeCard.getX()+" "+activeCard.getY());
+        }
         if(activeCard.getCreature().getRemainingCoolDown()==0){
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
@@ -287,7 +290,7 @@ public class Map {
                 if (isWater[i]) {
                     jad[i][j] = '~';
                 } else {
-                    jad[i][j] = ' ';
+                    jad[i][j] = '.';
                 }
             }
         }
