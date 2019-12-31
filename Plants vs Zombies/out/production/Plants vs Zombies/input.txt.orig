@@ -16,6 +16,17 @@ plant 2,1
 end turn
 select snow pea
 plant 2,2
+<<<<<<< HEAD
+end turn
+select snow pea
+plant 2,3
+end turn
+select snow pea
+plant 2,4
+end turn
+select snow pea
+plant 2,5
+=======
 select explode-o-nut
 plant 2,3
 select scaredy-shroom
@@ -25,6 +36,7 @@ plant 2,5
 select kernel-pult
 plant 2,6
 end turn
+>>>>>>> 45f84b83798bd143908bac3949606c8577973e72
 end turn
 select snow pea
 plant 2,6
