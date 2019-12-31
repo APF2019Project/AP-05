@@ -1,9 +1,6 @@
 package Player;
 
-import Main.ActiveCard;
-import Main.Creature;
-import Main.Map;
-import Main.User;
+import Main.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,25 +10,31 @@ public abstract class ZombiePlayer extends Player {
         super(user);
     }
 
-    protected ArrayList<ActiveCard> zombieCardsInNextWave = new ArrayList<>();
+    protected ArrayList<ActiveCard> zombieCardsInThisWave = new ArrayList<>();
     protected boolean isWaveRunning;
 
     public void startWave() throws Exception {
         getMap().startWave();
         isWaveRunning = true;
-        for (ActiveCard activeCard : zombieCardsInNextWave) {
+        for (ActiveCard activeCard : zombieCardsInThisWave) {
             getMap().addActiveCard(activeCard);
         }
     }
 
     public void doAction() throws Exception {
-        if(zombieCardsInNextWave.isEmpty()){
+        if(zombieCardsInThisWave.isEmpty()){
             isWaveRunning=false;
             return;
         }
         if (isWaveRunning) {
-            getMap().addActiveCard(zombieCardsInNextWave.get(0));
-            zombieCardsInNextWave.remove(0);
+            boolean[] added =new boolean[getMap().getRow()];
+            for(ActiveCard zombieCardInThisWave:zombieCardsInThisWave) {
+                if(!added[zombieCardInThisWave.getY()]){
+                    added[zombieCardInThisWave.getY()]=true;
+                    getMap().addActiveCard(zombieCardInThisWave);
+                    zombieCardsInThisWave.remove(zombieCardInThisWave);
+                }
+            }
         }
     }
 }
