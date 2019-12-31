@@ -66,7 +66,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
             }
         }
     }
-    public void sendWave(){
+    public void sendWave() throws Exception {
         boolean isSend[]=new boolean[getMap().getRow()];
         ArrayList<ActiveCard> sends=new ArrayList<ActiveCard>();
         for(ActiveCard activeCard:wave){

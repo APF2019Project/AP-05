@@ -214,7 +214,10 @@ public class Map {
     }
 
     public GameStatus run() throws Exception {
-        for (Creature creature : Creature.getAllCreatures()) {
+        for (Creature creature : plantPlayer.getCreaturesOnHand()) {
+            creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
+        }
+        for (Creature creature : zombiePlayer.getCreaturesOnHand()) {
             creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
         }
 
@@ -308,13 +311,19 @@ public class Map {
                 jad[activeCard.getY()][activeCard.getX()] = 'P';
             }
         }
-        System.out.println("/////////////////////////////////////////");
+        for (int i = 0; i < col; i++) {
+            System.out.print("/");
+        }
+        System.out.println("");
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 System.out.print(jad[i][j]);
             }
             System.out.println();
         }
-        System.out.println("/////////////////////////////////////////");
+        for (int i = 0; i < col; i++) {
+            System.out.print("/");
+        }
+        System.out.println("");
     }
 }

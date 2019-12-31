@@ -17,7 +17,6 @@ public class Menu {
         this.user = user;
         this.commandHandler = commandHandler;
         commandHandler.setMenu(this);
-        commandHandler.setFirstLineDescription();
     }
 
     public CommandHandler getCommandHandler() {
@@ -48,6 +47,7 @@ public class Menu {
         isOpen = true;
         while (isOpen) {
             try {
+                commandHandler.setFirstLineDescription();
                 showHelp(); // bayad pak shavad
                 String command = Main.scanLine().toLowerCase();
                 accept(command);
