@@ -1,8 +1,9 @@
 package Player;
 
-import Main.Creature;
-import Main.Map;
-import Main.User;
+import Command.CollectionCommandHandler;
+import Command.PlantOnRailModePlayerCommandHandler;
+import Command.ZombiePlayerCommandHandler;
+import Main.*;
 
 public class ZombieHumanPlayer extends ZombiePlayer {
     public ZombieHumanPlayer(User user) {
@@ -12,7 +13,8 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     @Override
     public void doAction() throws Exception {
         super.doAction();
-
+        Menu ZombiePlayerMenu = new Menu(user, new ZombiePlayerCommandHandler());
+        ZombiePlayerMenu.run();
     }
 
     @Override
@@ -31,6 +33,7 @@ public class ZombieHumanPlayer extends ZombiePlayer {
 
     @Override
     public void pickCards() throws Exception {
-
+        Menu collectionMenu = new Menu(user, new CollectionCommandHandler(CollectionMode.zombiesCollection));
+        collectionMenu.run();
     }
 }

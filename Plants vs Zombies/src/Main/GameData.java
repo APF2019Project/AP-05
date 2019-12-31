@@ -19,6 +19,9 @@ public class GameData {
     static int cactusDamage = 1;
     static int PepperDamage = 1;
     static int maxMagnetRange, MagnetEatingTime;
+    public final static int numberOfWavesInDayAndWaterMode=10;
+    public final static int numberOfWavesInRailMode=10;
+    public final static int numberOfWavesInZombieMode=10;
     static String usersJSONFilePath = "JSON/users";
     public final static int mapRowCount = 6;
     public final static int mapColCount = 10;
@@ -186,11 +189,11 @@ public class GameData {
     }
 
     public static void run() throws Exception {
-        AIUser = User.getUserByUsername("AI User");
         addAllShield();
         addAllGuns();
         addAllPlants();
         addAllZombies();
         addAllUsers();
+        AIUser = User.getUserByUsername("AI User");
     }
 }

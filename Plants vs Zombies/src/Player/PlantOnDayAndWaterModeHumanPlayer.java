@@ -1,7 +1,8 @@
 package Player;
 
 import Command.CollectionCommandHandler;
-import Main.Main;
+import Command.PlantOnDayAndWaterModePlayerCommandHandler;
+import Main.CollectionMode;
 import Main.Menu;
 import Main.Map;
 import Main.User;
@@ -13,8 +14,9 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
     }
 
     @Override
-    public void doAction() {
-
+    public void doAction() throws Exception {
+        Menu plantOnDayAndWaterModePlayerMenu = new Menu(user, new PlantOnDayAndWaterModePlayerCommandHandler());
+        plantOnDayAndWaterModePlayerMenu.run();
     }
 
     @Override
@@ -32,7 +34,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void pickCards() throws Exception {
-        Menu collectionMenu = new Menu(user, new CollectionCommandHandler());
+        Menu collectionMenu = new Menu(user, new CollectionCommandHandler(CollectionMode.plantsCollection));
         collectionMenu.run();
     }
 }

@@ -28,9 +28,9 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
-            stringBuilder.append(plant.getName()).append(' ')
-                    .append(plant.getPrice()).append(' ')
-                    .append(plant.getRemainingCoolDown()).append('\n');
+            stringBuilder.append("\nName: ").append(plant.getName()).append("\nprice: ")
+                    .append(plant.getPrice()).append("\nremaining cool down: ")
+                    .append(plant.getRemainingCoolDown()).append("\n");
         }
         Main.print(stringBuilder.toString());
     }
@@ -42,6 +42,9 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         }
         String plantName = matcher.group(1);
         Plant plant = (Plant) menu.getUser().getPlayer().getCreatureOnHandByName(plantName);
+        if(plant==null){
+            throw new Exception("invalid plant name");
+        }
         if (menu.getUser().getPlayer().getSunInGame() < plant.getPrice()) {
             throw new Error("you don't have Enough money");
         }
@@ -52,6 +55,9 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler plant method");
+        }
+        if(selectedPlant==null){
+            throw new Exception("you select nothing!");
         }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
         menu.getUser().getPlayer().getMap()
@@ -79,8 +85,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
-            stringBuilder.append(activeCard.getCreature().getName()).append(" (")
-                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")")
+            stringBuilder.append("\nName: ").append(activeCard.getCreature().getName()).append("\nposition: (")
+                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")\nremaining Hp:")
                     .append(activeCard.getRemainingHp()).append('\n');
         }
         Main.print(stringBuilder.toString());

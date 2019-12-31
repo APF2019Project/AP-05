@@ -32,7 +32,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
-            stringBuilder.append(plant.getName()).append('\n');
+            stringBuilder.append("Name: ").append(plant.getName()).append('\n');
         }
         Main.print(stringBuilder.toString());
     }
@@ -81,8 +81,8 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
-            stringBuilder.append(activeCard.getCreature().getName()).append(" (")
-                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")")
+            stringBuilder.append("\nName: ").append(activeCard.getCreature().getName()).append("\nposition: (")
+                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")\n remaining Hp:")
                     .append(activeCard.getRemainingHp()).append('\n');
         }
         Main.print(stringBuilder.toString());

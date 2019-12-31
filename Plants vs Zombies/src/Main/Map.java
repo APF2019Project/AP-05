@@ -5,13 +5,12 @@ import Player.Player;
 import java.util.ArrayList;
 
 public class Map {
-    ArrayList<ActiveCard> activeCardArrayList;
-    ArrayList<GunShot> gunShotArrayList;
+    ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
+    ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
-    private int row, col;
+    private int row, col, numberOfRemainedWaves, turnNumber;
     MapMode mapMode;
-    protected int remainedWaves;
-    final private Player plantPlayer,zombiePlayer;
+    final private Player plantPlayer, zombiePlayer;
 
     public ArrayList<ActiveCard> getActiveCardArrayList() {
         return activeCardArrayList;
@@ -25,12 +24,13 @@ public class Map {
         return zombiePlayer;
     }
 
-    public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer) {
+    public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
         this.row = row;
         this.col = col;
         this.plantPlayer = plantPlayer;
         this.zombiePlayer = zombiePlayer;
         this.mapMode = mapMode;
+        this.numberOfRemainedWaves = wavesNumber;
         plantPlayer.setMap(this);
         zombiePlayer.setMap(this);
         if (mapMode.equals(MapMode.Water)) {
@@ -101,9 +101,14 @@ public class Map {
         }
         return nearest;
     }
-    public boolean canAddActiveCard(ActiveCard activeCard){
+
+    public void startWave(){
+        numberOfRemainedWaves--;
+    }
+
+    public boolean canAddActiveCard(ActiveCard activeCard) {
         if (activeCard.getCreature() instanceof Plant) {
-            if(activeCard.getX()%2==1){
+            if (activeCard.getX() % 2 == 1) {
                 return false;
             }
             if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
@@ -111,18 +116,20 @@ public class Map {
                 return true;
             } else if (!((Plant) activeCard.getCreature()).isWaterProof() &&
                     findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
-                return  true;
+                return true;
             } else {
                 return false;
             }
-        } else  {
+        } else {
             return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getX()));
         }
     }
+
     public void removeActiveCard(ActiveCard activeCard) {
         activeCardArrayList.remove(activeCard);
     }
-    public void addActiveCard(ActiveCard activeCard){
+
+    public void addActiveCard(ActiveCard activeCard) {
         activeCardArrayList.add(activeCard);
     }
 
@@ -169,6 +176,10 @@ public class Map {
     }
 
     public GameStatus run() throws Exception {
+        turnNumber++;
+        if(numberOfRemainedWaves<0){
+            return GameStatus.PlantPlayerWins;
+        }
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
@@ -189,8 +200,8 @@ public class Map {
                 usedGunShot.add(gunShot);
             }
         }
-        for(ActiveCard activeCard : activeCardArrayList){
-            if(activeCard.getRemainingHp()==0){
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if (activeCard.getRemainingHp() == 0) {
                 dies.add(activeCard);
             }
         }
@@ -199,10 +210,10 @@ public class Map {
         }
         for (ActiveCard activeCard : dies) {
             activeCardArrayList.remove(activeCard);
-            if(activeCard.getCreature() instanceof Plant){
+            if (activeCard.getCreature() instanceof Plant) {
                 zombiePlayer.addSun(activeCard.getCreature().getKillingReward());
             }
-            if(activeCard.getCreature() instanceof Zombie){
+            if (activeCard.getCreature() instanceof Zombie) {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
             }
         }
@@ -222,30 +233,31 @@ public class Map {
         }
         return nearestZombie;
     }
-    void mapSimpleShow(){
-        char jad[][]=new char[row][col];
-        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++){
-                if(isWater[i]){
-                    jad[i][j]='~';
-                }else {
+
+    void mapSimpleShow() {
+        char jad[][] = new char[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (isWater[i]) {
+                    jad[i][j] = '~';
+                } else {
                     jad[i][j] = ' ';
                 }
             }
         }
-        for(GunShot gunShot:gunShotArrayList){
-            jad[gunShot.getX()][gunShot.getY()]='*';
+        for (GunShot gunShot : gunShotArrayList) {
+            jad[gunShot.getX()][gunShot.getY()] = '*';
         }
-        for(ActiveCard activeCard:activeCardArrayList){
-            if(activeCard.getCreature() instanceof Zombie){
-                jad[activeCard.getX()][activeCard.getY()]='Z';
-            }else{
-                jad[activeCard.getX()][activeCard.getY()]='P';
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if (activeCard.getCreature() instanceof Zombie) {
+                jad[activeCard.getX()][activeCard.getY()] = 'Z';
+            } else {
+                jad[activeCard.getX()][activeCard.getY()] = 'P';
             }
         }
         System.out.println("/////////////////////////////////////////");
-        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 System.out.print(jad[i][j]);
             }
             System.out.println();

@@ -7,7 +7,7 @@ import Main.User;
 import java.util.ArrayList;
 
 public abstract class Player {
-    private int sunInGame;
+    private int sunInGame=50;
     private Map map;
     private int killingEnemyCount;
     final User user;

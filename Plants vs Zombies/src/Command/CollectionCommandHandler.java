@@ -22,14 +22,8 @@ public class CollectionCommandHandler extends CommandHandler {
         };
     }
 
-    public CollectionCommandHandler() {
-        onStart();
-    }
-
-    public void onStart() {
-    }
-
-    public void onEnd() {
+    public CollectionCommandHandler(CollectionMode collectionMode) {
+        this.collectionMode=collectionMode;
     }
 
     public void showHand(InputCommand inputCommand) {
@@ -43,7 +37,10 @@ public class CollectionCommandHandler extends CommandHandler {
     public void showCollection(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
-            stringBuilder.append(creature.getName()).append('\n');
+            if((creature instanceof Plant && CollectionMode.plantsCollection.equals(collectionMode))
+            || (creature instanceof Zombie && CollectionMode.zombiesCollection.equals(collectionMode))) {
+                stringBuilder.append(creature.getName()).append('\n');
+            }
         }
         Main.print(stringBuilder.toString());
     }
@@ -55,7 +52,8 @@ public class CollectionCommandHandler extends CommandHandler {
         }
         String cardName = matcher.group(1);
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
-        if (creature == null) {
+        if (creature == null || (creature instanceof Plant && collectionMode.equals(CollectionMode.zombiesCollection))
+                || (creature instanceof Zombie && collectionMode.equals(CollectionMode.plantsCollection))) {
             throw new Exception("invalid cardName");
         }
         menu.getUser().getPlayer().addCreaturesOnHand(creature);
@@ -75,7 +73,6 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void play(InputCommand inputCommand) throws Exception {
-        onEnd();
         menu.exit();
     }
 }

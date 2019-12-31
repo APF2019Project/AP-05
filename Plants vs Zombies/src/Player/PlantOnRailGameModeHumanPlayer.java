@@ -1,8 +1,9 @@
 package Player;
 
-import Main.Creature;
-import Main.Map;
-import Main.User;
+import Command.CollectionCommandHandler;
+import Command.PlantOnDayAndWaterModePlayerCommandHandler;
+import Command.PlantOnRailModePlayerCommandHandler;
+import Main.*;
 
 public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     public PlantOnRailGameModeHumanPlayer(User user) {
@@ -10,8 +11,9 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     }
 
     @Override
-    public void doAction() {
-
+    public void doAction() throws Exception {
+        Menu PlantOnRailModePlayerMenu = new Menu(user, new PlantOnRailModePlayerCommandHandler());
+        PlantOnRailModePlayerMenu.run();
     }
 
     @Override
@@ -26,6 +28,6 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void pickCards() throws Exception {
-
+        //nothing
     }
 }

@@ -17,6 +17,7 @@ public abstract class ZombiePlayer extends Player {
     protected boolean isWaveRunning;
 
     public void startWave() throws Exception {
+        getMap().startWave();
         isWaveRunning = true;
         for (ActiveCard activeCard : zombieCardsInNextWave) {
             getMap().addActiveCard(activeCard);
@@ -24,7 +25,11 @@ public abstract class ZombiePlayer extends Player {
     }
 
     public void doAction() throws Exception {
-        if (isWaveRunning && !zombieCardsInNextWave.isEmpty()) {
+        if(zombieCardsInNextWave.isEmpty()){
+            isWaveRunning=false;
+            return;
+        }
+        if (isWaveRunning) {
             getMap().addActiveCard(zombieCardsInNextWave.get(0));
             zombieCardsInNextWave.remove(0);
         }
