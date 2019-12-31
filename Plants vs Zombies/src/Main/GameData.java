@@ -24,7 +24,7 @@ public class GameData {
     public final static int numberOfWavesInZombieMode=10;
     static String usersJSONFilePath = "JSON/users";
     public final static int mapRowCount = 6;
-    public final static int mapColCount = 10;
+    public final static int mapColCount = 20;
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
     public final static String positiveNumber = "([0-9]{1,20})";
