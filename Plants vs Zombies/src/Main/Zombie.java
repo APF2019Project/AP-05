@@ -26,6 +26,7 @@ public class Zombie extends Creature {
             this.powerWithShield = powerWithShield;
         }
     */
+
     public static void addFirstZombie(Zombie zombie) {
         firstZombies.add(zombie);
     }
@@ -128,7 +129,6 @@ public class Zombie extends Creature {
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);
-        eatPlant(activeCard, map);
-        return true;
+        return eatPlant(activeCard, map);
     }
 }

@@ -1,0 +1,14 @@
+login
+arshia
+arshia
+play
+day
+select snow pea
+select sunflower
+play
+select snow pea
+plant 2,3
+end turn
+end turn
+end turn
+end turn

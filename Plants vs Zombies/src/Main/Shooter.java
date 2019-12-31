@@ -21,6 +21,10 @@ public class Shooter extends Plant {
 
     @Override
     public boolean doAction(ActiveCard activeCard, Map map) {
+        if(gun==null){
+            System.out.println(activeCard.getCreature().getName());
+            System.out.println("WTF?");
+        }
         return gun.doAction(activeCard, map);
     }
 }

@@ -53,6 +53,7 @@ public class Gun {
     }
 
     public boolean isShy() {
+        System.out.println("rdr4d"+shy);
         return shy;
     }
 

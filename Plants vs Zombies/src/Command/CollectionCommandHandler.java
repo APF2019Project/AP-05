@@ -51,6 +51,9 @@ public class CollectionCommandHandler extends CommandHandler {
             throw new Exception("there are some bug in CollectionCommandHandler selectCard method");
         }
         String cardName = matcher.group(1);
+        if (menu.getUser().getPlayer().getCreatureOnHandByName(cardName) != null) {
+            throw new Exception("you have already selected this plant");
+        }
         Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
         if (creature == null || (creature instanceof Plant && collectionMode.equals(CollectionMode.zombiesCollection))
                 || (creature instanceof Zombie && collectionMode.equals(CollectionMode.plantsCollection))) {

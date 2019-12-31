@@ -35,7 +35,6 @@ public abstract class Creature {
         this.reloadTime = jsonHandler.getInt(FieldNames.reloadTime);
         this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
         allCreatures.add(this);
-
     }
 
     static public Creature getCreatureByName(String name) {

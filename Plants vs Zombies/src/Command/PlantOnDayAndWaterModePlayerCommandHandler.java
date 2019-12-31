@@ -3,6 +3,7 @@ package Command;
 import Main.*;
 import Player.Player;
 
+import java.security.spec.ECField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +61,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             throw new Exception("you select nothing!");
         }
         int x = Integer.parseInt(matcher.group(1)), y = Integer.parseInt(matcher.group(2));
+        ActiveCard activeCard=new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer());
+        if(!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)){
+            throw new Exception("inja nekar pedar sag");
+        }
         menu.getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
         selectedPlant = null;
