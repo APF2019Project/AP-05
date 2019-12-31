@@ -81,7 +81,7 @@ public class Gun {
     boolean doAction(ActiveCard activeCard, Map map) {
         if (!this.isShy() || !this.isShyes(activeCard, map)) {
             for (int i = 0; i < gunShotsPerRound; i++) {
-                map.addGunShot(new GunShot(this, activeCard.getX()+1, activeCard.getY()
+                map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY()
                         , GameData.speedOfGunShot, activeCard.getOwner()));
             }
             return true;
