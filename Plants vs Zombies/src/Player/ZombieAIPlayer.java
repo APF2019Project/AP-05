@@ -11,7 +11,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
     private int whenPutZombie,lastZombieDie;
     private boolean isStart;
     Random random;
-
+    ArrayList<ActiveCard> wave;
     public ZombieAIPlayer(User user) {
         super(user);
         random=new Random();
@@ -61,7 +61,23 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 startWave();
             }else if(isStart && lastZombieDie==7){
                 startWave();
+            }else{
+                sendWave();
             }
+        }
+    }
+    public void sendWave(){
+        boolean isSend[]=new boolean[getMap().getRow()];
+        ArrayList<ActiveCard> sends=new ArrayList<ActiveCard>();
+        for(ActiveCard activeCard:wave){
+            if(!isSend[activeCard.getY()]){
+                getMap().addActiveCard(activeCard);
+                isSend[activeCard.getY()]=true;
+                sends.add(activeCard);
+            }
+        }
+        for(ActiveCard activeCard:sends){
+            wave.remove(activeCard);
         }
     }
     @Override
@@ -84,7 +100,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
                     ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
 
                     if (map.canAddActiveCardAndBuy(zombie)) {
-                        map.addActiveCard(zombie);
+                        wave.add(zombie);
                         break;
                     }
                 } else {
