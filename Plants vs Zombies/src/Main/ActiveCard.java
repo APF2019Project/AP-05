@@ -93,9 +93,6 @@ public class ActiveCard {
             if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
             }
-            if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
-                remainingHp--;
-            }
             this.shieldRemainingHp = 0;
         } else {
             this.shieldRemainingHp = shieldRemainingHp;

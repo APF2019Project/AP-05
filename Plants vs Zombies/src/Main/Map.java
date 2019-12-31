@@ -220,19 +220,15 @@ public class Map {
         for (Creature creature : zombiePlayer.getCreaturesOnHand()) {
             creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
         }
-
         if (numberOfRemainedWaves < 0) {
             return GameStatus.PlantPlayerWins;
         }
-
         for (GunShot gunShot : gunShotArrayList) {
             gunShot.doAction(this);
         }
-
         for (ActiveCard activeCard : activeCardArrayList) {
             activeCard.doAction(this);
         }
-
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
                 if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {

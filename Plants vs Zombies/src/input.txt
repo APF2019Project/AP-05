@@ -25,5 +25,23 @@ select kernel-pult
 plant 2,6
 end turn
 end turn
+select sunflower
+plant 2,5
+end turn
+select peashooter
+plant 4,5
+select scaredy-shroom
+plant 4,3
+end turn
+select sunflower
+plant 4,1
+select kernel-pult
+plant 4,2
+select snow pea
+plant 4,4
+end turn
+select scaredy-shroom
+plant 4,6
+end turn
 end turn
 end turn
