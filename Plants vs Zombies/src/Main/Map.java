@@ -3,6 +3,7 @@ package Main;
 import Player.Player;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Map {
     ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
@@ -224,6 +225,12 @@ public class Map {
             }
             if (activeCard.getCreature() instanceof Zombie) {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
+            }
+        }
+        if(mapMode!=mapMode.Rail){
+            Random random=new Random();
+            if(random.nextInt()%3==0){
+                plantPlayer.addSun(random.nextInt(4)+2);
             }
         }
         return GameStatus.OnGame;
