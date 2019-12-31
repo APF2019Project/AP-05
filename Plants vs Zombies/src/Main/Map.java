@@ -113,7 +113,7 @@ public class Map {
 
     public boolean canAddActiveCardAndBuy(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature() instanceof Plant) {
-            if (activeCard.getX() % 2 == 1) {
+            if (activeCard.getX() % 2 == 0) {
                 return false;
             }
             if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
