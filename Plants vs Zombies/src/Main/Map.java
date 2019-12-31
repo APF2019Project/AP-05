@@ -113,6 +113,9 @@ public class Map {
     }
 
     public boolean canAddActiveCardAndBuy(ActiveCard activeCard) throws Exception {
+        if(!isInMap(activeCard.getX(),activeCard.getY())){
+            return false;
+        }
         if (activeCard.getCreature() instanceof Plant) {
             if (activeCard.getX() % 2 == 0) {
                 return false;

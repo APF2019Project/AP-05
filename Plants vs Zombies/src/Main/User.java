@@ -23,6 +23,14 @@ public class User {
         this.player = player;
     }
 
+    public void gameEnded(boolean win) throws Exception {
+        killingEnemyCount+=player.getKillingEnemyCount();
+        if(win){
+            coinForShop+=GameData.winReward;
+        }
+        saveAllUsers();
+    }
+
     public static void saveAllUsers() throws Exception {
         JSONArray usersJsonArray = new JSONArray();
         for (User user : allUsers) {
