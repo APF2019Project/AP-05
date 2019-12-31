@@ -88,7 +88,7 @@ public class Map {
     public ActiveCard getZombieIn(int y, int xl, int vx) {
         ActiveCard nearest = null;
         for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getY() == y) {
+            if (activeCard.getY() == y && activeCard.getCreature() instanceof Zombie) {
                 if (vx < 0) {
                     if (activeCard.getX() <= xl && xl + vx <= activeCard.getX()) {
                         if (nearest == null || nearest.getX() < activeCard.getX()) {
