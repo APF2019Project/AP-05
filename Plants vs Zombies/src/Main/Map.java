@@ -131,7 +131,7 @@ public class Map {
         activeCardArrayList.remove(activeCard);
     }
 
-    public void addActiveCard(ActiveCard activeCard) {
+    public void addActiveCard(ActiveCard activeCard){
         if(activeCard.getCreature().getName().equals("bungee zombie")){
             Random random=new Random();
             activeCard.setX(random.nextInt(col));
@@ -212,7 +212,7 @@ public class Map {
         ArrayList<ActiveCard> dies = new ArrayList<ActiveCard>();
         ArrayList<GunShot> usedGunShot = new ArrayList<GunShot>();
         for (GunShot gunShot : gunShotArrayList) {
-            if (gunShot.isUsed()) {
+            if (gunShot.isUsed() || !isInMap(gunShot.getX(),gunShot.getY())) {
                 usedGunShot.add(gunShot);
             }
         }

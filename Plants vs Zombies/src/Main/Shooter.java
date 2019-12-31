@@ -12,7 +12,7 @@ public class Shooter extends Plant {
 
     public Shooter(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
-        this.gun = Gun.getGunByName(jsonHandler.getString(FieldNames.name) + "gun");
+        this.gun = Gun.getGunByName(jsonHandler.getString(FieldNames.name) + " gun");
     }
 
     public Gun getGun() {
@@ -21,10 +21,6 @@ public class Shooter extends Plant {
 
     @Override
     public boolean doAction(ActiveCard activeCard, Map map) {
-        if(gun==null){
-            System.out.println(activeCard.getCreature().getName());
-            System.out.println("WTF?");
-        }
         return gun.doAction(activeCard, map);
     }
 }
