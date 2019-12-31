@@ -11,7 +11,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
     private int whenPutZombie,lastZombieDie;
     private boolean isStart;
     Random random;
-    ArrayList<ActiveCard> wave;
+    ArrayList<ActiveCard> wave=new ArrayList<ActiveCard>();
     public ZombieAIPlayer(User user) {
         super(user);
         random=new Random();
