@@ -70,10 +70,6 @@ public class Zombie extends Creature {
         return (1 + this.getSpeed()) * this.getFullHp() * 10;
     }
 
-    public boolean isSwimmerWithActiveCard(ActiveCard activeCard) {
-        return (swimmer || activeCard.isHasOrdak());
-    }
-
     public boolean isSwimmer() {
         return swimmer;
     }
@@ -115,6 +111,12 @@ public class Zombie extends Creature {
             return true;
         }
         return false;
+    }
+    public boolean isMarine(ActiveCard activeCard){
+        return (swimmer || activeCard.isHasOrdak());
+    }
+    public boolean isOnshore(ActiveCard activeCard){
+        return (!swimmer);
     }
 
     public boolean doAction(ActiveCard activeCard, Map map) throws Exception {

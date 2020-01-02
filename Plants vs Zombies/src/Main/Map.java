@@ -111,7 +111,6 @@ public class Map {
     public void startWave() {
         numberOfRemainedWaves--;
     }
-
     public boolean canAddActiveCardAndBuy(ActiveCard activeCard) throws Exception {
         if(!isInMap(activeCard.getX(),activeCard.getY())){
             return false;
@@ -120,19 +119,14 @@ public class Map {
             if (activeCard.getX() % 2 == 0) {
                 return false;
             }
-            if (((Plant) activeCard.getCreature()).isWaterProof() && findPlantIn(activeCard.getX(), activeCard.getY())
-                    != null && findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad) {
-                return activeCard.getOwner().pickCreature(activeCard.getCreature());
-            } else if (!((Plant) activeCard.getCreature()).isWaterProof() &&
-                    findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
-                return activeCard.getOwner().pickCreature(activeCard.getCreature());
-            } else {
-                return false;
-            }
-        } else {
-            return (((Zombie) activeCard.getCreature()).isSwimmerWithActiveCard(activeCard) == isWater(activeCard.getY()))
-                    && activeCard.getOwner().pickCreature(activeCard.getCreature());
         }
+        if(isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard)) {
+            return false;
+        }
+        if(!isWater(activeCard.getY()) && !activeCard.getCreature().isOnshore(activeCard)) {
+            return false;
+        }
+        return activeCard.getOwner().pickCreature(activeCard.getCreature());
     }
 
     public void removeActiveCard(ActiveCard activeCard) {
@@ -200,14 +194,22 @@ public class Map {
     }
 
     public void gameActionForEachTurn() {
-        if (mapMode.equals(MapMode.Rail)) {
+        if (!mapMode.equals(MapMode.Rail)) {
             Random random = new Random();
             if (random.nextInt() % 3 == 0) {
                 plantPlayer.addSun(random.nextInt(4) + 2);
             }
         }
-    }
 
+    }
+    public boolean isMapHasPlant() {
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if (activeCard.getCreature() instanceof Plant) {
+                return true;
+            }
+        }
+        return false;
+    }
     public boolean isMapHasZombie() {
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
