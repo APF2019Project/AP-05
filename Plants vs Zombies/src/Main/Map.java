@@ -278,7 +278,7 @@ public class Map {
 
         gameActionForEachTurn();
 
-        mapSimpleShow();
+        //mapSimpleShow();
 
         return GameStatus.OnGame;
     }
