@@ -14,7 +14,7 @@ public class ActiveCard {
     private boolean hasOrdak;
 
     public ActiveCard(Creature creature, int x, int y, Player player) throws Exception {
-        if(creature.getRemainingCoolDown()!=0){
+        if(creature.getRemainingCoolDown()!=0 && !owner.getMap().mapMode.equals(MapMode.Rail)){
             throw new Exception("couldn't add this creature cool down is not 0");
         }
         this.creature = creature;
