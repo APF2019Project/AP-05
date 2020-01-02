@@ -19,6 +19,9 @@ plant 4,1
 select explode-o-nut
 plant 6,1
 select scaredy-shroom
+<<<<<<< HEAD
+plant 2,4
+=======
 plant 8,1
 select cherry bomb
 plant 10,1
@@ -26,6 +29,7 @@ select kernel-pult
 plant 12,1
 end turn
 end turn
+>>>>>>> 291d4ec9c5ddcdeedad1a96d52b952c2e6ff76bb
 select sunflower
 plant 2,5
 end turn

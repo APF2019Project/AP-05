@@ -1,5 +1,5 @@
 package Main;
 
 public enum GameStatus {
-    PlantPlayerWins,ZombiePlayerWins,OnGame
+    PlantPlayerWins,ZombiePlayerWins,OnGame,notInGame
 }

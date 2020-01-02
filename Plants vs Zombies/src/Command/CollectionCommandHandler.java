@@ -27,6 +27,7 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void showHand(InputCommand inputCommand) {
+        Main.print("Your hand:");
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
             stringBuilder.append(creature.getName()).append('\n');
@@ -35,6 +36,7 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void showCollection(InputCommand inputCommand) {
+        Main.print("Your collection:");
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
             if (menu.getUser().getPlayer().getCreatureOnHandByName(creature.getName()) != null) {

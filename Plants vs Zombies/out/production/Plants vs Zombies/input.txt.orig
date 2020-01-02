@@ -15,28 +15,39 @@ select peashooter
 plant 2,1
 end turn
 select snow pea
-plant 2,2
-<<<<<<< HEAD
-end turn
-select snow pea
-plant 2,3
-end turn
-select snow pea
-plant 2,4
-end turn
-select snow pea
-plant 2,5
-=======
+plant 4,1
 select explode-o-nut
-plant 2,3
+plant 6,1
 select scaredy-shroom
+<<<<<<< HEAD
 plant 2,4
+=======
+plant 8,1
 select cherry bomb
-plant 2,5
+plant 10,1
 select kernel-pult
-plant 2,6
+plant 12,1
 end turn
->>>>>>> 45f84b83798bd143908bac3949606c8577973e72
 end turn
+>>>>>>> 291d4ec9c5ddcdeedad1a96d52b952c2e6ff76bb
+select sunflower
+plant 2,5
+end turn
+select peashooter
+plant 4,5
+select scaredy-shroom
+plant 4,3
+end turn
+select sunflower
+plant 4,1
+select kernel-pult
+plant 4,2
 select snow pea
-plant 2,6
+plant 4,4
+end turn
+select scaredy-shroom
+plant 4,6
+end turn
+end turn
+end turn
+show laws
