@@ -56,8 +56,13 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
             throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler plant method");
         }
         int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
+        ActiveCard activeCard=new ActiveCard(
+                menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getUser().getPlayer());
+        if (!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
+            throw new Exception("you can't your plant here");
+        }
         menu.getUser().getPlayer().getMap()
-                .addActiveCard(new ActiveCard(menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getUser().getPlayer()));
+                .addActiveCard(activeCard);
         menu.getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
         plantIndex = -1;
     }

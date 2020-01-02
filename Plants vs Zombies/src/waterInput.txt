@@ -12,7 +12,7 @@ select kernel-pult
 select sunflower
 play
 select peashooter
-plant 2,1
+plant 2,2
 end turn
 select explode-o-nut
 plant 2,4

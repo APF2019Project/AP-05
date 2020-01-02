@@ -6,7 +6,7 @@ import Player.Player;
 public class Menu {
     //private Menu lastMenu;
     private CommandHandler commandHandler;
-    private User user;
+    private final User user;
     private boolean isOpen = false;
 
     public User getUser() {
@@ -49,14 +49,14 @@ public class Menu {
     public void run() throws Exception {
         isOpen = true;
         while (isOpen) {
-            try {
+            //try {
                 commandHandler.setFirstLineDescription();
                 showHelp(); // bayad pak shavad
                 String command = Main.scanLine().toLowerCase();
                 accept(command);
-            } catch (Exception e) {
-               System.err.println(e.getMessage());
-            }
+            //} catch (Exception e) {
+          //     System.err.println(e.getMessage());
+           // }
         }
     }
 }

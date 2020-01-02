@@ -19,7 +19,7 @@ public abstract class ZombiePlayer extends Player {
     }
 
     @Override
-    public boolean pickCreature(Creature creature) throws Exception {
+    public boolean pickCreature(Creature creature) {
         if (getSunInGame() < creature.getPrice()) {
             return false;
         }
@@ -34,12 +34,16 @@ public abstract class ZombiePlayer extends Player {
         }
         if (isWaveRunning) {
             boolean[] added =new boolean[getMap().getRow()];
+            ArrayList<ActiveCard> removedZombies = new ArrayList<>();
             for(ActiveCard zombieCardInThisWave:zombieCardsInThisWave) {
                 if(!added[zombieCardInThisWave.getY()]){
                     added[zombieCardInThisWave.getY()]=true;
                     getMap().addActiveCard(zombieCardInThisWave);
-                    zombieCardsInThisWave.remove(zombieCardInThisWave);
+                    removedZombies.add(zombieCardInThisWave);
                 }
+            }
+            for(ActiveCard zombieCardInThisWave:removedZombies) {
+                zombieCardsInThisWave.remove(zombieCardInThisWave);
             }
         }
     }
