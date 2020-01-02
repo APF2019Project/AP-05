@@ -23,15 +23,6 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     }
 
     @Override
-    public boolean pickCreature(Creature creature) throws Exception {
-        if (getSunInGame() < creature.getPrice()) {
-            return false;
-        }
-        setSunInGame(getSunInGame() - creature.getPrice());
-        return true;
-    }
-
-    @Override
     public void pickCards() throws Exception {
         Menu collectionMenu = new Menu(user, new CollectionCommandHandler(CollectionMode.zombiesCollection));
         collectionMenu.run();

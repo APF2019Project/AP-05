@@ -60,6 +60,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void start(InputCommand inputCommand) throws Exception {
         ((ZombiePlayer) menu.getUser().getPlayer()).startWave();
+        Main.print("Wave Started");
         //menu.exit();
     }
 

@@ -16,9 +16,15 @@ public abstract class ZombiePlayer extends Player {
     public void startWave() throws Exception {
         getMap().startWave();
         isWaveRunning = true;
-        for (ActiveCard activeCard : zombieCardsInThisWave) {
-            getMap().addActiveCard(activeCard);
+    }
+
+    @Override
+    public boolean pickCreature(Creature creature) throws Exception {
+        if (getSunInGame() < creature.getPrice()) {
+            return false;
         }
+        setSunInGame(getSunInGame() - creature.getPrice());
+        return true;
     }
 
     public void doAction() throws Exception {

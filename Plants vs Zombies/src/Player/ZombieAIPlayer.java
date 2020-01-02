@@ -11,7 +11,6 @@ public class ZombieAIPlayer extends ZombiePlayer {
     private int whenPutZombie,lastZombieDie;
     private boolean isStart;
     Random random;
-    ArrayList<ActiveCard> wave=new ArrayList<ActiveCard>();
     public ZombieAIPlayer(User user) {
         super(user);
         random=new Random();
@@ -61,23 +60,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
                 startWave();
             }else if(isStart && lastZombieDie==7){
                 startWave();
-            }else{
-                sendWave();
             }
-        }
-    }
-    public void sendWave() throws Exception {
-        boolean isSend[]=new boolean[getMap().getRow()];
-        ArrayList<ActiveCard> sends=new ArrayList<ActiveCard>();
-        for(ActiveCard activeCard:wave){
-            if(!isSend[activeCard.getY()]){
-                getMap().addActiveCard(activeCard);
-                isSend[activeCard.getY()]=true;
-                sends.add(activeCard);
-            }
-        }
-        for(ActiveCard activeCard:sends){
-            wave.remove(activeCard);
         }
     }
     @Override
@@ -101,7 +84,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
                     ActiveCard zombie = new ActiveCard(available.get(rand_int), x, y, this);
 
                     if (map.canAddActiveCardAndBuy(zombie)) {
-                        wave.add(zombie);
+                        zombieCardsInThisWave.add(zombie);
                         break;
                     }
                 } else {
@@ -114,15 +97,6 @@ public class ZombieAIPlayer extends ZombiePlayer {
     @Override
     public void gameAction() {
 
-    }
-
-    @Override
-    public boolean pickCreature(Creature creature) throws Exception {
-        if (getSunInGame() < creature.getPrice()) {
-            return false;
-        }
-        setSunInGame(getSunInGame() - creature.getPrice());
-        return true;
     }
 
     @Override
