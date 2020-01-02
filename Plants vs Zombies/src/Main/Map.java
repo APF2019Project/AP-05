@@ -233,7 +233,12 @@ public class Map {
             gunShot.doAction(this);
         }
         for (ActiveCard activeCard : activeCardArrayList) {
-            activeCard.doAction(this);
+            if(activeCard.getCreature() instanceof Plant)
+                activeCard.doAction(this);
+        }
+        for (ActiveCard activeCard : activeCardArrayList) {
+            if(activeCard.getCreature() instanceof Zombie)
+                activeCard.doAction(this);
         }
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
