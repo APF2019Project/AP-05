@@ -178,13 +178,14 @@ public class Map {
         return null;
     }
 
-    GunShot getGunShotIn(int y, int xl, int xr) {
+    ArrayList<GunShot> getGunShotIn(int y, int xl, int xr) {
+        ArrayList<GunShot> ans=new ArrayList<GunShot>();
         for (GunShot gunshot : gunShotArrayList) {
             if (!gunshot.isUsed()  && gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
-                return gunshot;
+                ans.add(gunshot);
             }
         }
-        return null;
+        return ans;
     }
 
     int hasNoPlantIn(int y, int x) {

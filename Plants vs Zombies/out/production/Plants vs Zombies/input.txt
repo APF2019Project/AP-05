@@ -15,15 +15,15 @@ select peashooter
 plant 2,1
 end turn
 select snow pea
-plant 2,2
+plant 4,1
 select explode-o-nut
-plant 2,3
+plant 6,1
 select scaredy-shroom
-plant 2,4
+plant 8,1
 select cherry bomb
-plant 2,5
+plant 10,1
 select kernel-pult
-plant 2,6
+plant 12,1
 end turn
 end turn
 select sunflower
@@ -46,3 +46,4 @@ plant 4,6
 end turn
 end turn
 end turn
+show laws

@@ -123,9 +123,8 @@ public class Zombie extends Creature {
             deltaX *= (100 - activeCard.getSlowDownPercent()) / 100.0;
         }
         int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - deltaX);
-        while (activeCard.getRemainingHp() > 0) {
-            GunShot gunShot = map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
-            if (gunShot == null) break;
+        ArrayList<GunShot> collisionGUnShot=map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
+        for(GunShot gunShot:collisionGUnShot){
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);
