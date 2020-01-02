@@ -21,6 +21,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                         "put [name],[number of zombies to put],[row]: to put zombies."),
                 new Command(this::start, "start", "start: To start current wave."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
+                new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining \n" +
+                        "zombies and plants"),
         };
     }
 

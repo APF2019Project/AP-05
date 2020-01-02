@@ -33,6 +33,9 @@ public class Menu {
             return;
         }
         if (command.equals("exit")) {
+            if(GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)){
+                GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
+            }
             exit();
             return;
         }

@@ -52,9 +52,14 @@ public class PlayCommandHandler extends CommandHandler {
     public void playPvPMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
+        Main.print("opponent username:");
         String opponentUsername = Main.scanLine();
+        Main.print("Enter number of waves:");
         int numberOfWaves = Integer.parseInt(Main.scanLine());
         User opponentUser = User.getUserByUsername(opponentUsername);
+        if(opponentUser==null){
+            throw new Exception("opponent not found!");
+        }
         ZombieHumanPlayer zombieHumanPlayer =
                 new ZombieHumanPlayer(opponentUser);
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day, plantOnDayAndWaterModeHumanPlayer,
