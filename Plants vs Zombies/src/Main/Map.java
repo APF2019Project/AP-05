@@ -139,7 +139,7 @@ public class Map {
             activeCard.setX(random.nextInt(col));
             activeCard.setY(random.nextInt(row));
         }
-        if (activeCard.getCreature().getRemainingCoolDown() == 0) {
+        if (activeCard.getCreature().getRemainingCoolDown() == 0 || mapMode.equals(MapMode.Rail)) {
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
         } else {
