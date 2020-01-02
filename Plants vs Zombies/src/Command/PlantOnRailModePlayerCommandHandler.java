@@ -26,7 +26,8 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         };
     }
 
-    private Plant selectedPlant = null;
+    private int plantIndex = -1;
+    //private Plant selectedPlant = null;
 
     void list(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -42,8 +43,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         if (!matcher.find()) {
             throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler select method");
         }
-        int plantIndex = Integer.parseInt(matcher.group(1)); // input is 0-base
-        selectedPlant = (Plant) menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex);
+        plantIndex = Integer.parseInt(matcher.group(1)); // input is 0-base
     }
 
     void record(InputCommand inputCommand) {
@@ -57,8 +57,9 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         }
         int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
         menu.getUser().getPlayer().getMap()
-                .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
-        selectedPlant = null;
+                .addActiveCard(new ActiveCard(menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getUser().getPlayer()));
+        menu.getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
+        plantIndex = -1;
     }
 
     void remove(InputCommand inputCommand) throws Exception {

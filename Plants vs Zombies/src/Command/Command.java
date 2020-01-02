@@ -7,6 +7,7 @@ public class Command {
     final private String help;
     private Function function;
 
+
     public Command(Function function, String regex, String help) {
         this.function = function;
         this.regex = regex;
