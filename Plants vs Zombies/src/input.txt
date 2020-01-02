@@ -20,7 +20,7 @@ select explode-o-nut
 plant 2,3
 select scaredy-shroom
 plant 2,4
-select cherry bomb
+select sunflower
 plant 2,5
 select kernel-pult
 plant 2,6

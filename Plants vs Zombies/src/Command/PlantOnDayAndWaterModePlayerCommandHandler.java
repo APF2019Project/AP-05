@@ -67,7 +67,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
         ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer());
         if (!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            throw new Exception("inja nekar pedar sag");
+            throw new Exception("you can't your plant here");
         }
         menu.getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));

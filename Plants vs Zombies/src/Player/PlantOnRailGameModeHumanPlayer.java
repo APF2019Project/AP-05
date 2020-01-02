@@ -18,7 +18,6 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void gameAction() {
-
     }
 
     @Override
