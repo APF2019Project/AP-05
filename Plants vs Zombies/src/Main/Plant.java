@@ -58,9 +58,11 @@ public class Plant extends Creature {
         }
         return null;
     }
-
-    public boolean isWaterProof() {
+    public  boolean isMarine(ActiveCard activeCard){
         return waterProof;
+    }
+    public boolean isOnshore(ActiveCard activeCard){
+        return !waterProof;
     }
 
     public boolean isCactus() {

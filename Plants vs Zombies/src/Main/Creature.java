@@ -36,6 +36,8 @@ public abstract class Creature {
         this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
         allCreatures.add(this);
     }
+    public  abstract boolean isMarine(ActiveCard activeCard);
+    public abstract boolean isOnshore(ActiveCard activeCard);
 
     static public Creature getCreatureByName(String name) {
         for (Creature creature : allCreatures) {

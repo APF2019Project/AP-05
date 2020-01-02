@@ -32,7 +32,10 @@ public class ActiveCard {
         remainReloadTime = creature.getReloadTime();
     }
 
-    public void setHasOrdak(boolean hasOrdak) {
+    public void setHasOrdak(boolean hasOrdak) throws Exception {
+        if(((Zombie)creature).isMarine(this)){
+            throw new Exception("this zombie is already swimmer");
+        }
         this.hasOrdak = hasOrdak;
     }
     public boolean isHasOrdak() {
@@ -40,11 +43,7 @@ public class ActiveCard {
     }
 
     public void setHasLadder(boolean hasLadder) throws Exception {
-        if(((Zombie)creature).isSwimmerWithActiveCard(this)){
-            throw new Exception("this zombie is already swimmer");
-        }
         this.hasLadder = hasLadder;
-
     }
     public boolean isHasLadder() {
         return hasLadder;
@@ -90,9 +89,6 @@ public class ActiveCard {
 
     public void setShieldRemainingHp(int shieldRemainingHp) {
         if (shieldRemainingHp <= 0) {
-            if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
-                remainingHp--;
-            }
             if (creature.getName().equals("Buckethead Zombie") && remainingHp >= 2) {
                 remainingHp--;
             }

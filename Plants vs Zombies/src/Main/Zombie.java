@@ -70,10 +70,6 @@ public class Zombie extends Creature {
         return (1 + this.getSpeed()) * this.getFullHp() * 10;
     }
 
-    public boolean isSwimmerWithActiveCard(ActiveCard activeCard) {
-        return (swimmer || activeCard.isHasOrdak());
-    }
-
     public boolean isSwimmer() {
         return swimmer;
     }
@@ -116,6 +112,12 @@ public class Zombie extends Creature {
         }
         return false;
     }
+    public boolean isMarine(ActiveCard activeCard){
+        return (swimmer || activeCard.isHasOrdak());
+    }
+    public boolean isOnshore(ActiveCard activeCard){
+        return (!swimmer);
+    }
 
     public boolean doAction(ActiveCard activeCard, Map map) throws Exception {
         int deltaX = speed;
@@ -123,9 +125,8 @@ public class Zombie extends Creature {
             deltaX *= (100 - activeCard.getSlowDownPercent()) / 100.0;
         }
         int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - deltaX);
-        while (activeCard.getRemainingHp() > 0) {
-            GunShot gunShot = map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
-            if (gunShot == null) break;
+        ArrayList<GunShot> collisionGUnShot=map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
+        for(GunShot gunShot:collisionGUnShot){
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);

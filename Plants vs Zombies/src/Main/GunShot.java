@@ -58,7 +58,7 @@ public class GunShot {
         if (gun.isSleepy()) {
             activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime, GameData.sleepySlowDownPercent);
         }
-        if (gun.isProjectile() || activeCard.getCreature().getShield().isFullBodyShield()) {
+        if (gun.isProjectile() || (activeCard.getCreature().getShield()!=null && activeCard.getCreature().getShield().isFullBodyShield())) {
             if (activeCard.getShieldRemainingHp() > 0) {
                 activeCard.setShieldRemainingHp(activeCard.getShieldRemainingHp() - gun.getDamage());
             } else {
