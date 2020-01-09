@@ -22,10 +22,11 @@ public class GameMenuSwitcher {
 
     public void runGame() throws Exception {
         setGameStatus(GameStatus.OnGame);
+        System.err.println("DE0");
         map.getPlantPlayer().pickCards();
+        System.err.println("DE1");
         map.getZombiePlayer().pickCards();
-
-        // this part is incomplete
+        System.err.println("DE");
         while (gameStatus.equals(GameStatus.OnGame)) {
             map.getPlantPlayer().doAction();
             if (gameStatus.equals(GameStatus.OnGame)) {

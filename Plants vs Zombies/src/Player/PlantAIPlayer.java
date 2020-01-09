@@ -34,13 +34,10 @@ public class PlantAIPlayer extends PlantPlayer {
         }else{
             availablePlantName= GameData.WetModeAvailablePlantName;
         }
-        ArrayList<Plant> availablePlant=new ArrayList<Plant>();
-        for(String name:availablePlantName){
-            availablePlant.add((Plant) Creature.getCreatureByName(name));
-        }
+        ArrayList<Creature> availablePlant=map.getPlantPlayer().getCreaturesOnHand();
         this.setSunInGame(GameData.inf);
         while(availablePlant.size()>0){
-            Plant plant=availablePlant.get(0);
+            Plant plant=(Plant)availablePlant.get(0);
             int x=random.nextInt(3);
             int y=random.nextInt(map.getRow());
             ActiveCard activeCard=new ActiveCard(plant,x,y,this);

@@ -26,7 +26,7 @@ public class ShopCommandHandler extends CommandHandler {
         stringBuilder.append("List of your not bought cards:\n");
         for (Creature creature : menu.getUser().getLockedCreatures()) {
             stringBuilder.append("\nName: ").append(creature.getName())
-                    .append("\nPrice: ").append(creature.getPrice()).append("\n");
+                    .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
         }
         Main.print(stringBuilder.toString());
     }
@@ -36,7 +36,7 @@ public class ShopCommandHandler extends CommandHandler {
         stringBuilder.append("List of your bought cards:\n");
         for (Creature creature : menu.getUser().getUnlockedCreatures()) {
             stringBuilder.append("\nName: ").append(creature.getName())
-                    .append("\nPrice: ").append(creature.getPrice()).append("\n");
+                    .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
         }
         Main.print(stringBuilder.toString());
     }
