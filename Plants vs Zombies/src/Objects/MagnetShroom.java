@@ -1,4 +1,9 @@
-package Main;
+package Objects;
+
+import Main.ActiveCard;
+import Main.GameData;
+import Main.JSONHandler;
+import Main.Map;
 
 public class MagnetShroom extends Plant {
     /*
@@ -13,7 +18,7 @@ public class MagnetShroom extends Plant {
     }
 
     public boolean doAction(ActiveCard magnet, Map map) {
-        for(ActiveCard zombie:map.activeCardArrayList){
+        for(ActiveCard zombie:map.getActiveCardArrayList()){
             if(zombie.getCreature() instanceof  Zombie) {
                 if (magnet.getDistance(zombie) <= GameData.maxMagnetRange &&
                         zombie.getShieldRemainingHp() > 0 && zombie.getCreature().getShield().isMetal()) {

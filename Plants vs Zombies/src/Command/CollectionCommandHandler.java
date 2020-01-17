@@ -1,7 +1,11 @@
 package Command;
 
-import Main.*;
-import Player.Player;
+import Main.CollectionMode;
+import Main.GameData;
+import Main.Main;
+import Objects.Creature;
+import Objects.Plant;
+import Objects.Zombie;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

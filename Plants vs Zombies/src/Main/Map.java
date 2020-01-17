@@ -1,6 +1,7 @@
 package Main;
 
-import Player.*;
+import Objects.*;
+import Player.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -172,7 +173,7 @@ public class Map {
         return null;
     }
 
-    ArrayList<GunShot> getGunShotIn(int y, int xl, int xr) {
+    public ArrayList<GunShot> getGunShotIn(int y, int xl, int xr) {
         ArrayList<GunShot> ans=new ArrayList<GunShot>();
         for (GunShot gunshot : gunShotArrayList) {
             if (!gunshot.isUsed()  && gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
@@ -182,7 +183,7 @@ public class Map {
         return ans;
     }
 
-    int hasNoPlantIn(int y, int x) {
+    public int hasNoPlantIn(int y, int x) {
         int maxX = -10000;
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Plant && !activeCard.isHasLadder()

@@ -1,4 +1,9 @@
-package Main;
+package Objects;
+
+import Main.ActiveCard;
+import Main.FieldNames;
+import Main.JSONHandler;
+import Main.Map;
 
 public class SunFlower extends Plant {
     private int numberOfSuns;

@@ -1,4 +1,9 @@
-package Main;
+package Objects;
+
+import Main.ActiveCard;
+import Main.GameData;
+import Main.JSONHandler;
+import Main.Map;
 
 public class ThreeRowGun extends Gun {
     /*

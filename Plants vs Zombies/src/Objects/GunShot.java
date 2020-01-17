@@ -1,6 +1,9 @@
-package Main;
+package Objects;
 
 
+import Main.ActiveCard;
+import Main.GameData;
+import Main.Map;
 import Player.Player;
 
 public class GunShot {

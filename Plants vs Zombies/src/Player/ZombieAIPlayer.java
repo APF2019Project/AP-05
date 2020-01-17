@@ -1,9 +1,13 @@
 package Player;
 
-import Main.*;
+import Main.ActiveCard;
+import Main.Map;
+import Main.MapMode;
+import Main.User;
+import Objects.Creature;
+import Objects.Zombie;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 

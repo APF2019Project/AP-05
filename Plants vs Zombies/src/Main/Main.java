@@ -1,10 +1,7 @@
 package Main;
 
 import Command.LoginCommandHandler;
-import Command.MainMenuCommandHandler;
-import Command.ProfileCommandHandler;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {

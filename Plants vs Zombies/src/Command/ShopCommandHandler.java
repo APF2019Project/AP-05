@@ -1,7 +1,9 @@
 package Command;
 
-import Main.*;
-import Player.Player;
+import Main.CollectionMode;
+import Main.Main;
+import Main.Menu;
+import Objects.Creature;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

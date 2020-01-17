@@ -1,8 +1,8 @@
 package Player;
 
-import Main.Creature;
 import Main.Map;
 import Main.User;
+import Objects.Creature;
 
 import java.util.ArrayList;
 

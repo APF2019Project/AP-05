@@ -4,9 +4,8 @@ import Command.CollectionCommandHandler;
 import Command.PlantOnDayAndWaterModePlayerCommandHandler;
 import Main.CollectionMode;
 import Main.Menu;
-import Main.Map;
 import Main.User;
-import Main.Creature;
+import Objects.Creature;
 
 public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
     public PlantOnDayAndWaterModeHumanPlayer(User user) {

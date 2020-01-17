@@ -1,4 +1,7 @@
-package Main;
+package Objects;
+
+import Main.FieldNames;
+import Main.JSONHandler;
 
 import java.util.ArrayList;
 

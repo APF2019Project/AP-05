@@ -1,5 +1,8 @@
 package Main;
 
+import Objects.Creature;
+import Objects.Plant;
+import Objects.Zombie;
 import Player.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

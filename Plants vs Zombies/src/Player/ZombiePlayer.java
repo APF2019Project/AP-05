@@ -1,9 +1,10 @@
 package Player;
 
-import Main.*;
+import Main.ActiveCard;
+import Main.User;
+import Objects.Creature;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class ZombiePlayer extends Player {
     public ZombiePlayer(User user) {

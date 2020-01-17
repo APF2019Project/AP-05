@@ -1,9 +1,10 @@
 package Player;
 
 import Command.CollectionCommandHandler;
-import Command.PlantOnRailModePlayerCommandHandler;
 import Command.ZombiePlayerCommandHandler;
-import Main.*;
+import Main.CollectionMode;
+import Main.Menu;
+import Main.User;
 
 public class ZombieHumanPlayer extends ZombiePlayer {
     public ZombieHumanPlayer(User user) {

@@ -1,5 +1,6 @@
 package Main;
 
+import Objects.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,15 +11,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameData {
-    static int speedOfGunShot = 3;
-    static int shyDistanceLimit;
-    static int iceSlowDownTime;
-    static int iceSlowDownPercent = 50;
-    static int sleepySlowDownTime;
-    static int sleepySlowDownPercent = 100;
-    static int cactusDamage = 1;
-    static int PepperDamage = 1;
-    static int maxMagnetRange, MagnetEatingTime;
+    public static int speedOfGunShot = 3;
+    public static int shyDistanceLimit;
+    public static int iceSlowDownTime;
+    public static int iceSlowDownPercent = 50;
+    public static int sleepySlowDownTime;
+    public static int sleepySlowDownPercent = 100;
+    public static int cactusDamage = 1;
+    public static int PepperDamage = 1;
+    public static int maxMagnetRange, MagnetEatingTime;
     public final static int numberOfWavesInDayAndWaterMode=3;
     public final static int numberOfWavesInRailMode=10;
     public final static int numberOfWavesInZombieMode=10;

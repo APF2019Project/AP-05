@@ -1,8 +1,6 @@
 package Command;
 
-import Main.Main;
 import Main.Menu;
-import Player.Player;
 
 public class MainMenuCommandHandler extends CommandHandler {
     {

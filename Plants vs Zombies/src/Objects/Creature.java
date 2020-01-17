@@ -1,4 +1,9 @@
-package Main;
+package Objects;
+
+import Main.ActiveCard;
+import Main.FieldNames;
+import Main.JSONHandler;
+import Main.Map;
 
 import java.util.ArrayList;
 
@@ -48,7 +53,7 @@ public abstract class Creature {
         return null;
     }
 
-    static ArrayList<Creature> getAllCreatures() {
+    public static ArrayList<Creature> getAllCreatures() {
         return allCreatures;
     }
 

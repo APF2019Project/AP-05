@@ -1,6 +1,8 @@
 package Main;
 
 
+import Objects.Creature;
+import Objects.Zombie;
 import Player.Player;
 
 public class ActiveCard {

@@ -1,7 +1,6 @@
 package Main;
 
 import Command.CommandHandler;
-import Player.Player;
 
 public class Menu {
     //private Menu lastMenu;

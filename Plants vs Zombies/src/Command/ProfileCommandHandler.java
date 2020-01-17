@@ -1,8 +1,6 @@
 package Command;
 
 import Main.Main;
-import Main.Menu;
-import Player.Player;
 import Main.User;
 
 public class ProfileCommandHandler extends CommandHandler {

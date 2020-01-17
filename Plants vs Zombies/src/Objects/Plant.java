@@ -1,4 +1,9 @@
-package Main;
+package Objects;
+
+import Main.ActiveCard;
+import Main.FieldNames;
+import Main.JSONHandler;
+import Main.Map;
 
 import java.util.ArrayList;
 

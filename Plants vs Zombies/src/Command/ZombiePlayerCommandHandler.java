@@ -1,11 +1,10 @@
 package Command;
 
-import Main.Creature;
+import Main.ActiveCard;
 import Main.GameData;
 import Main.Main;
-import Main.Plant;
-import Main.ActiveCard;
-import Main.Zombie;
+import Objects.Creature;
+import Objects.Zombie;
 import Player.ZombiePlayer;
 
 import java.util.regex.Matcher;

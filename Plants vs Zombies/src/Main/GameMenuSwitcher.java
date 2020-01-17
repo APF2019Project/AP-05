@@ -1,9 +1,5 @@
 package Main;
 
-import Player.PlantPlayer;
-import Player.ZombiePlayer;
-import Player.Player;
-
 public class GameMenuSwitcher {
     private Map map;
     private static GameStatus gameStatus = GameStatus.notInGame;

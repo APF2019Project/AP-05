@@ -1,13 +1,11 @@
 package Main;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 
 public class JSONHandler {
     private JSONObject jsonObject;
@@ -34,16 +32,16 @@ public class JSONHandler {
         }
     }
 
-    int getInt(FieldNames key) throws Exception {
+    public int getInt(FieldNames key) throws Exception {
         return ((Long) getFromJSONObject(key)).intValue();
     }
 
-    String getString(FieldNames key) throws Exception {
+    public String getString(FieldNames key) throws Exception {
         return (String) getFromJSONObject(key);
     }
 
 
-    boolean getBoolean(FieldNames key) throws Exception {
+    public boolean getBoolean(FieldNames key) throws Exception {
         return (boolean) getFromJSONObject(key);
     }
 

@@ -1,5 +1,8 @@
 package Main;
 
+import Objects.Gun;
+import Objects.GunShot;
+
 public class DoubleSidedGun extends Gun {
     /*
     public DoubleSidedGun(String name, boolean icy, boolean shy, boolean sleepy, int damage,

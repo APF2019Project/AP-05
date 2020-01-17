@@ -1,5 +1,8 @@
 package Main;
 
+import Objects.Plant;
+import Objects.Zombie;
+
 public class Mine extends Plant {
     private int deltaX, deltaY, activeRange;
 /*

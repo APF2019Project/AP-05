@@ -1,10 +1,10 @@
 package Command;
 
-import Main.Creature;
+import Main.ActiveCard;
 import Main.GameData;
 import Main.Main;
-import Main.Plant;
-import Main.ActiveCard;
+import Objects.Creature;
+import Objects.Plant;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

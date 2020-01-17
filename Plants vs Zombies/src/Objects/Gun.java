@@ -1,4 +1,6 @@
-package Main;
+package Objects;
+
+import Main.*;
 
 import java.util.ArrayList;
 
@@ -69,7 +71,7 @@ public class Gun {
     }
 
     public boolean isShyes(ActiveCard activeCard, Map map) {
-        for (ActiveCard activeCard1 : map.activeCardArrayList) {
+        for (ActiveCard activeCard1 : map.getActiveCardArrayList()) {
             if (activeCard1.getX() == activeCard.getX() &&
                     activeCard.getDistance(activeCard1) <= GameData.shyDistanceLimit) {
                 return true;

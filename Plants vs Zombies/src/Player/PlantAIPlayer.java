@@ -1,6 +1,11 @@
 package Player;
 
-import Main.*;
+import Main.ActiveCard;
+import Main.GameData;
+import Main.Map;
+import Main.User;
+import Objects.Creature;
+import Objects.Plant;
 
 import java.util.ArrayList;
 import java.util.Random;
