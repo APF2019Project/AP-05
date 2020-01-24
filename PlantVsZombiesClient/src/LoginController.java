@@ -10,7 +10,7 @@ public class LoginController {
     int i = 0;
 
     @FXML void initialize(){
-        //PrettyLabel.playBackgroundColorAnimation(title);
+        PrettyLabel.playBackgroundColorAnimation(title);
     }
 
 }
