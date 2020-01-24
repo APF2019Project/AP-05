@@ -24,7 +24,13 @@ public class Main extends Application {
         MenuHandler.setStage(primaryStage);
         MenuHandler.openScene("first");
         MediaPlayer.playBackgroundMusic();
+        primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(windowEvent -> {
+            try {
+                MenuHandler.getClient().send("exit");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             MediaPlayer.closeBackgroundMusic();
             System.exit(0);
         });

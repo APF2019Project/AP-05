@@ -16,34 +16,34 @@ public class PlayCommandHandler extends CommandHandler {
 
     public void playDayMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
+                new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day, plantOnDayAndWaterModeHumanPlayer,
-                new ZombieAIPlayer(GameData.getAIUser()), GameData.numberOfWavesInDayAndWaterMode);
+                new ZombieAIPlayer(GameData.getAIConnection()), GameData.numberOfWavesInDayAndWaterMode);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
 
     public void playWaterMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
+                new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Water, plantOnDayAndWaterModeHumanPlayer,
-                new ZombieAIPlayer(GameData.getAIUser()), GameData.numberOfWavesInDayAndWaterMode);
+                new ZombieAIPlayer(GameData.getAIConnection()), GameData.numberOfWavesInDayAndWaterMode);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
 
     public void playRailMode(InputCommand inputCommand) throws Exception {
         PlantOnRailGameModeHumanPlayer plantOnRailGameModeHumanPlayer =
-                new PlantOnRailGameModeHumanPlayer(menu.getUser());
+                new PlantOnRailGameModeHumanPlayer(menu.getConnection());
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Rail, plantOnRailGameModeHumanPlayer,
-                new ZombieAIPlayer(GameData.getAIUser()), GameData.numberOfWavesInRailMode);
+                new ZombieAIPlayer(GameData.getAIConnection()), GameData.numberOfWavesInRailMode);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
     }
 
     public void playZombieMode(InputCommand inputCommand) throws Exception {
-        ZombieHumanPlayer zombieHumanPlayer = new ZombieHumanPlayer(menu.getUser());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, new PlantAIPlayer(menu.getUser()),
+        ZombieHumanPlayer zombieHumanPlayer = new ZombieHumanPlayer(menu.getConnection());
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, new PlantAIPlayer(menu.getConnection()),
                 zombieHumanPlayer, GameData.numberOfWavesInZombieMode);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
@@ -51,17 +51,15 @@ public class PlayCommandHandler extends CommandHandler {
 
     public void playPvPMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(menu.getUser());
-        Main.print("opponent username:");
-        String opponentUsername = Main.scanLine();
-        Main.print("Enter number of waves:");
-        int numberOfWaves = Integer.parseInt(Main.scanLine());
+                new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
+        String opponentUsername = (String) inputCommand.getInputJsonObject().get("opponentUsername");
+        int numberOfWaves = (int) inputCommand.getInputJsonObject().get("numberOfWaves");
         User opponentUser = User.getUserByUsername(opponentUsername);
-        if(opponentUser==null){
+        if (opponentUser == null) {
             throw new Exception("opponent not found!");
         }
         ZombieHumanPlayer zombieHumanPlayer =
-                new ZombieHumanPlayer(opponentUser);
+                new ZombieHumanPlayer(Server.getConnectionByUsername(opponentUsername));
         Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day, plantOnDayAndWaterModeHumanPlayer,
                 zombieHumanPlayer, numberOfWaves);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);

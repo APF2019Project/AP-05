@@ -22,7 +22,7 @@ public class ShopCommandHandler extends CommandHandler {
     public void showShop(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("List of your not bought cards:\n");
-        for (Creature creature : menu.getUser().getLockedCreatures()) {
+        for (Creature creature : menu.getConnection().getUser().getLockedCreatures()) {
             stringBuilder.append("\nName: ").append(creature.getName())
                     .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
         }
@@ -32,7 +32,7 @@ public class ShopCommandHandler extends CommandHandler {
     public void showCollection(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("List of your bought cards:\n");
-        for (Creature creature : menu.getUser().getUnlockedCreatures()) {
+        for (Creature creature : menu.getConnection().getUser().getUnlockedCreatures()) {
             stringBuilder.append("\nName: ").append(creature.getName())
                     .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
         }
@@ -40,21 +40,17 @@ public class ShopCommandHandler extends CommandHandler {
     }
 
     public void buy(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in shopCommandHandler buy method");
-        }
-        String creatureName = matcher.group(1);
+        String creatureName = (String) inputCommand.getInputJsonObject().get("creatureName");
         Creature creature = Creature.getCreatureByName(creatureName);
-        if (creature == null || menu.getUser().getUnlockedCreatureByName(creatureName) != null) {
+        if (creature == null || menu.getConnection().getUser().getUnlockedCreatureByName(creatureName) != null) {
             throw new Exception("invalid cardName");
         }
-        if (!menu.getUser().buyCreatureFromShop(creature)) {
+        if (!menu.getConnection().getUser().buyCreatureFromShop(creature)) {
             throw new Exception("you don't have enough money");
         }
     }
 
     public void money(InputCommand inputCommand) {
-        Main.print("Money: " + menu.getUser().getCoinForShop() + "$");
+        Main.print("Money: " + menu.getConnection().getUser().getCoinForShop() + "$");
     }
 }

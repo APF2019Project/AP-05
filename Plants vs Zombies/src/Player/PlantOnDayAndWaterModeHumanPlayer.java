@@ -3,18 +3,19 @@ package Player;
 import Command.CollectionCommandHandler;
 import Command.PlantOnDayAndWaterModePlayerCommandHandler;
 import Command.CollectionMode;
+import Main.Connection;
 import Main.Menu;
 import Main.User;
 import Objects.Creature;
 
 public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
-    public PlantOnDayAndWaterModeHumanPlayer(User user) {
-        super(user);
+    public PlantOnDayAndWaterModeHumanPlayer(Connection connection) {
+        super(connection);
     }
 
     @Override
     public void doAction() throws Exception {
-        Menu plantOnDayAndWaterModePlayerMenu = new Menu(user, new PlantOnDayAndWaterModePlayerCommandHandler());
+        Menu plantOnDayAndWaterModePlayerMenu = new Menu(connection, new PlantOnDayAndWaterModePlayerCommandHandler());
         plantOnDayAndWaterModePlayerMenu.run();
     }
 
@@ -33,7 +34,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void pickCards() throws Exception {
-        Menu collectionMenu = new Menu(user, new CollectionCommandHandler(CollectionMode.plantsCollection));
+        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.plantsCollection));
         collectionMenu.run();
     }
 }

@@ -16,7 +16,7 @@ public class Client {
             System.out.println("Connected");
             startListening();
         }catch (Exception e){
-           // MessageBox.showErrorAndExit(e.getMessage());
+            MessageBox.showErrorAndExit(e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class Client {
                 String line = "";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
-
+                    MenuHandler.receive(line);
                 }
             } catch (Exception e) {
                 MessageBox.showErrorAndExit(e.getMessage());

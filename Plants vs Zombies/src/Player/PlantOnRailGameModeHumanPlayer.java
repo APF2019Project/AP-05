@@ -1,6 +1,7 @@
 package Player;
 
 import Command.PlantOnRailModePlayerCommandHandler;
+import Main.Connection;
 import Main.Menu;
 import Main.User;
 import Objects.Creature;
@@ -9,13 +10,13 @@ import Objects.Plant;
 import java.util.Random;
 
 public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
-    public PlantOnRailGameModeHumanPlayer(User user) {
-        super(user);
+    public PlantOnRailGameModeHumanPlayer(Connection connection) {
+        super(connection);
     }
     private int remainTurnToAddCard=0;
     @Override
     public void doAction() throws Exception {
-        Menu PlantOnRailModePlayerMenu = new Menu(user, new PlantOnRailModePlayerCommandHandler());
+        Menu PlantOnRailModePlayerMenu = new Menu(connection, new PlantOnRailModePlayerCommandHandler());
         PlantOnRailModePlayerMenu.run();
     }
 

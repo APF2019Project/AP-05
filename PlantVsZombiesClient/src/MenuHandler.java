@@ -1,6 +1,8 @@
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 
 public class MenuHandler {
     private static Stage currentStage;
-    private final static Client client = new Client("wfep78yt7oj.com", 1000);
+    private final static Client client = new Client("127.0.0.1", 5000);
 
     private static ArrayList<String> sceneNames = new ArrayList<>();
 
@@ -31,20 +33,32 @@ public class MenuHandler {
 
 
     private static void openScene(Scene scene) {
-        currentStage.setScene(scene);
-        currentStage.show();
+        Platform.runLater(() -> {
+            currentStage.setScene(scene);
+            currentStage.show();
+        });
+    }
+
+    public static Client getClient() {
+        return client;
     }
 
     private static void openSceneWithoutPush(String menuName) throws IOException {
+        System.err.println(menuName + "Scene.fxml");
         Parent parent = FXMLLoader.load(MenuHandler.class.getResource(menuName + "Scene.fxml"));
         openScene(new Scene(parent));
     }
 
     static void openScene(String menuName) throws IOException {
-        sceneNames.add(menuName);
-        openSceneWithoutPush(menuName);
+        Platform.runLater(() -> {
+            sceneNames.add(menuName);
+            try {
+                openSceneWithoutPush(menuName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-
     /*
     static void openSceneInNewStageAndCloseCurrentStage(Scene scene) {
         if (currentStage != null) {
@@ -60,18 +74,21 @@ public class MenuHandler {
 
     static void receive(String message) throws ParseException, IOException {
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
-        boolean successful = (boolean) messageJsonObject.get("successful");
-        if (messageJsonObject.containsKey("newMenu")) {
-            openScene((String) messageJsonObject.get("newMenu"));
+        String action = (String) messageJsonObject.get("action");
+        JSONObject parameters = (JSONObject) messageJsonObject.get("parameters");
+        if (action.equals("newMenu")) {
+            openScene((String) parameters.get("menuName"));
+            return;
         }
-        if (!successful) {
-            String errorMessage = (String) messageJsonObject.getOrDefault("error", "Error!");
-            boolean needToExit = (boolean) messageJsonObject.getOrDefault("needToExit", true);
-            if (needToExit) {
-                MessageBox.showErrorAndExit(errorMessage);
-            } else {
-                MessageBox.showError(errorMessage);
-            }
+        if (action.equals("showMessage")) {
+            String alertMessage = (String) parameters.get("message");
+            String alertMessageType = (String) parameters.getOrDefault("messageType", "ERROR");
+            Platform.runLater(() -> {
+                MessageBox.show(alertMessage, Alert.AlertType.valueOf(alertMessageType));
+                if (Alert.AlertType.valueOf(alertMessageType).equals(Alert.AlertType.ERROR)) {
+                    System.exit(-1);
+                }
+            });
             return;
         }
         JSONObject result = (JSONObject) messageJsonObject.get("result");

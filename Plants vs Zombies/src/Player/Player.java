@@ -1,5 +1,6 @@
 package Player;
 
+import Main.Connection;
 import Main.Map;
 import Main.User;
 import Objects.Creature;
@@ -10,10 +11,10 @@ public abstract class Player {
     private int sunInGame=50;
     private Map map;
     private int killingEnemyCount;
-    protected final User user;
+    protected final Connection connection;
 
-    public User getUser() {
-        return user;
+    public Connection getConnection() {
+        return connection;
     }
 
     public void setMap(Map map) {
@@ -38,9 +39,9 @@ public abstract class Player {
         this.sunInGame = sunInGame;
     }
 
-    public Player(User user) {
-        this.user = user;
-        user.setPlayer(this);
+    public Player(Connection connection) {
+        this.connection = connection;
+        connection.getUser().setPlayer(this);
     }
 
     public Map getMap() {

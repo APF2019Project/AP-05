@@ -2,9 +2,17 @@ import javafx.scene.control.Alert;
 
 public class MessageBox {
     static void showError(String message) {
+        show(message, Alert.AlertType.WARNING);
+    }
+
+    static void showInformation(String message) {
+        show(message, Alert.AlertType.INFORMATION);
+    }
+
+    static void show(String message, Alert.AlertType alertType){
         System.err.println(message);
         try {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(alertType);
             alert.setTitle("Message");
             alert.setHeaderText(message);
             alert.showAndWait();
@@ -15,16 +23,7 @@ public class MessageBox {
     }
 
     static void showErrorAndExit(String message) {
-        System.err.println(message);
-        try {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(message);
-            alert.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        show(message, Alert.AlertType.ERROR);
         System.exit(-1);
     }
 }

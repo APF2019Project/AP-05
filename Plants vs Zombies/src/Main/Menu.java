@@ -1,19 +1,20 @@
 package Main;
 
 import Command.CommandHandler;
+import org.json.simple.JSONObject;
 
 public class Menu {
     //private Menu lastMenu;
     private CommandHandler commandHandler;
-    private final User user;
+    private final Connection connection;
     private boolean isOpen = false;
 
-    public User getUser() {
-        return user;
+    public Connection getConnection() {
+        return connection;
     }
 
-    public Menu(User user, CommandHandler commandHandler) {
-        this.user = user;
+    public Menu(Connection connection, CommandHandler commandHandler) {
+        this.connection = connection;
         this.commandHandler = commandHandler;
         commandHandler.setMenu(this);
     }
@@ -27,18 +28,28 @@ public class Menu {
     }
 
     public void accept(String command) throws Exception {
-        if (command.equals("help")) {
-            //showHelp(); // bayad ezafe shavad
-            return;
-        }
-        if (command.equals("exit")) {
-            if(GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)){
-                GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
+        try {
+            if (command.equals("help")) {
+                //showHelp(); // bayad ezafe shavad
+                return;
             }
-            exit();
-            return;
+            if (command.equals("exit")) {
+                if (GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
+                    GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
+                }
+                exit();
+                return;
+            }
+            commandHandler.accept(command);
+        } catch (Exception e) {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject parametersJsonObject = new JSONObject();
+            jsonObject.put("action", "showMessage");
+            parametersJsonObject.put("message", e.getMessage());
+            parametersJsonObject.put("messageType", "WARNING");
+            jsonObject.put("parameters", parametersJsonObject);
+            connection.send(jsonObject.toJSONString());
         }
-        commandHandler.accept(command);
     }
 
     public void showHelp() throws Exception {
@@ -47,7 +58,13 @@ public class Menu {
 
     public void run() throws Exception {
         isOpen = true;
-        while (isOpen) {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject parametersJsonObject = new JSONObject();
+        jsonObject.put("action", "newMenu");
+        parametersJsonObject.put("menuName", "first");
+        jsonObject.put("parameters", parametersJsonObject);
+        connection.send(jsonObject.toJSONString());
+        /*while (isOpen) {
             try {
                 commandHandler.setFirstLineDescription();
                 showHelp(); // bayad pak shavad
@@ -56,6 +73,6 @@ public class Menu {
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
-        }
+        }*/
     }
 }

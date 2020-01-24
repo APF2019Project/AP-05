@@ -19,31 +19,31 @@ public class ProfileCommandHandler extends CommandHandler {
     }
 
     public void changeUsernameAndPassword(InputCommand inputCommand) throws Exception {
-        String username = Main.scanLine();
-        String password = Main.scanLine();
-        menu.getUser().changeUsername(username);
-        menu.getUser().changePassword(password);
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        String password = (String) inputCommand.getInputJsonObject().get("password");
+        menu.getConnection().getUser().changeUsername(username);
+        menu.getConnection().getUser().changePassword(password);
     }
 
     public void deleteUser(InputCommand inputCommand) throws Exception {
-        String username = Main.scanLine();
-        String password = Main.scanLine();
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        String password = (String) inputCommand.getInputJsonObject().get("password");
         User.deleteUser(username, password);
     }
 
     public void renameUser(InputCommand inputCommand) throws Exception {
-        String username = Main.scanLine();
-        menu.getUser().changeUsername(username);
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        menu.getConnection().getUser().changeUsername(username);
     }
 
     public void createUser(InputCommand inputCommand) throws Exception {
-        String username = Main.scanLine();
-        String password = Main.scanLine();
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        String password = (String) inputCommand.getInputJsonObject().get("password");
         new User(username, password);
         // inja bayad current user avaz she???
     }
 
     public void showUser(InputCommand inputCommand) {
-        Main.print(menu.getUser().getUsername());
+        Main.print(menu.getConnection().getUser().getUsername());
     }
 }

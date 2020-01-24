@@ -27,7 +27,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void showHand(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
+        for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Zombie zombie = (Zombie) creature;
             stringBuilder.append(zombie.getName()).append(" full Hp: ").append(zombie.getFullHp()).append('\n');
         }
@@ -36,7 +36,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void showLanes(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
+        for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             if (activeCard.getCreature() instanceof Zombie) {
                 stringBuilder.append(activeCard.getCreature().getName()).append(" in line:")
                         .append(activeCard.getY()).append('\n');
@@ -46,21 +46,17 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
     }
 
     void put(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in ZombiePlayerCommandHandler put method");
-        }
-        String zombieName = matcher.group(1);
-        int zombieCount = Integer.parseInt(matcher.group(2));
-        int y = Integer.parseInt(matcher.group(3)) - 1;
-        Zombie zombie = (Zombie) menu.getUser().getPlayer().getCreatureOnHandByName(zombieName);
+        String zombieName = (String) inputCommand.getInputJsonObject().get("zombieName");
+        int zombieCount = (int) inputCommand.getInputJsonObject().get("zombieCount");
+        int y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        Zombie zombie = (Zombie) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(zombieName);
         for (int i = 0; i < zombieCount; i++) {
-            menu.getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getUser().getPlayer()));
+            menu.getConnection().getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getConnection().getUser().getPlayer()));
         }
     }
 
     void start(InputCommand inputCommand) throws Exception {
-        ((ZombiePlayer) menu.getUser().getPlayer()).startWave();
+        ((ZombiePlayer) menu.getConnection().getUser().getPlayer()).startWave();
         Main.print("Wave Started");
         //menu.exit();
     }
@@ -72,7 +68,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
+        for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             stringBuilder.append(activeCard.getCreature().getName()).append(" (")
                     .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")")
                     .append(activeCard.getRemainingHp()).append('\n');

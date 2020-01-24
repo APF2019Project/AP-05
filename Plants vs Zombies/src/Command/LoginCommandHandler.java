@@ -3,6 +3,7 @@ package Command;
 import Main.Main;
 import Main.Menu;
 import Main.User;
+import org.json.simple.JSONObject;
 
 import java.util.Comparator;
 
@@ -19,19 +20,24 @@ public class LoginCommandHandler extends CommandHandler {
     }
 
     public void createAccount(InputCommand inputCommand) throws Exception {
-        Main.print("Enter your username:");
-        String username = Main.scanLine();
-        Main.print("Enter your password:");
-        String password = Main.scanLine();
-        new User(username, password);
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        String password = (String) inputCommand.getInputJsonObject().get("password");
+        menu.getConnection().setUser(new User(username, password));
+        new Menu(menu.getConnection(), new MainMenuCommandHandler()).run();
+        JSONObject jsonObject = new JSONObject();
+        JSONObject parametersJsonObject = new JSONObject();
+        jsonObject.put("action", "showMessage");
+        parametersJsonObject.put("message", "You created your account");
+        parametersJsonObject.put("messageType", "INFORMATION");
+        jsonObject.put("parameters", parametersJsonObject);
+        menu.getConnection().send(jsonObject.toJSONString());
     }
 
     public void login(InputCommand inputCommand) throws Exception {
-        Main.print("Enter your username:");
-        String username = Main.scanLine();
-        Main.print("Enter your password:");
-        String password = Main.scanLine();
-        new Menu(User.login(username, password), new MainMenuCommandHandler()).run();
+        String username = (String) inputCommand.getInputJsonObject().get("username");
+        String password = (String) inputCommand.getInputJsonObject().get("password");
+        menu.getConnection().setUser(User.login(username, password));
+        new Menu(menu.getConnection(), new MainMenuCommandHandler()).run();
     }
 
     public void leaderboard(InputCommand inputCommand) throws Exception {

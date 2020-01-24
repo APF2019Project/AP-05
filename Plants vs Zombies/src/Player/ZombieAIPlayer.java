@@ -1,9 +1,6 @@
 package Player;
 
-import Main.ActiveCard;
-import Main.Map;
-import Main.MapMode;
-import Main.User;
+import Main.*;
 import Objects.Creature;
 import Objects.Zombie;
 
@@ -15,8 +12,8 @@ public class ZombieAIPlayer extends ZombiePlayer {
     private int whenPutZombie,lastZombieDie;
     private boolean isStart;
     Random random;
-    public ZombieAIPlayer(User user) {
-        super(user);
+    public ZombieAIPlayer(Connection connection) {
+        super(connection);
         random=new Random();
         isStart=false;
         lastZombieDie=0;
@@ -26,7 +23,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
 
     public void doAction() throws Exception {
         super.doAction();
-        if(user.getPlayer().getMap().getMapMode().equals(MapMode.Rail)){
+        if(connection.getUser().getPlayer().getMap().getMapMode().equals(MapMode.Rail)){
             this.addSun(1000);
             if(whenPutZombie==0){
                 ArrayList<Creature> available = new ArrayList<Creature>();

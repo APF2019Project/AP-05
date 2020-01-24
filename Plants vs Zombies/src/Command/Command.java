@@ -1,5 +1,8 @@
 package Command;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.util.regex.Pattern;
 
 public class Command {
@@ -27,8 +30,9 @@ public class Command {
     }
 
     public boolean accept(String input) throws Exception {
-        if (Pattern.matches(regex, input)) {
-            function.accept(new InputCommand(this, input));
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(input);
+        if (Pattern.matches(regex, (String) jsonObject.get("action"))) {
+            function.accept(new InputCommand(this, (JSONObject) jsonObject.get("parameters")));
             return true;
         }
         return false;

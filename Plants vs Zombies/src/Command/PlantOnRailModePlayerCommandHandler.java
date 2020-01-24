@@ -31,7 +31,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
 
     void list(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
+        for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
             stringBuilder.append("Name: ").append(plant.getName()).append('\n');
         }
@@ -39,45 +39,33 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     }
 
     void select(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler select method");
-        }
-        plantIndex = Integer.parseInt(matcher.group(1)); // input is 0-base
+        plantIndex = (int) inputCommand.getInputJsonObject().get("plantIndex"); // input is 0-base
     }
 
     void record(InputCommand inputCommand) {
-        Main.print(String.valueOf(menu.getUser().getPlayer().getKillingEnemyCount()));
+        Main.print(String.valueOf(menu.getConnection().getUser().getPlayer().getKillingEnemyCount()));
     }
 
     void plant(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler plant method");
-        }
-        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
+        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
         ActiveCard activeCard=new ActiveCard(
-                menu.getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getUser().getPlayer());
-        if (!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
+                menu.getConnection().getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getConnection().getUser().getPlayer());
+        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
             throw new Exception("you can't your plant here");
         }
-        menu.getUser().getPlayer().getMap()
+        menu.getConnection().getUser().getPlayer().getMap()
                 .addActiveCard(activeCard);
-        menu.getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
+        menu.getConnection().getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
         plantIndex = -1;
     }
 
     void remove(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnRailModePlayerCommandHandler remove method");
-        }
-        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
-        ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
+        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        ActiveCard activeCard = menu.getConnection().getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
             throw new Exception("there is no plant here to remove");
         }
-        menu.getUser().getPlayer().getMap().removeActiveCard(activeCard);
+        menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
     }
 
     void endTurn(InputCommand inputCommand) {
@@ -86,7 +74,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
 
     void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
+        for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             stringBuilder.append("\nName: ").append(activeCard.getCreature().getName()).append("\nposition: (")
                     .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")\n remaining Hp:")
                     .append(activeCard.getRemainingHp()).append('\n');

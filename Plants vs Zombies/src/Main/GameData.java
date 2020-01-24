@@ -20,9 +20,9 @@ public class GameData {
     public static int cactusDamage = 1;
     public static int PepperDamage = 1;
     public static int maxMagnetRange, MagnetEatingTime;
-    public final static int numberOfWavesInDayAndWaterMode=3;
-    public final static int numberOfWavesInRailMode=10;
-    public final static int numberOfWavesInZombieMode=10;
+    public final static int numberOfWavesInDayAndWaterMode = 3;
+    public final static int numberOfWavesInRailMode = 10;
+    public final static int numberOfWavesInZombieMode = 10;
     static String usersJSONFilePath = "JSON/users";
     public final static int mapRowCount = 6;
     public final static int mapColCount = 20;
@@ -31,13 +31,14 @@ public class GameData {
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
     public final static String positiveNumber = "([0-9]{1,20})";
-    private static User AIUser;
+    ;
+    private static Connection AIConnection;
     static public ArrayList<String> DryModeAvailablePlantName;
     static public ArrayList<String> WetModeAvailablePlantName;
     static public int inf = 100000000;
 
-    public static User getAIUser() {
-        return AIUser;
+    public static Connection getAIConnection() {
+        return AIConnection;
     }
 
     private static void addLilyPadClass() throws Exception {
@@ -197,6 +198,6 @@ public class GameData {
         addAllPlants();
         addAllZombies();
         addAllUsers();
-        AIUser = User.getUserByUsername("AI User");
+        AIConnection = new Connection(User.getUserByUsername("AI User"));
     }
 }

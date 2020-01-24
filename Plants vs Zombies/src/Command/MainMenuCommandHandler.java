@@ -12,14 +12,14 @@ public class MainMenuCommandHandler extends CommandHandler {
     }
 
     public void play(InputCommand inputCommand) throws Exception {
-        new Menu(menu.getUser(),new PlayCommandHandler()).run();
+        new Menu(menu.getConnection(),new PlayCommandHandler()).run();
     }
 
     public void profile(InputCommand inputCommand) throws Exception {
-        new Menu(menu.getUser(),new ProfileCommandHandler()).run();
+        new Menu(menu.getConnection(),new ProfileCommandHandler()).run();
     }
 
     public void shop(InputCommand inputCommand) throws Exception {
-        new Menu(menu.getUser(),new ShopCommandHandler()).run();
+        new Menu(menu.getConnection(),new ShopCommandHandler()).run();
     }
 }

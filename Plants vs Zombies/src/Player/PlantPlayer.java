@@ -1,9 +1,10 @@
 package Player;
 
+import Main.Connection;
 import Main.User;
 
 public abstract class PlantPlayer extends Player {
-    public PlantPlayer(User user) {
-        super(user);
+    public PlantPlayer(Connection connection) {
+        super(connection);
     }
 }

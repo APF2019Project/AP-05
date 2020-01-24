@@ -32,7 +32,7 @@ public class CollectionCommandHandler extends CommandHandler {
     public void showHand(InputCommand inputCommand) {
         Main.print("Your hand:");
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
+        for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             stringBuilder.append(creature.getName()).append('\n');
         }
         Main.print(stringBuilder.toString());
@@ -41,8 +41,8 @@ public class CollectionCommandHandler extends CommandHandler {
     public void showCollection(InputCommand inputCommand) {
         Main.print("Your collection:");
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : menu.getUser().getUnlockedCreatures()) {
-            if (menu.getUser().getPlayer().getCreatureOnHandByName(creature.getName()) != null) {
+        for (Creature creature : menu.getConnection().getUser().getUnlockedCreatures()) {
+            if (menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(creature.getName()) != null) {
                 continue;
             }
             if ((creature instanceof Plant && CollectionMode.plantsCollection.equals(collectionMode))
@@ -54,37 +54,29 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void selectCard(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in CollectionCommandHandler selectCard method");
-        }
-        String cardName = matcher.group(1);
-        if (menu.getUser().getPlayer().getCreatureOnHandByName(cardName) != null) {
+        String cardName = (String) inputCommand.getInputJsonObject().get("cardName");
+        if (menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(cardName) != null) {
             throw new Exception("you have already selected this plant");
         }
-        Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
+        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(cardName);
         if (creature == null || (creature instanceof Plant && collectionMode.equals(CollectionMode.zombiesCollection))
                 || (creature instanceof Zombie && collectionMode.equals(CollectionMode.plantsCollection))) {
             throw new Exception("invalid cardName");
         }
-        menu.getUser().getPlayer().addCreaturesOnHand(creature);
+        menu.getConnection().getUser().getPlayer().addCreaturesOnHand(creature);
     }
 
     public void removeCard(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in CollectionCommandHandler removeCard method");
-        }
-        String cardName = matcher.group(1);
-        Creature creature = menu.getUser().getUnlockedCreatureByName(cardName);
+        String cardName = (String) inputCommand.getInputJsonObject().get("cardName");
+        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(cardName);
         if (creature == null) {
             throw new Exception("invalid cardName");
         }
-        menu.getUser().getPlayer().removeCreaturesOnHand(creature);
+        menu.getConnection().getUser().getPlayer().removeCreaturesOnHand(creature);
     }
 
     public void play(InputCommand inputCommand) throws Exception {
-        if (menu.getUser().getPlayer().getCreaturesOnHand().size() != GameData.creatureOnHandSize) {
+        if (menu.getConnection().getUser().getPlayer().getCreaturesOnHand().size() != GameData.creatureOnHandSize) {
             throw new Exception("count of creatures on hand should be " + GameData.creatureOnHandSize);
         }
         menu.exit();

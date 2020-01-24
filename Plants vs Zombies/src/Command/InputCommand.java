@@ -1,19 +1,21 @@
 package Command;
 
+import org.json.simple.JSONObject;
+
 public class InputCommand {
     final private Command command;
-    final private String input;
+    final private JSONObject inputJsonObject;
 
-    public InputCommand(Command command, String input) {
+    public InputCommand(Command command, JSONObject inputJsonObject) {
         this.command = command;
-        this.input = input;
+        this.inputJsonObject = inputJsonObject;
     }
 
     public Command getCommand() {
         return command;
     }
 
-    public String getInput() {
-        return input;
+    public JSONObject getInputJsonObject() {
+        return inputJsonObject;
     }
 }

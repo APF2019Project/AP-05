@@ -1,9 +1,6 @@
 package Player;
 
-import Main.ActiveCard;
-import Main.GameData;
-import Main.Map;
-import Main.User;
+import Main.*;
 import Objects.Creature;
 import Objects.Plant;
 
@@ -11,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlantAIPlayer extends PlantPlayer {
-    public PlantAIPlayer(User user) {
-        super(user);
+    public PlantAIPlayer(Connection connection) {
+        super(connection);
     }
 
     @Override

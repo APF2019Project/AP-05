@@ -1,14 +1,15 @@
 package Player;
 
 import Main.ActiveCard;
+import Main.Connection;
 import Main.User;
 import Objects.Creature;
 
 import java.util.ArrayList;
 
 public abstract class ZombiePlayer extends Player {
-    public ZombiePlayer(User user) {
-        super(user);
+    public ZombiePlayer(Connection connection) {
+        super(connection);
     }
 
     protected ArrayList<ActiveCard> zombieCardsInThisWave = new ArrayList<>();

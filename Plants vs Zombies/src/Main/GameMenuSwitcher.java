@@ -39,8 +39,8 @@ public class GameMenuSwitcher {
             }
         }
         if(!gameStatus.equals(GameStatus.notInGame)) {
-            map.getPlantPlayer().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
-            map.getZombiePlayer().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
+            map.getPlantPlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
+            map.getZombiePlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
             Main.print(gameStatus.name());
         }
         setGameStatus(GameStatus.notInGame);

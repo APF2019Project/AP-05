@@ -26,14 +26,14 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     public void setFirstLineDescription() {
-        firstLineDescription = "Sun in Game: " + menu.getUser().getPlayer().getSunInGame();
+        firstLineDescription = "Sun in Game: " + menu.getConnection().getUser().getPlayer().getSunInGame();
     }
 
     private Plant selectedPlant = null;
 
     void showHand(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Creature creature : menu.getUser().getPlayer().getCreaturesOnHand()) {
+        for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
             stringBuilder.append("\nName: ").append(plant.getName()).append("\nprice: ")
                     .append(plant.getPrice()).append("\nremaining cool down: ")
@@ -43,50 +43,38 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     void select(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler select method");
-        }
-        String plantName = matcher.group(1);
-        Plant plant = (Plant) menu.getUser().getPlayer().getCreatureOnHandByName(plantName);
+        String plantName = (String) inputCommand.getInputJsonObject().get("plantName");
+        Plant plant = (Plant) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(plantName);
         if (plant == null) {
             throw new Exception("invalid plant name");
         }
-        if (menu.getUser().getPlayer().getSunInGame() < plant.getPrice()) {
+        if (menu.getConnection().getUser().getPlayer().getSunInGame() < plant.getPrice()) {
             throw new Error("you don't have Enough money");
         }
         selectedPlant = plant;
     }
 
     void plant(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler plant method");
-        }
         if (selectedPlant == null) {
             throw new Exception("you select nothing!");
         }
-        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
-        ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer());
-        if (!menu.getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
+        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer());
+        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
             throw new Exception("you can't your plant here");
         }
-        menu.getUser().getPlayer().getMap()
-                .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getUser().getPlayer()));
+        menu.getConnection().getUser().getPlayer().getMap()
+                .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer()));
         selectedPlant = null;
     }
 
     void remove(InputCommand inputCommand) throws Exception {
-        Matcher matcher = Pattern.compile(inputCommand.getCommand().getRegex()).matcher(inputCommand.getInput());
-        if (!matcher.find()) {
-            throw new Exception("there are some bug in PlantOnDayAndWaterModePlayerCommandHandler remove method");
-        }
-        int x = Integer.parseInt(matcher.group(1)) - 1, y = Integer.parseInt(matcher.group(2)) - 1;
-        ActiveCard activeCard = menu.getUser().getPlayer().getMap().findPlantIn(x, y);
+        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        ActiveCard activeCard = menu.getConnection().getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
             throw new Exception("there is no plant here to remove");
         }
-        menu.getUser().getPlayer().getMap().removeActiveCard(activeCard);
+        menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
     }
 
     void endTurn(InputCommand inputCommand) {
@@ -95,7 +83,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
 
     void showLawn(InputCommand inputCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ActiveCard activeCard : menu.getUser().getPlayer().getMap().getActiveCardArrayList()) {
+        for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             stringBuilder.append("\nName: ").append(activeCard.getCreature().getName()).append("\nposition: (")
                     .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")\nremaining Hp:")
                     .append(activeCard.getRemainingHp()).append('\n');

@@ -34,7 +34,7 @@ public class User {
         saveAllUsers();
     }
 
-    public static void saveAllUsers() throws Exception {
+    public static synchronized void saveAllUsers() throws Exception {
         JSONArray usersJsonArray = new JSONArray();
         for (User user : allUsers) {
             JSONObject userJsonObject = new JSONObject();
