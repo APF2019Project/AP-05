@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateAccountSceneController">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
@@ -18,25 +18,34 @@
                <image>
                   <Image url="@Files/background.jpeg" />
                </image></ImageView>
-            <Button id="loginButton" layoutX="354.0" layoutY="410.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="155.0" text="Login">
+            <Button fx:id="createAccountButton" layoutX="335.0" layoutY="410.0" mnemonicParsing="false" onMouseClicked="#onCreateAccountButtonMouseClicked" prefHeight="52.0" prefWidth="193.0" text="Create Account">
                <font>
                   <Font size="20.0" />
                </font></Button>
-            <TextField id="usernameTextField" layoutX="301.0" layoutY="285.0" promptText="username">
+            <TextField fx:id="username" layoutX="301.0" layoutY="285.0" promptText="username">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <PasswordField id="passwordField" layoutX="301.0" layoutY="340.0" promptText="password">
+            <PasswordField fx:id="password" layoutX="301.0" layoutY="340.0" promptText="password">
                <font>
                   <Font size="20.0" />
                </font>
             </PasswordField>
-            <Label id="titleLabel" fx:id="title" layoutX="301.0" layoutY="14.0" text="Plant&#10;Vs&#10;Zombies" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="title" layoutX="301.0" layoutY="14.0" text="Plant&#10;Vs&#10;Zombies" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Ubuntu Bold" size="65.0" />
                </font>
             </Label>
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Files/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </children>

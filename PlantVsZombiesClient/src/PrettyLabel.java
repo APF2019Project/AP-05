@@ -18,14 +18,19 @@ public class PrettyLabel {
         return value / (double) (cycleCount);
     }
 
+    static int labelCount = 0;
+
     public static void playBackgroundColorAnimation(Label label) {
+        labelCount++;
+        int labelId = labelCount;
         new Thread(() -> {
             int[] value = {0, 0, 0};
             //0,1,3,2,6,7,5,4
             //1,2,1,4,1,2,1,4
             int[] indexOfValue = new int[]{0, 1, 0, 2, 0, 1, 0, 2};
             int[] changeOfValue = new int[]{1, 1, -1, 1, 1, -1, -1, -1};
-            for (int i = 0, j = 0; ; i = (i + 1) % (secondCycleCount * cycleCount), j = i / cycleCount) {
+            for (int i = 0, j = 0; labelId == labelCount;
+                 i = (i + 1) % (secondCycleCount * cycleCount), j = i / cycleCount) {
                 LinearGradient linearGradient = new LinearGradient(askStop(i) * 4 / 5.0, askStop(i),
                         askStop(i) * 2 / 5.0, 0.6, true, CycleMethod.REFLECT,
                         new Stop(0, new Color(

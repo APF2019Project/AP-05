@@ -21,11 +21,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent parent=FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("Plant Vs Zombies");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Files/icon.jpg")));
-        primaryStage.setScene(new Scene(parent));
-        primaryStage.show();
+        MenuHandler.setStage(primaryStage);
+        MenuHandler.openScene("first");
         MediaPlayer.playBackgroundMusic();
         primaryStage.setOnCloseRequest(windowEvent -> {
             MediaPlayer.closeBackgroundMusic();
