@@ -1,6 +1,5 @@
 package Command;
 
-import Main.CollectionMode;
 import Main.Main;
 import Main.Menu;
 import Objects.Creature;
@@ -9,9 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ShopCommandHandler extends CommandHandler {
-    public Menu nextMenu;
-    public CollectionMode collectionMode;
-
     {
         this.commands = new Command[]{
                 new Command(this::showShop, "show shop", "show shop: To see your " +

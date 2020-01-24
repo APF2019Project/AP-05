@@ -2,7 +2,7 @@ package Player;
 
 import Command.CollectionCommandHandler;
 import Command.ZombiePlayerCommandHandler;
-import Main.CollectionMode;
+import Command.CollectionMode;
 import Main.Menu;
 import Main.User;
 

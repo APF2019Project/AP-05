@@ -2,7 +2,7 @@ package Player;
 
 import Command.CollectionCommandHandler;
 import Command.PlantOnDayAndWaterModePlayerCommandHandler;
-import Main.CollectionMode;
+import Command.CollectionMode;
 import Main.Menu;
 import Main.User;
 import Objects.Creature;

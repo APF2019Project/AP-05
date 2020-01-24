@@ -284,7 +284,7 @@ public class Map {
         return GameStatus.OnGame;
     }
 
-    ActiveCard getNearestZombie(ActiveCard activeCard) {
+    public ActiveCard getNearestZombie(ActiveCard activeCard) {
         ActiveCard nearestZombie = null;
         int distance = GameData.inf;
         for (ActiveCard zombie : activeCardArrayList) {

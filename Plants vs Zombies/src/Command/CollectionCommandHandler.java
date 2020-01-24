@@ -1,6 +1,5 @@
 package Command;
 
-import Main.CollectionMode;
 import Main.GameData;
 import Main.Main;
 import Objects.Creature;

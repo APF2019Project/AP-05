@@ -1,5 +1,9 @@
-package Main;
+package Objects;
 
+import Main.ActiveCard;
+import Main.FieldNames;
+import Main.JSONHandler;
+import Main.Map;
 import Objects.Plant;
 import Objects.Zombie;
 
@@ -25,7 +29,7 @@ public class Mine extends Plant {
     @Override
     public boolean doAction(ActiveCard activeCard, Map map) {
         if (activeCard.getDistance(map.getNearestZombie(activeCard)) <= activeRange || activeRange == -1) {
-            for (ActiveCard activeCard1 : map.activeCardArrayList) {
+            for (ActiveCard activeCard1 : map.getActiveCardArrayList()) {
                 if ((activeCard.getCreature() instanceof Zombie) && Math.abs(activeCard.getX() - activeCard1.getX()) <= deltaX
                         && Math.abs(activeCard.getY() - activeCard1.getY()) <= deltaY) {
                     activeCard1.setRemainingHp(0);
