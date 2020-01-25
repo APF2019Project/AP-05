@@ -1,10 +1,11 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
-public class FirstSceneController {
+public class FirstSceneController implements Controller {
     @FXML
     private Label title;
     @FXML
@@ -21,16 +22,21 @@ public class FirstSceneController {
 
     @FXML
     void onLoginButtonMouseClicked() throws IOException {
-        MenuHandler.openScene("login");
+        MenuHandler.openSceneWithDefaultParameters("login");
     }
 
     @FXML
     void onCreateAccountButtonMouseClicked() throws IOException {
-        MenuHandler.openScene("createAccount");
+        MenuHandler.openSceneWithDefaultParameters("create account");
     }
 
     @FXML
     void onLeaderboardButtonMouseClicked() throws IOException {
-        MenuHandler.openScene("leaderboard");
+        MenuHandler.openSceneWithDefaultParameters("leaderboard");
+    }
+
+    @Override
+    public void initJsonInput(JSONObject jsonObject) {
+
     }
 }

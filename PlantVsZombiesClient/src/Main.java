@@ -20,9 +20,9 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         MenuHandler.setStage(primaryStage);
-        MenuHandler.openScene("first");
+        MenuHandler.openSceneWithDefaultParameters("first");
         MediaPlayer.playBackgroundMusic();
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(windowEvent -> {

@@ -5,10 +5,6 @@ public class MessageBox {
         show(message, Alert.AlertType.WARNING);
     }
 
-    static void showInformation(String message) {
-        show(message, Alert.AlertType.INFORMATION);
-    }
-
     static void show(String message, Alert.AlertType alertType){
         System.err.println(message);
         try {

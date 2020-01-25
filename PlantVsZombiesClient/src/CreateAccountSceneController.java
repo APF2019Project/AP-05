@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
-public class CreateAccountSceneController {
+public class CreateAccountSceneController{
     @FXML
     private TextField username, password;
     @FXML

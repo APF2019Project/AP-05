@@ -8,13 +8,11 @@ import java.io.IOException;
 
 public class LoginSceneController {
     @FXML
-    private TextField username, password;
+    private TextField textField0, textField1;
     @FXML
     private Label title;
     @FXML
-    private Button loginButton;
-    @FXML
-    private Button backButton;
+    private Button button;
 
     @FXML
     void initialize() {
@@ -24,10 +22,12 @@ public class LoginSceneController {
     @FXML
     void onLoginButtonMouseClicked() throws IOException {
         JSONObject messageJsonObject = new JSONObject();
-        messageJsonObject.put("action", "login");
+        messageJsonObject.put("action", button.getText().toLowerCase());
         JSONObject parametersJsonObject = new JSONObject();
-        parametersJsonObject.put("username", username.getText());
-        parametersJsonObject.put("password", password.getText());
+        if (textField0.isVisible()) {
+            parametersJsonObject.put(textField0.getPromptText().toLowerCase(), textField0.getText());
+        }
+        parametersJsonObject.put(textField1.getPromptText().toLowerCase(), textField1.getText());
         messageJsonObject.put("parameters", parametersJsonObject);
         MenuHandler.sendToServer(messageJsonObject);
     }

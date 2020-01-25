@@ -51,7 +51,6 @@ public class Connection {
                 System.out.println("Closing connection");
             } catch (Exception e) {
                 e.printStackTrace();
-                System.exit(-1);
             } finally {
                 try {
                     Server.getDataOutputStreams().remove(dataOutputStream);

@@ -16,14 +16,14 @@ public class MenuHandler {
     private static Stage currentStage;
     private final static Client client = new Client("127.0.0.1", 5000);
 
-    private static ArrayList<String> sceneNames = new ArrayList<>();
+    private static ArrayList<Scene> scenes = new ArrayList<>();
 
     static void closeScene() throws IOException {
-        if (sceneNames.size() <= 1) {
+        if (scenes.size() <= 1) {
             System.exit(0);
         }
-        sceneNames.remove(sceneNames.size() - 1);
-        openSceneWithoutPush(sceneNames.get(sceneNames.size() - 1));
+        scenes.remove(scenes.size() - 1);
+        openSceneWithoutPush(scenes.get(scenes.size() - 1));
         currentStage.show();
     }
 
@@ -31,29 +31,31 @@ public class MenuHandler {
         currentStage = stage;
     }
 
-
-    private static void openScene(Scene scene) {
-        Platform.runLater(() -> {
-            currentStage.setScene(scene);
-            currentStage.show();
-        });
-    }
-
     public static Client getClient() {
         return client;
     }
 
-    private static void openSceneWithoutPush(String menuName) throws IOException {
-        System.err.println(menuName + "Scene.fxml");
-        Parent parent = FXMLLoader.load(MenuHandler.class.getResource(menuName + "Scene.fxml"));
-        openScene(new Scene(parent));
+    private static void openSceneWithoutPush(Scene scene) {
+        currentStage.setScene(scene);
+        currentStage.show();
     }
 
-    static void openScene(String menuName) throws IOException {
+    private static Scene getScene(String menuName, JSONObject parameters) throws IOException {
+        String menuFile = (String) parameters.getOrDefault("menuFile", menuName);
+        System.err.println(menuFile + "Scene.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(menuFile + "Scene.fxml"));
+        Parent parent = fxmlLoader.load();
+        Controller controller = fxmlLoader.getController();
+        controller.initJsonInput(parameters);
+        return new Scene(parent);
+    }
+
+    static void openSceneWithDefaultParameters(String menuName) {
         Platform.runLater(() -> {
-            sceneNames.add(menuName);
             try {
-                openSceneWithoutPush(menuName);
+                Scene scene = getScene(menuName, JSONData.get(menuName));
+                scenes.add(scene);
+                openSceneWithoutPush(scene);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,7 +79,7 @@ public class MenuHandler {
         String action = (String) messageJsonObject.get("action");
         JSONObject parameters = (JSONObject) messageJsonObject.get("parameters");
         if (action.equals("newMenu")) {
-            openScene((String) parameters.get("menuName"));
+            openSceneWithDefaultParameters((String) parameters.get("menuName"));
             return;
         }
         if (action.equals("showMessage")) {
