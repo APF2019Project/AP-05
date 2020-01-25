@@ -40,6 +40,11 @@ public class InputFormSceneController implements Controller {
     }
 
     @Override
+    public void initializeReOpen() {
+        PrettyLabel.playBackgroundColorAnimation(title);
+    }
+
+    @Override
     public void initJsonInput(JSONObject jsonObject) {
         if (jsonObject.containsKey("textField0#setPromptText")) {
             textField0.setPromptText((String) jsonObject.get("textField0#setPromptText"));

@@ -32,7 +32,12 @@ public class FirstSceneController implements Controller {
 
     @FXML
     void onLeaderboardButtonMouseClicked() throws IOException {
-        MenuHandler.openSceneWithDefaultParameters("leaderboard");
+        MenuHandler.openSceneWithDefaultParameters("shop");
+    }
+
+    @Override
+    public void initializeReOpen() {
+        PrettyLabel.playBackgroundColorAnimation(title);
     }
 
     @Override

@@ -42,13 +42,10 @@ public class Menu {
             }
             commandHandler.accept(command);
         } catch (Exception e) {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject parametersJsonObject = new JSONObject();
-            jsonObject.put("action", "showMessage");
-            parametersJsonObject.put("message", e.getMessage());
-            parametersJsonObject.put("messageType", "WARNING");
-            jsonObject.put("parameters", parametersJsonObject);
-            connection.send(jsonObject.toJSONString());
+            JSONObject data = new JSONObject();
+            data.put("message", e.getMessage());
+            data.put("messageType", "WARNING");
+            connection.send("showMessage",data);
         }
     }
 
@@ -58,21 +55,10 @@ public class Menu {
 
     public void run() throws Exception {
         isOpen = true;
-        JSONObject jsonObject = new JSONObject();
-        JSONObject parametersJsonObject = new JSONObject();
-        jsonObject.put("action", "newMenu");
-        parametersJsonObject.put("menuName", "first");
-        jsonObject.put("parameters", parametersJsonObject);
-        connection.send(jsonObject.toJSONString());
-        /*while (isOpen) {
-            try {
-                commandHandler.setFirstLineDescription();
-                showHelp(); // bayad pak shavad
-                String command = Main.scanLine().toLowerCase();
-                accept(command);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
-        }*/
+        while(isOpen) {
+            JSONObject data = new JSONObject();
+            String menuName = commandHandler.getClass().getName().split("CommandHandler")[0].toLowerCase();
+            connection.send("runMenu", menuName);
+        }
     }
 }

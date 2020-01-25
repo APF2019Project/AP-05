@@ -1,6 +1,8 @@
 package Command;
 
 import Main.Menu;
+import Main.User;
+import org.json.simple.JSONObject;
 
 public class MainMenuCommandHandler extends CommandHandler {
     {
@@ -10,6 +12,8 @@ public class MainMenuCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "shop: To enter shop.")
         };
     }
+
+
 
     public void play(InputCommand inputCommand) throws Exception {
         new Menu(menu.getConnection(),new PlayCommandHandler()).run();

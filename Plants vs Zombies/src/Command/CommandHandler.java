@@ -1,8 +1,9 @@
 package Command;
 
 import Main.Menu;
+import org.json.simple.JSONObject;
 
-public class CommandHandler {
+public abstract class CommandHandler {
     protected Command[] commands;
     protected String firstLineDescription="";
     protected Menu menu;

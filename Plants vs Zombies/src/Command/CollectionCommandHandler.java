@@ -5,6 +5,7 @@ import Main.Main;
 import Objects.Creature;
 import Objects.Plant;
 import Objects.Zombie;
+import org.json.simple.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +31,6 @@ public class CollectionCommandHandler extends CommandHandler {
     }
 
     public void showHand(InputCommand inputCommand) {
-        Main.print("Your hand:");
         StringBuilder stringBuilder = new StringBuilder();
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             stringBuilder.append(creature.getName()).append('\n');

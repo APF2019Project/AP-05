@@ -4,12 +4,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -17,6 +20,7 @@ public class MenuHandler {
     private final static Client client = new Client("127.0.0.1", 5000);
 
     private static ArrayList<Scene> scenes = new ArrayList<>();
+    private static ArrayList<Controller> controllers = new ArrayList<>();
 
     static void closeScene() throws IOException {
         if (scenes.size() <= 1) {
@@ -24,7 +28,13 @@ public class MenuHandler {
         }
         scenes.remove(scenes.size() - 1);
         openSceneWithoutPush(scenes.get(scenes.size() - 1));
+        controllers.remove(controllers.size() - 1);
+        controllers.get(controllers.size() - 1).initializeReOpen();
         currentStage.show();
+    }
+
+    static Controller getCurrentController() {
+        return controllers.get(controllers.size() - 1);
     }
 
     static void setStage(Stage stage) {
@@ -40,22 +50,31 @@ public class MenuHandler {
         currentStage.show();
     }
 
-    private static Scene getScene(String menuName, JSONObject parameters) throws IOException {
+    public static Pane getPaneWithDefaultParametersHandler(String fileName, JSONObject parameters) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(fileName));
+        Pane pane = fxmlLoader.load();
+        Controller controller = fxmlLoader.getController();
+        controller.initJsonInput(parameters);
+        return pane;
+    }
+
+    private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
         String menuFile = (String) parameters.getOrDefault("menuFile", menuName);
         System.err.println(menuFile + "Scene.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(menuFile + "Scene.fxml"));
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         controller.initJsonInput(parameters);
-        return new Scene(parent);
+        Scene scene = new Scene(parent);
+        scenes.add(scene);
+        controllers.add(controller);
+        openSceneWithoutPush(scene);
     }
 
     static void openSceneWithDefaultParameters(String menuName) {
         Platform.runLater(() -> {
             try {
-                Scene scene = getScene(menuName, JSONData.get(menuName));
-                scenes.add(scene);
-                openSceneWithoutPush(scene);
+                openSceneWithDefaultParametersHandler(menuName, JSONData.get(menuName));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -74,15 +93,20 @@ public class MenuHandler {
     }
     */
 
-    static void receive(String message) throws ParseException, IOException {
+    static void receive(String message) throws ParseException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
-        String action = (String) messageJsonObject.get("action");
-        JSONObject parameters = (JSONObject) messageJsonObject.get("parameters");
-        if (action.equals("newMenu")) {
-            openSceneWithDefaultParameters((String) parameters.get("menuName"));
+        String command = (String) messageJsonObject.get("command");
+        Object data = messageJsonObject.get("data");
+        if (command.equals("newMenu")) {
+            openSceneWithDefaultParameters((String) data);
             return;
         }
-        if (action.equals("showMessage")) {
+        if (command.equals("showLog")) {
+            System.out.println((String) data);
+            return;
+        }
+        if (command.equals("showMessage")) {
+            JSONObject parameters = (JSONObject) data;
             String alertMessage = (String) parameters.get("message");
             String alertMessageType = (String) parameters.getOrDefault("messageType", "ERROR");
             Platform.runLater(() -> {
@@ -93,7 +117,8 @@ public class MenuHandler {
             });
             return;
         }
-        JSONObject result = (JSONObject) messageJsonObject.get("result");
+        Method method = getCurrentController().getClass().getDeclaredMethod(command, Object.class);
+        method.invoke(getCurrentController(), data);
     }
 
     static void sendToServer(JSONObject jsonObject) throws IOException {

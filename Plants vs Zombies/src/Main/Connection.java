@@ -1,6 +1,7 @@
 package Main;
 
 import Command.LoginCommandHandler;
+import org.json.simple.JSONObject;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,14 +30,14 @@ public class Connection {
     }
 
     public Connection(Socket socket, DataOutputStream dataOutputStream) {
-        this.socket=socket;
-        this.dataOutputStream=dataOutputStream;
+        this.socket = socket;
+        this.dataOutputStream = dataOutputStream;
         Server.getDataOutputStreams().add(dataOutputStream);
-        thread=new Thread(() -> {
+        thread = new Thread(() -> {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
-                menu=new Menu(this, new LoginCommandHandler());
+                menu = new Menu(this, new LoginCommandHandler());
                 menu.run();
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
@@ -72,8 +73,8 @@ public class Connection {
     }
 
     void receive(String message) throws Exception {
-        System.out.println("Client: "+message);
-        if(message.equals("exit")){
+        System.out.println("Client: " + message);
+        if (message.equals("exit")) {
             thread.wait();
             dataOutputStream.close();
             socket.close();
@@ -81,8 +82,12 @@ public class Connection {
         menu.accept(message.toLowerCase());
     }
 
-    public void send(String message) throws Exception {
-        System.out.println("Server: "+message);
+    public void send(String command, Object data) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("command", command);
+        jsonObject.put("data", data);
+        String message = jsonObject.toJSONString();
+        System.out.println("Server: " + message);
         dataOutputStream.writeUTF(message);
         dataOutputStream.flush();
     }

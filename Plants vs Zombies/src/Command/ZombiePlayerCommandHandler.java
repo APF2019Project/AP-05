@@ -6,6 +6,8 @@ import Main.Main;
 import Objects.Creature;
 import Objects.Zombie;
 import Player.ZombiePlayer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,24 +27,29 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         };
     }
 
-    void showHand(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    void showHand(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Zombie zombie = (Zombie) creature;
-            stringBuilder.append(zombie.getName()).append(" full Hp: ").append(zombie.getFullHp()).append('\n');
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("zombie.getName", zombie.getName());
+            jsonObject.put("zombie.getFullHp", zombie.getFullHp());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showHand", jsonArray);
     }
 
-    void showLanes(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    void showLanes(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             if (activeCard.getCreature() instanceof Zombie) {
-                stringBuilder.append(activeCard.getCreature().getName()).append(" in line:")
-                        .append(activeCard.getY()).append('\n');
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("activeCard.getCreature.getName", activeCard.getCreature().getName());
+                jsonObject.put("activeCard.getY", activeCard.getY());
+                jsonArray.add(jsonObject);
             }
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showLanes", jsonArray);
     }
 
     void put(InputCommand inputCommand) throws Exception {
@@ -53,26 +60,29 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         for (int i = 0; i < zombieCount; i++) {
             menu.getConnection().getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getConnection().getUser().getPlayer()));
         }
+        menu.getConnection().send("showLog","put successful");
     }
 
     void start(InputCommand inputCommand) throws Exception {
         ((ZombiePlayer) menu.getConnection().getUser().getPlayer()).startWave();
-        Main.print("Wave Started");
-        //menu.exit();
+        menu.getConnection().send("showLog","Wave Started");
     }
 
-    void endTurn(InputCommand inputCommand) {
+    void endTurn(InputCommand inputCommand) throws Exception {
         menu.exit();
     }
 
 
-    void showLawn(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    void showLawn(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
-            stringBuilder.append(activeCard.getCreature().getName()).append(" (")
-                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")")
-                    .append(activeCard.getRemainingHp()).append('\n');
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("activeCard.getCreature.getName", activeCard.getCreature().getName());
+            jsonObject.put("activeCard.getX", activeCard.getX());
+            jsonObject.put("activeCard.getY", activeCard.getY());
+            jsonObject.put("activeCard.getRemainingHp", activeCard.getRemainingHp());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showLawn", jsonArray);
     }
 }

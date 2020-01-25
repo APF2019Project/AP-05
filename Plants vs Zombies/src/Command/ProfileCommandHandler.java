@@ -23,12 +23,14 @@ public class ProfileCommandHandler extends CommandHandler {
         String password = (String) inputCommand.getInputJsonObject().get("password");
         menu.getConnection().getUser().changeUsername(username);
         menu.getConnection().getUser().changePassword(password);
+        menu.getConnection().send("showLog","changeUsernameAndPassword successful");
     }
 
     public void deleteUser(InputCommand inputCommand) throws Exception {
         String username = (String) inputCommand.getInputJsonObject().get("username");
         String password = (String) inputCommand.getInputJsonObject().get("password");
         User.deleteUser(username, password);
+        menu.getConnection().send("showLog","deleteUser successful");
     }
 
     public void renameUser(InputCommand inputCommand) throws Exception {
@@ -40,10 +42,11 @@ public class ProfileCommandHandler extends CommandHandler {
         String username = (String) inputCommand.getInputJsonObject().get("username");
         String password = (String) inputCommand.getInputJsonObject().get("password");
         new User(username, password);
+        menu.getConnection().send("showLog","createUser successful");
         // inja bayad current user avaz she???
     }
 
-    public void showUser(InputCommand inputCommand) {
-        Main.print(menu.getConnection().getUser().getUsername());
+    public void showUser(InputCommand inputCommand) throws Exception {
+        menu.getConnection().send("showUser", menu.getConnection().getUser().getUsername());
     }
 }

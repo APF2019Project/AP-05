@@ -1,11 +1,9 @@
 package Command;
 
 import Main.Main;
-import Main.Menu;
 import Objects.Creature;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class ShopCommandHandler extends CommandHandler {
     {
@@ -19,24 +17,26 @@ public class ShopCommandHandler extends CommandHandler {
         };
     }
 
-    public void showShop(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("List of your not bought cards:\n");
+    public void showShop(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getLockedCreatures()) {
-            stringBuilder.append("\nName: ").append(creature.getName())
-                    .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("creature.getName", creature.getName());
+            jsonObject.put("creature.getPriceInShop", creature.getPriceInShop());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showShop", jsonArray);
     }
 
-    public void showCollection(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("List of your bought cards:\n");
+    public void showCollection(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getUnlockedCreatures()) {
-            stringBuilder.append("\nName: ").append(creature.getName())
-                    .append("\nPrice: ").append(creature.getPriceInShop()).append("\n");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("creature.getName", creature.getName());
+            jsonObject.put("creature.getPriceInShop", creature.getPriceInShop());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showCollection", jsonArray);
     }
 
     public void buy(InputCommand inputCommand) throws Exception {
@@ -50,7 +50,7 @@ public class ShopCommandHandler extends CommandHandler {
         }
     }
 
-    public void money(InputCommand inputCommand) {
-        Main.print("Money: " + menu.getConnection().getUser().getCoinForShop() + "$");
+    public void money(InputCommand inputCommand) throws Exception {
+        menu.getConnection().send("money", menu.getConnection().getUser().getCoinForShop());
     }
 }
