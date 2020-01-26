@@ -1,12 +1,9 @@
 package Main;
 
-import Command.LoginCommandHandler;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Server {
     private static ArrayList<DataOutputStream> dataOutputStreams = new ArrayList<>();
@@ -34,7 +31,7 @@ public class Server {
         new Thread(() -> {
             while (true){
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                     User.saveAllUsers();
                     System.out.println("All users saved");
                 } catch (Exception e) {

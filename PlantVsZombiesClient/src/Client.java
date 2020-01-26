@@ -1,3 +1,5 @@
+import org.json.simple.JSONObject;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,14 +17,14 @@ public class Client {
             dataInputStream = new DataInputStream(socket.getInputStream());
             System.out.println("Connected");
             startListening();
-        }catch (Exception e){
+        } catch (Exception e) {
             MessageBox.showErrorAndExit(e.getMessage());
         }
     }
 
     public void close() {
         try {
-            send("exit");
+            sendExit();
             dataOutputStream.close();
             socket.close();
         } catch (Exception e) {
@@ -32,7 +34,7 @@ public class Client {
 
     public void close(DataOutputStream dataInputStream) {
         try {
-            send("exit");
+            sendExit();
             dataInputStream.close();
             dataOutputStream.close();
             socket.close();
@@ -58,8 +60,17 @@ public class Client {
         thread.start();
     }
 
-    public synchronized void send(String input) throws IOException {
-        dataOutputStream.writeUTF(input);
+    public synchronized void sendExit() throws IOException {
+        dataOutputStream.writeUTF("exit");
+        dataOutputStream.flush();
+    }
+
+    public synchronized void send(String command, Object data) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("command", command);
+        jsonObject.put("data", data);
+        String message = jsonObject.toJSONString();
+        dataOutputStream.writeUTF(message);
         dataOutputStream.flush();
     }
 }

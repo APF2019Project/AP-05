@@ -1,13 +1,10 @@
 package Command;
 
-import Main.Main;
 import Main.Menu;
 import Main.User;
 import org.json.simple.JSONObject;
 
-import java.util.Comparator;
-
-public class LoginCommandHandler extends CommandHandler {
+public class FirstCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::createAccount, "create account", "create account: To create " +

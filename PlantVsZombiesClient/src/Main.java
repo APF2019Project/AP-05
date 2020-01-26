@@ -22,12 +22,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MenuHandler.setStage(primaryStage);
-        MenuHandler.openSceneWithDefaultParameters("first");
         MediaPlayer.playBackgroundMusic();
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(windowEvent -> {
             try {
-                MenuHandler.getClient().send("exit");
+                MenuHandler.getClient().sendExit();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -50,12 +51,12 @@ public class MenuHandler {
         currentStage.show();
     }
 
-    public static Pane getPaneWithDefaultParametersHandler(String fileName, JSONObject parameters) throws IOException {
+    public static BorderPane getPaneWithDefaultParametersHandler(String fileName, JSONObject parameters) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(fileName));
-        Pane pane = fxmlLoader.load();
+        BorderPane borderPane = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         controller.initJsonInput(parameters);
-        return pane;
+        return borderPane;
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
@@ -94,15 +95,16 @@ public class MenuHandler {
     */
 
     static void receive(String message) throws ParseException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        System.err.println("message" + message);
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
         String command = (String) messageJsonObject.get("command");
         Object data = messageJsonObject.get("data");
-        if (command.equals("newMenu")) {
+        if (command.equals("runMenu")) {
             openSceneWithDefaultParameters((String) data);
             return;
         }
         if (command.equals("showLog")) {
-            System.out.println((String) data);
+            System.out.println("LOG: " + data);
             return;
         }
         if (command.equals("showMessage")) {
@@ -117,12 +119,12 @@ public class MenuHandler {
             });
             return;
         }
-        Method method = getCurrentController().getClass().getDeclaredMethod(command, Object.class);
-        method.invoke(getCurrentController(), data);
-    }
-
-    static void sendToServer(JSONObject jsonObject) throws IOException {
-        client.send(jsonObject.toJSONString());
+        try {
+            Method method = getCurrentController().getClass().getDeclaredMethod(command, Object.class);
+            method.invoke(getCurrentController(), data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

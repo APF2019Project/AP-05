@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="memberInShopListController">
    <left>
       <ImageView fx:id="imageView" fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
@@ -34,7 +33,7 @@
    <right>
       <VBox alignment="CENTER" prefHeight="59.0" prefWidth="59.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="shopButton" mnemonicParsing="false">
+            <Button fx:id="button" mnemonicParsing="false" onMouseClicked="#onButtonMouseClicked">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>

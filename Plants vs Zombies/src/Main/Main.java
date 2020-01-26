@@ -1,8 +1,5 @@
 package Main;
 
-import Command.LoginCommandHandler;
-
-import java.io.File;
 import java.util.Scanner;
 
 public class Main {

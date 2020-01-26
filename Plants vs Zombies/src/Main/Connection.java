@@ -1,20 +1,36 @@
 package Main;
 
-import Command.LoginCommandHandler;
+import Command.FirstCommandHandler;
 import org.json.simple.JSONObject;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Connection {
     private User user;
-    private Menu menu;
+    private ArrayList<Menu> menus = new ArrayList<>();
     private DataOutputStream dataOutputStream;
     private Thread thread;
     private Socket socket;
+
+    public void popMenu() throws Exception {
+        menus.remove(menus.size()-1);
+        if(menus.isEmpty()){
+            thread.wait();
+        }
+        getCurrentMenu().run();
+    }
+
+    public void pushMenu(Menu menu) {
+        menus.add(menu);
+    }
+
+    public Menu getCurrentMenu() {
+        return menus.get(menus.size() - 1);
+    }
 
     public User getUser() {
         return user;
@@ -37,8 +53,7 @@ public class Connection {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
-                menu = new Menu(this, new LoginCommandHandler());
-                menu.run();
+                new Menu(this, new FirstCommandHandler()).run();
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
                 String line = "";
@@ -68,10 +83,6 @@ public class Connection {
         thread.start();
     }
 
-    public Thread getThread() {
-        return thread;
-    }
-
     void receive(String message) throws Exception {
         System.out.println("Client: " + message);
         if (message.equals("exit")) {
@@ -79,7 +90,7 @@ public class Connection {
             dataOutputStream.close();
             socket.close();
         }
-        menu.accept(message.toLowerCase());
+        getCurrentMenu().accept(message);
     }
 
     public void send(String command, Object data) throws Exception {

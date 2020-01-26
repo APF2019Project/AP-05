@@ -16,9 +16,9 @@ public abstract class CommandHandler {
         this.menu = menu;
     }
 
-    public void accept(String inputCommand) throws Exception {
+    public void accept(JSONObject jsonObject) throws Exception {
         for (Command command : commands)
-            if (command.accept(inputCommand))
+            if (command.accept(jsonObject))
                 return;
         throw new Exception("invalid command");
     }

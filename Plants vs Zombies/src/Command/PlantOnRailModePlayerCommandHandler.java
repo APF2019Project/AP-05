@@ -68,7 +68,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
     }
 
-    void endTurn(InputCommand inputCommand) {
+    void endTurn(InputCommand inputCommand) throws Exception {
         menu.exit();
     }
 

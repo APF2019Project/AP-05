@@ -29,10 +29,9 @@ public class Command {
         return help;
     }
 
-    public boolean accept(String input) throws Exception {
-        JSONObject jsonObject = (JSONObject) new JSONParser().parse(input);
-        if (Pattern.matches(regex, (String) jsonObject.get("action"))) {
-            function.accept(new InputCommand(this, (JSONObject) jsonObject.get("parameters")));
+    public boolean accept(JSONObject jsonObject) throws Exception {
+        if (Pattern.matches(regex, (String) jsonObject.get("command"))) {
+            function.accept(new InputCommand(this, (JSONObject) jsonObject.get("data")));
             return true;
         }
         return false;
