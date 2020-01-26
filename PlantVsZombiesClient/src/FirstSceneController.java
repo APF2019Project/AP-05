@@ -25,7 +25,7 @@ public class FirstSceneController implements Controller {
 
     @FXML
     void onLeaderboardButtonMouseClicked() throws IOException {
-        MenuHandler.openSceneWithDefaultParameters("shop");
+        MenuHandler.openSceneWithDefaultParameters("Leaderboard");
     }
 
     @Override

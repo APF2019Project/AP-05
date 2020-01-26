@@ -12,7 +12,7 @@ import java.util.Comparator;
 public class LeaderboardCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::leaderboard, "show hand", "show hand: To see selected cards.")
+                new Command(this::leaderboard, "leaderboard", "")
         };
     }
 

@@ -13,11 +13,11 @@ public class MemberInShopListController implements Controller {
     @FXML
     private Label creatureNameLabel, priceLabel;
     @FXML
+    private Button button;
+    @FXML
     private ImageView boughtImageView;
     @FXML
     private ImageView imageView;
-    @FXML
-    private Button button;
 
     @FXML
     void initialize() {
@@ -35,10 +35,10 @@ public class MemberInShopListController implements Controller {
     }
 
     @Override
-    public void initJsonInput(JSONObject jsonObject) throws IOException {
+    public void initJsonInput(JSONObject jsonObject) {
         creatureNameLabel.setText((String) jsonObject.get("creature.getName"));
-        priceLabel.setText(String.valueOf(jsonObject.get("creature.getPriceInShop")) + "$");
-        if (((boolean) jsonObject.get("bought"))) {
+        priceLabel.setText(jsonObject.get("creature.getPriceInShop") + "$");
+        if((boolean)jsonObject.get("bought")){
             button.setVisible(false);
         }else {
             boughtImageView.setVisible(false);
