@@ -65,10 +65,10 @@ public class MenuHandler {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(menuFile + "Scene.fxml"));
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
-        controller.initJsonInput(parameters);
         Scene scene = new Scene(parent);
         scenes.add(scene);
         controllers.add(controller);
+        controller.initJsonInput(parameters);
         openSceneWithoutPush(scene);
     }
 
@@ -94,7 +94,7 @@ public class MenuHandler {
     }
     */
 
-    static void receive(String message) throws ParseException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    static synchronized void receive(String message) throws ParseException {
         System.err.println("message" + message);
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
         String command = (String) messageJsonObject.get("command");

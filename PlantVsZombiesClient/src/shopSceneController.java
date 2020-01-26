@@ -29,8 +29,6 @@ public class shopSceneController implements Controller {
 
     @FXML
     void initialize() throws IOException {
-        //scrollPane.setStyle("-fx-background: rgb(255,255,255);\n -fx-background-color: rgb(255,255,255)");
-        MenuHandler.getClient().send("show shop", null);
     }
 
     @Override
@@ -50,5 +48,6 @@ public class shopSceneController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
+        MenuHandler.getClient().send("show shop", null);
     }
 }

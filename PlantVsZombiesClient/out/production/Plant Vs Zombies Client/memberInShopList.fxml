@@ -13,7 +13,7 @@
    <left>
       <ImageView fx:id="imageView" fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@Files/3118070_0.jpg" />
+            <Image url="@../PlantVsZombiesGallery/Plants%20vs%20Zombies/Magnet-shroom/HD_MAGNET.webp" />
          </image>
       </ImageView>
    </left>
