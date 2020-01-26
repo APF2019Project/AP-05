@@ -83,7 +83,7 @@ public class User {
                 return user;
             }
         }
-        throw new Exception("username of password is invalid");
+        throw new Exception("username or password is invalid");
     }
 
     public static void deleteUser(String username, String password) throws Exception {
