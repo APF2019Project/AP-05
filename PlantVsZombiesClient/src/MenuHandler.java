@@ -66,6 +66,10 @@ public class MenuHandler {
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         Scene scene = new Scene(parent);
+        if(!controllers.isEmpty() && getCurrentController().getClass().getSimpleName().equals(menuFile+"SceneController")) {
+            scenes.remove(scenes.size() - 1);
+            controllers.remove(controllers.size() - 1);
+        }
         scenes.add(scene);
         controllers.add(controller);
         controller.initJsonInput(parameters);

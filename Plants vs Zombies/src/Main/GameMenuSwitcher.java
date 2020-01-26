@@ -18,31 +18,41 @@ public class GameMenuSwitcher {
 
     public void runGame() throws Exception {
         setGameStatus(GameStatus.OnGame);
-        System.err.println("DE0");
-        map.getPlantPlayer().pickCards();
-        System.err.println("DE1");
-        map.getZombiePlayer().pickCards();
-        System.err.println("DE");
-        while (gameStatus.equals(GameStatus.OnGame)) {
-            map.getPlantPlayer().doAction();
-            if (gameStatus.equals(GameStatus.OnGame)) {
-                map.getZombiePlayer().doAction();
+        map.getPlantPlayer().pickCards(()-> {
+            try {
+                map.getZombiePlayer().pickCards(()->{
+                    try {
+                        while (gameStatus.equals(GameStatus.OnGame)) {
+                            Thread.sleep(500);
+                            map.getPlantPlayer().doAction();
+                            if (gameStatus.equals(GameStatus.OnGame)) {
+                                map.getZombiePlayer().doAction();
+                            }
+                            if (gameStatus.equals(GameStatus.OnGame)) {
+                                gameStatus = map.run();
+                            }
+                            if (gameStatus.equals(GameStatus.OnGame)) {
+                                map.getPlantPlayer().gameAction();
+                            }
+                            if (gameStatus.equals(GameStatus.OnGame)) {
+                                map.getZombiePlayer().gameAction();
+                            }
+                        }
+                        if (!gameStatus.equals(GameStatus.notInGame)) {
+                            map.getPlantPlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
+                            map.getZombiePlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
+                            Main.print(gameStatus.name());
+                        }
+                        setGameStatus(GameStatus.notInGame);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    return null;
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (gameStatus.equals(GameStatus.OnGame)) {
-                gameStatus = map.run();
-            }
-            if (gameStatus.equals(GameStatus.OnGame)) {
-                map.getPlantPlayer().gameAction();
-            }
-            if (gameStatus.equals(GameStatus.OnGame)) {
-                map.getZombiePlayer().gameAction();
-            }
-        }
-        if(!gameStatus.equals(GameStatus.notInGame)) {
-            map.getPlantPlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
-            map.getZombiePlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
-            Main.print(gameStatus.name());
-        }
-        setGameStatus(GameStatus.notInGame);
+            return null;
+        });
     }
 }

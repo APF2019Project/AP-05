@@ -8,6 +8,7 @@ import Objects.Creature;
 import Objects.Plant;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     public PlantOnRailGameModeHumanPlayer(Connection connection) {
@@ -40,7 +41,8 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     }
 
     @Override
-    public void pickCards() throws Exception {
+    public void pickCards(Supplier<Void> supplier) throws Exception {
+        supplier.get();
         //nothing
     }
 }

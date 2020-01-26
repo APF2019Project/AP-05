@@ -5,80 +5,94 @@ import Main.Main;
 import Objects.Creature;
 import Objects.Plant;
 import Objects.Zombie;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.awt.event.ActionEvent;
+import java.beans.EventHandler;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CollectionCommandHandler extends CommandHandler {
     public CollectionMode collectionMode;
+    private Supplier<Void> supplier;
 
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To show your selected cards"),
                 new Command(this::showCollection, "show collection", "show collection: " +
                         "To show your not selected cards"),
-                new Command(this::selectCard, "select (.+)", "select [name]: To select " +
+                new Command(this::selectCard, "select", "select [name]: To select " +
                         "a card with the given name"),
-                new Command(this::removeCard, "remove (.+)", "remove [name]: To remove " +
+                new Command(this::removeCard, "remove", "remove [name]: To remove " +
                         "a card from your hand"),
                 new Command(this::play, "play", "play: To start the game")
         };
     }
 
-    public CollectionCommandHandler(CollectionMode collectionMode) {
+    public CollectionCommandHandler(CollectionMode collectionMode, Supplier<Void> supplier) {
         this.collectionMode = collectionMode;
+        this.supplier=supplier;
     }
 
-    public void showHand(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    public void showHand(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
-            stringBuilder.append(creature.getName()).append('\n');
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("creature.getName", creature.getName());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showHand", jsonArray);
     }
 
-    public void showCollection(InputCommand inputCommand) {
-        Main.print("Your collection:");
-        StringBuilder stringBuilder = new StringBuilder();
+    public void showCollection(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getUnlockedCreatures()) {
             if (menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(creature.getName()) != null) {
                 continue;
             }
             if ((creature instanceof Plant && CollectionMode.plantsCollection.equals(collectionMode))
                     || (creature instanceof Zombie && CollectionMode.zombiesCollection.equals(collectionMode))) {
-                stringBuilder.append(creature.getName()).append('\n');
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("creature.getName", creature.getName());
+                jsonArray.add(jsonObject);
             }
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showCollection", jsonArray);
     }
 
     public void selectCard(InputCommand inputCommand) throws Exception {
-        String cardName = (String) inputCommand.getInputJsonObject().get("cardName");
-        if (menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(cardName) != null) {
+        String creatureName = (String) inputCommand.getInputJsonObject().get("creatureName");
+        if (menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(creatureName) != null) {
             throw new Exception("you have already selected this plant");
         }
-        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(cardName);
+        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(creatureName);
         if (creature == null || (creature instanceof Plant && collectionMode.equals(CollectionMode.zombiesCollection))
                 || (creature instanceof Zombie && collectionMode.equals(CollectionMode.plantsCollection))) {
-            throw new Exception("invalid cardName");
+            throw new Exception("invalid creatureName");
         }
         menu.getConnection().getUser().getPlayer().addCreaturesOnHand(creature);
+        menu.run();
     }
 
     public void removeCard(InputCommand inputCommand) throws Exception {
-        String cardName = (String) inputCommand.getInputJsonObject().get("cardName");
-        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(cardName);
+        String creatureName = (String) inputCommand.getInputJsonObject().get("creatureName");
+        Creature creature = menu.getConnection().getUser().getUnlockedCreatureByName(creatureName);
         if (creature == null) {
-            throw new Exception("invalid cardName");
+            throw new Exception("invalid creatureName");
         }
         menu.getConnection().getUser().getPlayer().removeCreaturesOnHand(creature);
+        menu.run();
     }
 
     public void play(InputCommand inputCommand) throws Exception {
         if (menu.getConnection().getUser().getPlayer().getCreaturesOnHand().size() != GameData.creatureOnHandSize) {
             throw new Exception("count of creatures on hand should be " + GameData.creatureOnHandSize);
         }
+        supplier.get();
         menu.exit();
     }
 }

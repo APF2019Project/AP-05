@@ -5,7 +5,9 @@ import Main.Map;
 import Main.User;
 import Objects.Creature;
 
+import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public abstract class Player {
     private int sunInGame=50;
@@ -75,7 +77,7 @@ public abstract class Player {
 
     public abstract boolean pickCreature(Creature creature) throws Exception;
 
-    public abstract void pickCards() throws Exception;
+    public abstract void pickCards(Supplier<Void> supplier) throws Exception;
 
     public void addSun(int sun) {
         this.sunInGame += sun;

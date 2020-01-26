@@ -27,6 +27,11 @@ public class CollectionSceneController implements Controller {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
+    @FXML
+    void onStartGameMouseClicked() throws IOException {
+        MenuHandler.getClient().send("play", null);
+        MenuHandler.closeScene();
+    }
 
     @FXML
     void initialize() throws IOException {
@@ -38,17 +43,22 @@ public class CollectionSceneController implements Controller {
 
     public void showHand(Object object) throws IOException {
         JSONArray jsonArray = (JSONArray) object;
-        if (jsonArray.size() < 7) {
-            infoLabel.setText("You have to select" + (7 - (int) object) + " more creatures");
-        } else if (jsonArray.size() > 7) {
-            infoLabel.setText("You have to unselect" + ((int) object - 7) + " creatures");
-        } else {
-            infoLabel.setText("You can start the game now");
-        }
+        Platform.runLater(() -> {
+            if (jsonArray.size() < 7) {
+                infoLabel.setText("You have to select " + (7 - jsonArray.size()) + " more creatures");
+                startGameButton.setVisible(false);
+            } else if (jsonArray.size() > 7) {
+                infoLabel.setText("You have to unselect " + (jsonArray.size() - 7) + " creatures");
+                startGameButton.setVisible(false);
+            } else {
+                infoLabel.setText("You can start the game now");
+                startGameButton.setVisible(true);
+            }
+        });
         for (Object objectForCreature : jsonArray) {
             JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
-            jsonObjectForCreature.put("selected", false);
-            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInLeaderboardList.fxml", jsonObjectForCreature);
+            jsonObjectForCreature.put("selected", true);
+            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInCollectionList.fxml", jsonObjectForCreature);
             Platform.runLater(() -> {
                 creatureList.getChildren().add(borderPane);
             });
@@ -59,8 +69,8 @@ public class CollectionSceneController implements Controller {
         JSONArray jsonArray = (JSONArray) object;
         for (Object objectForCreature : jsonArray) {
             JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
-            jsonObjectForCreature.put("selected", true);
-            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInLeaderboardList.fxml", jsonObjectForCreature);
+            jsonObjectForCreature.put("selected", false);
+            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInCollectionList.fxml", jsonObjectForCreature);
             Platform.runLater(() -> {
                 creatureList.getChildren().add(borderPane);
             });
@@ -69,7 +79,7 @@ public class CollectionSceneController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
-        MenuHandler.getClient().send("show collection", null);
         MenuHandler.getClient().send("show hand", null);
+        MenuHandler.getClient().send("show collection", null);
     }
 }

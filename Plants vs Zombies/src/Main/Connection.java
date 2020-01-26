@@ -17,8 +17,8 @@ public class Connection {
     private Socket socket;
 
     public void popMenu() throws Exception {
-        menus.remove(menus.size()-1);
-        if(menus.isEmpty()){
+        menus.remove(menus.size() - 1);
+        if (menus.isEmpty()) {
             thread.wait();
         }
         getCurrentMenu().run();
@@ -53,12 +53,12 @@ public class Connection {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
-                new Menu(this, new FirstCommandHandler()).run();
                 dataInputStream = new DataInputStream(socket.getInputStream());
-
+                new Menu(this, new FirstCommandHandler()).run();
+                DataInputStream finalDataInputStream = dataInputStream;
                 String line = "";
                 while (!line.equals("exit")) {
-                    line = dataInputStream.readUTF();
+                    line = finalDataInputStream.readUTF();
                     System.out.println(line);
                     if (!line.equals("exit")) {
                         receive(line);

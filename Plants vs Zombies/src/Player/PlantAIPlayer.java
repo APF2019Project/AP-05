@@ -6,6 +6,7 @@ import Objects.Plant;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class PlantAIPlayer extends PlantPlayer {
     public PlantAIPlayer(Connection connection) {
@@ -27,7 +28,7 @@ public class PlantAIPlayer extends PlantPlayer {
     }
 
     @Override
-    public void pickCards() throws Exception {
+    public void pickCards(Supplier<Void> supplier) throws Exception {
         Random random=new Random();
         Map map=this.getMap();
         ArrayList<String> availablePlantName=new ArrayList<String>();
@@ -50,5 +51,6 @@ public class PlantAIPlayer extends PlantPlayer {
                 // its really should be empty
             }
         }
+        supplier.get();
     }
 }

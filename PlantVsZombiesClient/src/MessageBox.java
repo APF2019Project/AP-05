@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 public class MessageBox {
@@ -7,15 +8,17 @@ public class MessageBox {
 
     static void show(String message, Alert.AlertType alertType) {
         System.err.println(message);
-        try {
-            Alert alert = new Alert(alertType);
-            alert.setTitle("Message");
-            alert.setHeaderText(message);
-            alert.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        Platform.runLater(() -> {
+            try {
+                Alert alert = new Alert(alertType);
+                alert.setTitle("Message");
+                alert.setHeaderText(message);
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+        });
     }
 
     static void showErrorAndExit(String message) {

@@ -7,6 +7,9 @@ import Main.Connection;
 import Main.Menu;
 import Main.User;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 public class ZombieHumanPlayer extends ZombiePlayer {
     public ZombieHumanPlayer(Connection connection) {
         super(connection);
@@ -25,8 +28,8 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     }
 
     @Override
-    public void pickCards() throws Exception {
-        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.zombiesCollection));
+    public void pickCards(Supplier<Void> supplier) throws Exception {
+        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.zombiesCollection,supplier));
         collectionMenu.run();
     }
 }

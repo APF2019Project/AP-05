@@ -7,6 +7,7 @@ import Objects.Zombie;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class ZombieAIPlayer extends ZombiePlayer {
     private int whenPutZombie,lastZombieDie;
@@ -101,7 +102,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
     }
 
     @Override
-    public void pickCards() {
+    public void pickCards(Supplier<Void> supplier) {
         Random rand = new Random();
         Map map = this.getMap();
         ArrayList<Zombie> dryZombie=new ArrayList<Zombie>();
@@ -128,5 +129,6 @@ public class ZombieAIPlayer extends ZombiePlayer {
         for(int i=0;i<dry;i++){
             this.addCreaturesOnHand(dryZombie.get(i));
         }
+        supplier.get();
     }
 }

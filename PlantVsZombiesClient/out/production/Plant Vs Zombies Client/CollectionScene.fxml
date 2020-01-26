@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LeaderboardScene">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CollectionSceneController">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
@@ -41,7 +41,7 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Button fx:id="startGameButton" layoutX="658.0" layoutY="412.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="158.0" text="Start Game">
+            <Button fx:id="startGameButton" layoutX="658.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#onStartGameMouseClicked" prefHeight="56.0" prefWidth="158.0" text="Start Game">
                <font>
                   <Font size="19.0" />
                </font>

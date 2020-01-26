@@ -8,6 +8,11 @@ public class Menu {
     //private Menu lastMenu;
     private CommandHandler commandHandler;
     private final Connection connection;
+    private boolean isOpen;
+
+    public boolean isOpen() {
+        return isOpen;
+    }
 
     public Connection getConnection() {
         return connection;
@@ -21,13 +26,14 @@ public class Menu {
     }
 
     public void exit() throws Exception {
+        isOpen = false;
         connection.popMenu();
     }
 
     public void accept(String input) throws Exception {
-        JSONObject jsonObject=(JSONObject) new JSONParser().parse(input);
-        String command=(String)jsonObject.get("command");
-        System.err.println("Command:"+command);
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(input);
+        String command = (String) jsonObject.get("command");
+        System.err.println("Command:" + command);
         try {
             if (command.equals("help")) {
                 //showHelp(); // bayad ezafe shavad
@@ -54,6 +60,7 @@ public class Menu {
     }
 
     public void run() throws Exception {
+        isOpen = true;
         String menuName = commandHandler.getClass().getSimpleName().split("CommandHandler")[0];
         connection.send("runMenu", menuName);
     }
