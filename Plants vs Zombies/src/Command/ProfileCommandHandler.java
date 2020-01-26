@@ -12,7 +12,7 @@ public class ProfileCommandHandler extends CommandHandler {
                         "Enter a username and its password in two different lines after this command."),
                 new Command(this::renameUser, "rename", "rename: To rename your current username. " +
                         "Enter a username in a different line."),
-                new Command(this::createUser, "create", "create account: To create " +
+                new Command(this::createUser, "create account", "create account: To create " +
                         "a new user. Enter a username and a password in two different lines after this command"),
                 new Command(this::showUser, "show", "show: To see your username."),
         };

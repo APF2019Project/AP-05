@@ -15,29 +15,29 @@ public class JSONData {
 
         JSONObject createAccount = new JSONObject();
         createAccount.put("menuFile", "InputForm");
-        createAccount.put("textField0.setPromptText", "username");
-        createAccount.put("textField1.setPromptText", "password");
+        createAccount.put("textField0.setPromptText", "Username");
+        createAccount.put("textField1.setPromptText", "Password");
         createAccount.put("sendButton.setText", "Create Account");
         inputJsonForm.put("create account", createAccount);
 
         JSONObject changeUser = new JSONObject();
         changeUser.put("menuFile", "InputForm");
-        changeUser.put("textField0.setPromptText", "username");
-        changeUser.put("textField1.setPromptText", "password");
+        changeUser.put("textField0.setPromptText", "Username");
+        changeUser.put("textField1.setPromptText", "Password");
         changeUser.put("sendButton.setText", "Change Username");
         inputJsonForm.put("change user", changeUser);
 
         JSONObject deleteUser = new JSONObject();
         deleteUser.put("menuFile", "InputForm");
-        deleteUser.put("textField0.setPromptText", "username");
-        deleteUser.put("textField1.setPromptText", "password");
+        deleteUser.put("textField0.setPromptText", "Username");
+        deleteUser.put("textField1.setPromptText", "Password");
         deleteUser.put("sendButton.setText", "Delete User");
         inputJsonForm.put("delete user", deleteUser);
 
         JSONObject rename = new JSONObject();
         rename.put("menuFile", "InputForm");
         rename.put("textField1.setVisible", false);
-        rename.put("textField0.setPromptText", "username");
+        rename.put("textField0.setPromptText", "Username");
         rename.put("sendButton.setText", "Rename");
         inputJsonForm.put("rename user", rename);
     }
