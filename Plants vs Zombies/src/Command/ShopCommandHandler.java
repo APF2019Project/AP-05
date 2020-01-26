@@ -12,7 +12,7 @@ public class ShopCommandHandler extends CommandHandler {
                         "not bought cards."),
                 new Command(this::showCollection, "show collection", "show collection: To see your " +
                         "bought cards."),
-                new Command(this::buy, "buy (.+)", "buy [name]: To buy card with given name."),
+                new Command(this::buy, "buy", "buy [name]: To buy card with given name."),
                 new Command(this::money, "money", "money: To see your amount of coins.")
         };
     }
@@ -48,6 +48,7 @@ public class ShopCommandHandler extends CommandHandler {
         if (!menu.getConnection().getUser().buyCreatureFromShop(creature)) {
             throw new Exception("you don't have enough money");
         }
+        menu.run();
     }
 
     public void money(InputCommand inputCommand) throws Exception {

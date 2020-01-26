@@ -2,7 +2,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
@@ -10,9 +9,11 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
-public class memberInShopListController implements Controller {
+public class MemberInShopListController implements Controller {
     @FXML
     private Label creatureNameLabel, priceLabel;
+    @FXML
+    private ImageView boughtImageView;
     @FXML
     private ImageView imageView;
     @FXML
@@ -24,7 +25,9 @@ public class memberInShopListController implements Controller {
 
     @FXML
     void onButtonMouseClicked() throws IOException {
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("creatureName", creatureNameLabel.getText());
+        MenuHandler.getClient().send("buy", jsonObject);
     }
 
     @Override
@@ -34,15 +37,19 @@ public class memberInShopListController implements Controller {
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         creatureNameLabel.setText((String) jsonObject.get("creature.getName"));
-        priceLabel.setText(String.valueOf(jsonObject.get("creature.getPriceInShop")));
-
+        priceLabel.setText(String.valueOf(jsonObject.get("creature.getPriceInShop")) + "$");
+        if (((boolean) jsonObject.get("bought"))) {
+            button.setVisible(false);
+        }else {
+            boughtImageView.setVisible(false);
+        }
         File directory = new File("../Gallery/");
         for (File dir : directory.listFiles()) {
             if (dir.getName().toLowerCase().equals(creatureNameLabel.getText())) {
                 for (File file : dir.listFiles()) {
-                    if (file.exists()) {
+                    if (file.exists() && file.getName().contains("HD")) {
                         System.out.println(file.getPath());
-                        Platform.runLater(()->{
+                        Platform.runLater(() -> {
                             imageView.setImage(new Image(file.toURI().toString()));
                         });
                         break;

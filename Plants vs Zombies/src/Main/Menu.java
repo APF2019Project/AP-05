@@ -55,7 +55,6 @@ public class Menu {
 
     public void run() throws Exception {
         String menuName = commandHandler.getClass().getSimpleName().split("CommandHandler")[0];
-        menuName=Character.toLowerCase(menuName.charAt(0)) + menuName.substring(1);
         connection.send("runMenu", menuName);
     }
 }

@@ -13,9 +13,11 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
-public class shopSceneController implements Controller {
+public class ShopSceneController implements Controller {
     @FXML
     private VBox creatureList;
+    @FXML
+    private Label moneyLabel;
     @FXML
     private Button backButton;
     @FXML
@@ -23,7 +25,7 @@ public class shopSceneController implements Controller {
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
-        MenuHandler.getClient().send("exitMenu",null);
+        MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
 
@@ -35,12 +37,29 @@ public class shopSceneController implements Controller {
     public void initializeReOpen() {
     }
 
+    public void money(Object object) {
+        moneyLabel.setText("You have " + object + "$");
+    }
+
     public void showShop(Object object) throws IOException {
         JSONArray jsonArray = (JSONArray) object;
         for (Object objectForCreature : jsonArray) {
             JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
-            BorderPane borderPane=MenuHandler.getPaneWithDefaultParametersHandler("memberInShopList.fxml", jsonObjectForCreature);
-            Platform.runLater(()->{
+            jsonObjectForCreature.put("bought", false);
+            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInShopList.fxml", jsonObjectForCreature);
+            Platform.runLater(() -> {
+                creatureList.getChildren().add(borderPane);
+            });
+        }
+    }
+
+    public void showCollection(Object object) throws IOException {
+        JSONArray jsonArray = (JSONArray) object;
+        for (Object objectForCreature : jsonArray) {
+            JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
+            jsonObjectForCreature.put("bought", true);
+            BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler("MemberInShopList.fxml", jsonObjectForCreature);
+            Platform.runLater(() -> {
                 creatureList.getChildren().add(borderPane);
             });
         }
@@ -48,6 +67,8 @@ public class shopSceneController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
+        MenuHandler.getClient().send("money", null);
+        MenuHandler.getClient().send("show collection", null);
         MenuHandler.getClient().send("show shop", null);
     }
 }

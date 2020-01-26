@@ -2,13 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shopSceneController">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ShopSceneController">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
@@ -26,7 +28,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ScrollPane fx:id="scrollPane" layoutX="70.0" layoutY="35.0" opacity="0.8" prefHeight="432.0" prefWidth="530.0">
+            <ScrollPane fx:id="scrollPane" layoutX="70.0" layoutY="53.0" opacity="0.85" prefHeight="415.0" prefWidth="530.0">
                <content>
                   <VBox fx:id="creatureList" prefHeight="430.0" />
                </content>
@@ -34,6 +36,11 @@
                   <Insets />
                </opaqueInsets>
             </ScrollPane>
+            <Label fx:id="moneyLabel" layoutX="70.0" layoutY="14.0">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
