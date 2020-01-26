@@ -66,6 +66,9 @@ public class Client {
     }
 
     public synchronized void send(String command, Object data) throws IOException {
+        System.out.println("Sending");
+        System.out.println(command);
+        System.out.println(data);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("command", command);
         jsonObject.put("data", data);
