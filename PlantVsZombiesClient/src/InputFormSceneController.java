@@ -27,7 +27,9 @@ public class InputFormSceneController implements Controller {
         if (textField0.isVisible()) {
             data.put(textField0.getPromptText().toLowerCase(), textField0.getText());
         }
-        data.put(textField1.getPromptText().toLowerCase(), textField1.getText());
+        if (textField1.isVisible()) {
+            data.put(textField1.getPromptText().toLowerCase(), textField1.getText());
+        }
         MenuHandler.getClient().send(sendButton.getText().toLowerCase(), data);
     }
 

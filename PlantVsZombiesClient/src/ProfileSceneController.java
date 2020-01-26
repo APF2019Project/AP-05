@@ -46,7 +46,7 @@ public class ProfileSceneController implements Controller {
     }
 
     @Override
-    public void initializeReOpen() {
-
+    public void initializeReOpen() throws IOException{
+        MenuHandler.getClient().send("show", null);
     }
 }

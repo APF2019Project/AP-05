@@ -24,6 +24,7 @@ public class ProfileCommandHandler extends CommandHandler {
         menu.getConnection().getUser().changeUsername(username);
         menu.getConnection().getUser().changePassword(password);
         menu.getConnection().send("showLog","changeUsernameAndPassword successful");
+        menu.run();
     }
 
     public void deleteUser(InputCommand inputCommand) throws Exception {
@@ -31,11 +32,13 @@ public class ProfileCommandHandler extends CommandHandler {
         String password = (String) inputCommand.getInputJsonObject().get("password");
         User.deleteUser(username, password);
         menu.getConnection().send("showLog","deleteUser successful");
+        menu.run();
     }
 
     public void renameUser(InputCommand inputCommand) throws Exception {
         String username = (String) inputCommand.getInputJsonObject().get("username");
         menu.getConnection().getUser().changeUsername(username);
+        menu.run();
     }
 
     public void createUser(InputCommand inputCommand) throws Exception {
@@ -43,6 +46,7 @@ public class ProfileCommandHandler extends CommandHandler {
         String password = (String) inputCommand.getInputJsonObject().get("password");
         new User(username, password);
         menu.getConnection().send("showLog","createUser successful");
+        menu.run();
         // inja bayad current user avaz she???
     }
 
