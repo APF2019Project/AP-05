@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PrettyLabel {
 
-    final static int cycleCount = 100, sleepTime = 30, secondCycleCount = 2, scale = 4;
+    final static int cycleCount = 60, sleepTime = 40, secondCycleCount = 2, scale = 4;
 
     public static Double askStop(int value) {
         value %= (2 * cycleCount);
