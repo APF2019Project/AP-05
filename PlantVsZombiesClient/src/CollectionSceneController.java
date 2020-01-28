@@ -27,6 +27,7 @@ public class CollectionSceneController implements Controller {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
+
     @FXML
     void onStartGameMouseClicked() throws IOException {
         MenuHandler.getClient().send("play", null);
@@ -41,20 +42,24 @@ public class CollectionSceneController implements Controller {
     public void initializeReOpen() {
     }
 
-    public void showHand(Object object) throws IOException {
-        JSONArray jsonArray = (JSONArray) object;
+    public void showHandSize(Object object) throws IOException {
+        int size = ((Long) object).intValue();
         Platform.runLater(() -> {
-            if (jsonArray.size() < 7) {
-                infoLabel.setText("You have to select " + (7 - jsonArray.size()) + " more creatures");
+            if (size < 7) {
+                infoLabel.setText("You have to select " + (7 - size) + " more creatures");
                 startGameButton.setVisible(false);
-            } else if (jsonArray.size() > 7) {
-                infoLabel.setText("You have to unselect " + (jsonArray.size() - 7) + " creatures");
+            } else if (size > 7) {
+                infoLabel.setText("You have to unselect " + (size - 7) + " creatures");
                 startGameButton.setVisible(false);
             } else {
                 infoLabel.setText("You can start the game now");
                 startGameButton.setVisible(true);
             }
         });
+    }
+
+    public void showHand(Object object) throws IOException {
+        JSONArray jsonArray = (JSONArray) object;
         for (Object objectForCreature : jsonArray) {
             JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
             jsonObjectForCreature.put("selected", true);
@@ -79,6 +84,7 @@ public class CollectionSceneController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
+        MenuHandler.getClient().send("show hand size", null);
         MenuHandler.getClient().send("show hand", null);
         MenuHandler.getClient().send("show collection", null);
     }

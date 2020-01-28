@@ -17,10 +17,13 @@ public abstract class CommandHandler {
     }
 
     public void accept(JSONObject jsonObject) throws Exception {
-        for (Command command : commands)
+        for (Command command : commands) {
             if (command.accept(jsonObject))
                 return;
-        throw new Exception("invalid command");
+        }
+        if(!(jsonObject.get("command")).equals("end turn")){
+            throw new Exception("invalid command");
+        }
     }
 
     public String help() throws Exception {

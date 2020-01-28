@@ -1,20 +1,12 @@
 package Command;
 
 import Main.GameData;
-import Main.Main;
 import Objects.Creature;
 import Objects.Plant;
 import Objects.Zombie;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.awt.event.ActionEvent;
-import java.beans.EventHandler;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CollectionCommandHandler extends CommandHandler {
     public CollectionMode collectionMode;
@@ -22,6 +14,7 @@ public class CollectionCommandHandler extends CommandHandler {
 
     {
         this.commands = new Command[]{
+                new Command(this::showHandSize, "show hand size", "show hand size"),
                 new Command(this::showHand, "show hand", "show hand: To show your selected cards"),
                 new Command(this::showCollection, "show collection", "show collection: " +
                         "To show your not selected cards"),
@@ -35,7 +28,7 @@ public class CollectionCommandHandler extends CommandHandler {
 
     public CollectionCommandHandler(CollectionMode collectionMode, Supplier<Void> supplier) {
         this.collectionMode = collectionMode;
-        this.supplier=supplier;
+        this.supplier = supplier;
     }
 
     public void showHand(InputCommand inputCommand) throws Exception {
@@ -46,6 +39,11 @@ public class CollectionCommandHandler extends CommandHandler {
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showHand", jsonArray);
+    }
+
+    public void showHandSize(InputCommand inputCommand) throws Exception {
+        menu.getConnection().send("showHandSize", menu.getConnection().
+                getUser().getPlayer().getCreaturesOnHand().size());
     }
 
     public void showCollection(InputCommand inputCommand) throws Exception {
@@ -75,7 +73,7 @@ public class CollectionCommandHandler extends CommandHandler {
             throw new Exception("invalid creatureName");
         }
         menu.getConnection().getUser().getPlayer().addCreaturesOnHand(creature);
-        menu.run();
+        showHandSize(null);
     }
 
     public void removeCard(InputCommand inputCommand) throws Exception {
@@ -85,7 +83,7 @@ public class CollectionCommandHandler extends CommandHandler {
             throw new Exception("invalid creatureName");
         }
         menu.getConnection().getUser().getPlayer().removeCreaturesOnHand(creature);
-        menu.run();
+        showHandSize(null);
     }
 
     public void play(InputCommand inputCommand) throws Exception {
@@ -93,6 +91,5 @@ public class CollectionCommandHandler extends CommandHandler {
             throw new Exception("count of creatures on hand should be " + GameData.creatureOnHandSize);
         }
         supplier.get();
-        menu.exit();
     }
 }

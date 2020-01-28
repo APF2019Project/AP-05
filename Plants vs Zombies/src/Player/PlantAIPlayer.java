@@ -14,8 +14,10 @@ public class PlantAIPlayer extends PlantPlayer {
     }
 
     @Override
-    public void doAction() {
-
+    public void doAction(Supplier<Void> supplier) {
+        if(supplier!=null){
+            supplier.get();
+        }
     }
     @Override
     public void gameAction() {

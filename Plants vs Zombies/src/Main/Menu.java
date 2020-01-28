@@ -52,6 +52,7 @@ public class Menu {
             data.put("message", e.getMessage());
             data.put("messageType", "WARNING");
             connection.send("showMessage", data);
+            run();
         }
     }
 

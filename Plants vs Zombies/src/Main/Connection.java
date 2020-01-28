@@ -57,6 +57,16 @@ public class Connection {
                 new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
                 String line = "";
+                new Thread(()->{
+                    while(!socket.isClosed()){
+                        try {
+                            receive("{\"command\":\"end turn\"");
+                            Thread.sleep(5000);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 while (!line.equals("exit")) {
                     line = finalDataInputStream.readUTF();
                     System.out.println(line);

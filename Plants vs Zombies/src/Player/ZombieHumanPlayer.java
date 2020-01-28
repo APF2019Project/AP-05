@@ -16,9 +16,9 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     }
 
     @Override
-    public void doAction() throws Exception {
+    public void doAction(Supplier<Void> supplier) throws Exception {
         super.doAction();
-        Menu ZombiePlayerMenu = new Menu(connection, new ZombiePlayerCommandHandler());
+        Menu ZombiePlayerMenu = new Menu(connection, new ZombiePlayerCommandHandler(supplier));
         ZombiePlayerMenu.run();
     }
 

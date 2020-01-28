@@ -17,8 +17,9 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
     }
 
     @Override
-    public void doAction() throws Exception {
-        Menu plantOnDayAndWaterModePlayerMenu = new Menu(connection, new PlantOnDayAndWaterModePlayerCommandHandler());
+    public void doAction(Supplier<Void> supplier) throws Exception {
+        System.out.println("deh8uhfq");
+        Menu plantOnDayAndWaterModePlayerMenu = new Menu(connection, new PlantOnDayAndWaterModePlayerCommandHandler(supplier));
         plantOnDayAndWaterModePlayerMenu.run();
     }
 
@@ -37,7 +38,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
 
     @Override
     public void pickCards(Supplier<Void> supplier) throws Exception {
-        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.plantsCollection,supplier));
+        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.plantsCollection, supplier));
         collectionMenu.run();
     }
 }

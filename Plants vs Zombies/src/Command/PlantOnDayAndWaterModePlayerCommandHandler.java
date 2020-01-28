@@ -5,11 +5,16 @@ import Main.GameData;
 import Main.Main;
 import Objects.Creature;
 import Objects.Plant;
+import Player.PlantOnDayAndWaterModeHumanPlayer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
+    private Supplier<Void> supplier;
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To see your collection's " +
@@ -25,21 +30,28 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         };
     }
 
+
+    public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier){
+        this.supplier=supplier;
+    }
+
     public void setFirstLineDescription() {
         firstLineDescription = "Sun in Game: " + menu.getConnection().getUser().getPlayer().getSunInGame();
     }
 
     private Plant selectedPlant = null;
 
-    void showHand(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    void showHand(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
-            stringBuilder.append("\nName: ").append(plant.getName()).append("\nprice: ")
-                    .append(plant.getPrice()).append("\nremaining cool down: ")
-                    .append(plant.getRemainingCoolDown()).append("\n");
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("name",plant.getName());
+            jsonObject.put("price",plant.getPrice());
+            jsonObject.put("remaining cool down",plant.getRemainingCoolDown());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showHand",jsonArray);
     }
 
     void select(InputCommand inputCommand) throws Exception {
@@ -78,7 +90,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     void endTurn(InputCommand inputCommand) throws Exception {
-        menu.exit();
+        supplier.get();
+        //menu.exit();
     }
 
     void showLawn(InputCommand inputCommand) {

@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ import javafx.stage.WindowEvent;
 
 import javax.media.CannotRealizeException;
 import javax.media.NoPlayerException;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -32,6 +34,21 @@ public class Main extends Application {
             MediaPlayer.closeBackgroundMusic();
             System.exit(0);
         });
+    }
+
+    public static String getImageAddressByCreatureName(String name) {
+        File directory = new File("../Gallery/");
+        for (File dir : directory.listFiles()) {
+            if (dir.getName().toLowerCase().equals(name)) {
+                for (File file : dir.listFiles()) {
+                    if (file.exists() && file.getName().contains("HD")) {
+                        System.out.println(file.getPath());
+                        return file.toURI().toString();
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 

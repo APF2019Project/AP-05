@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PlantOnDayAndWaterModePlayerSceneController">
+   <children>
+      <ImageView fitHeight="489.0" fitWidth="870.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Gallery/dayBackgroundCut.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="selectImageView" fitHeight="489.0" fitWidth="870.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Gallery/selectPic.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="handBox" layoutX="14.0" layoutY="35.0" />
+      <Separator fx:id="separatorUp" layoutX="183.0" layoutY="62.0" prefHeight="3.0" prefWidth="636.0" visible="false" />
+      <Separator fx:id="separatorDown" layoutX="183.0" layoutY="472.0" prefHeight="3.0" prefWidth="636.0" visible="false" />
+      <Button fx:id="backButton" layoutX="785.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Files/exitIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

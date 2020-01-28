@@ -9,10 +9,12 @@ import Player.ZombiePlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ZombiePlayerCommandHandler extends CommandHandler {
+    private Supplier<Void> supplier;
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To see selected cards."),
@@ -25,6 +27,10 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining \n" +
                         "zombies and plants"),
         };
+    }
+
+    public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
+        this.supplier = supplier;
     }
 
     void showHand(InputCommand inputCommand) throws Exception {

@@ -6,10 +6,17 @@ import Main.Main;
 import Objects.Creature;
 import Objects.Plant;
 
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
+    private Supplier<Void> supplier;
+
+    public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
+        this.supplier = supplier;
+    }
+
     {
         this.commands = new Command[]{
                 new Command(this::list, "list", "list: To see your current cards."),

@@ -21,8 +21,7 @@ public class ZombieAIPlayer extends ZombiePlayer {
         whenPutZombie=random.nextInt(3)+3;
     }
 
-
-    public void doAction() throws Exception {
+    public void doAction(Supplier<Void> supplier) throws Exception {
         super.doAction();
         if(connection.getUser().getPlayer().getMap().getMapMode().equals(MapMode.Rail)){
             this.addSun(1000);
@@ -63,6 +62,9 @@ public class ZombieAIPlayer extends ZombiePlayer {
             }else if(isStart && lastZombieDie==7){
                 startWave();
             }
+        }
+        if(supplier!=null){
+            supplier.get();
         }
     }
     @Override

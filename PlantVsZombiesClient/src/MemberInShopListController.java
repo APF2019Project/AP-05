@@ -38,24 +38,16 @@ public class MemberInShopListController implements Controller {
     public void initJsonInput(JSONObject jsonObject) {
         creatureNameLabel.setText((String) jsonObject.get("creature.getName"));
         priceLabel.setText(jsonObject.get("creature.getPriceInShop") + "$");
-        if((boolean)jsonObject.get("bought")){
+        if ((boolean) jsonObject.get("bought")) {
             button.setVisible(false);
-        }else {
+        } else {
             boughtImageView.setVisible(false);
         }
-        File directory = new File("../Gallery/");
-        for (File dir : directory.listFiles()) {
-            if (dir.getName().toLowerCase().equals(creatureNameLabel.getText())) {
-                for (File file : dir.listFiles()) {
-                    if (file.exists() && file.getName().contains("HD")) {
-                        System.out.println(file.getPath());
-                        Platform.runLater(() -> {
-                            imageView.setImage(new Image(file.toURI().toString()));
-                        });
-                        break;
-                    }
-                }
-            }
+        Image image = new Image(Main.getImageAddressByCreatureName(creatureNameLabel.getText()));
+        if (image != null) {
+            Platform.runLater(() -> {
+                imageView.setImage(image);
+            });
         }
     }
 }

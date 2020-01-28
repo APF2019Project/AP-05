@@ -1,6 +1,5 @@
 package Command;
 
-import Main.Main;
 import Main.User;
 
 public class ProfileCommandHandler extends CommandHandler {

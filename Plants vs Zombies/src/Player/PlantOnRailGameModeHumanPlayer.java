@@ -16,8 +16,8 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
     }
     private int remainTurnToAddCard=0;
     @Override
-    public void doAction() throws Exception {
-        Menu PlantOnRailModePlayerMenu = new Menu(connection, new PlantOnRailModePlayerCommandHandler());
+    public void doAction(Supplier<Void> supplier) throws Exception {
+        Menu PlantOnRailModePlayerMenu = new Menu(connection, new PlantOnRailModePlayerCommandHandler(supplier));
         PlantOnRailModePlayerMenu.run();
     }
 

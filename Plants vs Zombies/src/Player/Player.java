@@ -71,7 +71,7 @@ public abstract class Player {
         return null;
     }
 
-    public abstract void doAction() throws Exception;
+    public abstract void doAction(Supplier<Void> supplier) throws Exception;
 
     public abstract void gameAction();
 
