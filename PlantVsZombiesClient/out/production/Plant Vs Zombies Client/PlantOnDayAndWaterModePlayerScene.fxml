@@ -9,16 +9,15 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PlantOnDayAndWaterModePlayerSceneController">
    <children>
-      <ImageView fitHeight="489.0" fitWidth="870.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../../../../Gallery/dayBackgroundCut.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="selectImageView" fitHeight="489.0" fitWidth="870.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="selectImageView" fitHeight="489.0" fitWidth="863.0" opacity="0.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../../../../Gallery/selectPic.png" />
-         </image>
-      </ImageView>
+         </image></ImageView>
       <VBox fx:id="handBox" layoutX="14.0" layoutY="35.0" />
       <Separator fx:id="separatorUp" layoutX="183.0" layoutY="62.0" prefHeight="3.0" prefWidth="636.0" visible="false" />
       <Separator fx:id="separatorDown" layoutX="183.0" layoutY="472.0" prefHeight="3.0" prefWidth="636.0" visible="false" />

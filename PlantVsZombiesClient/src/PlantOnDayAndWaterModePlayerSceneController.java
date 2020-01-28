@@ -23,7 +23,7 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     private VBox handBox;
 
     private ToggleButton[] toggleButtons = new ToggleButton[7];
-    private int selectedToggleIndex=-1;
+    private ToggleButton selectedToggleButton = null;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
@@ -41,15 +41,17 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
 
     public void onToggleButtonAction(ToggleButton toggleButton) {
         System.out.println("onToggleButtonAction");
-        if (toggleButton.isSelected()) {
+        if (toggleButton.equals(selectedToggleButton)) {
+            selectedToggleButton = null;
+            selectImageView.setOpacity(0);
+        } else {
+            selectedToggleButton = toggleButton;
             selectImageView.setOpacity(0.5);
             for (ToggleButton anotherToggleButton : toggleButtons) {
-                if (anotherToggleButton.equals(toggleButton)) {
+                if (!anotherToggleButton.equals(toggleButton)) {
                     anotherToggleButton.setSelected(false);
                 }
             }
-        } else {
-            selectImageView.setOpacity(0);
         }
     }
 
@@ -68,7 +70,7 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         for (int i = 0; i < 7; i++) {
-            toggleButtons[i] = new ToggleButton("");
+            toggleButtons[i] = new ToggleButton();
             final ToggleButton toggleButton = toggleButtons[i];
             //toggleButton.setMnemonicParsing(false);
             handBox.getChildren().add(toggleButton);
