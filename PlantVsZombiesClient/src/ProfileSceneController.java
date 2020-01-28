@@ -1,14 +1,20 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
 
-import javax.swing.text.html.ImageView;
+import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class ProfileSceneController implements Controller {
     @FXML
     private Label usernameLabel;
+    @FXML
+    private ImageView imageView;
 
     @FXML
     void initialize() {
@@ -40,9 +46,16 @@ public class ProfileSceneController implements Controller {
         usernameLabel.setText(username);
     }
 
+    @FXML
+    void onBackButtonMouseClicked() throws IOException {
+        MenuHandler.getClient().send("exitMenu", null);
+        MenuHandler.closeScene();
+    }
+
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         MenuHandler.getClient().send("show", null);
+        System.out.println(imageView.getImage().getUrl());
     }
 
     @Override
