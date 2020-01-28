@@ -27,7 +27,7 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     private VBox handBox;
 
     private MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
-    private MemberInHandBoxController selectedMemberInHandBoxController = null;
+    private String selectedPlantName = null;
     private ImageView[][] imageViews = new ImageView[GameData.mapRowCount][];
 
     @FXML
@@ -50,25 +50,9 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     public void onToggleButtonAction(MemberInHandBoxController memberInHandBoxController) throws IOException {
         if (memberInHandBoxController.isEnable()) {
             System.out.println("onToggleButtonAction");
-            if (memberInHandBoxController.equals(selectedMemberInHandBoxController)) {
-                memberInHandBoxController.getToggleButton().setSelected(false);
-                selectedMemberInHandBoxController = null;
-                selectImageView.setOpacity(0);
-                MenuHandler.getClient().send("un select", null);
-            } else {
-                selectedMemberInHandBoxController = memberInHandBoxController;
-                selectImageView.setOpacity(0.5);
-                memberInHandBoxController.getToggleButton().setSelected(true);
-
-                for (MemberInHandBoxController controller : onHandCardControllers) {
-                    if (!controller.equals(memberInHandBoxController)) {
-                        controller.getToggleButton().setSelected(false);
-                    }
-                }
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("plantName", memberInHandBoxController.getPlantName());
-                MenuHandler.getClient().send("select", jsonObject);
-            }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("plantName", memberInHandBoxController.getPlantName());
+            MenuHandler.getClient().send("select", jsonObject);
         }
     }
 
@@ -94,11 +78,27 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     //1 base
     void put(int x, int y) throws IOException {
         System.out.println("put request:");
-        if (selectedMemberInHandBoxController != null) {
+        if (selectedPlantName != null) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("x", x);
             jsonObject.put("y", y);
             MenuHandler.getClient().send("plant", jsonObject);
+        }
+    }
+
+    void selectPlant(Object object) {
+        selectedPlantName = (String) object;
+        if (selectedPlantName != null) {
+            selectImageView.setOpacity(0.5);
+        } else {
+            selectImageView.setOpacity(0);
+        }
+        for (MemberInHandBoxController controller : onHandCardControllers) {
+            if (!controller.getPlantName().equals(selectedPlantName)) {
+                controller.getToggleButton().setSelected(false);
+            } else {
+                controller.getToggleButton().setSelected(true);
+            }
         }
     }
 

@@ -47,6 +47,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
 
     void select(InputCommand inputCommand) throws Exception {
         plantIndex = (int) inputCommand.getInputJsonObject().get("plantIndex"); // input is 0-base
+        menu.getConnection().send("selectPlant",plantIndex);
     }
 
     void record(InputCommand inputCommand) {
@@ -64,6 +65,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
                 .addActiveCard(activeCard);
         menu.getConnection().getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
         plantIndex = -1;
+        menu.getConnection().send("selectPlant",plantIndex);
     }
 
     void remove(InputCommand inputCommand) throws Exception {
