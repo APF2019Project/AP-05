@@ -47,6 +47,15 @@ public class Main extends Application {
                     }
                 }
             }
+        }for (File dir : directory.listFiles()) {
+            if (dir.getName().toLowerCase().equals(name)) {
+                for (File file : dir.listFiles()) {
+                    if (file.exists()) {
+                        System.out.println(file.getPath());
+                        return file.toURI().toString();
+                    }
+                }
+            }
         }
         return null;
     }

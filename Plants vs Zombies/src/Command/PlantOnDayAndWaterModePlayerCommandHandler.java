@@ -19,10 +19,11 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To see your collection's " +
                         "remaining cooldown and other things"),
-                new Command(this::select, "select (.+)", "select [Plant Name]: To select a plant"),
-                new Command(this::plant, "plant " + GameData.positiveNumber + "," + GameData.positiveNumber,
+                new Command(this::select, "select", "select [Plant Name]: To select a plant"),
+                new Command(this::unSelect, "un select", "select [Plant Name]: To select a plant"),
+                new Command(this::plant, "plant",
                         "plant [row],[column]: To plant your selected plant in the given coordination."),
-                new Command(this::remove, "remove " + GameData.positiveNumber + "," + GameData.positiveNumber,
+                new Command(this::remove, "remove",
                         "remove [row],[column]: To remove a plant from given coordination."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
@@ -48,7 +49,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             JSONObject jsonObject=new JSONObject();
             jsonObject.put("name",plant.getName());
             jsonObject.put("price",plant.getPrice());
-            jsonObject.put("remaining cool down",plant.getRemainingCoolDown());
+            jsonObject.put("cool down",plant.getCoolDown());
+            jsonObject.put("remaining cool down",plant.getRemainingCoolDown()+1);
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showHand",jsonArray);
@@ -66,11 +68,17 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         selectedPlant = plant;
     }
 
+
+    void unSelect(InputCommand inputCommand) throws Exception {
+        selectedPlant = null;
+    }
+
     void plant(InputCommand inputCommand) throws Exception {
         if (selectedPlant == null) {
             throw new Exception("you select nothing!");
         }
-        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        int x = ((Long) inputCommand.getInputJsonObject().get("x")).intValue()- 1,
+                y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
         ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer());
         if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
             throw new Exception("you can't your plant here");
@@ -78,15 +86,18 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         menu.getConnection().getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer()));
         selectedPlant = null;
+        show();
     }
 
     void remove(InputCommand inputCommand) throws Exception {
-        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        int x = ((Long) inputCommand.getInputJsonObject().get("x")).intValue()- 1,
+                y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
         ActiveCard activeCard = menu.getConnection().getUser().getPlayer().getMap().findPlantIn(x, y);
         if (activeCard == null) {
             throw new Exception("there is no plant here to remove");
         }
         menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
+        show();
     }
 
     void endTurn(InputCommand inputCommand) throws Exception {
@@ -94,14 +105,22 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         //menu.exit();
     }
 
-    void showLawn(InputCommand inputCommand) {
-        StringBuilder stringBuilder = new StringBuilder();
+    void showLawn(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
         for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
-            stringBuilder.append("\nName: ").append(activeCard.getCreature().getName()).append("\nposition: (")
-                    .append(activeCard.getX()).append(',').append(activeCard.getY()).append(")\nremaining Hp:")
-                    .append(activeCard.getRemainingHp()).append('\n');
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("name",activeCard.getCreature().getName());
+            jsonObject.put("x",activeCard.getX());
+            jsonObject.put("y",activeCard.getY());
+            jsonObject.put("remaining hp",activeCard.getRemainingHp());
+            jsonArray.add(jsonObject);
         }
-        Main.print(stringBuilder.toString());
+        menu.getConnection().send("showLawn",jsonArray);
+    }
+
+    void show() throws Exception {
+        showHand(null);
+        showLawn(null);
     }
 
 }

@@ -60,6 +60,11 @@ public class MenuHandler {
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
+        if(menuName.contains("Mode")){
+            currentStage.close();
+            currentStage=new Stage();
+            currentStage.setOnCloseRequest((event)-> System.exit(0));
+        }
         String menuFile = (String) parameters.getOrDefault("menuFile", menuName);
         System.err.println(menuFile + "Scene.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(menuFile + "Scene.fxml"));
@@ -79,7 +84,7 @@ public class MenuHandler {
     static void openSceneWithDefaultParameters(String menuName) {
         Platform.runLater(() -> {
             try {
-                openSceneWithDefaultParametersHandler(menuName, JSONData.get(menuName));
+                openSceneWithDefaultParametersHandler(menuName, GameData.getJson(menuName));
             } catch (IOException e) {
                 e.printStackTrace();
             }

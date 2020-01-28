@@ -2,8 +2,12 @@ import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 
-public class JSONData {
+public class GameData {
     private final static HashMap<String, JSONObject> inputJsonForm = new HashMap<>();
+    public final static int mapRowCount = 6;
+    public final static int mapColCount = 19;
+    public final static int mapPlantColCount = mapColCount/2;
+    public final static int creatureOnHandSize = 7;
 
     static {
         JSONObject login = new JSONObject();
@@ -42,7 +46,7 @@ public class JSONData {
         inputJsonForm.put("rename user", rename);
     }
 
-    public static JSONObject get(String name) {
+    public static JSONObject getJson(String name) {
         JSONObject jsonObject=inputJsonForm.get(name);
         if(jsonObject==null){
             jsonObject=new JSONObject();

@@ -45,11 +45,11 @@ public class CollectionSceneController implements Controller {
     public void showHandSize(Object object) throws IOException {
         int size = ((Long) object).intValue();
         Platform.runLater(() -> {
-            if (size < 7) {
-                infoLabel.setText("You have to select " + (7 - size) + " more creatures");
+            if (size < GameData.creatureOnHandSize) {
+                infoLabel.setText("You have to select " + (GameData.creatureOnHandSize - size) + " more creatures");
                 startGameButton.setVisible(false);
-            } else if (size > 7) {
-                infoLabel.setText("You have to unselect " + (size - 7) + " creatures");
+            } else if (size > GameData.creatureOnHandSize) {
+                infoLabel.setText("You have to unselect " + (size - GameData.creatureOnHandSize) + " creatures");
                 startGameButton.setVisible(false);
             } else {
                 infoLabel.setText("You can start the game now");
