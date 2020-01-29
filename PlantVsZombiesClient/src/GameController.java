@@ -264,6 +264,7 @@ public abstract class GameController implements Controller {
                 gamePane.getChildren().add(pane);
             }
         }
+        sendLoadRequest();
     }
 }
 
