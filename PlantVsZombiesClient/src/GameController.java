@@ -97,6 +97,7 @@ public abstract class GameController implements Controller {
     public void showHand(Object object) {
         JSONObject jsonObject = (JSONObject) object;
         JSONArray jsonArray = (JSONArray) jsonObject.get("cards");
+        System.out.println(jsonObject.toJSONString());
         Platform.runLater(() -> {
             sunLabel.setText(jsonObject.get("sun").toString());
         });

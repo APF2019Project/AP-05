@@ -1,11 +1,9 @@
 package Player;
 
 import Command.CollectionCommandHandler;
-import Command.ZombiePlayerCommandHandler;
 import Command.CollectionMode;
 import Main.Connection;
 import Main.Menu;
-import Main.User;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
