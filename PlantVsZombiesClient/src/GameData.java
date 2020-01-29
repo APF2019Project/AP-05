@@ -29,14 +29,14 @@ public class GameData {
         changeUser.put("menuFile", "InputForm");
         changeUser.put("textField0.setPromptText", "Username");
         changeUser.put("textField1.setPromptText", "Password");
-        changeUser.put("sendButton.setText", "Change Username");
+        changeUser.put("sendButton.setText", "Change");
         inputJsonForm.put("change user", changeUser);
 
         JSONObject deleteUser = new JSONObject();
         deleteUser.put("menuFile", "InputForm");
         deleteUser.put("textField0.setPromptText", "Username");
         deleteUser.put("textField1.setPromptText", "Password");
-        deleteUser.put("sendButton.setText", "Delete User");
+        deleteUser.put("sendButton.setText", "Delete");
         inputJsonForm.put("delete user", deleteUser);
 
         JSONObject rename = new JSONObject();
