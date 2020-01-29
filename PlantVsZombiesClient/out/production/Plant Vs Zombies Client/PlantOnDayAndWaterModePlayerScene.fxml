@@ -23,7 +23,7 @@
          </image>
       </ImageView>
       <VBox fx:id="handBox" layoutX="14.0" layoutY="35.0" />
-      <AnchorPane fx:id="gamePane" layoutX="242.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="768.0" />
+      <AnchorPane fx:id="gamePane" layoutX="242.0" layoutY="44.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="768.0" />
       <Button fx:id="backButton" layoutX="948.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -42,7 +42,7 @@
             </ImageView>
             <Pane prefHeight="33.0" prefWidth="185.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="33.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffffb2" height="33.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
                   <Label fx:id="sunLabel" alignment="CENTER" layoutX="2.0" prefHeight="33.0" prefWidth="68.0" text="sunCount" textAlignment="CENTER">
                      <font>
                         <Font size="22.0" />
