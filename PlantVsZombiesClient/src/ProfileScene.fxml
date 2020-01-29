@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProfileSceneController">
-   <children>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-         <children>
-            <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Files/background.jpeg" />
-               </image>
-            </ImageView>
-            <Button fx:id="createAccountButton" layoutX="331.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#onCreateAccountButtonClicked" prefHeight="55.0" prefWidth="201.0" text="Create Account">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="deleteAccountButton" layoutX="331.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onDeleteAccountButtonClicked" prefHeight="55.0" prefWidth="201.0" text="Delete Account">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="changeUserButton" layoutX="100.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onChangeUserButtonClicked" opacity="0.95" prefHeight="55.0" prefWidth="201.0" text="Change User">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="renameButton" layoutX="564.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onRenameButtonClicked" opacity="0.95" prefHeight="55.0" prefWidth="201.0" text="Rename">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="357.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../Profile Pictures/profile1.png" />
-               </image>
-            </ImageView>
-            <BorderPane layoutY="208.0" prefHeight="35.0" prefWidth="863.0">
-               <center>
-                  <Label fx:id="usernameLabel" alignment="TOP_CENTER" text="Username" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-               </center>
-            </BorderPane>
-            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
-               <graphic>
-                  <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Files/back.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </AnchorPane>
-   </children>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="ProfileSceneController">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Files/background.jpeg"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="createAccountButton" layoutX="331.0" layoutY="338.0" mnemonicParsing="false"
+                        onMouseClicked="#onCreateAccountButtonClicked" prefHeight="55.0" prefWidth="201.0"
+                        text="Create Account">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="deleteAccountButton" layoutX="331.0" layoutY="268.0" mnemonicParsing="false"
+                        onMouseClicked="#onDeleteAccountButtonClicked" prefHeight="55.0" prefWidth="201.0"
+                        text="Delete Account">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="changeUserButton" layoutX="100.0" layoutY="268.0" mnemonicParsing="false"
+                        onMouseClicked="#onChangeUserButtonClicked" opacity="0.95" prefHeight="55.0" prefWidth="201.0"
+                        text="Change User">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="renameButton" layoutX="564.0" layoutY="268.0" mnemonicParsing="false"
+                        onMouseClicked="#onRenameButtonClicked" opacity="0.95" prefHeight="55.0" prefWidth="201.0"
+                        text="Rename">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Button>
+                <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="357.0" layoutY="49.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../Profile Pictures/profile1.png"/>
+                    </image>
+                </ImageView>
+                <BorderPane layoutY="208.0" prefHeight="35.0" prefWidth="863.0">
+                    <center>
+                        <Label fx:id="usernameLabel" alignment="TOP_CENTER" text="Username" textAlignment="CENTER"
+                               wrapText="true" BorderPane.alignment="CENTER">
+                            <font>
+                                <Font size="28.0"/>
+                            </font>
+                        </Label>
+                    </center>
+                </BorderPane>
+                <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked"
+                        opacity="0.88">
+                    <graphic>
+                        <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@Files/back.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

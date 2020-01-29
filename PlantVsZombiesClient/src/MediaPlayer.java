@@ -1,7 +1,7 @@
-import javafx.scene.media.Media;
-
-import javax.media.*;
-import java.io.File;
+import javax.media.CannotRealizeException;
+import javax.media.Manager;
+import javax.media.NoPlayerException;
+import javax.media.Player;
 import java.io.IOException;
 
 public class MediaPlayer {

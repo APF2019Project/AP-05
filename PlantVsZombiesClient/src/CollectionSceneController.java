@@ -48,10 +48,12 @@ public class CollectionSceneController implements Controller {
             if (size < GameData.creatureOnHandSize) {
                 infoLabel.setText("You have to select " + (GameData.creatureOnHandSize - size) + " more creatures");
                 startGameButton.setVisible(false);
-            } else if (size > GameData.creatureOnHandSize) {
+            }
+            else if (size > GameData.creatureOnHandSize) {
                 infoLabel.setText("You have to unselect " + (size - GameData.creatureOnHandSize) + " creatures");
                 startGameButton.setVisible(false);
-            } else {
+            }
+            else {
                 infoLabel.setText("You can start the game now");
                 startGameButton.setVisible(true);
             }

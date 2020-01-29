@@ -1,14 +1,9 @@
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 public class ProfileSceneController implements Controller {
     @FXML
@@ -59,7 +54,7 @@ public class ProfileSceneController implements Controller {
     }
 
     @Override
-    public void initializeReOpen() throws IOException{
+    public void initializeReOpen() throws IOException {
         MenuHandler.getClient().send("show", null);
     }
 }
