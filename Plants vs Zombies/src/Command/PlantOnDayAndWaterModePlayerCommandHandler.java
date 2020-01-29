@@ -45,6 +45,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     private Plant selectedPlant = null;
 
     void showHand(InputCommand inputCommand) throws Exception {
+        JSONObject sendingJSONObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Plant plant = (Plant) creature;
@@ -55,7 +56,9 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             jsonObject.put("remaining cool down", plant.getRemainingCoolDown());
             jsonArray.add(jsonObject);
         }
-        menu.getConnection().send("showHand", jsonArray);
+        sendingJSONObject.put("sun", menu.getConnection().getUser().getPlayer().getSunInGame());
+        sendingJSONObject.put("cards", jsonArray);
+        menu.getConnection().send("showHand", sendingJSONObject);
     }
 
 

@@ -15,6 +15,12 @@ public class PlaySceneController implements Controller {
     }
 
     @FXML
+    void onBackButtonMouseClicked() throws IOException {
+        MenuHandler.getClient().send("exitMenu", null);
+        MenuHandler.closeScene();
+    }
+
+    @FXML
     void onDayButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("day", null);
     }

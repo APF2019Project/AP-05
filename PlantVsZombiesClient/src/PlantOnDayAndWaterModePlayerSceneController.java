@@ -38,6 +38,9 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     private ArrayList<Pane> zombiesPanes = new ArrayList<>();
 
     @FXML
+    private Label sunLabel;
+
+    @FXML
     private AnchorPane gamePane;
 
     @FXML
@@ -98,7 +101,11 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     }
 
     public void showHand(Object object) {
-        JSONArray jsonArray = (JSONArray) object;
+        JSONObject jsonObject = (JSONObject) object;
+        JSONArray jsonArray = (JSONArray) jsonObject.get("cards");
+        Platform.runLater(() -> {
+            sunLabel.setText(jsonObject.get("sun").toString());
+        });
         for (int i = 0; i < GameData.creatureOnHandSize; i++) {
             final int index = i;
             Platform.runLater(() -> {

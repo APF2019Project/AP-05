@@ -47,6 +47,15 @@
                   <Font size="20.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Files/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </children>
