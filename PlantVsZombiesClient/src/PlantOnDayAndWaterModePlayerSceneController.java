@@ -1,3 +1,6 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     @FXML
@@ -29,6 +35,7 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     private MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
     private String selectedPlantName = null;
     private ImageView[][] imageViews = new ImageView[GameData.mapRowCount][];
+    private ArrayList<Pane> zombiesPanes = new ArrayList<>();
 
     @FXML
     private AnchorPane gamePane;
@@ -37,6 +44,40 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
     void onBackButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
+    }
+
+    private double getPlantWidth() {
+        return gamePane.getPrefWidth() / GameData.mapPlantColCount;
+    }
+
+    private double getPlantHeight() {
+        return gamePane.getPrefHeight() / GameData.mapRowCount;
+    }
+
+    private double getZombieWidth() {
+        return gamePane.getPrefWidth() / GameData.mapColCount;
+    }
+
+    private double getZombieHeight() {
+        return gamePane.getPrefHeight() / GameData.mapRowCount;
+    }
+
+    private double getZombieLayoutX(int x) {
+        return x * getZombieWidth();
+    }
+
+    private double getZombieLayoutY(int y) {
+        return y * getZombieHeight();
+
+    }
+
+    private double getPlantLayoutX(int x) {
+        return x * getPlantWidth();
+
+    }
+
+    private double getPlantLayoutY(int y) {
+        return y * getPlantHeight();
     }
 
     @FXML
@@ -66,13 +107,105 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
         }
     }
 
+    private Pane newPaneWithSize(double width, double height) {
+        Pane pane = new Pane();
+        pane.setPrefWidth(width);
+        pane.setPrefHeight(height);
+        pane.setMinHeight(pane.getPrefHeight());
+        pane.setMaxHeight(pane.getPrefHeight());
+        pane.setMinWidth(pane.getPrefWidth());
+        pane.setMaxWidth(pane.getPrefWidth());
+        return pane;
+    }
+
     public void showLawn(Object object) {
-        JSONArray jsonArray = (JSONArray) object;
-        for (Object o : jsonArray) {
-            JSONObject jsonObject = (JSONObject) o;
-            imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / 2]
-                    .setImage(new Image(Main.getImageAddressByCreatureName((String) jsonObject.get("name"))));
-        }
+        Platform.runLater(() -> {
+            for (Pane pane : zombiesPanes) {
+                pane.getChildren().clear();
+                gamePane.getChildren().remove(pane);
+            }
+            JSONArray jsonArray = (JSONArray) object;
+            for (Object o : jsonArray) {
+                JSONObject jsonObject = (JSONObject) o;
+                if (jsonObject.get("type").equals("Zombie")) {
+                    System.out.println("ADDING ZOMBIE");
+                    try {
+                        Pane pane = newPaneWithSize(getZombieWidth(), getZombieHeight() + 10);
+                        pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
+                        pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()));
+                        int speed = ((Long) jsonObject.get("speed")).intValue();
+                        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
+                                Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
+                        imageView.setPreserveRatio(false);
+                        imageView.setFitWidth(getPlantWidth());
+                        imageView.setFitHeight(getPlantHeight() + 10);
+                        zombiesPanes.add(pane);
+                        pane.getChildren().add(imageView);
+                        gamePane.getChildren().add(pane);
+
+                        Timeline timeline = new Timeline();
+                        timeline.getKeyFrames().addAll(
+                                new KeyFrame(Duration.ZERO, // set start position at 0
+                                        new KeyValue(pane.translateXProperty(),
+                                                pane.getTranslateX()
+                                        )
+                                ), new KeyFrame(Duration.seconds(3),
+                                        new KeyValue(pane.translateXProperty(),
+                                                pane.getTranslateX() - speed * 30
+                                        )
+                                )
+                        );
+                        timeline.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (jsonObject.get("type").equals("GunShot")) {
+                    System.out.println("ADDING Gun Shot");
+                    try {
+                        String gunName = (String) jsonObject.get("name");
+                        Pane pane = newPaneWithSize(getZombieWidth(), getZombieHeight() + 10);
+                        pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
+                        pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()) + 30);
+                        int speed = ((Long) jsonObject.get("speed")).intValue();
+                        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
+                                Main.getImageAddressByCreatureName(gunName))));// inja bayad avaz she
+                        imageView.setPreserveRatio(false);
+                        imageView.setFitWidth(getPlantWidth() / 3);
+                        imageView.setFitHeight(getPlantHeight() / 3);
+                        zombiesPanes.add(pane);
+                        pane.getChildren().add(imageView);
+                        gamePane.getChildren().add(pane);
+
+                        Timeline timeline = new Timeline();
+                        timeline.getKeyFrames().addAll(
+                                new KeyFrame(Duration.ZERO, // set start position at 0
+                                        new KeyValue(pane.translateXProperty(),
+                                                pane.getTranslateX()
+                                        )
+                                ), new KeyFrame(Duration.seconds(3),
+                                        new KeyValue(pane.translateXProperty(),
+                                                pane.getTranslateX() + speed * 30
+                                        )
+                                )
+                        );
+                        timeline.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (jsonObject.get("type").equals("Plant")) {
+                    System.out.println("ADDING PLANT");
+                    try {
+                        imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / GameData.slices]
+                                .setImage(new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(
+                                        (String) jsonObject.get("name")))));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     //1 base
@@ -80,6 +213,7 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
         System.out.println("put request:");
         if (selectedPlantName != null) {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("plantName", selectedPlantName);
             jsonObject.put("x", x);
             jsonObject.put("y", y);
             MenuHandler.getClient().send("plant", jsonObject);
@@ -100,6 +234,11 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
                 controller.getToggleButton().setSelected(true);
             }
         }
+    }
+
+    public void sendLoadRequest() throws IOException {
+        MenuHandler.getClient().send("show hand", null);
+        MenuHandler.getClient().send("show lawn", null);
     }
 
     @Override
@@ -125,25 +264,19 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
                 imageViews[i][j] = new ImageView();
                 final ImageView imageView = imageViews[i][j];
                 imageView.setPreserveRatio(false);
-                imageView.setFitWidth(gamePane.getPrefWidth() / GameData.mapPlantColCount);
-                imageView.setFitHeight(gamePane.getPrefHeight() / GameData.mapRowCount + 10);
+                imageView.setFitWidth(getPlantWidth());
+                imageView.setFitHeight(getPlantHeight() + 10);
                 //final int finalI = i, finalJ = j;
 
-                Pane pane = new Pane();
+                Pane pane = newPaneWithSize(getPlantWidth(), getZombieHeight() + 10);
                 pane.setAccessibleText(i + "," + j);
-                pane.setPrefWidth(gamePane.getPrefWidth() / GameData.mapPlantColCount);
-                pane.setPrefHeight(gamePane.getPrefHeight() / GameData.mapRowCount + 10);
-                pane.setMinHeight(pane.getPrefHeight());
-                pane.setMaxHeight(pane.getPrefHeight());
-                pane.setMinWidth(pane.getPrefWidth());
-                pane.setMaxWidth(pane.getPrefWidth());
-                pane.setLayoutY(i * (gamePane.getPrefHeight() / GameData.mapRowCount));
-                pane.setLayoutX(j * gamePane.getPrefWidth() / GameData.mapPlantColCount);
+                pane.setLayoutY(getPlantLayoutY(i));
+                pane.setLayoutX(getPlantLayoutX(j));
                 pane.setOnMouseClicked(mouseEvent -> {
                     try {
                         int finalI = Integer.parseInt(pane.getAccessibleText().split(",")[0]);
                         int finalJ = Integer.parseInt(pane.getAccessibleText().split(",")[1]);
-                        put(finalJ * 2 + 2, finalI + 1);
+                        put(finalJ * GameData.slices + GameData.slices / 2 + 1, finalI + 1);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -152,7 +285,5 @@ public class PlantOnDayAndWaterModePlayerSceneController implements Controller {
                 gamePane.getChildren().add(pane);
             }
         }
-        MenuHandler.getClient().send("show hand", null);
-        MenuHandler.getClient().send("show lawn", null);
     }
 }

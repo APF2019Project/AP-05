@@ -60,8 +60,9 @@ public class Main extends Application {
         return null;
     }
 
+    public static int cnt=0;
 
-    public static void main(String[] args) throws CannotRealizeException, IOException, NoPlayerException {
+    public static void main(String[] args) {
         launch(args);
     }
 }

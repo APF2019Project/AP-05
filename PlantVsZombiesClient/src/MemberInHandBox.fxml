@@ -26,7 +26,7 @@
             </Label>
          </center>
       </BorderPane>
-      <ImageView fx:id="coolDownImageView" fitHeight="90.0" fitWidth="70.0" opacity="0.51" pickOnBounds="true">
+      <ImageView fx:id="coolDownImageView" fitHeight="90.0" fitWidth="70.0" opacity="0.51" pickOnBounds="true" scaleY="0.0">
          <image>
             <Image url="@Files/Yellow_icon.png" />
          </image>

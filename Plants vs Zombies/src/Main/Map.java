@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
-    ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
+    private ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
     private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
     private int row, col, numberOfRemainedWaves;
     MapMode mapMode;
     final private Player plantPlayer, zombiePlayer;
+
+    public ArrayList<GunShot> getGunShotArrayList() {
+        return gunShotArrayList;
+    }
 
     public ArrayList<ActiveCard> getActiveCardArrayList() {
         return activeCardArrayList;
@@ -112,19 +116,24 @@ public class Map {
     public void startWave() {
         numberOfRemainedWaves--;
     }
+
     public boolean canAddActiveCardAndBuy(ActiveCard activeCard) throws Exception {
-        if(!isInMap(activeCard.getX(),activeCard.getY())){
+        if (!isInMap(activeCard.getX(), activeCard.getY())) {
             return false;
         }
         if (activeCard.getCreature() instanceof Plant) {
-            if (activeCard.getX() % 2 == 0) {
+            if (activeCard.getX() % GameData.slices != GameData.slices / 2) {
                 return false;
             }
         }
-        if(isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard)) {
+        if (findPlantIn(activeCard.getX(), activeCard.getY()) != null &&
+                !(findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad)) {
             return false;
         }
-        if(!isWater(activeCard.getY()) && !activeCard.getCreature().isOnshore(activeCard)) {
+        if (isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard)) {
+            return false;
+        }
+        if (!isWater(activeCard.getY()) && !activeCard.getCreature().isOnshore(activeCard)) {
             return false;
         }
         return activeCard.getOwner().pickCreature(activeCard.getCreature());
@@ -165,18 +174,18 @@ public class Map {
         if (option.size() == 1) {
             return option.get(0);
         }
-        for (int i = 0; i < option.size(); i++) {
-            if (!(option.get(i).getCreature() instanceof LilyPad)) {
-                return option.get(i);
+        for (ActiveCard activeCard : option) {
+            if (!(activeCard.getCreature() instanceof LilyPad)) {
+                return activeCard;
             }
         }
         return null;
     }
 
     public ArrayList<GunShot> getGunShotIn(int y, int xl, int xr) {
-        ArrayList<GunShot> ans=new ArrayList<GunShot>();
+        ArrayList<GunShot> ans = new ArrayList<>();
         for (GunShot gunshot : gunShotArrayList) {
-            if (!gunshot.isUsed()  && gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
+            if (!gunshot.isUsed() && gunshot.getY() == y && xl <= gunshot.getX() && gunshot.getX() <= xr) {
                 ans.add(gunshot);
             }
         }
@@ -203,6 +212,7 @@ public class Map {
         }
 
     }
+
     public boolean isMapHasPlant() {
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Plant) {
@@ -211,6 +221,7 @@ public class Map {
         }
         return false;
     }
+
     public boolean isMapHasZombie() {
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
@@ -234,11 +245,11 @@ public class Map {
             gunShot.doAction(this);
         }
         for (ActiveCard activeCard : activeCardArrayList) {
-            if(activeCard.getCreature() instanceof Plant)
+            if (activeCard.getCreature() instanceof Plant)
                 activeCard.doAction(this);
         }
         for (ActiveCard activeCard : activeCardArrayList) {
-            if(activeCard.getCreature() instanceof Zombie)
+            if (activeCard.getCreature() instanceof Zombie)
                 activeCard.doAction(this);
         }
         for (ActiveCard activeCard : activeCardArrayList) {
@@ -271,9 +282,11 @@ public class Map {
             activeCardArrayList.remove(activeCard);
             if (activeCard.getCreature() instanceof Plant) {
                 zombiePlayer.addSun(activeCard.getCreature().getKillingReward());
+                zombiePlayer.setKillingEnemyCount(zombiePlayer.getKillingEnemyCount() + 1);
             }
             if (activeCard.getCreature() instanceof Zombie) {
                 plantPlayer.addSun(activeCard.getCreature().getKillingReward());
+                plantPlayer.setKillingEnemyCount(plantPlayer.getKillingEnemyCount() + 1);
             }
         }
 

@@ -4,11 +4,13 @@ import Main.*;
 
 import java.util.ArrayList;
 
+
 public class Zombie extends Creature {
     private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed, power, powerWithShield;
     private static ArrayList<Zombie> allZombies = new ArrayList<>();
     private final static ArrayList<Zombie> firstZombies = new ArrayList<>();
+
 
     public static ArrayList<Zombie> getFirstZombies() {
         return firstZombies;
@@ -114,10 +116,12 @@ public class Zombie extends Creature {
         }
         return false;
     }
-    public boolean isMarine(ActiveCard activeCard){
+
+    public boolean isMarine(ActiveCard activeCard) {
         return (swimmer || activeCard.isHasOrdak());
     }
-    public boolean isOnshore(ActiveCard activeCard){
+
+    public boolean isOnshore(ActiveCard activeCard) {
         return (!swimmer);
     }
 
@@ -127,8 +131,8 @@ public class Zombie extends Creature {
             deltaX *= (100 - activeCard.getSlowDownPercent()) / 100.0;
         }
         int finalX = Math.max(map.hasNoPlantIn(activeCard.getY(), activeCard.getX()), activeCard.getX() - deltaX);
-        ArrayList<GunShot> collisionGUnShot=map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
-        for(GunShot gunShot:collisionGUnShot){
+        ArrayList<GunShot> collisionGUnShot = map.getGunShotIn(activeCard.getY(), finalX, activeCard.getX());
+        for (GunShot gunShot : collisionGUnShot) {
             gunShot.collision(activeCard);
         }
         activeCard.setX(finalX);

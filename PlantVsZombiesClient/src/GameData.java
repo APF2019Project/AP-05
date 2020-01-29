@@ -4,9 +4,10 @@ import java.util.HashMap;
 
 public class GameData {
     private final static HashMap<String, JSONObject> inputJsonForm = new HashMap<>();
+    public static int slices = 10;//hatman zoj
     public final static int mapRowCount = 6;
-    public final static int mapColCount = 19;
-    public final static int mapPlantColCount = mapColCount/2;
+    public final static int mapPlantColCount = 9;
+    public final static int mapColCount = mapPlantColCount * slices + slices / 2;
     public final static int creatureOnHandSize = 7;
 
     static {

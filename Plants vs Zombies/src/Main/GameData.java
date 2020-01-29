@@ -11,6 +11,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameData {
+    public final static int slices = 10;//hatman zoj
+    public final static String winMessage="آقا خیلی تبریک میگم! شما بردی";
+    public final static String loseMessage="آقا معذرت میخوام شما خیلی ضعیفی. باختی";
+    public final static int mapRowCount = 6;
+    public final static int mapPlantColCount = 9;
+    public final static int mapColCount = mapPlantColCount * slices + slices / 2;
+    public final static int creatureOnHandSize = 7;
     public static int speedOfGunShot = 3;
     public static int shyDistanceLimit;
     public static int iceSlowDownTime;
@@ -24,9 +31,6 @@ public class GameData {
     public final static int numberOfWavesInRailMode = 10;
     public final static int numberOfWavesInZombieMode = 10;
     static String usersJSONFilePath = "JSON/users";
-    public final static int mapRowCount = 6;
-    public final static int mapColCount = 20;
-    public final static int creatureOnHandSize = 7;
     public final static int winReward = 200;
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};

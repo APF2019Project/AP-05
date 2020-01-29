@@ -49,17 +49,19 @@ public class MemberInHandBoxController implements Controller {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((plantName))));
             priceLabel.setText(jsonObject.get("price") + "$");
             System.out.println("EEE"+((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
-            Timeline timeline = new Timeline();
-            timeline.getKeyFrames().addAll(
-                    new KeyFrame(Duration.ZERO, // set start position at 0
-                            new KeyValue(coolDownImageView.scaleYProperty(),
-                                    (1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))
-                            )
-                    ), new KeyFrame(Duration.seconds(3*(Long) jsonObject.get("remaining cool down")),
-                            new KeyValue(coolDownImageView.scaleYProperty(), 0)
-                    )
-            );
-            timeline.play();
+            if((Long) jsonObject.get("remaining cool down")!=0){
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().addAll(
+                        new KeyFrame(Duration.ZERO, // set start position at 0
+                                new KeyValue(coolDownImageView.scaleYProperty(),
+                                        (1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))
+                                )
+                        ), new KeyFrame(Duration.seconds(6*(Long) jsonObject.get("remaining cool down")),
+                                new KeyValue(coolDownImageView.scaleYProperty(), 0)
+                        )
+                );
+                timeline.play();
+            }
         });
     }
 

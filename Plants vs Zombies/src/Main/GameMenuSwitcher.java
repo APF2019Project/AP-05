@@ -1,5 +1,7 @@
 package Main;
 
+import org.json.simple.JSONObject;
+
 public class GameMenuSwitcher {
     private Map map;
     private static GameStatus gameStatus = GameStatus.notInGame;
@@ -37,6 +39,24 @@ public class GameMenuSwitcher {
                     runTurn();
                 } else {
                     if (!gameStatus.equals(GameStatus.notInGame)) {
+                        JSONObject data = new JSONObject();
+                        data.put("message", GameData.winMessage);
+                        data.put("messageType", "INFORMATION");
+                        (gameStatus.equals(GameStatus.PlantPlayerWins) ? map.getPlantPlayer() : map.getZombiePlayer())
+                                .getConnection().send("showMessage", data);
+
+                        data = new JSONObject();
+                        data.put("message", GameData.loseMessage);
+                        data.put("messageType", "INFORMATION");
+                        (gameStatus.equals(GameStatus.ZombiePlayerWins) ? map.getPlantPlayer() : map.getZombiePlayer())
+                                .getConnection().send("showMessage", data);
+
+                        map.getPlantPlayer().getConnection().popMenu();
+                        map.getPlantPlayer().getConnection().popMenu();
+
+                        map.getZombiePlayer().getConnection().popMenu();
+                        map.getZombiePlayer().getConnection().popMenu();
+
                         map.getPlantPlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
                         map.getZombiePlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
                         Main.print(gameStatus.name());

@@ -60,10 +60,15 @@ public class MenuHandler {
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
-        if(menuName.contains("Mode")){
+        if (!controllers.isEmpty() && getCurrentController() instanceof PlantOnDayAndWaterModePlayerSceneController) {
+            ((PlantOnDayAndWaterModePlayerSceneController) getCurrentController()).sendLoadRequest();
+            return;
+        }
+        if (menuName.contains("Mode")) {
             currentStage.close();
-            currentStage=new Stage();
-            currentStage.setOnCloseRequest((event)-> System.exit(0));
+            currentStage = new Stage();
+            currentStage.setResizable(false);
+            currentStage.setOnCloseRequest((event) -> System.exit(0));
         }
         String menuFile = (String) parameters.getOrDefault("menuFile", menuName);
         System.err.println(menuFile + "Scene.fxml");
@@ -71,7 +76,7 @@ public class MenuHandler {
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         Scene scene = new Scene(parent);
-        if(!controllers.isEmpty() && getCurrentController().getClass().getSimpleName().equals(menuFile+"SceneController")) {
+        if (!controllers.isEmpty() && getCurrentController().getClass().getSimpleName().equals(menuFile + "SceneController")) {
             scenes.remove(scenes.size() - 1);
             controllers.remove(controllers.size() - 1);
         }

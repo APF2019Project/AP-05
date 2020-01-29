@@ -18,7 +18,7 @@ public class LeaderboardCommandHandler extends CommandHandler {
 
     public void leaderboard(InputCommand inputCommand) throws Exception {
         JSONArray jsonArray = new JSONArray();
-        User.getAllUsers().sort(Comparator.comparingInt(User::getKillingEnemyCount));
+        User.getAllUsers().sort((user0, user1) -> user1.getKillingEnemyCount()-user0.getKillingEnemyCount());
         for (User user : User.getAllUsers()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("user.getUsername", user.getUsername());

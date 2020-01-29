@@ -8,12 +8,6 @@ public class Menu {
     //private Menu lastMenu;
     private CommandHandler commandHandler;
     private final Connection connection;
-    private boolean isOpen;
-
-    public boolean isOpen() {
-        return isOpen;
-    }
-
     public Connection getConnection() {
         return connection;
     }
@@ -26,7 +20,6 @@ public class Menu {
     }
 
     public void exit() throws Exception {
-        isOpen = false;
         connection.popMenu();
     }
 
@@ -56,12 +49,15 @@ public class Menu {
         }
     }
 
+    public boolean isPlayerModeMenu(){
+        return commandHandler.getClass().getSimpleName().toLowerCase().contains("player");
+    }
+
     public void showHelp() throws Exception {
         Main.print(commandHandler.help());
     }
 
     public void run() throws Exception {
-        isOpen = true;
         String menuName = commandHandler.getClass().getSimpleName().split("CommandHandler")[0];
         connection.send("runMenu", menuName);
     }

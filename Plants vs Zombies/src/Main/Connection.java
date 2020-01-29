@@ -17,15 +17,19 @@ public class Connection {
     private Socket socket;
 
     public void popMenu() throws Exception {
-        menus.remove(menus.size() - 1);
-        if (menus.isEmpty()) {
-            thread.wait();
+        if((!menus.isEmpty()) ) {
+            menus.remove(menus.size() - 1);
+            if (menus.isEmpty()) {
+                thread.wait();
+            }
+            getCurrentMenu().run();
         }
-        getCurrentMenu().run();
     }
 
     public void pushMenu(Menu menu) {
-        menus.add(menu);
+        if(menus.isEmpty() || !menu.equals(menus.get(menus.size()-1))) {
+            menus.add(menu);
+        }
     }
 
     public Menu getCurrentMenu() {
@@ -60,13 +64,13 @@ public class Connection {
                 new Thread(()->{
                     while(!socket.isClosed()){
                         try {
-                            receive("{\"command\":\"end turn\"");
-                            Thread.sleep(5000);
+                            receive("{\"command\":\"end turn\"}");
+                            Thread.sleep(1000);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                });
+                }).start();
                 while (!line.equals("exit")) {
                     line = finalDataInputStream.readUTF();
                     System.out.println(line);
@@ -103,13 +107,17 @@ public class Connection {
         getCurrentMenu().accept(message);
     }
 
-    public void send(String command, Object data) throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("command", command);
-        jsonObject.put("data", data);
-        String message = jsonObject.toJSONString();
-        System.out.println("Server: " + message);
-        dataOutputStream.writeUTF(message);
-        dataOutputStream.flush();
+    public void send(String command, Object data) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("command", command);
+            jsonObject.put("data", data);
+            String message = jsonObject.toJSONString();
+            System.out.println("Server: " + message);
+            dataOutputStream.writeUTF(message);
+            dataOutputStream.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
