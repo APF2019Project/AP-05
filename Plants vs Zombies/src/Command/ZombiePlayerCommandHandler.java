@@ -2,17 +2,15 @@ package Command;
 
 import Main.ActiveCard;
 import Main.GameData;
-import Main.Main;
 import Objects.Creature;
 import Objects.GunShot;
+import Objects.Plant;
 import Objects.Zombie;
 import Player.ZombiePlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ZombiePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
@@ -21,13 +19,40 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                 new Command(this::showHand, "show hand", "show hand: To see selected cards."),
                 new Command(this::showLanes, "show lanes", "show lanes: To see " +
                         "rows and zombies to go there."),
-                new Command(this::put, "put (.+)," + GameData.positiveNumber + "," + GameData.positiveNumber,
+                new Command(this::put, "put",
                         "put [name],[number of zombies to put],[row]: to put zombies."),
                 new Command(this::start, "start", "start: To start current wave."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining \n" +
                         "zombies and plants"),
+                new Command(this::select, "select", ""),
         };
+    }
+
+    private Zombie selectedZombie;
+
+    private void select(InputCommand inputCommand) throws Exception {
+        String zombieName = (String) inputCommand.getInputJsonObject().get("creatureName");
+        Zombie zombie = (Zombie) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(zombieName);
+        if (zombie == null) {
+            throw new Exception("invalid zombie name");
+        }
+        if (menu.getConnection().getUser().getPlayer().getSunInGame() < zombie.getPrice()) {
+            throw new Exception("you don't have Enough money");
+        }
+        if (zombie.getRemainingCoolDown() > 0) {
+            // for graphic
+            showHand(null);
+        } else {
+            if (zombie.equals(selectedZombie)) {
+                selectedZombie = null;
+                menu.getConnection().send("selectCreature", null);
+            } else {
+                selectedZombie = zombie;
+                menu.getConnection().send("selectCreature", selectedZombie.getName().toLowerCase());
+            }
+        }
+
     }
 
     public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
@@ -48,6 +73,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sun", menu.getConnection().getUser().getPlayer().getSunInGame());
         jsonObject.put("cards", jsonArray);
+        System.out.println(jsonObject.toJSONString());
         menu.getConnection().send("showHand", jsonObject);
     }
 
@@ -66,8 +92,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void put(InputCommand inputCommand) throws Exception {
         String zombieName = (String) inputCommand.getInputJsonObject().get("zombieName");
-        int zombieCount = (int) inputCommand.getInputJsonObject().getOrDefault("zombieCount", 1);
-        int y = (int) inputCommand.getInputJsonObject().get("y") - 1;
+        int zombieCount = 1;
+        int y = ((Long)inputCommand.getInputJsonObject().get("y")).intValue() - 1;
         Zombie zombie = (Zombie) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(zombieName);
         for (int i = 0; i < zombieCount; i++) {
             menu.getConnection().getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getConnection().getUser().getPlayer()));

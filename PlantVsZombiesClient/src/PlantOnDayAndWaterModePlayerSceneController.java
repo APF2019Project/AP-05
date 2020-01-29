@@ -20,33 +20,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlantOnDayAndWaterModePlayerSceneController extends GameController implements Controller {
-    private String selectedPlantName;
-
     //1 base
     void put(int x, int y) throws IOException {
         System.out.println("put request:");
-        if (selectedPlantName != null) {
+        if (getCreatureName() != null) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("plantName", selectedPlantName);
+            jsonObject.put("plantName", getCreatureName());
             jsonObject.put("x", x);
             jsonObject.put("y", y);
             MenuHandler.getClient().send("plant", jsonObject);
-        }
-    }
-
-    void selectCreature(Object object) {
-        selectedPlantName = (String) object;
-        if (selectedPlantName != null) {
-            selectImageView.setOpacity(0.5);
-        } else {
-            selectImageView.setOpacity(0);
-        }
-        for (MemberInHandBoxController controller : onHandCardControllers) {
-            if (!controller.getCreatureName().equals(selectedPlantName)) {
-                controller.getToggleButton().setSelected(false);
-            } else {
-                controller.getToggleButton().setSelected(true);
-            }
         }
     }
 }

@@ -34,14 +34,13 @@ public abstract class GameController implements Controller {
 
     @FXML
     private AnchorPane gamePane;
+    private String creatureName;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
-
-    private String creatureName;
 
     protected double getPlantWidth() {
         return gamePane.getPrefWidth() / GameData.mapPlantColCount;
@@ -166,7 +165,7 @@ public abstract class GameController implements Controller {
                     System.out.println("ADDING Gun Shot");
                     try {
                         String gunName = (String) jsonObject.get("name");
-                        Pane pane = newPaneWithSize(getZombieWidth()/3, getZombieHeight()/3 + 10);
+                        Pane pane = newPaneWithSize(getZombieWidth() / 3, getZombieHeight() / 3 + 10);
                         pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
                         pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()) + 30);
                         int speed = ((Long) jsonObject.get("speed")).intValue();
@@ -213,7 +212,13 @@ public abstract class GameController implements Controller {
     //1 base
     abstract void put(int x, int y) throws IOException;
 
-    abstract void selectCreature(Object object);
+    public String getCreatureName() {
+        return creatureName;
+    }
+
+    public void setCreatureName(String creatureName) {
+        this.creatureName = creatureName;
+    }
 
     public void sendLoadRequest() throws IOException {
         MenuHandler.getClient().send("show hand", null);
@@ -266,5 +271,22 @@ public abstract class GameController implements Controller {
         }
         sendLoadRequest();
     }
-}
 
+    void selectCreature(Object object) {
+        creatureName = (String) object;
+        if (creatureName != null) {
+            selectImageView.setOpacity(0.5);
+        }
+        else {
+            selectImageView.setOpacity(0);
+        }
+        for (MemberInHandBoxController controller : onHandCardControllers) {
+            if (!controller.getCreatureName().equals(creatureName)) {
+                controller.getToggleButton().setSelected(false);
+            }
+            else {
+                controller.getToggleButton().setSelected(true);
+            }
+        }
+    }
+}
