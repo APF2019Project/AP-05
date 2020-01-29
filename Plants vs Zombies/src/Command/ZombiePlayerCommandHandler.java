@@ -38,8 +38,10 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         for (Creature creature : menu.getConnection().getUser().getPlayer().getCreaturesOnHand()) {
             Zombie zombie = (Zombie) creature;
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("zombie.getName", zombie.getName());
-            jsonObject.put("zombie.getFullHp", zombie.getFullHp());
+            jsonObject.put("name", zombie.getName());
+            jsonObject.put("price", zombie.getPrice());
+            jsonObject.put("cool down", 0);
+            jsonObject.put("remaining cool down", 0);
             jsonArray.add(jsonObject);
         }
         JSONObject jsonObject = new JSONObject();
