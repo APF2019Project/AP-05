@@ -3,12 +3,12 @@ import org.json.simple.JSONObject;
 import java.util.HashMap;
 
 public class GameData {
-    private final static HashMap<String, JSONObject> inputJsonForm = new HashMap<>();
-    public static int slices = 10;//hatman zoj
     public final static int mapRowCount = 6;
     public final static int mapPlantColCount = 9;
-    public final static int mapColCount = mapPlantColCount * slices + slices / 2;
     public final static int creatureOnHandSize = 7;
+    private final static HashMap<String, JSONObject> inputJsonForm = new HashMap<>();
+    public static int slices = 10;//hatman zoj
+    public final static int mapColCount = mapPlantColCount * slices + slices / 2;
 
     static {
         JSONObject login = new JSONObject();
@@ -48,9 +48,9 @@ public class GameData {
     }
 
     public static JSONObject getJson(String name) {
-        JSONObject jsonObject=inputJsonForm.get(name);
-        if(jsonObject==null){
-            jsonObject=new JSONObject();
+        JSONObject jsonObject = inputJsonForm.get(name);
+        if (jsonObject == null) {
+            jsonObject = new JSONObject();
         }
         return jsonObject;
     }

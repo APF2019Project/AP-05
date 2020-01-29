@@ -35,8 +35,8 @@ public class MemberInHandBoxController implements Controller {
     public void initializeReOpen() {
     }
 
-    public boolean isEnable(){
-        return coolDownImageView.getScaleY()==0;
+    public boolean isEnable() {
+        return coolDownImageView.getScaleY() == 0;
     }
 
     void showHand(JSONObject jsonObject) {
@@ -44,15 +44,15 @@ public class MemberInHandBoxController implements Controller {
         Platform.runLater(() -> {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
             priceLabel.setText(jsonObject.get("price") + "$");
-            System.out.println("EEE"+((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
-            if((Long) jsonObject.get("remaining cool down")!=0){
+            System.out.println("EEE" + ((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
+            if ((Long) jsonObject.get("remaining cool down") != 0) {
                 Timeline timeline = new Timeline();
                 timeline.getKeyFrames().addAll(
                         new KeyFrame(Duration.ZERO, // set start position at 0
                                 new KeyValue(coolDownImageView.scaleYProperty(),
                                         (1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))
                                 )
-                        ), new KeyFrame(Duration.seconds(6*(Long) jsonObject.get("remaining cool down")),
+                        ), new KeyFrame(Duration.seconds(6 * (Long) jsonObject.get("remaining cool down")),
                                 new KeyValue(coolDownImageView.scaleYProperty(), 0)
                         )
                 );

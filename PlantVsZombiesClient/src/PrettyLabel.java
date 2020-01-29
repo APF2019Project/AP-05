@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class PrettyLabel {
 
     final static int cycleCount = 60, sleepTime = 40, secondCycleCount = 2, scale = 4;
+    static int labelCount = 0;
 
     public static Double askStop(int value) {
         value %= (2 * cycleCount);
@@ -17,8 +18,6 @@ public class PrettyLabel {
         }
         return value / (double) (cycleCount);
     }
-
-    static int labelCount = 0;
 
     public static void playBackgroundColorAnimation(Label label) {
         labelCount++;

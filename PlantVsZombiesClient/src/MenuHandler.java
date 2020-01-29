@@ -3,23 +3,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MenuHandler {
-    private static Stage currentStage;
     private final static Client client = new Client("127.0.0.1", 5000);
-
+    private static Stage currentStage;
     private static ArrayList<Scene> scenes = new ArrayList<>();
     private static ArrayList<Controller> controllers = new ArrayList<>();
 
@@ -143,7 +139,7 @@ public class MenuHandler {
     }
 
     private static Method getDeclaredMethod(Class<?> cls, String name, Class<?>... parameters) {
-        while(cls != null) {
+        while (cls != null) {
             try {
                 return cls.getDeclaredMethod(name, parameters);
             } catch (NoSuchMethodException e) {

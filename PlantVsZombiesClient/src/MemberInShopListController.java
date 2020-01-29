@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MemberInShopListController implements Controller {
@@ -40,7 +39,8 @@ public class MemberInShopListController implements Controller {
         priceLabel.setText(jsonObject.get("creature.getPriceInShop") + "$");
         if ((boolean) jsonObject.get("bought")) {
             button.setVisible(false);
-        } else {
+        }
+        else {
             boughtImageView.setVisible(false);
         }
         Image image = new Image(Main.getImageAddressByCreatureName(creatureNameLabel.getText()));
