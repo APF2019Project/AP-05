@@ -64,7 +64,8 @@ public class Connection {
                 new Thread(()->{
                     while(!socket.isClosed()){
                         try {
-                            receive("{\"command\":\"end turn\"}");
+                            if(!getCurrentMenu().getCommandHandlerName().contains("Zombie"))
+                                receive("{\"command\":\"end turn\"}");
                             Thread.sleep(1000);
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -61,4 +61,8 @@ public class Menu {
         String menuName = commandHandler.getClass().getSimpleName().split("CommandHandler")[0];
         connection.send("runMenu", menuName);
     }
+
+    public String getCommandHandlerName() {
+        return commandHandler.getClass().getSimpleName();
+    }
 }

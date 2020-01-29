@@ -41,6 +41,8 @@ public abstract class GameController implements Controller {
         MenuHandler.closeScene();
     }
 
+    private String creatureName;
+
     protected double getPlantWidth() {
         return gamePane.getPrefWidth() / GameData.mapPlantColCount;
     }

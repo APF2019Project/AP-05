@@ -42,7 +42,10 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("zombie.getFullHp", zombie.getFullHp());
             jsonArray.add(jsonObject);
         }
-        menu.getConnection().send("showHand", jsonArray);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sun", menu.getConnection().getUser().getPlayer().getSunInGame());
+        jsonObject.put("cards", jsonArray);
+        menu.getConnection().send("showHand", jsonObject);
     }
 
     void showLanes(InputCommand inputCommand) throws Exception {
@@ -60,7 +63,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void put(InputCommand inputCommand) throws Exception {
         String zombieName = (String) inputCommand.getInputJsonObject().get("zombieName");
-        int zombieCount = (int) inputCommand.getInputJsonObject().get("zombieCount");
+        int zombieCount = (int) inputCommand.getInputJsonObject().getOrDefault("zombieCount", 1);
         int y = (int) inputCommand.getInputJsonObject().get("y") - 1;
         Zombie zombie = (Zombie) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(zombieName);
         for (int i = 0; i < zombieCount; i++) {

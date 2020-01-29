@@ -60,11 +60,12 @@ public class MenuHandler {
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
-        if (!controllers.isEmpty() && getCurrentController() instanceof PlantOnDayAndWaterModePlayerSceneController) {
-            ((PlantOnDayAndWaterModePlayerSceneController) getCurrentController()).sendLoadRequest();
+        if (!controllers.isEmpty() && getCurrentController() instanceof GameController) {
+            ((GameController) getCurrentController()).sendLoadRequest();
             return;
         }
-        if (menuName.contains("Mode")) {
+        if (menuName.contains("Player")) {
+            System.out.println("HERE");
             currentStage.close();
             currentStage = new Stage();
             currentStage.setResizable(false);
