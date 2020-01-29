@@ -43,7 +43,7 @@ public class PlayCommandHandler extends CommandHandler {
 
     public void playZombieMode(InputCommand inputCommand) throws Exception {
         ZombieHumanPlayer zombieHumanPlayer = new ZombieHumanPlayer(menu.getConnection());
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, new PlantAIPlayer(menu.getConnection()),
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, new PlantAIPlayer(GameData.getAIConnection()),
                 zombieHumanPlayer, GameData.numberOfWavesInZombieMode);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
@@ -60,7 +60,7 @@ public class PlayCommandHandler extends CommandHandler {
         }
         ZombieHumanPlayer zombieHumanPlayer =
                 new ZombieHumanPlayer(Server.getConnectionByUsername(opponentUsername));
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.Day, plantOnDayAndWaterModeHumanPlayer,
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, plantOnDayAndWaterModeHumanPlayer,
                 zombieHumanPlayer, numberOfWaves);
         GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
         gameMenuSwitcher.runGame();
