@@ -3,16 +3,12 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
-
-import java.io.IOException;
 
 public class MemberInHandBoxController implements Controller {
     @FXML
@@ -21,14 +17,14 @@ public class MemberInHandBoxController implements Controller {
     private ToggleButton toggleButton;
     @FXML
     private ImageView imageView, coolDownImageView;
-    private String plantName;
+    private String creatureName;
 
     @FXML
     void initialize() {
     }
 
-    public String getPlantName() {
-        return plantName;
+    public String getCreatureName() {
+        return creatureName;
     }
 
     public ToggleButton getToggleButton() {
@@ -44,9 +40,9 @@ public class MemberInHandBoxController implements Controller {
     }
 
     void showHand(JSONObject jsonObject) {
-        plantName = (String) jsonObject.get("name");
+        creatureName = (String) jsonObject.get("name");
         Platform.runLater(() -> {
-            imageView.setImage(new Image(Main.getImageAddressByCreatureName((plantName))));
+            imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
             priceLabel.setText(jsonObject.get("price") + "$");
             System.out.println("EEE"+((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
             if((Long) jsonObject.get("remaining cool down")!=0){

@@ -63,7 +63,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
 
 
     void select(InputCommand inputCommand) throws Exception {
-        String plantName = (String) inputCommand.getInputJsonObject().get("plantName");
+        String plantName = (String) inputCommand.getInputJsonObject().get("creatureName");
         Plant plant = (Plant) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(plantName);
         if (plant == null) {
             throw new Exception("invalid plant name");
@@ -77,10 +77,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         } else {
             if (plant.equals(selectedPlant)) {
                 selectedPlant = null;
-                menu.getConnection().send("selectPlant", null);
+                menu.getConnection().send("selectCreature", null);
             } else {
                 selectedPlant = plant;
-                menu.getConnection().send("selectPlant", selectedPlant.getName().toLowerCase());
+                menu.getConnection().send("selectCreature", selectedPlant.getName().toLowerCase());
             }
         }
     }
@@ -100,7 +100,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         menu.getConnection().getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(plant, x, y, menu.getConnection().getUser().getPlayer()));
         plant = null;
-        menu.getConnection().send("selectPlant", null);
+        menu.getConnection().send("selectCreature", null);
         show();
     }
 
@@ -113,10 +113,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
                 y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
         ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer());
         if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            menu.getConnection().send("selectPlant", null);
+            menu.getConnection().send("selectCreature", null);
         }
         selectedPlant = null;
-        menu.getConnection().send("selectPlant", null);
+        menu.getConnection().send("selectCreature", null);
         show();
     }
 

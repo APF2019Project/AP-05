@@ -134,11 +134,23 @@ public class MenuHandler {
             return;
         }
         try {
-            Method method = getCurrentController().getClass().getDeclaredMethod(command, Object.class);
+            Method method = getDeclaredMethod(getCurrentController().getClass(), command, Object.class);
             method.invoke(getCurrentController(), data);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static Method getDeclaredMethod(Class<?> cls, String name, Class<?>... parameters) {
+        while(cls != null) {
+            try {
+                return cls.getDeclaredMethod(name, parameters);
+            } catch (NoSuchMethodException e) {
+                cls = cls.getSuperclass();
+            }
+        }
+
+        return null;
     }
 }
 
