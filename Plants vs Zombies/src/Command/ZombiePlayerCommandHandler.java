@@ -19,11 +19,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                 new Command(this::showHand, "show hand", "show hand: To see selected cards."),
                 new Command(this::showLanes, "show lanes", "show lanes: To see " +
                         "rows and zombies to go there."),
-<<<<<<< HEAD
                 new Command(this::put, "put",
-=======
-                new Command(this::put, "put," + GameData.positiveNumber + "," + GameData.positiveNumber,
->>>>>>> 1a2f129c13bc32ebb15e9460d36dc554c32f9164
                         "put [name],[number of zombies to put],[row]: to put zombies."),
                 new Command(this::start, "start", "start: To start current wave."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
