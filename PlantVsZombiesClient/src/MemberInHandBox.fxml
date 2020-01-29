@@ -10,14 +10,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MemberInHandBoxController">
    <children>
-      <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="70.0" />
-      <ImageView fitHeight="90.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imageView" fitHeight="60.0" fitWidth="60.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+      <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="55.0" />
+      <ImageView fitHeight="75.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageView" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Gallery/Sunflower/Sunflower_transparent.webp" />
          </image>
       </ImageView>
-      <BorderPane layoutY="70.0" prefWidth="70.0">
+      <BorderPane layoutY="55.0" prefWidth="55.0">
          <center>
             <Label fx:id="priceLabel" text="N$" BorderPane.alignment="CENTER">
                <font>
@@ -26,7 +26,7 @@
             </Label>
          </center>
       </BorderPane>
-      <ImageView fx:id="coolDownImageView" fitHeight="90.0" fitWidth="70.0" opacity="0.51" pickOnBounds="true" scaleY="0.0">
+      <ImageView fx:id="coolDownImageView" fitHeight="75.0" fitWidth="55.0" opacity="0.51" pickOnBounds="true" scaleY="0.0">
          <image>
             <Image url="@Files/Yellow_icon.png" />
          </image>

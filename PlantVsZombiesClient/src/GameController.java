@@ -165,7 +165,7 @@ public abstract class GameController implements Controller {
                     System.out.println("ADDING Gun Shot");
                     try {
                         String gunName = (String) jsonObject.get("name");
-                        Pane pane = newPaneWithSize(getZombieWidth(), getZombieHeight() + 10);
+                        Pane pane = newPaneWithSize(getZombieWidth()/3, getZombieHeight()/3 + 10);
                         pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
                         pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()) + 30);
                         int speed = ((Long) jsonObject.get("speed")).intValue();
