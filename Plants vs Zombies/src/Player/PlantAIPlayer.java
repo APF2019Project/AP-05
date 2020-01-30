@@ -44,14 +44,16 @@ public class PlantAIPlayer extends PlantPlayer {
         this.setSunInGame(GameData.inf);
         for(int i=0;i<availablePlantName.size();i++) {
             Plant plant = Plant.getPlantByName(availablePlantName.get(i));
-            int x = random.nextInt(3)*GameData.slices+GameData.slices/2;
-            int y = random.nextInt(map.getRow());
-            assert plant != null;
-            try {
-                ActiveCard activeCard = new ActiveCard(plant, x, y, this);
-                map.addActiveCard(activeCard);
-            } catch (Exception e) {
-                // its really should be empty
+            for(int j=0;j<1000;j++) {
+                int x = random.nextInt(3) * GameData.slices + GameData.slices / 2;
+                int y = random.nextInt(map.getRow());
+                assert plant != null;
+                try {
+                    ActiveCard activeCard = new ActiveCard(plant, x, y, this);
+                    map.addActiveCard(activeCard);
+                } catch (Exception e) {
+                    // its really should be empty
+                }
             }
         }
         supplier.get();
