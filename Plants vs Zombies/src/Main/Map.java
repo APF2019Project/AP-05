@@ -312,7 +312,7 @@ public class Map {
         int distance = GameData.inf;
         for (ActiveCard zombie : activeCardArrayList) {
             if (zombie.getCreature() instanceof Zombie) {
-                if (activeCard.getDistance(zombie) > distance) {
+                if (activeCard.getDistance(zombie) < distance) {
                     distance = activeCard.getDistance(zombie);
                     nearestZombie = zombie;
                 }
