@@ -166,5 +166,4 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         showHand(null);
         showLawn(null);
     }
-
 }

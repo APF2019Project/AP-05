@@ -15,10 +15,11 @@ public class PlantAIPlayer extends PlantPlayer {
 
     @Override
     public void doAction(Supplier<Void> supplier) {
-        if(supplier!=null){
+        if (supplier != null) {
             supplier.get();
         }
     }
+
     @Override
     public void gameAction() {
 
@@ -31,25 +32,26 @@ public class PlantAIPlayer extends PlantPlayer {
 
     @Override
     public void pickCards(Supplier<Void> supplier) throws Exception {
-        Random random=new Random();
-        Map map=this.getMap();
-        ArrayList<String> availablePlantName=new ArrayList<String>();
-        if(!map.hasWater()){
-            availablePlantName= GameData.DryModeAvailablePlantName;
-        }else{
-            availablePlantName= GameData.WetModeAvailablePlantName;
+        Random random = new Random();
+        Map map = this.getMap();
+        ArrayList<String> availablePlantName = new ArrayList<>();
+        if (!map.hasWater()) {
+            availablePlantName = GameData.DryModeAvailablePlantName;
+        } else {
+            availablePlantName = GameData.WetModeAvailablePlantName;
         }
-        ArrayList<Creature> availablePlant=map.getPlantPlayer().getCreaturesOnHand();
+        //ArrayList<Creature> availablePlant = map.getPlantPlayer().getCreaturesOnHand();
         this.setSunInGame(GameData.inf);
-        while(availablePlant.size()>0){
-            Plant plant=(Plant)availablePlant.get(0);
-            int x=random.nextInt(3);
-            int y=random.nextInt(map.getRow());
-            ActiveCard activeCard=new ActiveCard(plant,x,y,this);
-            try{
+        while (availablePlantName.size() > 0) {
+            Plant plant = Plant.getPlantByName(availablePlantName.get(0));
+            int x = random.nextInt(3);
+            int y = random.nextInt(map.getRow());
+            assert plant != null;
+            try {
+                ActiveCard activeCard = new ActiveCard(plant, x, y, this);
                 map.addActiveCard(activeCard);
-                availablePlant.remove(0);
-            }catch (Error e){
+                availablePlantName.remove(0);
+            } catch (Exception e) {
                 // its really should be empty
             }
         }

@@ -26,14 +26,23 @@ public abstract class GameController implements Controller {
     protected VBox handBox;
 
     protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
-    protected ImageView[][] imageViews = new ImageView[GameData.mapRowCount][];
+    protected ImageView[][] imageViews;
     protected ArrayList<Pane> zombiesPanes = new ArrayList<>();
+
+    private int mapRowCount, mapColCount, mapColCountWithSlice;
+
+    public GameController(int mapRowCount, int mapColCount) {
+        this.mapRowCount = mapRowCount;
+        this.mapColCount = mapColCount;
+        mapColCountWithSlice = mapColCount * GameData.slices + GameData.slices / 2;
+        imageViews = new ImageView[mapColCount][];
+    }
 
     @FXML
     private Label sunLabel;
 
     @FXML
-    private AnchorPane gamePane;
+    protected AnchorPane gamePane;
     private String creatureName;
 
     @FXML
@@ -43,19 +52,19 @@ public abstract class GameController implements Controller {
     }
 
     protected double getPlantWidth() {
-        return gamePane.getPrefWidth() / GameData.mapPlantColCount;
+        return gamePane.getPrefWidth() / mapColCount;
     }
 
     protected double getPlantHeight() {
-        return gamePane.getPrefHeight() / GameData.mapRowCount;
+        return gamePane.getPrefHeight() / mapRowCount;
     }
 
     protected double getZombieWidth() {
-        return gamePane.getPrefWidth() / GameData.mapColCount;
+        return gamePane.getPrefWidth() / mapColCountWithSlice;
     }
 
     protected double getZombieHeight() {
-        return gamePane.getPrefHeight() / GameData.mapRowCount;
+        return gamePane.getPrefHeight() / mapRowCount;
     }
 
     protected double getZombieLayoutX(int x) {
@@ -125,6 +134,11 @@ public abstract class GameController implements Controller {
                 pane.getChildren().clear();
                 gamePane.getChildren().remove(pane);
             }
+            /*for(ImageView[] imageViewArray:imageViews){
+                for(ImageView imageView:imageViewArray){
+                    imageView.setImage(null);
+                }
+            }*/
             JSONArray jsonArray = (JSONArray) object;
             for (Object o : jsonArray) {
                 JSONObject jsonObject = (JSONObject) o;
@@ -242,9 +256,9 @@ public abstract class GameController implements Controller {
                 }
             }));
         }
-        for (int i = 0; i < GameData.mapRowCount; i++) {
-            imageViews[i] = new ImageView[GameData.mapPlantColCount];
-            for (int j = 0; j < GameData.mapPlantColCount; j++) {
+        for (int i = 0; i < mapRowCount; i++) {
+            imageViews[i] = new ImageView[mapColCount];
+            for (int j = 0; j < mapColCount; j++) {
                 imageViews[i][j] = new ImageView();
                 final ImageView imageView = imageViews[i][j];
                 imageView.setPreserveRatio(false);
@@ -276,15 +290,13 @@ public abstract class GameController implements Controller {
         creatureName = (String) object;
         if (creatureName != null) {
             selectImageView.setOpacity(0.5);
-        }
-        else {
+        } else {
             selectImageView.setOpacity(0);
         }
         for (MemberInHandBoxController controller : onHandCardControllers) {
             if (!controller.getCreatureName().equals(creatureName)) {
                 controller.getToggleButton().setSelected(false);
-            }
-            else {
+            } else {
                 controller.getToggleButton().setSelected(true);
             }
         }

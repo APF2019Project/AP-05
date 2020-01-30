@@ -14,8 +14,10 @@ import java.util.function.Supplier;
 
 public class ZombiePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
+
     {
         this.commands = new Command[]{
+                new Command(this::showWaveStatus, "show wave status", "show hand: To see selected cards."),
                 new Command(this::showHand, "show hand", "show hand: To see selected cards."),
                 new Command(this::showLanes, "show lanes", "show lanes: To see " +
                         "rows and zombies to go there."),
@@ -30,6 +32,16 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
     }
 
     private Zombie selectedZombie;
+
+    private void showWaveStatus(InputCommand inputCommand) {
+        menu.getConnection().send("showWaveStatus", ((ZombiePlayer) menu.getConnection()
+                .getUser().getPlayer()).isWaveRunning());
+    }
+
+    private void showCanStart(InputCommand inputCommand) {
+        menu.getConnection().send("showCanStart", ((ZombiePlayer) menu.getConnection()
+                .getUser().getPlayer()).canStart());
+    }
 
     private void select(InputCommand inputCommand) throws Exception {
         String zombieName = (String) inputCommand.getInputJsonObject().get("creatureName");
@@ -52,7 +64,6 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                 menu.getConnection().send("selectCreature", selectedZombie.getName().toLowerCase());
             }
         }
-
     }
 
     public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
@@ -92,25 +103,36 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void put(InputCommand inputCommand) throws Exception {
         String zombieName = (String) inputCommand.getInputJsonObject().get("zombieName");
-        int zombieCount = 1;
-        int y = ((Long)inputCommand.getInputJsonObject().get("y")).intValue() - 1;
+        int x = ((Long) inputCommand.getInputJsonObject().get("x")).intValue() - 1;
+        int y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
         Zombie zombie = (Zombie) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(zombieName);
-        for (int i = 0; i < zombieCount; i++) {
-            menu.getConnection().getUser().getPlayer().getMap().addActiveCard(new ActiveCard(zombie, GameData.mapColCount, y, menu.getConnection().getUser().getPlayer()));
+        if (((ZombiePlayer) menu.getConnection().getUser().getPlayer()).pickCreature(zombie)) {
+            ActiveCard activeCard = new ActiveCard(zombie, x, y, menu.getConnection().getUser().getPlayer());
+            ((ZombiePlayer) menu.getConnection().getUser().getPlayer()).addZombieCardInThisWave(activeCard);
+        } else {
+            throw new Exception("you don't have Enough money");
         }
-        menu.getConnection().send("showLog","put successful");
+
+        ActiveCard activeCard = new ActiveCard(zombie, x, y, menu.getConnection().getUser().getPlayer());
+        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
+            menu.getConnection().getUser().getPlayer().getMap().addActiveCard(activeCard);
+        }
+        menu.getConnection().send("selectCreature", null);
+        menu.getConnection().send("showLog", "put successful");
+        show();
     }
 
     void start(InputCommand inputCommand) throws Exception {
         ((ZombiePlayer) menu.getConnection().getUser().getPlayer()).startWave();
-        menu.getConnection().send("showLog","Wave Started");
+        showWaveStatus(null);
+        showCanStart(null);
     }
 
-    void endTurn(InputCommand inputCommand) throws Exception {
-        menu.exit();
+    void endTurn(InputCommand inputCommand) {
+        supplier.get();
     }
 
-    void showLawn(InputCommand inputCommand) throws Exception {
+    void showLawn(InputCommand inputCommand) {
         JSONArray jsonArray = new JSONArray();
         for (ActiveCard activeCard : menu.getConnection().getUser().getPlayer().getMap().getActiveCardArrayList()) {
             JSONObject jsonObject = new JSONObject();
@@ -124,6 +146,17 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             }
             jsonArray.add(jsonObject);
         }
+        for (ActiveCard activeCard : ((ZombiePlayer) menu.getConnection().getUser().getPlayer())
+                .getZombieCardsInThisWave()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", activeCard.getCreature().getName());
+            jsonObject.put("type", "Zombie");
+            jsonObject.put("x", activeCard.getX());
+            jsonObject.put("y", activeCard.getY());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("speed", 0);
+            jsonArray.add(jsonObject);
+        }
         for (GunShot gunShot : menu.getConnection().getUser().getPlayer().getMap().getGunShotArrayList()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name", gunShot.getGun().getName());
@@ -134,5 +167,12 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showLawn", jsonArray);
+    }
+
+    void show() throws Exception {
+        showHand(null);
+        showLawn(null);
+        showWaveStatus(null);
+        showCanStart(null);
     }
 }
