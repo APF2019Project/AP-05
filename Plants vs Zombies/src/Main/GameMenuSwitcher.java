@@ -51,12 +51,6 @@ public class GameMenuSwitcher {
                                     (gameStatus.equals(GameStatus.ZombiePlayerWins) ? map.getPlantPlayer() : map.getZombiePlayer())
                                             .getConnection().send("showMessage", data);
 
-                                    map.getPlantPlayer().getConnection().popMenu();
-                                    map.getPlantPlayer().getConnection().popMenu();
-
-                                    map.getZombiePlayer().getConnection().popMenu();
-                                    map.getZombiePlayer().getConnection().popMenu();
-
                                     map.getPlantPlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.PlantPlayerWins));
                                     map.getZombiePlayer().getConnection().getUser().gameEnded(gameStatus.equals(GameStatus.ZombiePlayerWins));
                                     Main.print(gameStatus.name());

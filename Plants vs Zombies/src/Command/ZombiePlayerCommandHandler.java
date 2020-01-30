@@ -128,8 +128,9 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         showCanStart(null);
     }
 
-    void endTurn(InputCommand inputCommand) {
+    void endTurn(InputCommand inputCommand) throws Exception {
         supplier.get();
+    //    menu.getConnection().popMenuWithoutRun();
     }
 
     void showLawn(InputCommand inputCommand) {

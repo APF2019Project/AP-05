@@ -133,7 +133,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
 
     void endTurn(InputCommand inputCommand) throws Exception {
         supplier.get();
-        //menu.exit();
+//        menu.getConnection().popMenuWithoutRun();
     }
 
     void showLawn(InputCommand inputCommand) throws Exception {

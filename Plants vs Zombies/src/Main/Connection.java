@@ -18,11 +18,42 @@ public class Connection {
 
     public void popMenu() throws Exception {
         if((!menus.isEmpty()) ) {
-            menus.remove(menus.size() - 1);
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            for(Menu menu : menus)
+                System.err.println(menu.getCommandHandlerName());
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            String name = menus.get(menus.size() - 1).getCommandHandlerName();
+            while(menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
+                menus.remove(menus.size() - 1);
             if (menus.isEmpty()) {
                 thread.wait();
             }
+          //  send("popMenu", null);
             getCurrentMenu().run();
+        }
+    }
+
+    public void popMenuWithoutRun() throws Exception {
+        if((!menus.isEmpty()) ) {
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            for(Menu menu : menus)
+                System.err.println(menu.getCommandHandlerName());
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            String name = menus.get(menus.size() - 1).getCommandHandlerName();
+            while(menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
+                menus.remove(menus.size() - 1);
+            if (menus.isEmpty()) {
+                thread.wait();
+            }
+            //  send("popMenu", null);
+        }
+    }
+
+    public void popDoubleMenu() throws Exception {
+        if(menus.size() >= 2) {
+            popMenuWithoutRun();
+            popMenu();
+           // send("popDoubleMenu", null);
         }
     }
 

@@ -30,6 +30,19 @@ public class MenuHandler {
         currentStage.show();
     }
 
+    static void closeDoubleScene() throws  IOException {
+        if(scenes.size() <= 2) {
+            System.exit(0);
+        }
+        scenes.remove(scenes.size() - 1);
+        scenes.remove(scenes.size() - 1);
+        openSceneWithoutPush(scenes.get(scenes.size() - 1));
+        controllers.remove(controllers.size() - 1);
+        controllers.remove(controllers.size() - 1);
+        controllers.get(controllers.size() - 1).initializeReOpen();
+        currentStage.show();
+    }
+
     static Controller getCurrentController() {
         return controllers.get(controllers.size() - 1);
     }
@@ -73,10 +86,6 @@ public class MenuHandler {
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         Scene scene = new Scene(parent);
-        if (!controllers.isEmpty() && getCurrentController().getClass().getSimpleName().equals(menuFile + "SceneController")) {
-            scenes.remove(scenes.size() - 1);
-            controllers.remove(controllers.size() - 1);
-        }
         scenes.add(scene);
         controllers.add(controller);
         controller.initJsonInput(parameters);
@@ -113,6 +122,20 @@ public class MenuHandler {
         if (command.equals("runMenu")) {
             openSceneWithDefaultParameters((String) data);
             return;
+        }
+        if(command.equals("popMenu")) {
+            try {
+                closeScene();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(command.equals("popDoubleMenu")) {
+            try {
+                closeDoubleScene();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (command.equals("showLog")) {
             System.out.println("LOG: " + data);

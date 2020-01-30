@@ -33,10 +33,19 @@ public class Menu {
                 return;
             }
             if (command.equals("exitMenu")) {
+                System.out.println(this.getCommandHandlerName() + " HERE BAW");
                 if (GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
                     GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
                 }
                 exit();
+                return;
+            }
+            if(command.equals("exitDoubleMenu")) {
+                if (GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
+                    GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
+                }
+                getConnection().popMenuWithoutRun();
+                getConnection().getCurrentMenu().exit();
                 return;
             }
             commandHandler.accept(jsonObject);

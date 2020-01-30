@@ -47,8 +47,8 @@ public abstract class GameController implements Controller {
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
-        MenuHandler.getClient().send("exitMenu", null);
-        MenuHandler.closeScene();
+        MenuHandler.getClient().send("exitDoubleMenu", null);
+        MenuHandler.closeDoubleScene();
     }
 
     protected double getPlantWidth() {

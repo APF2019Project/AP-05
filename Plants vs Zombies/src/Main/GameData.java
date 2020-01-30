@@ -42,6 +42,7 @@ public class GameData {
     static public int inf = 100000000;
 
     public static Connection getAIConnection() {
+        AIConnection = new Connection(User.getUserByUsername("AI User"));
         return AIConnection;
     }
 
