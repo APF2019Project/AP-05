@@ -42,6 +42,12 @@ public class GameData {
     static public int inf = 100000000;
 
     public static Connection getAIConnection() {
+        try {
+            User.deleteUser("AI User", "1234");
+            new User("AI User", "1234");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         AIConnection = new Connection(User.getUserByUsername("AI User"));
         return AIConnection;
     }

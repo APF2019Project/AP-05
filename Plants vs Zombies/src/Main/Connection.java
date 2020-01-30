@@ -49,12 +49,21 @@ public class Connection {
         }
     }
 
-    public void popDoubleMenu() throws Exception {
+    public void popDoubleMenuHandler() throws Exception {
         if(menus.size() >= 2) {
+            send("popDoubleMenu", null);
             popMenuWithoutRun();
             popMenu();
-           // send("popDoubleMenu", null);
         }
+    }
+
+    public void popDoubleMenu() throws Exception {
+        if(GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
+            getUser().getPlayer().getMap().getPlantPlayer().getConnection().popDoubleMenuHandler();
+            getUser().getPlayer().getMap().getZombiePlayer().getConnection().popDoubleMenuHandler();
+        }
+        else
+            popDoubleMenuHandler();
     }
 
     public void pushMenu(Menu menu) {
