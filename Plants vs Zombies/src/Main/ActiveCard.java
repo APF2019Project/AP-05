@@ -54,7 +54,7 @@ public class ActiveCard {
         if(activeCard==null){
             return GameData.inf;
         }
-        return Math.abs(activeCard.getX() - this.getX()) + Math.abs(activeCard.getY() - this.getY());
+        return Math.abs(activeCard.getX() - this.getX())/GameData.slices + Math.abs(activeCard.getY() - this.getY());
     }
 
     public Player getOwner() {
