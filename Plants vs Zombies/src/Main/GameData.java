@@ -101,13 +101,46 @@ public class GameData {
             String plantName = (String) object;
             Plant plant = Plant.getPlantByName(plantName.toLowerCase());
 
-            DryModeAvailablePlantName.add(plantName.toLowerCase());/// incomplete
+            if (plant == null) {
+                throw new Exception("bug in addFirstPlants method: " + plantName + " doesn't exist");
+            }
+            Plant.addFirstPlant(plant);
+        }
+        fileReader.close();
+        fileReader = new FileReader("JSON/plantInZombieMode");
+        jsonArray = (JSONArray) (new JSONParser()).parse(fileReader);
+        for (Object object : jsonArray) {
+            String plantName = (String) object;
+            Plant plant = Plant.getPlantByName(plantName.toLowerCase());
+
+            DryModeAvailablePlantName.add(plantName.toLowerCase());
+
+            if (plant == null) {
+                throw new Exception("bug in addFirstPlants method: " + plantName + " doesn't exist");
+            }
+        }
+        fileReader.close();
+        fileReader = new FileReader("JSON/plantInZombieModeWet");
+        jsonArray = (JSONArray) (new JSONParser()).parse(fileReader);
+        for (Object object : jsonArray) {
+            String plantName = (String) object;
+            Plant plant = Plant.getPlantByName(plantName.toLowerCase());
             WetModeAvailablePlantName.add(plantName.toLowerCase());
 
             if (plant == null) {
                 throw new Exception("bug in addFirstPlants method: " + plantName + " doesn't exist");
             }
-            Plant.addFirstPlant(plant);
+        }
+        for(int i=0;i<3;i++){
+            if(!WetModeAvailablePlantName.get(i).equals("Lily Pad")){
+                for(int j=i+1;j<WetModeAvailablePlantName.size();j++){
+                    if(WetModeAvailablePlantName.get(j).equals("Lily Pad")){
+                        WetModeAvailablePlantName.set(j,WetModeAvailablePlantName.get(i));
+                        WetModeAvailablePlantName.set(i,"Lily Pad");
+                        break;
+                    }
+                }
+            }
         }
         fileReader.close();
     }

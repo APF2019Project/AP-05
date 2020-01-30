@@ -1,5 +1,5 @@
 package Main;
 
 public enum MapMode {
-    Day,Water,Rail,PvP
+    Day,Water,Rail,PvP,Zombie
 }
