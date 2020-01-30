@@ -1,1 +1,1 @@
-{"shield":null,"activeRange":1,"peppery":false,"fullHp":1000,"deltaX":1000,"deltaY":0,"disposable":true,"coolDown":0,"reloadTime":0,"price":0,"name":"Lawnmower","cactus":false,"waterProof":false}
+{"shield":null,"activeRange":0,"peppery":false,"fullHp":1000,"deltaX":10000,"deltaY":0,"disposable":true,"coolDown":0,"reloadTime":0,"price":0,"name":"Lawnmower","cactus":false,"waterProof":false}
