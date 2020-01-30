@@ -51,6 +51,7 @@ public class PlantAIPlayer extends PlantPlayer {
                 try {
                     ActiveCard activeCard = new ActiveCard(plant, x, y, this);
                     map.addActiveCard(activeCard);
+                    break;
                 } catch (Exception e) {
                     // its really should be empty
                 }
