@@ -1,0 +1,69 @@
+package Scenes.InputForm;
+
+import Helper.Controller;
+import Helper.MenuHandler;
+import Helper.PrettyLabel;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+
+public class InputFormSceneController implements Controller {
+    @FXML
+    private TextField textField0, textField1;
+    @FXML
+    private Label title;
+    @FXML
+    private Button sendButton;
+    @FXML
+    private Button backButton;
+
+    @FXML
+    void initialize() {
+        PrettyLabel.playBackgroundColorAnimation(title);
+    }
+
+    @FXML
+    void onSendButtonMouseClicked() throws IOException {
+        JSONObject data = new JSONObject();
+        if (textField0.isVisible()) {
+            data.put(textField0.getPromptText().toLowerCase(), textField0.getText());
+        }
+        if (textField1.isVisible()) {
+            data.put(textField1.getPromptText().toLowerCase(), textField1.getText());
+        }
+        MenuHandler.getClient().send(sendButton.getText().toLowerCase(), data);
+    }
+
+    @FXML
+    void onBackButtonMouseClicked() throws IOException {
+        MenuHandler.closeScene();
+    }
+
+    @Override
+    public void initializeReOpen() {
+        PrettyLabel.playBackgroundColorAnimation(title);
+    }
+
+    @Override
+    public void initJsonInput(JSONObject jsonObject) {
+        if (jsonObject.containsKey("textField0.setPromptText")) {
+            textField0.setPromptText((String) jsonObject.get("textField0.setPromptText"));
+        }
+        if (jsonObject.containsKey("textField1.setPromptText")) {
+            textField1.setPromptText((String) jsonObject.get("textField1.setPromptText"));
+        }
+        if (jsonObject.containsKey("textField0.setVisible")) {
+            textField0.setVisible((boolean) jsonObject.get("textField0.setVisible"));
+        }
+        if (jsonObject.containsKey("textField1.setVisible")) {
+            textField1.setVisible((boolean) jsonObject.get("textField1.setVisible"));
+        }
+        if (jsonObject.containsKey("sendButton.setText")) {
+            sendButton.setText((String) jsonObject.get("sendButton.setText"));
+        }
+    }
+}

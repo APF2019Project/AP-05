@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Games.MemberInHandBoxController">
+    <children>
+        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="55.0" />
+        <ImageView fitHeight="75.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+        </ImageView>
+        <BorderPane layoutY="55.0" prefWidth="55.0">
+            <center>
+                <Label fx:id="priceLabel" text="N$" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Label>
+            </center>
+        </BorderPane>
+        <ImageView fx:id="coolDownImageView" fitHeight="75.0" fitWidth="55.0" opacity="0.51" pickOnBounds="true" scaleY="0.0">
+            <image>
+                <Image url="@../../Files/Yellow_icon.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
