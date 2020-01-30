@@ -29,7 +29,9 @@ public class Mine extends Plant {
             for (ActiveCard activeCard1 : map.getActiveCardArrayList()) {
                 if ((activeCard.getCreature() instanceof Zombie) && Math.abs(activeCard.getX() - activeCard1.getX()) <= deltaX*GameData.slices
                         && Math.abs(activeCard.getY() - activeCard1.getY()) <= deltaY) {
+                    System.out.println("Chaman zan kill "+activeCard1.getCreature().getName());
                     activeCard1.setRemainingHp(0);
+                    activeCard1.setShieldRemainingHp(0);
                 }
             }
             return true;

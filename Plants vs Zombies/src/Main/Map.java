@@ -48,6 +48,16 @@ public class Map {
         } else {
             isWater = GameData.isWaterInDayMapMode.clone();
         }
+        Creature creature=Creature.getCreatureByName("lawnmower");
+        for(int i=0;i<row;i++){
+            try {
+                ActiveCard activeCard = new ActiveCard(creature, 2, i, plantPlayer);
+                this.addActiveCard(activeCard);
+            }
+            catch (Exception e) {
+                System.out.println("cannot add buchers");
+            }
+        }
     }
 
     public int getRow() {
