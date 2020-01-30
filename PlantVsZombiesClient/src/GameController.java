@@ -134,11 +134,11 @@ public abstract class GameController implements Controller {
                 pane.getChildren().clear();
                 gamePane.getChildren().remove(pane);
             }
-            /*for(ImageView[] imageViewArray:imageViews){
-                for(ImageView imageView:imageViewArray){
-                    imageView.setImage(null);
+            for (int i = 0; i < mapRowCount; i++) {
+                for (int j = 0; j < mapColCount; j++) {
+                    imageViews[i][j].setImage(null);
                 }
-            }*/
+            }
             JSONArray jsonArray = (JSONArray) object;
             for (Object o : jsonArray) {
                 JSONObject jsonObject = (JSONObject) o;
