@@ -213,7 +213,7 @@ public class GameData {
         for (File file : Objects.requireNonNull(new File("JSON/zombie/").listFiles())) {
             if (file.isFile()) {
                 JSONHandler jsonHandler = new JSONHandler(file);
-                jsonHandler.put(FieldNames.price, jsonHandler.getInt(FieldNames.fullHp) * 10L);
+                jsonHandler.put(FieldNames.price, jsonHandler.getInt(FieldNames.fullHp) * 5L);
                 new Zombie(jsonHandler);
             }
         }
