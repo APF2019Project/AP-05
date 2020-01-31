@@ -142,6 +142,9 @@ public class GameData {
                 }
             }
         }
+        for(int i=0;i<WetModeAvailablePlantName.size();i++){
+            System.out.println(WetModeAvailablePlantName.get(i));
+        }
         fileReader.close();
     }
 
