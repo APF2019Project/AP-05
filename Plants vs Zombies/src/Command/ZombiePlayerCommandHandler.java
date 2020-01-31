@@ -82,6 +82,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonArray.add(jsonObject);
         }
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("hasWater", menu.getConnection().getUser().getPlayer().getMap().hasWater());
         jsonObject.put("sun", menu.getConnection().getUser().getPlayer().getSunInGame());
         jsonObject.put("cards", jsonArray);
         System.out.println(jsonObject.toJSONString());
@@ -164,7 +165,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", "GunShot");
             jsonObject.put("x", gunShot.getX());
             jsonObject.put("y", gunShot.getY());
-            jsonObject.put("speed", gunShot.getVx());
+            jsonObject.put("speed", gunShot.getSignedVx());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showLawn", jsonArray);

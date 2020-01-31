@@ -5,8 +5,10 @@ import Helper.MenuHandler;
 import Scenes.Games.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ZombiePlayerSceneController extends GameController {
@@ -31,6 +33,18 @@ public class ZombiePlayerSceneController extends GameController {
     public void showCanStart(Object object) {
         canStart = (boolean) object;
         startWaveButton.setVisible(canStart);
+    }
+
+    public void showHand(Object object){
+        JSONObject jsonObject = (JSONObject) object;
+        if((boolean)jsonObject.get("hasWater")) {
+            backgroundImageView.setImage(new Image(new File(
+                    "src/Files/waterZombieBackgroundCutSixLines.jpg").toURI().toString()));
+        }else {
+            backgroundImageView.setImage(new Image(new File(
+                    "src/Files/dayZombieBackgroundCutSixLines.jpg").toURI().toString()));
+        }
+        super.showHand(object);
     }
 
     @Override

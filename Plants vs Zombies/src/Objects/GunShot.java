@@ -29,8 +29,8 @@ public class GunShot {
         return owner;
     }
 
-    public int getVx() {
-        return vx;
+    public int getSignedVx() {
+        return -vx;
     }
 
     public Gun getGun() {

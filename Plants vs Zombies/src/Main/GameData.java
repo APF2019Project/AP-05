@@ -18,7 +18,7 @@ public class GameData {
     public final static int mapPlantColCount = 9 + 2;
     public final static int mapColCount = mapPlantColCount * slices + slices / 2;
     public final static int creatureOnHandSize = 7;
-    public static int speedOfGunShot = 3;
+    public static int speedOfGunShot = 14;
     public static int shyDistanceLimit;
     public static int iceSlowDownTime;
     public static int iceSlowDownPercent = 50;

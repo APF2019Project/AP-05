@@ -21,19 +21,21 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.beans.EventHandler;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class GameController implements Controller {
     @FXML
-    protected ImageView selectImageView;
+    protected ImageView selectImageView, backgroundImageView;
     @FXML
     protected VBox handBox;
 
     protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
     protected ImageView[][] imageViews;
-    protected ArrayList<Pane> zombiesPanes = new ArrayList<>();
+    protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
 
     private int mapRowCount, mapColCount, mapColCountWithSlice;
 
@@ -57,11 +59,11 @@ public abstract class GameController implements Controller {
         MenuHandler.closeDoubleScene();
     }
 
-    protected double getPlantWidth() {
+    protected double getNormalWidth() {
         return gamePane.getPrefWidth() / mapColCount;
     }
 
-    protected double getPlantHeight() {
+    protected double getNormalHeight() {
         return gamePane.getPrefHeight() / mapRowCount;
     }
 
@@ -83,12 +85,12 @@ public abstract class GameController implements Controller {
     }
 
     protected double getPlantLayoutX(int x) {
-        return x * getPlantWidth();
+        return x * getNormalWidth();
 
     }
 
     protected double getPlantLayoutY(int y) {
-        return y * getPlantHeight();
+        return y * getNormalHeight();
     }
 
     @FXML
@@ -134,9 +136,58 @@ public abstract class GameController implements Controller {
         return pane;
     }
 
+    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy) {
+        try {
+            int x = ((Long) jsonObject.get("x")).intValue();
+            int y = ((Long) jsonObject.get("y")).intValue();
+            Pane pane = newPaneWithSize(getNormalWidth() * sizeRatio, (getNormalHeight() + 10) * sizeRatio);
+            pane.setLayoutX(getZombieLayoutX(x) + dx);
+            pane.setLayoutY(getZombieLayoutY(y) + dy);
+
+            int speed = ((Long) jsonObject.getOrDefault("speed", 0L)).intValue();
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
+                    Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
+            imageView.setPreserveRatio(false);
+            imageView.setFitWidth(getNormalWidth() * sizeRatio);
+            imageView.setFitHeight((getNormalHeight() + 10) * sizeRatio);
+            freeCreaturesPaneArrayList.add(pane);
+            pane.getChildren().add(imageView);
+            gamePane.getChildren().add(pane);
+
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().addAll(
+                    new KeyFrame(Duration.ZERO, // set start position at 0
+                            new KeyValue(pane.translateXProperty(),
+                                    pane.getTranslateX()
+                            )
+                    ), new KeyFrame(Duration.seconds(3),
+                            new KeyValue(pane.translateXProperty(),
+                                    pane.getTranslateX() - speed * 28
+                            )
+                    )
+            );
+            timeline.play();
+            if (jsonObject.get("type").equals("Plant") && !jsonObject.get("name").equals("lawnmower")) {
+                pane.setAccessibleText(y + "," + x);
+                pane.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        int finalI = Integer.parseInt(pane.getAccessibleText().split(",")[0]);
+                        int finalJ = Integer.parseInt(pane.getAccessibleText().split(",")[1]);
+                        put(finalJ + 1, finalI + 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void showLawn(Object object) {
         Platform.runLater(() -> {
-            for (Pane pane : zombiesPanes) {
+            for (Pane pane : freeCreaturesPaneArrayList) {
                 pane.getChildren().clear();
                 gamePane.getChildren().remove(pane);
             }
@@ -148,79 +199,26 @@ public abstract class GameController implements Controller {
             JSONArray jsonArray = (JSONArray) object;
             for (Object o : jsonArray) {
                 JSONObject jsonObject = (JSONObject) o;
-                if (jsonObject.get("type").equals("Zombie")) {
+                if (jsonObject.get("name").equals("lawnmower")) {
+                    System.out.println("ADDING lawnmower");
+                    creatureFreeAdd(jsonObject, 0.66, -45, 45);
+                } else if (jsonObject.get("name").equals("lily pad")) {
+                    System.out.println("ADDING lily pad");
+                    creatureFreeAdd(jsonObject, 0.90, -10, 45);
+                } else if (jsonObject.get("type").equals("Zombie")) {
                     System.out.println("ADDING ZOMBIE");
-                    try {
-                        Pane pane = newPaneWithSize(getZombieWidth(), getZombieHeight() + 10);
-                        pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
-                        pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()));
-                        int speed = ((Long) jsonObject.get("speed")).intValue();
-                        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                                Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
-                        imageView.setPreserveRatio(false);
-                        imageView.setFitWidth(getPlantWidth());
-                        imageView.setFitHeight(getPlantHeight() + 10);
-                        zombiesPanes.add(pane);
-                        pane.getChildren().add(imageView);
-                        gamePane.getChildren().add(pane);
-
-                        Timeline timeline = new Timeline();
-                        timeline.getKeyFrames().addAll(
-                                new KeyFrame(Duration.ZERO, // set start position at 0
-                                        new KeyValue(pane.translateXProperty(),
-                                                pane.getTranslateX()
-                                        )
-                                ), new KeyFrame(Duration.seconds(3),
-                                        new KeyValue(pane.translateXProperty(),
-                                                pane.getTranslateX() - speed * 30
-                                        )
-                                )
-                        );
-                        timeline.play();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (jsonObject.get("type").equals("GunShot")) {
+                    creatureFreeAdd(jsonObject, 1, 0, 0);
+                } else if (jsonObject.get("type").equals("GunShot")) {
                     System.out.println("ADDING Gun Shot");
-                    try {
-                        String gunName = (String) jsonObject.get("name");
-                        Pane pane = newPaneWithSize(getZombieWidth() / 3, getZombieHeight() / 3 + 10);
-                        pane.setLayoutX(getZombieLayoutX(((Long) jsonObject.get("x")).intValue()));
-                        pane.setLayoutY(getZombieLayoutY(((Long) jsonObject.get("y")).intValue()) + 30);
-                        int speed = ((Long) jsonObject.get("speed")).intValue();
-                        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                                Main.getImageAddressByCreatureName(gunName))));// inja bayad avaz she
-                        imageView.setPreserveRatio(false);
-                        imageView.setFitWidth(getPlantWidth() / 3);
-                        imageView.setFitHeight(getPlantHeight() / 3);
-                        zombiesPanes.add(pane);
-                        pane.getChildren().add(imageView);
-                        gamePane.getChildren().add(pane);
-
-                        Timeline timeline = new Timeline();
-                        timeline.getKeyFrames().addAll(
-                                new KeyFrame(Duration.ZERO, // set start position at 0
-                                        new KeyValue(pane.translateXProperty(),
-                                                pane.getTranslateX()
-                                        )
-                                ), new KeyFrame(Duration.seconds(3),
-                                        new KeyValue(pane.translateXProperty(),
-                                                pane.getTranslateX() + speed * 30
-                                        )
-                                )
-                        );
-                        timeline.play();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (jsonObject.get("type").equals("Plant")) {
+                    creatureFreeAdd(jsonObject, 0.33, 0, 30);
+                } else if (jsonObject.get("type").equals("Plant")) {
                     System.out.println("ADDING PLANT");
                     try {
+                        creatureFreeAdd(jsonObject, 1, -20, 0);
+                        /*
                         imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / GameData.slices]
                                 .setImage(new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(
-                                        (String) jsonObject.get("name")))));
+                                        (String) jsonObject.get("name")))));*/
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -268,14 +266,14 @@ public abstract class GameController implements Controller {
                 imageViews[i][j] = new ImageView();
                 final ImageView imageView = imageViews[i][j];
                 imageView.setPreserveRatio(false);
-                imageView.setFitWidth(getPlantWidth());
-                imageView.setFitHeight(getPlantHeight() + 10);
+                imageView.setFitWidth(getNormalWidth());
+                imageView.setFitHeight(getNormalHeight() + 10);
                 //final int finalI = i, finalJ = j;
 
-                Pane pane = newPaneWithSize(getPlantWidth(), getZombieHeight() + 10);
-                pane.setAccessibleText(i + "," + j);
+                Pane pane = newPaneWithSize(getNormalWidth(), getNormalHeight() + 10);
                 pane.setLayoutY(getPlantLayoutY(i));
                 pane.setLayoutX(getPlantLayoutX(j));
+                pane.setAccessibleText(i + "," + j);
                 pane.setOnMouseClicked(mouseEvent -> {
                     try {
                         int finalI = Integer.parseInt(pane.getAccessibleText().split(",")[0]);

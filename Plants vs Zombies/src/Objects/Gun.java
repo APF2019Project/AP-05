@@ -3,12 +3,14 @@ package Objects;
 import Main.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Gun {
-    private static ArrayList<Gun> allGuns=new ArrayList<>();
+    private static ArrayList<Gun> allGuns = new ArrayList<>();
     private String name;
     private boolean icy, shy, sleepy, projectile;
     private int damage, gunShotsPerRound;
+
     /*
     public Gun(String name, boolean icy, boolean shy, boolean sleepy, int damage,
                int gunShotsPerRound, boolean hasEffectOnShield) {
@@ -28,14 +30,15 @@ public class Gun {
         this.shy = jsonHandler.getBoolean(FieldNames.shy);
         this.sleepy = jsonHandler.getBoolean(FieldNames.sleepy);
         this.projectile = jsonHandler.getBoolean(FieldNames.projectile);
-        this.damage =  jsonHandler.getInt(FieldNames.damage);;
-        this.gunShotsPerRound =  jsonHandler.getInt(FieldNames.gunShotsPerRound);
+        this.damage = jsonHandler.getInt(FieldNames.damage);
+        ;
+        this.gunShotsPerRound = jsonHandler.getInt(FieldNames.gunShotsPerRound);
         allGuns.add(this);
     }
 
-    public static Gun getGunByName(String gunName){
-        for(Gun gun:allGuns){
-            if(gun.getName().equals(gunName)){
+    public static Gun getGunByName(String gunName) {
+        for (Gun gun : allGuns) {
+            if (gun.getName().equals(gunName)) {
                 return gun;
             }
         }
@@ -81,7 +84,7 @@ public class Gun {
     }
 
     boolean doAction(ActiveCard activeCard, Map map) {
-        if (!this.isShy() || !this.isShyes(activeCard, map)) {
+        if ((!this.isShy() || !this.isShyes(activeCard, map))) {
             for (int i = 0; i < gunShotsPerRound; i++) {
                 map.addGunShot(new GunShot(this, activeCard.getX(), activeCard.getY()
                         , GameData.speedOfGunShot, activeCard.getOwner()));
