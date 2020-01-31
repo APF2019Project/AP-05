@@ -48,13 +48,12 @@ public class Map {
         } else {
             isWater = GameData.isWaterInDayMapMode.clone();
         }
-        Creature creature=Creature.getCreatureByName("lawnmower");
-        for(int i=0;i<row;i++){
+        Creature creature = Creature.getCreatureByName("lawnmower");
+        for (int i = 0; i < row; i++) {
             try {
                 ActiveCard activeCard = new ActiveCard(creature, 2, i, plantPlayer);
                 this.addActiveCard(activeCard);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("cannot add buchers");
             }
         }
@@ -133,17 +132,22 @@ public class Map {
         }
         if (activeCard.getCreature() instanceof Plant) {
             if (activeCard.getX() % GameData.slices != GameData.slices / 2) {
+                System.out.println("EEEEE4");
                 return false;
             }
         }
         if (findPlantIn(activeCard.getX(), activeCard.getY()) != null &&
                 !(findPlantIn(activeCard.getX(), activeCard.getY()).getCreature() instanceof LilyPad)) {
+            System.out.println("eeeeeeee: " + findPlantIn(activeCard.getX(), activeCard.getY()).getCreature().getName());
             return false;
         }
-        if (isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard)) {
+        if (isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard) &&
+        findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
+            System.out.println("EEEEE1");
             return false;
         }
         if (!isWater(activeCard.getY()) && !activeCard.getCreature().isOnshore(activeCard)) {
+            System.out.println("EEEEE2");
             return false;
         }
         return activeCard.getOwner().pickCreature(activeCard.getCreature());

@@ -56,6 +56,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             jsonObject.put("remaining cool down", plant.getRemainingCoolDown());
             jsonArray.add(jsonObject);
         }
+        sendingJSONObject.put("hasWater", menu.getConnection().getUser().getPlayer().getMap().hasWater());
         sendingJSONObject.put("sun", menu.getConnection().getUser().getPlayer().getSunInGame());
         sendingJSONObject.put("cards", jsonArray);
         menu.getConnection().send("showHand", sendingJSONObject);
@@ -156,7 +157,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", "GunShot");
             jsonObject.put("x", gunShot.getX());
             jsonObject.put("y", gunShot.getY());
-            jsonObject.put("speed", gunShot.getVx());
+            jsonObject.put("speed", gunShot.getSignedVx());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showLawn", jsonArray);

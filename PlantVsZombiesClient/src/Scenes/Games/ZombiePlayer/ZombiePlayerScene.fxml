@@ -12,7 +12,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Games.ZombiePlayer.ZombiePlayerSceneController">
     <children>
-        <ImageView fitHeight="650.0" fitWidth="1024.0" pickOnBounds="true" smooth="false">
+        <ImageView fx:id="backgroundImageView" fitHeight="650.0" fitWidth="1024.0" pickOnBounds="true" smooth="false">
             <image>
                 <Image url="@../../../Files/dayZombieBackgroundCutSixLines.jpg" />
             </image>
