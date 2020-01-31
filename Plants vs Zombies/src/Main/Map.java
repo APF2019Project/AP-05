@@ -175,7 +175,7 @@ public class Map {
     }
 
     public ActiveCard findPlantIn(int x, int y) {
-        ArrayList<ActiveCard> option = new ArrayList<ActiveCard>();
+        ArrayList<ActiveCard> option = new ArrayList<>();
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Plant) {
                 if (activeCard.getX() == x && activeCard.getY() == y) {
