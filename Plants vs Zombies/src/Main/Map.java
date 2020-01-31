@@ -160,7 +160,7 @@ public class Map {
     public void addActiveCard(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature().getName().equals("bungee zombie")) {
             Random random = new Random();
-            activeCard.setX(random.nextInt(col));
+            activeCard.setX(random.nextInt(7)*GameData.slices+GameData.slices/2);
             activeCard.setY(random.nextInt(row));
         }
         if (activeCard.getCreature().getRemainingCoolDown() == 0 || mapMode.equals(MapMode.Rail)
