@@ -43,9 +43,9 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     private Label sunLabel;
     private String creatureName;
 
-    public PlantOnRailModePlayerSceneController(int mapRowCount, int mapColCount) {
-        this.mapRowCount = mapRowCount;
-        this.mapColCount = mapColCount;
+    public PlantOnRailModePlayerSceneController() {
+        this.mapRowCount = GameData.mapRowCount;
+        this.mapColCount = GameData.mapPlantColCount;
         mapColCountWithSlice = mapColCount * GameData.slices + GameData.slices / 2;
         imageViews = new ImageView[mapColCount][];
     }
