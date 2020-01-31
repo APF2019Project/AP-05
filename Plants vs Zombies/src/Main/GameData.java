@@ -35,7 +35,6 @@ public class GameData {
     public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
     public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
     public final static String positiveNumber = "([0-9]{1,20})";
-    ;
     private static Connection AIConnection;
     static public ArrayList<String> DryModeAvailablePlantName=new ArrayList<>();
     static public ArrayList<String> WetModeAvailablePlantName=new ArrayList<>();

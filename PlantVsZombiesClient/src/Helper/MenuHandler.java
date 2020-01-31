@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -86,6 +87,7 @@ public class MenuHandler {
         }
         String menuFile = (String) parameters.getOrDefault("menuFile", menuName);
         System.err.println(menuFile + "Scene.fxml");
+        System.err.println(prefix + menuFile + "/" + menuFile + "Scene.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource(prefix + menuFile + "/" + menuFile + "Scene.fxml"));
         Parent parent = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
