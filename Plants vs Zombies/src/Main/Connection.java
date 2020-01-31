@@ -67,7 +67,8 @@ public class Connection {
     }
 
     public void pushMenu(Menu menu) {
-        if(menus.isEmpty() || !menu.equals(menus.get(menus.size()-1))) {
+        if(menus.isEmpty() ||
+                !menu.getCommandHandlerName().equals(menus.get(menus.size()-1).getCommandHandlerName())) {
             menus.add(menu);
         }
     }

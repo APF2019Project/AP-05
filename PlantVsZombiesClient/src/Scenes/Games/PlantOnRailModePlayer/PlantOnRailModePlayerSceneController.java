@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +26,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -33,7 +36,8 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     @FXML
     protected VBox handBox;
 
-    protected ArrayList<MemberInHandBoxController> onHandCardControllers = new ArrayList<>();
+    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[10];
+    protected AnchorPane[] onHandCardAnchors = new AnchorPane[10];
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
     @FXML
@@ -41,7 +45,7 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     private int mapRowCount, mapColCount, mapColCountWithSlice;
     @FXML
     private Label sunLabel;
-    private String creatureName;
+    private int plantIndex = -1;
 
     public PlantOnRailModePlayerSceneController() {
         this.mapRowCount = GameData.mapRowCount;
@@ -114,12 +118,14 @@ public class PlantOnRailModePlayerSceneController implements Controller {
         Platform.runLater(() -> {
             sunLabel.setText(jsonObject.get("record").toString());
         });
-        onHandCardControllers.clear();
-        for (Object object1 : jsonArray) {
-            final String name = (String) object1;
-            addNewHandCardToOnHandCardControllers();
+        setAllNotVisible();
+        System.out.println(jsonArray.size() + " HEREEEEEEEEEEEEEEEEEEEEEEE");
+        for(int i = 0; i < jsonArray.size(); i++) {
+            String name = (String) jsonArray.get(i);
+            final int index = i;
             Platform.runLater(() -> {
-                onHandCardControllers.get(onHandCardControllers.size() - 1).showHandOnRailMode(name);
+                onHandCardAnchors[index].setVisible(true);
+                onHandCardControllers[index].showHandOnRailMode(name);
             });
         }
     }
@@ -229,39 +235,40 @@ public class PlantOnRailModePlayerSceneController implements Controller {
         });
     }
 
-    public String getCreatureName() {
-        return creatureName;
-    }
-
-    public void setCreatureName(String creatureName) {
-        this.creatureName = creatureName;
-    }
-
     public void sendLoadRequest() throws IOException {
         MenuHandler.getClient().send("show hand", null);
         MenuHandler.getClient().send("show lawn", null);
     }
 
-    void addNewHandCardToOnHandCardControllers() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
-        final AnchorPane anchorPane = fxmlLoader.load();
-        onHandCardControllers.add(fxmlLoader.getController());
-        handBox.getChildren().add(anchorPane);
-        VBox.setMargin(anchorPane, new Insets(3, 3, 3, 3));
-        final int index = onHandCardControllers.size() - 1;
-        onHandCardControllers.get(index).setIndex(index);
-        anchorPane.setOnMouseClicked((actionEvent -> {
-            try {
-                onToggleButtonAction(onHandCardControllers.get(index));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
+    private void setAllNotVisible() {
+        for (int i = 0; i < 10; i++) {
+            final int index = i;
+            Platform.runLater(() -> {
+                onHandCardAnchors[index].setVisible(false);
+            });
+        }
     }
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
-        onHandCardControllers.clear();
+        for(int i = 0; i < 10; i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
+            final AnchorPane anchorPane = fxmlLoader.load();
+            onHandCardAnchors[i] = anchorPane;
+            onHandCardControllers[i] = fxmlLoader.getController();
+            onHandCardControllers[i].setIndex(i);
+            handBox.getChildren().add(anchorPane);
+            VBox.setMargin(anchorPane, new Insets(3, 3, 3, 3));
+            final int index = i;
+            anchorPane.setOnMouseClicked((actionEvent -> {
+                try {
+                    onToggleButtonAction(onHandCardControllers[index]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }));
+        }
+        setAllNotVisible();
         for (int i = 0; i < mapRowCount; i++) {
             imageViews[i] = new ImageView[mapColCount];
             for (int j = 0; j < mapColCount; j++) {
@@ -293,15 +300,16 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     }
 
     public void selectCreature(Object object) {
-        creatureName = (String) object;
-        if (creatureName != null) {
+        plantIndex = ((Long)object).intValue();
+        if (plantIndex != -1) {
             selectImageView.setOpacity(0.5);
         }
         else {
             selectImageView.setOpacity(0);
         }
-        for (MemberInHandBoxController controller : onHandCardControllers) {
-            if (!controller.getCreatureName().equals(creatureName)) {
+        for (int i = 0; i < 10; i++) {
+            MemberInHandBoxController controller = onHandCardControllers[i];
+            if (i != plantIndex) {
                 controller.getToggleButton().setSelected(false);
             }
             else {
@@ -313,12 +321,11 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     //1 base
     public void put(int x, int y) throws IOException {
         System.out.println("put request:");
-        if (getCreatureName() != null) {
+        if (plantIndex != -1) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("plantName", getCreatureName());
             jsonObject.put("x", x);
             jsonObject.put("y", y);
-            MenuHandler.getClient().send("plant", jsonObject);
+            MenuHandler.getClient().send("put", jsonObject);
         }
     }
 }
