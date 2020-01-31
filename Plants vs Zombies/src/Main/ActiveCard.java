@@ -160,9 +160,20 @@ public class ActiveCard {
             if (remainingSlowDown == 0)
                 slowDownPercent = 0;
         }
-
     }
-
+    public int getSpeed(){
+        Map map=this.owner.getMap();
+        if(creature instanceof  Zombie) {
+            int deltaX =((Zombie) creature).getSpeed();
+            if (this.getRemainingSlowDown() > 0) {
+                deltaX *= (100 - getSlowDownPercent()) / 100.0;
+            }
+            int finalX = Math.max(map.hasNoPlantIn(y,x),x - deltaX);
+            return x-finalX;
+        }else{
+            return 0;
+        }
+    }
     public void collisionSlowingGunShot(int slowDownTime, int slowDownPercent) {
         if (slowDownPercent > this.slowDownPercent) {
             this.slowDownPercent = slowDownPercent;
