@@ -163,7 +163,8 @@ public class Map {
             activeCard.setX(random.nextInt(col));
             activeCard.setY(random.nextInt(row));
         }
-        if (activeCard.getCreature().getRemainingCoolDown() == 0 || mapMode.equals(MapMode.Rail)) {
+        if (activeCard.getCreature().getRemainingCoolDown() == 0 || mapMode.equals(MapMode.Rail)
+                || (mapMode.equals(MapMode.Zombie) && activeCard.getCreature() instanceof Plant)) {
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
         } else {
@@ -266,10 +267,15 @@ public class Map {
             if (activeCard.getCreature() instanceof Zombie)
                 activeCard.doAction(this);
         }
-        for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getCreature() instanceof Zombie) {
-                if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
-                    return GameStatus.ZombiePlayerWins;
+        if(mapMode.equals(MapMode.Zombie) && !isMapHasPlant()){
+            return GameStatus.ZombiePlayerWins;
+        }
+        if(!mapMode.equals(MapMode.Zombie)) {
+            for (ActiveCard activeCard : activeCardArrayList) {
+                if (activeCard.getCreature() instanceof Zombie) {
+                    if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
+                        return GameStatus.ZombiePlayerWins;
+                    }
                 }
             }
         }
@@ -283,7 +289,7 @@ public class Map {
         }
 
         for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getRemainingHp() == 0) {
+            if (activeCard.getRemainingHp() == 0 || !isInMap(activeCard.getX(),activeCard.getY())) {
                 dies.add(activeCard);
             }
         }

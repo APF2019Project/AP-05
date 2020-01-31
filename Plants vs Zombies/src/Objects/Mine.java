@@ -25,13 +25,10 @@ public class Mine extends Plant {
 
     @Override
     public boolean doAction(ActiveCard activeCard, Map map) {
-        System.out.println("dis ="+activeCard.getDistance(map.getNearestZombie(activeCard)));
         if (activeCard.getDistance(map.getNearestZombie(activeCard)) <= activeRange || activeRange == -1) {
-            System.out.println("BOOOOOOBBMMMMM"+activeCard.getX()+":"+activeCard.getY());
             for (ActiveCard activeCard1 : map.getActiveCardArrayList()) {
                 if ((activeCard1.getCreature() instanceof Zombie) && Math.abs(activeCard.getX() - activeCard1.getX()) <= deltaX*GameData.slices
                         && Math.abs(activeCard.getY() - activeCard1.getY()) <= deltaY) {
-                    System.out.println("Chaman zan kill "+activeCard1.getCreature().getName());
                     activeCard1.setRemainingHp(0);
                     activeCard1.setShieldRemainingHp(0);
                 }
