@@ -22,6 +22,15 @@ public class MemberInHandBoxController implements Controller {
     @FXML
     private ImageView imageView, coolDownImageView;
     private String creatureName;
+    private int index;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @FXML
     void initialize() {
@@ -62,6 +71,14 @@ public class MemberInHandBoxController implements Controller {
                 );
                 timeline.play();
             }
+        });
+    }
+
+    public void showHandOnRailMode(String creatureName) {
+        this.creatureName = creatureName;
+        Platform.runLater(() -> {
+            imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
+            priceLabel.setVisible(false);
         });
     }
 
