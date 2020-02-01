@@ -3,7 +3,6 @@ package Objects;
 import Main.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Gun {
     private static ArrayList<Gun> allGuns = new ArrayList<>();
@@ -31,7 +30,6 @@ public class Gun {
         this.sleepy = jsonHandler.getBoolean(FieldNames.sleepy);
         this.projectile = jsonHandler.getBoolean(FieldNames.projectile);
         this.damage = jsonHandler.getInt(FieldNames.damage);
-        ;
         this.gunShotsPerRound = jsonHandler.getInt(FieldNames.gunShotsPerRound);
         allGuns.add(this);
     }

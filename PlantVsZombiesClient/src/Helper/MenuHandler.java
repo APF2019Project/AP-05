@@ -13,7 +13,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class MenuHandler {
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
         if (!controllers.isEmpty() && (getCurrentController() instanceof GameController ||
                 getCurrentController() instanceof PlantOnRailModePlayerSceneController)) {
-            if(getCurrentController() instanceof GameController)
+            if (getCurrentController() instanceof GameController)
                 ((GameController) getCurrentController()).sendLoadRequest();
             else
                 ((PlantOnRailModePlayerSceneController) getCurrentController()).sendLoadRequest();

@@ -18,6 +18,13 @@ public class GameData {
     public final static int mapPlantColCount = 9 + 2;
     public final static int mapColCount = mapPlantColCount * slices + slices / 2;
     public final static int creatureOnHandSize = 7;
+    public final static int numberOfWavesInDayAndWaterMode = 3;
+    public final static int numberOfWavesInRailMode = 10;
+    public final static int numberOfWavesInZombieMode = 10;
+    public final static int winReward = 200;
+    public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
+    public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
+    public final static String positiveNumber = "([0-9]{1,20})";
     public static int speedOfGunShot = 14;
     public static int shyDistanceLimit;
     public static int iceSlowDownTime;
@@ -27,18 +34,11 @@ public class GameData {
     public static int cactusDamage = 1;
     public static int PepperDamage = 1;
     public static int maxMagnetRange, MagnetEatingTime;
-    public final static int numberOfWavesInDayAndWaterMode = 3;
-    public final static int numberOfWavesInRailMode = 10;
-    public final static int numberOfWavesInZombieMode = 10;
-    static String usersJSONFilePath = "JSON/users";
-    public final static int winReward = 200;
-    public final static boolean[] isWaterInWaterMapMode = {false, false, true, true, false, false};
-    public final static boolean[] isWaterInDayMapMode = {false, false, false, false, false, false};
-    public final static String positiveNumber = "([0-9]{1,20})";
-    private static Connection AIConnection;
-    static public ArrayList<String> DryModeAvailablePlantName=new ArrayList<>();
-    static public ArrayList<String> WetModeAvailablePlantName=new ArrayList<>();
+    static public ArrayList<String> DryModeAvailablePlantName = new ArrayList<>();
+    static public ArrayList<String> WetModeAvailablePlantName = new ArrayList<>();
     static public int inf = 100000000;
+    static String usersJSONFilePath = "JSON/users";
+    private static Connection AIConnection;
 
     public static Connection getAIConnection() {
         try {
@@ -55,7 +55,8 @@ public class GameData {
         for (File file : Objects.requireNonNull(new File("JSON/plants/lilypad").listFiles())) {
             if (file.isFile()) {
                 new LilyPad(new JSONHandler(file));
-            } else {
+            }
+            else {
                 throw new Exception("there are some unknown folders in json directory");
             }
         }
@@ -130,18 +131,18 @@ public class GameData {
                 throw new Exception("bug in addFirstPlants method: " + plantName + " doesn't exist");
             }
         }
-        for(int i=0;i<3;i++){
-            if(!WetModeAvailablePlantName.get(i).equals("Lily Pad")){
-                for(int j=i+1;j<WetModeAvailablePlantName.size();j++){
-                    if(WetModeAvailablePlantName.get(j).equals("Lily Pad")){
-                        WetModeAvailablePlantName.set(j,WetModeAvailablePlantName.get(i));
-                        WetModeAvailablePlantName.set(i,"Lily Pad");
+        for (int i = 0; i < 3; i++) {
+            if (!WetModeAvailablePlantName.get(i).equals("Lily Pad")) {
+                for (int j = i + 1; j < WetModeAvailablePlantName.size(); j++) {
+                    if (WetModeAvailablePlantName.get(j).equals("Lily Pad")) {
+                        WetModeAvailablePlantName.set(j, WetModeAvailablePlantName.get(i));
+                        WetModeAvailablePlantName.set(i, "Lily Pad");
                         break;
                     }
                 }
             }
         }
-        for(int i=0;i<WetModeAvailablePlantName.size();i++){
+        for (int i = 0; i < WetModeAvailablePlantName.size(); i++) {
             System.out.println(WetModeAvailablePlantName.get(i));
         }
         fileReader.close();

@@ -16,75 +16,6 @@ public class Connection {
     private Thread thread;
     private Socket socket;
 
-    public void popMenu() throws Exception {
-        if((!menus.isEmpty()) ) {
-            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            for(Menu menu : menus)
-                System.err.println(menu.getCommandHandlerName());
-            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            String name = menus.get(menus.size() - 1).getCommandHandlerName();
-            while(menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
-                menus.remove(menus.size() - 1);
-            if (menus.isEmpty()) {
-                thread.wait();
-            }
-          //  send("popMenu", null);
-            getCurrentMenu().run();
-        }
-    }
-
-    public void popMenuWithoutRun() throws Exception {
-        if((!menus.isEmpty()) ) {
-            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            for(Menu menu : menus)
-                System.err.println(menu.getCommandHandlerName());
-            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            String name = menus.get(menus.size() - 1).getCommandHandlerName();
-            while(menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
-                menus.remove(menus.size() - 1);
-            if (menus.isEmpty()) {
-                thread.wait();
-            }
-            //  send("popMenu", null);
-        }
-    }
-
-    public void popDoubleMenuHandler() throws Exception {
-        if(menus.size() >= 2) {
-            send("popDoubleMenu", null);
-            popMenuWithoutRun();
-            popMenu();
-        }
-    }
-
-    public void popDoubleMenu() throws Exception {
-        if(GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
-            getUser().getPlayer().getMap().getPlantPlayer().getConnection().popDoubleMenuHandler();
-            getUser().getPlayer().getMap().getZombiePlayer().getConnection().popDoubleMenuHandler();
-        }
-        else
-            popDoubleMenuHandler();
-    }
-
-    public void pushMenu(Menu menu) {
-        if(menus.isEmpty() ||
-                !menu.getCommandHandlerName().equals(menus.get(menus.size()-1).getCommandHandlerName())) {
-            menus.add(menu);
-        }
-    }
-
-    public Menu getCurrentMenu() {
-        return menus.get(menus.size() - 1);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     // AI mode
     public Connection(User user) {
         this.user = user;
@@ -102,8 +33,8 @@ public class Connection {
                 new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
                 String line = "";
-                new Thread(()->{
-                    while(!socket.isClosed()){
+                new Thread(() -> {
+                    while (!socket.isClosed()) {
                         try {
                             //if(!getCurrentMenu().getCommandHandlerName().contains("Zombie"))
                             receive("{\"command\":\"end turn\"}");
@@ -139,6 +70,75 @@ public class Connection {
         thread.start();
     }
 
+    public void popMenu() throws Exception {
+        if ((!menus.isEmpty())) {
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            for (Menu menu : menus)
+                System.err.println(menu.getCommandHandlerName());
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            String name = menus.get(menus.size() - 1).getCommandHandlerName();
+            while (menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
+                menus.remove(menus.size() - 1);
+            if (menus.isEmpty()) {
+                thread.wait();
+            }
+            //  send("popMenu", null);
+            getCurrentMenu().run();
+        }
+    }
+
+    public void popMenuWithoutRun() throws Exception {
+        if ((!menus.isEmpty())) {
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            for (Menu menu : menus)
+                System.err.println(menu.getCommandHandlerName());
+            System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            String name = menus.get(menus.size() - 1).getCommandHandlerName();
+            while (menus.get(menus.size() - 1).getCommandHandlerName().equals(name))
+                menus.remove(menus.size() - 1);
+            if (menus.isEmpty()) {
+                thread.wait();
+            }
+            //  send("popMenu", null);
+        }
+    }
+
+    public void popDoubleMenuHandler() throws Exception {
+        if (menus.size() >= 2) {
+            send("popDoubleMenu", null);
+            popMenuWithoutRun();
+            popMenu();
+        }
+    }
+
+    public void popDoubleMenu() throws Exception {
+        if (GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
+            getUser().getPlayer().getMap().getPlantPlayer().getConnection().popDoubleMenuHandler();
+            getUser().getPlayer().getMap().getZombiePlayer().getConnection().popDoubleMenuHandler();
+        }
+        else
+            popDoubleMenuHandler();
+    }
+
+    public void pushMenu(Menu menu) {
+        if (menus.isEmpty() ||
+                !menu.getCommandHandlerName().equals(menus.get(menus.size() - 1).getCommandHandlerName())) {
+            menus.add(menu);
+        }
+    }
+
+    public Menu getCurrentMenu() {
+        return menus.get(menus.size() - 1);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     void receive(String message) throws Exception {
         System.out.println("Client: " + message);
         if (message.equals("exit")) {
@@ -158,7 +158,7 @@ public class Connection {
             System.out.println("Server: " + message);
             dataOutputStream.writeUTF(message);
             dataOutputStream.flush();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -13,13 +13,13 @@ public class MagnetShroom extends Plant {
     }
     */
 
-    public MagnetShroom(JSONHandler jsonHandler) throws Exception{
+    public MagnetShroom(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
     }
 
     public boolean doAction(ActiveCard magnet, Map map) {
-        for(ActiveCard zombie:map.getActiveCardArrayList()){
-            if(zombie.getCreature() instanceof  Zombie) {
+        for (ActiveCard zombie : map.getActiveCardArrayList()) {
+            if (zombie.getCreature() instanceof Zombie) {
                 if (magnet.getDistance(zombie) <= GameData.maxMagnetRange &&
                         zombie.getShieldRemainingHp() > 0 && zombie.getCreature().getShield().isMetal()) {
                     magnet.setRemainReloadTime(GameData.MagnetEatingTime);

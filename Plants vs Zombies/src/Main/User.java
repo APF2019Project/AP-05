@@ -18,19 +18,23 @@ public class User {
     private int killingEnemyCount;
     private Player player;
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void gameEnded(boolean win) throws Exception {
-        killingEnemyCount+=player.getKillingEnemyCount();
-        if(win){
-            coinForShop+=GameData.winReward;
+    public User(String username, String password, Void addFromFile) throws Exception {
+        if (!validNewUsername(username) || !validNewPassword(password)) {
+            throw new Exception("username or password invalid");
         }
+        this.username = username;
+        this.password = password;
+        allUsers.add(this);
+    }
+
+    public User(String username, String password) throws Exception {
+        if (!validNewUsername(username) || !validNewPassword(password)) {
+            throw new Exception("username or password invalid");
+        }
+        this.username = username;
+        this.password = password;
+        addFirstCreatures();
+        allUsers.add(this);
         saveAllUsers();
     }
 
@@ -50,31 +54,6 @@ public class User {
             usersJsonArray.add(userJsonObject);
         }
         new JSONHandler(new File(GameData.usersJSONFilePath)).set(FieldNames.users, usersJsonArray);
-    }
-
-    private void addFirstCreatures() {
-        unlockedCreatures.addAll(Plant.getFirstPlants());
-        unlockedCreatures.addAll(Zombie.getFirstZombies());
-    }
-
-    public User(String username, String password, Void addFromFile) throws Exception {
-        if (!validNewUsername(username) || !validNewPassword(password)) {
-            throw new Exception("username or password invalid");
-        }
-        this.username = username;
-        this.password = password;
-        allUsers.add(this);
-    }
-
-    public User(String username, String password) throws Exception {
-        if (!validNewUsername(username) || !validNewPassword(password)) {
-            throw new Exception("username or password invalid");
-        }
-        this.username = username;
-        this.password = password;
-        addFirstCreatures();
-        allUsers.add(this);
-        saveAllUsers();
     }
 
     public static User login(String username, String password) throws Exception {
@@ -112,6 +91,27 @@ public class User {
         return null;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void gameEnded(boolean win) throws Exception {
+        killingEnemyCount += player.getKillingEnemyCount();
+        if (win) {
+            coinForShop += GameData.winReward;
+        }
+        saveAllUsers();
+    }
+
+    private void addFirstCreatures() {
+        unlockedCreatures.addAll(Plant.getFirstPlants());
+        unlockedCreatures.addAll(Zombie.getFirstZombies());
+    }
+
     public Creature getUnlockedCreatureByName(String creatureName) {
         for (Creature creature : unlockedCreatures) {
             if (creature.getName().equals(creatureName)) {
@@ -119,10 +119,6 @@ public class User {
             }
         }
         return null;
-    }
-
-    public void setKillingEnemyCount(int killingEnemyCount) throws Exception {
-        this.killingEnemyCount = killingEnemyCount;
     }
 
     public boolean buyCreatureFromShop(Creature creature) throws Exception {
@@ -192,6 +188,10 @@ public class User {
 
     public int getKillingEnemyCount() {
         return killingEnemyCount;
+    }
+
+    public void setKillingEnemyCount(int killingEnemyCount) throws Exception {
+        this.killingEnemyCount = killingEnemyCount;
     }
 
     public ArrayList<Creature> getUnlockedCreatures() {

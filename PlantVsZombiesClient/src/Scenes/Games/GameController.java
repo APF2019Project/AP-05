@@ -21,37 +21,33 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.beans.EventHandler;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class GameController implements Controller {
     @FXML
+    protected AnchorPane mainAnchorPane;
+    @FXML
     protected ImageView selectImageView, backgroundImageView;
     @FXML
     protected VBox handBox;
 
-    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
+    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize + 1];
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
-
+    @FXML
+    protected AnchorPane gamePane;
     private int mapRowCount, mapColCount, mapColCountWithSlice;
-
+    @FXML
+    private Label sunLabel;
+    private String creatureName;
     public GameController(int mapRowCount, int mapColCount) {
         this.mapRowCount = mapRowCount;
         this.mapColCount = mapColCount;
         mapColCountWithSlice = mapColCount * GameData.slices + GameData.slices / 2;
         imageViews = new ImageView[mapColCount][];
     }
-
-    @FXML
-    private Label sunLabel;
-
-    @FXML
-    protected AnchorPane gamePane;
-    private String creatureName;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
@@ -202,16 +198,20 @@ public abstract class GameController implements Controller {
                 if (jsonObject.get("name").equals("lawnmower")) {
                     System.out.println("ADDING lawnmower");
                     creatureFreeAdd(jsonObject, 0.66, -45, 45);
-                } else if (jsonObject.get("name").equals("lily pad")) {
+                }
+                else if (jsonObject.get("name").equals("lily pad")) {
                     System.out.println("ADDING lily pad");
                     creatureFreeAdd(jsonObject, 0.90, -10, 45);
-                } else if (jsonObject.get("type").equals("Zombie")) {
+                }
+                else if (jsonObject.get("type").equals("Zombie")) {
                     System.out.println("ADDING ZOMBIE");
                     creatureFreeAdd(jsonObject, 1, 0, 0);
-                } else if (jsonObject.get("type").equals("GunShot")) {
+                }
+                else if (jsonObject.get("type").equals("GunShot")) {
                     System.out.println("ADDING Gun Shot");
                     creatureFreeAdd(jsonObject, 0.33, 0, 30);
-                } else if (jsonObject.get("type").equals("Plant")) {
+                }
+                else if (jsonObject.get("type").equals("Plant")) {
                     System.out.println("ADDING PLANT");
                     try {
                         creatureFreeAdd(jsonObject, 1, -20, 0);
@@ -243,6 +243,28 @@ public abstract class GameController implements Controller {
         MenuHandler.getClient().send("show lawn", null);
     }
 
+    private void handleShovel() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
+        final AnchorPane anchorPane = fxmlLoader.load();
+        onHandCardControllers[GameData.creatureOnHandSize] = fxmlLoader.getController();
+        anchorPane.setOnMouseClicked((actionEvent -> {
+            try {
+                MenuHandler.getClient().send("select shovel", null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+        final JSONObject shovel = new JSONObject();
+        shovel.put("name", "shovel");
+        Platform.runLater(() -> {
+            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            mainAnchorPane.getChildren().add(anchorPane);
+            onHandCardControllers[GameData.creatureOnHandSize].showHand(shovel);
+            anchorPane.setLayoutX(97.0);
+            anchorPane.setLayoutY(14.0);
+        });
+    }
+
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         for (int i = 0; i < GameData.creatureOnHandSize; i++) {
@@ -260,6 +282,7 @@ public abstract class GameController implements Controller {
                 }
             }));
         }
+        handleShovel();
         for (int i = 0; i < mapRowCount; i++) {
             imageViews[i] = new ImageView[mapColCount];
             for (int j = 0; j < mapColCount; j++) {
@@ -294,13 +317,15 @@ public abstract class GameController implements Controller {
         creatureName = (String) object;
         if (creatureName != null) {
             selectImageView.setOpacity(0.5);
-        } else {
+        }
+        else {
             selectImageView.setOpacity(0);
         }
         for (MemberInHandBoxController controller : onHandCardControllers) {
             if (!controller.getCreatureName().equals(creatureName)) {
                 controller.getToggleButton().setSelected(false);
-            } else {
+            }
+            else {
                 controller.getToggleButton().setSelected(true);
             }
         }

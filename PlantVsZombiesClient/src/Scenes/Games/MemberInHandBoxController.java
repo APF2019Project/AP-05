@@ -21,6 +21,7 @@ public class MemberInHandBoxController implements Controller {
     private ToggleButton toggleButton;
     @FXML
     private ImageView imageView, coolDownImageView;
+    private Timeline lastTimeline;
     private String creatureName;
     private int index;
 
@@ -54,11 +55,20 @@ public class MemberInHandBoxController implements Controller {
 
     void showHand(JSONObject jsonObject) {
         creatureName = (String) jsonObject.get("name");
+        System.out.println(creatureName + " FUCK");
         Platform.runLater(() -> {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
+            if (creatureName.equals("shovel")) {
+                System.out.println("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                priceLabel.setText("Shovel");
+                coolDownImageView.setVisible(false);
+                return;
+            }
             priceLabel.setText(jsonObject.get("price") + "$");
             System.out.println("EEE" + ((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
             if ((Long) jsonObject.get("remaining cool down") != 0) {
+                if (lastTimeline != null)
+                    lastTimeline.stop();
                 Timeline timeline = new Timeline();
                 timeline.getKeyFrames().addAll(
                         new KeyFrame(Duration.ZERO, // set start position at 0
@@ -70,6 +80,7 @@ public class MemberInHandBoxController implements Controller {
                         )
                 );
                 timeline.play();
+                lastTimeline = timeline;
             }
         });
     }
@@ -78,7 +89,10 @@ public class MemberInHandBoxController implements Controller {
         this.creatureName = creatureName;
         Platform.runLater(() -> {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
-            priceLabel.setVisible(false);
+            if (creatureName.equals("shovel"))
+                priceLabel.setText("Shovel");
+            else
+                priceLabel.setVisible(false);
         });
     }
 

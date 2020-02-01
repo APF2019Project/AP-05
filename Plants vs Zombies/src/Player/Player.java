@@ -2,28 +2,26 @@ package Player;
 
 import Main.Connection;
 import Main.Map;
-import Main.User;
 import Objects.Creature;
 
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public abstract class Player {
-    private int sunInGame=50;
+    protected final Connection connection;
+    private int sunInGame = 50;
     private Map map;
     private int killingEnemyCount;
-    protected final Connection connection;
+    private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
+
+    public Player(Connection connection) {
+        this.connection = connection;
+        connection.getUser().setPlayer(this);
+    }
 
     public Connection getConnection() {
         return connection;
     }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
-    private ArrayList<Creature> creaturesOnHand = new ArrayList<>();
 
     public int getKillingEnemyCount() {
         return killingEnemyCount;
@@ -41,13 +39,12 @@ public abstract class Player {
         this.sunInGame = sunInGame;
     }
 
-    public Player(Connection connection) {
-        this.connection = connection;
-        connection.getUser().setPlayer(this);
-    }
-
     public Map getMap() {
         return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public void addCreaturesOnHand(Creature creature) {

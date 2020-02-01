@@ -5,18 +5,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Menu {
+    private final Connection connection;
     //private Menu lastMenu;
     private CommandHandler commandHandler;
-    private final Connection connection;
-    public Connection getConnection() {
-        return connection;
-    }
 
     public Menu(Connection connection, CommandHandler commandHandler) {
         this.connection = connection;
         this.commandHandler = commandHandler;
         commandHandler.setMenu(this);
         connection.pushMenu(this);
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     public void exit() throws Exception {
@@ -40,7 +41,7 @@ public class Menu {
                 exit();
                 return;
             }
-            if(command.equals("exitDoubleMenu")) {
+            if (command.equals("exitDoubleMenu")) {
                 if (GameMenuSwitcher.getGameStatus().equals(GameStatus.OnGame)) {
                     GameMenuSwitcher.setGameStatus(GameStatus.notInGame);
                 }
@@ -58,7 +59,7 @@ public class Menu {
         }
     }
 
-    public boolean isPlayerModeMenu(){
+    public boolean isPlayerModeMenu() {
         return commandHandler.getClass().getSimpleName().toLowerCase().contains("player");
     }
 

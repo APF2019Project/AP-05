@@ -14,8 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,17 +24,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlantOnRailModePlayerSceneController implements Controller {
     @FXML
+    protected AnchorPane mainAnchorPane;
+    @FXML
     protected ImageView selectImageView, backgroundImageView;
     @FXML
     protected VBox handBox;
 
-    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[10];
+    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[11];
     protected AnchorPane[] onHandCardAnchors = new AnchorPane[10];
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
@@ -120,7 +119,7 @@ public class PlantOnRailModePlayerSceneController implements Controller {
         });
         setAllNotVisible();
         System.out.println(jsonArray.size() + " HEREEEEEEEEEEEEEEEEEEEEEEE");
-        for(int i = 0; i < jsonArray.size(); i++) {
+        for (int i = 0; i < jsonArray.size(); i++) {
             String name = (String) jsonArray.get(i);
             final int index = i;
             Platform.runLater(() -> {
@@ -249,9 +248,31 @@ public class PlantOnRailModePlayerSceneController implements Controller {
         }
     }
 
+    private void handleShovel() throws IOException {
+        final int i = 10;
+        FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
+        final AnchorPane anchorPane = fxmlLoader.load();
+        onHandCardControllers[i] = fxmlLoader.getController();
+        onHandCardControllers[i].setIndex(i);
+        anchorPane.setOnMouseClicked((actionEvent -> {
+            try {
+                onToggleButtonAction(onHandCardControllers[i]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+        Platform.runLater(() -> {
+            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            mainAnchorPane.getChildren().add(anchorPane);
+            onHandCardControllers[i].showHandOnRailMode("shovel");
+            anchorPane.setLayoutX(97.0);
+            anchorPane.setLayoutY(14.0);
+        });
+    }
+
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
             final AnchorPane anchorPane = fxmlLoader.load();
             onHandCardAnchors[i] = anchorPane;
@@ -268,6 +289,7 @@ public class PlantOnRailModePlayerSceneController implements Controller {
                 }
             }));
         }
+        handleShovel();
         setAllNotVisible();
         for (int i = 0; i < mapRowCount; i++) {
             imageViews[i] = new ImageView[mapColCount];
@@ -300,14 +322,14 @@ public class PlantOnRailModePlayerSceneController implements Controller {
     }
 
     public void selectCreature(Object object) {
-        plantIndex = ((Long)object).intValue();
+        plantIndex = ((Long) object).intValue();
         if (plantIndex != -1) {
             selectImageView.setOpacity(0.5);
         }
         else {
             selectImageView.setOpacity(0);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= 10; i++) {
             MemberInHandBoxController controller = onHandCardControllers[i];
             if (i != plantIndex) {
                 controller.getToggleButton().setSelected(false);

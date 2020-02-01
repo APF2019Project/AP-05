@@ -1,13 +1,11 @@
 package Player;
 
 import Command.CollectionCommandHandler;
-import Command.ZombiePlayerCommandHandler;
 import Command.CollectionMode;
+import Command.ZombiePlayerCommandHandler;
 import Main.Connection;
 import Main.Menu;
-import Main.User;
 
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class ZombieHumanPlayer extends ZombiePlayer {
@@ -18,7 +16,7 @@ public class ZombieHumanPlayer extends ZombiePlayer {
     @Override
     public void doAction(Supplier<Void> supplier) throws Exception {
         super.doAction();
-        if(!isWaveRunning()) {
+        if (!isWaveRunning()) {
             Menu ZombiePlayerMenu = new Menu(connection, new ZombiePlayerCommandHandler(supplier));
             ZombiePlayerMenu.run();
         }
@@ -31,7 +29,7 @@ public class ZombieHumanPlayer extends ZombiePlayer {
 
     @Override
     public void pickCards(Supplier<Void> supplier) throws Exception {
-        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.zombiesCollection,supplier));
+        Menu collectionMenu = new Menu(connection, new CollectionCommandHandler(CollectionMode.zombiesCollection, supplier));
         collectionMenu.run();
     }
 }

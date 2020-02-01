@@ -12,13 +12,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class ZombiePlayerSceneController extends GameController {
-    public ZombiePlayerSceneController() {
-        super(GameData.mapRowCount, GameData.mapPlantColCount + GameData.mapZombieColCount);
-    }
-
     boolean isWaveRunning, canStart;
     @FXML
     private Button startWaveButton;
+    public ZombiePlayerSceneController() {
+        super(GameData.mapRowCount, GameData.mapPlantColCount + GameData.mapZombieColCount);
+    }
 
     @FXML
     public void onStartWaveButtonMouseClicked() throws IOException {
@@ -35,12 +34,13 @@ public class ZombiePlayerSceneController extends GameController {
         startWaveButton.setVisible(canStart);
     }
 
-    public void showHand(Object object){
+    public void showHand(Object object) {
         JSONObject jsonObject = (JSONObject) object;
-        if((boolean)jsonObject.get("hasWater")) {
+        if ((boolean) jsonObject.get("hasWater")) {
             backgroundImageView.setImage(new Image(new File(
                     "src/Files/waterZombieBackgroundCutSixLines.jpg").toURI().toString()));
-        }else {
+        }
+        else {
             backgroundImageView.setImage(new Image(new File(
                     "src/Files/dayZombieBackgroundCutSixLines.jpg").toURI().toString()));
         }

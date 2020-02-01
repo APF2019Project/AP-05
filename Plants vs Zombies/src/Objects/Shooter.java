@@ -20,7 +20,7 @@ public class Shooter extends Plant {
 
         this.gun = Gun.getGunByName(jsonHandler.getString(FieldNames.name).toLowerCase() + " gun");
 
-        if(gun==null){
+        if (gun == null) {
             throw new Exception("gun is empty, json files have bug");
         }
     }

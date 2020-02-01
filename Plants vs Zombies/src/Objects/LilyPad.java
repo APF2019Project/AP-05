@@ -12,7 +12,7 @@ public class LilyPad extends Plant {
     }
     */
 
-    public LilyPad(JSONHandler jsonHandler) throws Exception{
+    public LilyPad(JSONHandler jsonHandler) throws Exception {
         super(jsonHandler);
     }
 
