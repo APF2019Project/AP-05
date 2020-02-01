@@ -19,6 +19,11 @@ public class MainMenuSceneController implements Controller {
     }
 
     @FXML
+    void onAllUsersButtonMouseClicked() throws IOException {
+        MenuHandler.getClient().send("show all users", null);
+    }
+
+    @FXML
     void onBackButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();

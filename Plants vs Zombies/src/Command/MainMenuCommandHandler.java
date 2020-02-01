@@ -7,8 +7,13 @@ public class MainMenuCommandHandler extends CommandHandler {
         this.commands = new Command[]{
                 new Command(this::play, "play", "play: To enter play menu and select game type."),
                 new Command(this::profile, "profile", "profile: To enter your profile."),
-                new Command(this::shop, "shop", "shop: To enter shop.")
+                new Command(this::shop, "shop", "shop: To enter shop."),
+                new Command(this::allUsers, "show all users", ""),
         };
+    }
+
+    public void allUsers(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), new AllUsersCommandHandler()).run();
     }
 
 

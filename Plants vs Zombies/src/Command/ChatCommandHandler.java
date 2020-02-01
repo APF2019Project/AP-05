@@ -1,7 +1,9 @@
 package Command;
 
 import Chat.Message;
+import Main.Menu;
 import Main.User;
+import org.json.simple.JSONObject;
 
 public class ChatCommandHandler extends CommandHandler {
     User sender, receiver;
@@ -10,7 +12,12 @@ public class ChatCommandHandler extends CommandHandler {
         this.commands = new Command[]{
                 new Command(this::showChat, "show chat", ""),
                 new Command(this::sendMessage, "send message", ""),
+                new Command(this::endTurn, "end turn", ""),
         };
+    }
+
+    private void endTurn(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), this).run();
     }
 
     public ChatCommandHandler(User sender, User receiver) {
@@ -18,14 +25,17 @@ public class ChatCommandHandler extends CommandHandler {
         this.receiver = receiver;
     }
 
-    private void sendMessage(InputCommand inputCommand) {
+    public void sendMessage(InputCommand inputCommand) {
         String content = (String) inputCommand.getInputJsonObject().get("content");
         new Message(content, sender, receiver);
         showChat(null);
     }
 
-    private void showChat(InputCommand inputCommand) {
-        menu.getConnection().send("showChat", Message.getChatBetweenUsers(sender, receiver));
+    public void showChat(InputCommand inputCommand) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", sender.getUsername());
+        menu.getConnection().send("showChat", jsonObject);
+        //menu.getConnection().send("showChat", Message.getChatBetweenUsers(sender, receiver));
     }
 
 }

@@ -6,6 +6,7 @@ import Helper.Main;
 import Helper.MenuHandler;
 import Scenes.Games.GameController;
 import Scenes.Games.MemberInHandBoxController;
+import Scenes.Refreshable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PlantOnRailModePlayerSceneController implements Controller {
+public class PlantOnRailModePlayerSceneController implements Controller, Refreshable {
     @FXML
     protected AnchorPane mainAnchorPane;
     @FXML
