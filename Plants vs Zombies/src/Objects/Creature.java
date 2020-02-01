@@ -81,6 +81,13 @@ public abstract class Creature {
 
     abstract public int getPriceInShop();
 
+    public int getFullHpWithShield(){
+        int fullHp=getFullHp();
+        if(getShield()!=null){
+            fullHp+=getShield().getFullHp();
+        }
+        return fullHp;
+    }
     abstract public int getKillingReward();
 
     public int getCoolDown() {

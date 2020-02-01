@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
@@ -21,6 +22,8 @@ public class MemberInHandBoxController implements Controller {
     private ToggleButton toggleButton;
     @FXML
     private ImageView imageView, coolDownImageView;
+    @FXML
+    private BorderPane borderPane;
     private String creatureName;
     private int index;
 
@@ -56,16 +59,24 @@ public class MemberInHandBoxController implements Controller {
         creatureName = (String) jsonObject.get("name");
         Platform.runLater(() -> {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
-            priceLabel.setText(jsonObject.get("price") + "$");
-            System.out.println("EEE" + ((1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))));
-            if ((Long) jsonObject.get("remaining cool down") != 0) {
+            imageView.setPreserveRatio(false);
+            if(jsonObject.containsKey("price")) {
+                priceLabel.setText(jsonObject.get("price") + "$");
+                borderPane.setVisible(true);
+            }else{
+                borderPane.setVisible(false);
+                imageView.setFitHeight(imageView.getFitHeight()+15);
+            }
+            if ((Long) jsonObject.getOrDefault("remaining cool down", 0L) != 0) {
                 Timeline timeline = new Timeline();
                 timeline.getKeyFrames().addAll(
                         new KeyFrame(Duration.ZERO, // set start position at 0
                                 new KeyValue(coolDownImageView.scaleYProperty(),
-                                        (1.0 * (Long) jsonObject.get("remaining cool down") / (Long) jsonObject.get("cool down"))
+                                        (1.0 * (Long) jsonObject.getOrDefault("remaining cool down", 0L)
+                                                / (Long) jsonObject.getOrDefault("cool down", 1L))
                                 )
-                        ), new KeyFrame(Duration.seconds(6 * (Long) jsonObject.get("remaining cool down")),
+                        ), new KeyFrame(Duration.seconds(6 *
+                                (Long) jsonObject.getOrDefault("remaining cool down", 0L)),
                                 new KeyValue(coolDownImageView.scaleYProperty(), 0)
                         )
                 );
@@ -78,7 +89,9 @@ public class MemberInHandBoxController implements Controller {
         this.creatureName = creatureName;
         Platform.runLater(() -> {
             imageView.setImage(new Image(Main.getImageAddressByCreatureName((creatureName))));
-            priceLabel.setVisible(false);
+            //priceLabel.setVisible(false);
+            borderPane.setVisible(false);
+            imageView.setFitHeight(imageView.getFitHeight()+15);
         });
     }
 

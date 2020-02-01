@@ -52,5 +52,6 @@
             </Pane>
          </children>
       </VBox>
+      <Pane fx:id="shovelPane" layoutX="252.0" layoutY="20.0" prefHeight="82.0" prefWidth="72.0" />
    </children>
 </AnchorPane>

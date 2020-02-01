@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -32,8 +34,11 @@ public abstract class GameController implements Controller {
     protected ImageView selectImageView, backgroundImageView;
     @FXML
     protected VBox handBox;
+    @FXML
+    protected Pane shovelPane;
 
-    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize];
+    protected MemberInHandBoxController[] onHandCardControllers =
+            new MemberInHandBoxController[GameData.creatureOnHandSize + 1]; //+1 is for shovel
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
 
@@ -136,7 +141,7 @@ public abstract class GameController implements Controller {
         return pane;
     }
 
-    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy) {
+    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy, boolean showHP) {
         try {
             int x = ((Long) jsonObject.get("x")).intValue();
             int y = ((Long) jsonObject.get("y")).intValue();
@@ -152,6 +157,14 @@ public abstract class GameController implements Controller {
             imageView.setFitHeight((getNormalHeight() + 10) * sizeRatio);
             freeCreaturesPaneArrayList.add(pane);
             pane.getChildren().add(imageView);
+            if (showHP) {
+                ProgressBar progressBar = new ProgressBar();
+                progressBar.setProgress(1.0 * ((Long) jsonObject.getOrDefault("remaining hp", 1L)) / ((Long) jsonObject.getOrDefault("full hp", 1L)));
+                progressBar.setLayoutY(100);
+                progressBar.setPrefWidth(80);
+                progressBar.setPrefHeight(10);
+                pane.getChildren().add(progressBar);
+            }
             gamePane.getChildren().add(pane);
 
             Timeline timeline = new Timeline();
@@ -162,7 +175,7 @@ public abstract class GameController implements Controller {
                             )
                     ), new KeyFrame(Duration.seconds(3),
                             new KeyValue(pane.translateXProperty(),
-                                    pane.getTranslateX() - speed * 28
+                                    pane.getTranslateX() - speed * GameData.speedConstant
                             )
                     )
             );
@@ -201,20 +214,20 @@ public abstract class GameController implements Controller {
                 JSONObject jsonObject = (JSONObject) o;
                 if (jsonObject.get("name").equals("lawnmower")) {
                     System.out.println("ADDING lawnmower");
-                    creatureFreeAdd(jsonObject, 0.66, -45, 45);
+                    creatureFreeAdd(jsonObject, 0.66, -45, 45, false);
                 } else if (jsonObject.get("name").equals("lily pad")) {
                     System.out.println("ADDING lily pad");
-                    creatureFreeAdd(jsonObject, 0.90, -10, 45);
+                    creatureFreeAdd(jsonObject, 0.90, -10, 45, false);
                 } else if (jsonObject.get("type").equals("Zombie")) {
                     System.out.println("ADDING ZOMBIE");
-                    creatureFreeAdd(jsonObject, 1, 0, 0);
+                    creatureFreeAdd(jsonObject, 1, 0, 0, true);
                 } else if (jsonObject.get("type").equals("GunShot")) {
                     System.out.println("ADDING Gun Shot");
-                    creatureFreeAdd(jsonObject, 0.33, 0, 30);
+                    creatureFreeAdd(jsonObject, 0.33, 0, 30, false);
                 } else if (jsonObject.get("type").equals("Plant")) {
                     System.out.println("ADDING PLANT");
                     try {
-                        creatureFreeAdd(jsonObject, 1, -20, 0);
+                        creatureFreeAdd(jsonObject, 1, -20, 0, true);
                         /*
                         imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / GameData.slices]
                                 .setImage(new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(
@@ -245,11 +258,15 @@ public abstract class GameController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
-        for (int i = 0; i < GameData.creatureOnHandSize; i++) {
+        for (int i = 0; i < GameData.creatureOnHandSize + 1; i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
             final AnchorPane anchorPane = fxmlLoader.load();
             onHandCardControllers[i] = fxmlLoader.getController();
-            handBox.getChildren().add(anchorPane);
+            if (i < GameData.creatureOnHandSize) {
+                handBox.getChildren().add(anchorPane);
+            } else {
+                shovelPane.getChildren().add(anchorPane);
+            }
             VBox.setMargin(anchorPane, new Insets(3, 3, 3, 3));
             final int index = i;
             anchorPane.setOnMouseClicked((actionEvent -> {
@@ -260,6 +277,11 @@ public abstract class GameController implements Controller {
                 }
             }));
         }
+        Platform.runLater(() -> {
+            JSONObject jObject = new JSONObject();
+            jObject.put("name", "shovel");
+            onHandCardControllers[GameData.creatureOnHandSize].showHand(jObject);
+        });
         for (int i = 0; i < mapRowCount; i++) {
             imageViews[i] = new ImageView[mapColCount];
             for (int j = 0; j < mapColCount; j++) {

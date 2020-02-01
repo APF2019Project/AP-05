@@ -20,11 +20,6 @@ public class ActiveCard {
             throw new Exception("couldn't add this creature cool down is not 0");
         }
         this.creature = creature;
-        /*if(creature instanceof Zombie){
-            hasLadder=(((Zombie)creature).isHasLadder());
-        }else{
-            hasLadder=false;
-        } kosshere mahz!!! mese hasordak bayad handle she*/
         this.remainingHp = creature.getFullHp();
         this.x = x;
         this.y = y;

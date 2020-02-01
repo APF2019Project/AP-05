@@ -142,7 +142,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", (activeCard.getCreature() instanceof Zombie) ? "Zombie" : "Plant");
             jsonObject.put("x", activeCard.getX());
             jsonObject.put("y", activeCard.getY());
-            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp() + activeCard.getShieldRemainingHp());
+            jsonObject.put("full hp", activeCard.getCreature().getFullHpWithShield());
             if (activeCard.getCreature() instanceof Zombie) {
                 jsonObject.put("speed", ((Zombie) activeCard.getCreature()).getSpeed());
             }
@@ -155,7 +156,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", "Zombie");
             jsonObject.put("x", activeCard.getX());
             jsonObject.put("y", activeCard.getY());
-            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp() + activeCard.getShieldRemainingHp());
+            jsonObject.put("full hp", activeCard.getCreature().getFullHpWithShield());
             jsonObject.put("speed", 0);
             jsonArray.add(jsonObject);
         }
