@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,8 +35,11 @@ public abstract class GameController implements Controller, Refreshable {
     protected ImageView selectImageView, backgroundImageView;
     @FXML
     protected VBox handBox;
+    @FXML
+    protected Pane shovelPane;
 
-    protected MemberInHandBoxController[] onHandCardControllers = new MemberInHandBoxController[GameData.creatureOnHandSize + 1];
+    protected MemberInHandBoxController[] onHandCardControllers =
+            new MemberInHandBoxController[GameData.creatureOnHandSize + 1]; //+1 is for shovel
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
     @FXML
@@ -43,6 +48,7 @@ public abstract class GameController implements Controller, Refreshable {
     @FXML
     private Label sunLabel;
     private String creatureName;
+
     public GameController(int mapRowCount, int mapColCount) {
         this.mapRowCount = mapRowCount;
         this.mapColCount = mapColCount;
@@ -133,22 +139,37 @@ public abstract class GameController implements Controller, Refreshable {
         return pane;
     }
 
-    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy) {
+    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy, boolean showHP) {
         try {
             int x = ((Long) jsonObject.get("x")).intValue();
             int y = ((Long) jsonObject.get("y")).intValue();
+            String name = (String) jsonObject.get("name");
             Pane pane = newPaneWithSize(getNormalWidth() * sizeRatio, (getNormalHeight() + 10) * sizeRatio);
             pane.setLayoutX(getZombieLayoutX(x) + dx);
             pane.setLayoutY(getZombieLayoutY(y) + dy);
 
             int speed = ((Long) jsonObject.getOrDefault("speed", 0L)).intValue();
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                    Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
+            ImageView imageView;
+            if (name.endsWith("gun")) {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName("peashooter gun"))));
+            } else {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName(name))));
+            }
             imageView.setPreserveRatio(false);
             imageView.setFitWidth(getNormalWidth() * sizeRatio);
             imageView.setFitHeight((getNormalHeight() + 10) * sizeRatio);
             freeCreaturesPaneArrayList.add(pane);
             pane.getChildren().add(imageView);
+            if (showHP) {
+                ProgressBar progressBar = new ProgressBar();
+                progressBar.setProgress(1.0 * ((Long) jsonObject.getOrDefault("remaining hp", 1L)) / ((Long) jsonObject.getOrDefault("full hp", 1L)));
+                progressBar.setLayoutY(100);
+                progressBar.setPrefWidth(80);
+                progressBar.setPrefHeight(10);
+                pane.getChildren().add(progressBar);
+            }
             gamePane.getChildren().add(pane);
 
             Timeline timeline = new Timeline();
@@ -159,7 +180,7 @@ public abstract class GameController implements Controller, Refreshable {
                             )
                     ), new KeyFrame(Duration.seconds(3),
                             new KeyValue(pane.translateXProperty(),
-                                    pane.getTranslateX() - speed * 28
+                                    pane.getTranslateX() - speed * GameData.speedConstant
                             )
                     )
             );
@@ -198,24 +219,20 @@ public abstract class GameController implements Controller, Refreshable {
                 JSONObject jsonObject = (JSONObject) o;
                 if (jsonObject.get("name").equals("lawnmower")) {
                     System.out.println("ADDING lawnmower");
-                    creatureFreeAdd(jsonObject, 0.66, -45, 45);
-                }
-                else if (jsonObject.get("name").equals("lily pad")) {
+                    creatureFreeAdd(jsonObject, 0.66, -45, 45, false);
+                } else if (jsonObject.get("name").equals("lily pad")) {
                     System.out.println("ADDING lily pad");
-                    creatureFreeAdd(jsonObject, 0.90, -10, 45);
-                }
-                else if (jsonObject.get("type").equals("Zombie")) {
+                    creatureFreeAdd(jsonObject, 0.90, -10, 45, false);
+                } else if (jsonObject.get("type").equals("Zombie")) {
                     System.out.println("ADDING ZOMBIE");
-                    creatureFreeAdd(jsonObject, 1, 0, 0);
-                }
-                else if (jsonObject.get("type").equals("GunShot")) {
+                    creatureFreeAdd(jsonObject, 1, 0, 0, true);
+                } else if (jsonObject.get("type").equals("GunShot")) {
                     System.out.println("ADDING Gun Shot");
-                    creatureFreeAdd(jsonObject, 0.33, 0, 30);
-                }
-                else if (jsonObject.get("type").equals("Plant")) {
+                    creatureFreeAdd(jsonObject, 0.33, 0, 30, false);
+                } else if (jsonObject.get("type").equals("Plant")) {
                     System.out.println("ADDING PLANT");
                     try {
-                        creatureFreeAdd(jsonObject, 1, -20, 0);
+                        creatureFreeAdd(jsonObject, 1, -20, 0, true);
                         /*
                         imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / GameData.slices]
                                 .setImage(new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(
@@ -258,7 +275,7 @@ public abstract class GameController implements Controller, Refreshable {
         final JSONObject shovel = new JSONObject();
         shovel.put("name", "shovel");
         Platform.runLater(() -> {
-            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            //System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
             mainAnchorPane.getChildren().add(anchorPane);
             onHandCardControllers[GameData.creatureOnHandSize].showHand(shovel);
             anchorPane.setLayoutX(97.0);
@@ -268,11 +285,13 @@ public abstract class GameController implements Controller, Refreshable {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
-        for (int i = 0; i < GameData.creatureOnHandSize; i++) {
+        for (int i = 0; i < GameData.creatureOnHandSize + 1; i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
             final AnchorPane anchorPane = fxmlLoader.load();
             onHandCardControllers[i] = fxmlLoader.getController();
-            handBox.getChildren().add(anchorPane);
+            if (i < GameData.creatureOnHandSize) {
+                handBox.getChildren().add(anchorPane);
+            }
             VBox.setMargin(anchorPane, new Insets(3, 3, 3, 3));
             final int index = i;
             anchorPane.setOnMouseClicked((actionEvent -> {
@@ -318,15 +337,13 @@ public abstract class GameController implements Controller, Refreshable {
         creatureName = (String) object;
         if (creatureName != null) {
             selectImageView.setOpacity(0.5);
-        }
-        else {
+        } else {
             selectImageView.setOpacity(0);
         }
         for (MemberInHandBoxController controller : onHandCardControllers) {
             if (!controller.getCreatureName().equals(creatureName)) {
                 controller.getToggleButton().setSelected(false);
-            }
-            else {
+            } else {
                 controller.getToggleButton().setSelected(true);
             }
         }

@@ -11,9 +11,8 @@ import org.json.simple.JSONObject;
 import java.util.function.Supplier;
 
 public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
-    boolean shovelSelected = false;
     private Supplier<Void> supplier;
-    private Plant selectedPlant = null;
+    private boolean shovelSelected;
 
     {
         this.commands = new Command[]{
@@ -39,6 +38,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         firstLineDescription = "Sun in Game: " + menu.getConnection().getUser().getPlayer().getSunInGame();
     }
 
+    private String selectedPlantName = null;
+
     void showHand(InputCommand inputCommand) throws Exception {
         JSONObject sendingJSONObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
@@ -59,13 +60,16 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
 
     void selectShovel(InputCommand inputCommand) {
         shovelSelected = true;
-        selectedPlant = null;
+        selectedPlantName = null;
         menu.getConnection().send("selectCreature", "shovel");
     }
 
     void select(InputCommand inputCommand) throws Exception {
         String plantName = (String) inputCommand.getInputJsonObject().get("creatureName");
         Plant plant = (Plant) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(plantName);
+        if(plantName.equals("shovel")){
+            plant=plant.getPlantByName(plantName);
+        }
         if (plant == null) {
             throw new Exception("invalid plant name");
         }
@@ -75,26 +79,23 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         if (plant.getRemainingCoolDown() > 0) {
             // for graphic
             showHand(null);
-        }
-        else {
-            if (plant.equals(selectedPlant)) {
-                selectedPlant = null;
+        } else {
+            if (plant.getName().equals(selectedPlantName)) {
+                selectedPlantName = null;
                 menu.getConnection().send("selectCreature", null);
-            }
-            else {
-                selectedPlant = plant;
-                shovelSelected = false;
-                menu.getConnection().send("selectCreature", selectedPlant.getName().toLowerCase());
+            } else {
+                selectedPlantName = plant.getName();
+                menu.getConnection().send("selectCreature", selectedPlantName.toLowerCase());
             }
         }
     }
 
     void plant(InputCommand inputCommand) throws Exception {
-        if (shovelSelected) {
+        String plantName = (String) inputCommand.getInputJsonObject().get("plantName");
+        if(plantName.equals("shovel")){
             remove(inputCommand);
             return;
         }
-        String plantName = (String) inputCommand.getInputJsonObject().get("plantName");
         Plant plant = (Plant) menu.getConnection().getUser().getPlayer().getCreatureOnHandByName(plantName);
         if (plant == null) {
             throw new Exception("you select nothing!");
@@ -107,23 +108,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         }
         menu.getConnection().getUser().getPlayer().getMap()
                 .addActiveCard(new ActiveCard(plant, x, y, menu.getConnection().getUser().getPlayer()));
-        plant = null;
-        menu.getConnection().send("selectCreature", null);
-        show();
-    }
-
-
-    void canPlant(InputCommand inputCommand) throws Exception {
-        if (selectedPlant == null) {
-            throw new Exception("you select nothing!");
-        }
-        int x = ((Long) inputCommand.getInputJsonObject().get("x")).intValue() - 1,
-                y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
-        ActiveCard activeCard = new ActiveCard(selectedPlant, x, y, menu.getConnection().getUser().getPlayer());
-        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            menu.getConnection().send("selectCreature", null);
-        }
-        selectedPlant = null;
+        selectedPlantName = null;
         menu.getConnection().send("selectCreature", null);
         show();
     }
@@ -136,6 +121,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             throw new Exception("there is no plant here to remove");
         }
         menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
+        selectedPlantName = null;
+        menu.getConnection().send("selectCreature", null);
         show();
     }
 
@@ -152,7 +139,8 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", (activeCard.getCreature() instanceof Zombie) ? "Zombie" : "Plant");
             jsonObject.put("x", activeCard.getX());
             jsonObject.put("y", activeCard.getY());
-            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp() + activeCard.getShieldRemainingHp());
+            jsonObject.put("full hp", activeCard.getCreature().getFullHpWithShield());
             if (activeCard.getCreature() instanceof Zombie) {
                 jsonObject.put("speed", ((Zombie) activeCard.getCreature()).getSpeed());
             }

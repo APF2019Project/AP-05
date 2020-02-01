@@ -4,7 +4,7 @@ import Helper.Controller;
 import Helper.GameData;
 import Helper.Main;
 import Helper.MenuHandler;
-import Scenes.Games.GameController;
+import Scenes.Games.*;
 import Scenes.Games.MemberInHandBoxController;
 import Scenes.Refreshable;
 import javafx.animation.KeyFrame;
@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +28,8 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static Helper.GameData.speedConstant;
 
 public class PlantOnRailModePlayerSceneController implements Controller, Refreshable {
     @FXML
@@ -141,22 +144,38 @@ public class PlantOnRailModePlayerSceneController implements Controller, Refresh
         return pane;
     }
 
-    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy) {
+    void creatureFreeAdd(JSONObject jsonObject, double sizeRatio, int dx, int dy, boolean showHP) {
         try {
             int x = ((Long) jsonObject.get("x")).intValue();
             int y = ((Long) jsonObject.get("y")).intValue();
+            String name = (String) jsonObject.get("name");
             Pane pane = newPaneWithSize(getNormalWidth() * sizeRatio, (getNormalHeight() + 10) * sizeRatio);
             pane.setLayoutX(getZombieLayoutX(x) + dx);
             pane.setLayoutY(getZombieLayoutY(y) + dy);
 
             int speed = ((Long) jsonObject.getOrDefault("speed", 0L)).intValue();
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                    Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
+            ImageView imageView;
+            if (name.endsWith("gun")) {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName("peashooter gun"))));
+            } else {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName(name))));
+            }
             imageView.setPreserveRatio(false);
             imageView.setFitWidth(getNormalWidth() * sizeRatio);
             imageView.setFitHeight((getNormalHeight() + 10) * sizeRatio);
             freeCreaturesPaneArrayList.add(pane);
             pane.getChildren().add(imageView);
+            if (showHP) {
+                ProgressBar progressBar = new ProgressBar();
+                progressBar.setProgress(1.0 * ((Long) jsonObject.getOrDefault("remaining hp", 1L)) /
+                        ((Long) jsonObject.getOrDefault("full hp", 1L)));
+                progressBar.setLayoutY(100);
+                progressBar.setPrefWidth(80);
+                progressBar.setPrefHeight(10);
+                pane.getChildren().add(progressBar);
+            }
             gamePane.getChildren().add(pane);
 
             Timeline timeline = new Timeline();
@@ -167,7 +186,7 @@ public class PlantOnRailModePlayerSceneController implements Controller, Refresh
                             )
                     ), new KeyFrame(Duration.seconds(3),
                             new KeyValue(pane.translateXProperty(),
-                                    pane.getTranslateX() - speed * 28
+                                    pane.getTranslateX() - speed * speedConstant
                             )
                     )
             );
@@ -205,28 +224,20 @@ public class PlantOnRailModePlayerSceneController implements Controller, Refresh
                 JSONObject jsonObject = (JSONObject) o;
                 if (jsonObject.get("name").equals("lawnmower")) {
                     System.out.println("ADDING lawnmower");
-                    creatureFreeAdd(jsonObject, 0.66, -45, 45);
-                }
-                else if (jsonObject.get("name").equals("lily pad")) {
+                    creatureFreeAdd(jsonObject, 0.66, -45, 45, false);
+                } else if (jsonObject.get("name").equals("lily pad")) {
                     System.out.println("ADDING lily pad");
-                    creatureFreeAdd(jsonObject, 0.90, -10, 45);
-                }
-                else if (jsonObject.get("type").equals("Zombie")) {
+                    creatureFreeAdd(jsonObject, 0.90, -10, 45, false);
+                } else if (jsonObject.get("type").equals("Zombie")) {
                     System.out.println("ADDING ZOMBIE");
-                    creatureFreeAdd(jsonObject, 1, 0, 0);
-                }
-                else if (jsonObject.get("type").equals("GunShot")) {
+                    creatureFreeAdd(jsonObject, 1, 0, 0, true);
+                } else if (jsonObject.get("type").equals("GunShot")) {
                     System.out.println("ADDING Gun Shot");
-                    creatureFreeAdd(jsonObject, 0.33, 0, 30);
-                }
-                else if (jsonObject.get("type").equals("Plant")) {
+                    creatureFreeAdd(jsonObject, 0.33, 0, 30, false);
+                } else if (jsonObject.get("type").equals("Plant")) {
                     System.out.println("ADDING PLANT");
                     try {
-                        creatureFreeAdd(jsonObject, 1, -20, 0);
-                        /*
-                        imageViews[((Long) jsonObject.get("y")).intValue()][((Long) jsonObject.get("x")).intValue() / GameData.slices]
-                                .setImage(new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(
-                                        (String) jsonObject.get("name")))));*/
+                        creatureFreeAdd(jsonObject, 1, -20, 0, true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -326,16 +337,14 @@ public class PlantOnRailModePlayerSceneController implements Controller, Refresh
         plantIndex = ((Long) object).intValue();
         if (plantIndex != -1) {
             selectImageView.setOpacity(0.5);
-        }
-        else {
+        } else {
             selectImageView.setOpacity(0);
         }
         for (int i = 0; i <= 10; i++) {
             MemberInHandBoxController controller = onHandCardControllers[i];
             if (i != plantIndex) {
                 controller.getToggleButton().setSelected(false);
-            }
-            else {
+            } else {
                 controller.getToggleButton().setSelected(true);
             }
         }

@@ -113,11 +113,6 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         else {
             throw new Exception("you don't have Enough money");
         }
-
-        ActiveCard activeCard = new ActiveCard(zombie, x, y, menu.getConnection().getUser().getPlayer());
-        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            menu.getConnection().getUser().getPlayer().getMap().addActiveCard(activeCard);
-        }
         menu.getConnection().send("selectCreature", null);
         menu.getConnection().send("showLog", "put successful");
         show();
@@ -142,7 +137,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", (activeCard.getCreature() instanceof Zombie) ? "Zombie" : "Plant");
             jsonObject.put("x", activeCard.getX());
             jsonObject.put("y", activeCard.getY());
-            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp() + activeCard.getShieldRemainingHp());
+            jsonObject.put("full hp", activeCard.getCreature().getFullHpWithShield());
             if (activeCard.getCreature() instanceof Zombie) {
                 jsonObject.put("speed", ((Zombie) activeCard.getCreature()).getSpeed());
             }
@@ -155,7 +151,8 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
             jsonObject.put("type", "Zombie");
             jsonObject.put("x", activeCard.getX());
             jsonObject.put("y", activeCard.getY());
-            jsonObject.put("remaining hp", activeCard.getRemainingHp());
+            jsonObject.put("remaining hp", activeCard.getRemainingHp() + activeCard.getShieldRemainingHp());
+            jsonObject.put("full hp", activeCard.getCreature().getFullHpWithShield());
             jsonObject.put("speed", 0);
             jsonArray.add(jsonObject);
         }
