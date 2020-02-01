@@ -18,7 +18,7 @@ public class User {
     private String username, password;
     private int killingEnemyCount;
     private Player player;
-    private String imageAddress = "../ProfilePictures/profile" + (new Random().nextInt(6) + 1) + ".png";
+    private String imageAddress = "../Profile Pictures/profile" + (new Random().nextInt(6) + 1) + ".png";
 
     public User(String username, String password, Void addFromFile) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {

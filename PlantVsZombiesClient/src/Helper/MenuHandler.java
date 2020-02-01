@@ -2,6 +2,7 @@ package Helper;
 
 import Scenes.Games.GameController;
 import Scenes.Games.PlantOnRailModePlayer.PlantOnRailModePlayerSceneController;
+import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -73,12 +74,9 @@ public class MenuHandler {
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
-        if (!controllers.isEmpty() && (getCurrentController() instanceof GameController ||
-                getCurrentController() instanceof PlantOnRailModePlayerSceneController)) {
-            if (getCurrentController() instanceof GameController)
-                ((GameController) getCurrentController()).sendLoadRequest();
-            else
-                ((PlantOnRailModePlayerSceneController) getCurrentController()).sendLoadRequest();
+        if (!controllers.isEmpty() && getCurrentController() instanceof Refreshable &&
+                getCurrentController().getClass().getSimpleName().equals(menuName + "SceneController")) {
+            ((Refreshable) getCurrentController()).sendLoadRequest();
             return;
         }
         String prefix = "../Scenes/";
@@ -153,6 +151,7 @@ public class MenuHandler {
             return;
         }
         try {
+            System.err.println(getCurrentController().getClass().getSimpleName());
             Method method = getDeclaredMethod(getCurrentController().getClass(), command, Object.class);
             method.invoke(getCurrentController(), data);
         } catch (Exception e) {

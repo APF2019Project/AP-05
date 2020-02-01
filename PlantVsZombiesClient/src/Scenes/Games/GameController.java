@@ -4,6 +4,7 @@ import Helper.Controller;
 import Helper.GameData;
 import Helper.Main;
 import Helper.MenuHandler;
+import Scenes.Refreshable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class GameController implements Controller {
+public abstract class GameController implements Controller, Refreshable {
     @FXML
     protected AnchorPane mainAnchorPane;
     @FXML

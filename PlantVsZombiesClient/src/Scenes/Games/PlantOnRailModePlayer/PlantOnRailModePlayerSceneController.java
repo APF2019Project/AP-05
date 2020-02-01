@@ -4,8 +4,9 @@ import Helper.Controller;
 import Helper.GameData;
 import Helper.Main;
 import Helper.MenuHandler;
-import Scenes.Games.GameController;
+import Scenes.Games.*;
 import Scenes.Games.MemberInHandBoxController;
+import Scenes.Refreshable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -30,7 +31,7 @@ import java.util.Objects;
 
 import static Helper.GameData.speedConstant;
 
-public class PlantOnRailModePlayerSceneController implements Controller {
+public class PlantOnRailModePlayerSceneController implements Controller, Refreshable {
     @FXML
     protected AnchorPane mainAnchorPane;
     @FXML
