@@ -225,7 +225,7 @@ public class Map {
         if (!mapMode.equals(MapMode.Rail)) {
             Random random = new Random();
             if (random.nextInt() % 3 == 0) {
-                plantPlayer.addSun(random.nextInt(4) + 2);
+                plantPlayer.addSun(random.nextInt(2) + 1);
             }
         }
 
