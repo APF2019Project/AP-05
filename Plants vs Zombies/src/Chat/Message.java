@@ -1,9 +1,12 @@
 package Chat;
 
+import Main.GameData;
+import Main.JSONHandler;
 import Main.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -21,6 +24,12 @@ public class Message {
         this.receiver = receiver;
         this.id = lastId;
         lastId++;
+        allMessages.add(this);
+        try {
+            saveAllMessages();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Message(String content, User sender, User receiver, int id) {
@@ -29,6 +38,7 @@ public class Message {
         this.receiver = receiver;
         this.id = id;
         lastId = Math.max(id + 1, lastId);
+        allMessages.add(this);
     }
 
     public static Message getMessageById(int id) {
@@ -60,6 +70,19 @@ public class Message {
         return jsonArray;
     }
 
+    public synchronized static void saveAllMessages() throws Exception {
+        JSONArray messageJsonArray = new JSONArray();
+        for(Message message : allMessages) {
+            JSONObject messageJsonObject = new JSONObject();
+            messageJsonObject.put(FieldNames.id.name() , message.getId());
+            messageJsonObject.put(FieldNames.content.name(), message.getContent());
+            messageJsonObject.put(FieldNames.senderUsername.name(), message.getSender().getUsername());
+            messageJsonObject.put(FieldNames.receiverUsername.name(), message.getReceiver().getUsername());
+            messageJsonArray.add(messageJsonObject);
+        }
+        new JSONHandler(new File(GameData.messagesJSONFilePath)).set(Main.FieldNames.messages, messageJsonArray);
+    }
+
     public Message getRepliedMessage() {
         return repliedMessage;
     }
@@ -68,8 +91,9 @@ public class Message {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", this.getId());
         jsonObject.put("content", this.getContent());
-        jsonObject.put("sender", this.getSender().getUsername());
-        jsonObject.put("repliedMessageId", this.getRepliedMessage().getId());
+        jsonObject.put("senderImage", this.getSender().getImageAddress());
+        if(repliedMessage != null)
+            jsonObject.put("repliedMessageId", this.getRepliedMessage().getId());
         return jsonObject;
     }
 

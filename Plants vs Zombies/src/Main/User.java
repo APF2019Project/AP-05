@@ -1,5 +1,6 @@
 package Main;
 
+import Chat.Message;
 import Objects.Creature;
 import Objects.Plant;
 import Objects.Zombie;

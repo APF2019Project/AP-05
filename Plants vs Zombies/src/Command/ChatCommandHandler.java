@@ -32,10 +32,6 @@ public class ChatCommandHandler extends CommandHandler {
     }
 
     public void showChat(InputCommand inputCommand) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", sender.getUsername());
-        menu.getConnection().send("showChat", jsonObject);
-        //menu.getConnection().send("showChat", Message.getChatBetweenUsers(sender, receiver));
+        menu.getConnection().send("showChat", Message.getChatBetweenUsers(sender, receiver));
     }
-
 }

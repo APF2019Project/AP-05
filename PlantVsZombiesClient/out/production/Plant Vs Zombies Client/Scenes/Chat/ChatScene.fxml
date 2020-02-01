@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="184.0" prefWidth="199.0" text="Label" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.ChatSceneController">
-   <font>
-      <Font size="47.0" />
-   </font>
-</Label>
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.ChatSceneController">
+   <children>
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Files/plantsVsZombiesEmptyMiddle.jpg" />
+               </image>
+            </ImageView>
+            <ScrollPane fx:id="scrollPane" layoutX="192.0" layoutY="58.0" opacity="0.82" prefHeight="370.0" prefWidth="465.0">
+               <content>
+                  <VBox fx:id="chatBox" prefHeight="426.0" prefWidth="1.0" />
+               </content>
+            </ScrollPane>
+            <Button mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Files/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TextField fx:id="textField" layoutX="192.0" layoutY="440.0" prefHeight="30.0" prefWidth="411.0" promptText="send a message" />
+            <Button fx:id="sendButton" layoutX="611.0" layoutY="440.0" mnemonicParsing="false" onMouseClicked="#onSendButtonMouseClicked" prefHeight="24.0" prefWidth="46.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Files/sendIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

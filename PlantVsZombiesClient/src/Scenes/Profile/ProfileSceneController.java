@@ -56,7 +56,7 @@ public class ProfileSceneController implements Controller {
         Platform.runLater(() -> {
             usernameLabel.setText(username);
             System.out.println(imageAddress);
-            imageView.setImage(new Image(imageAddress));
+            imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
         });
     }
 

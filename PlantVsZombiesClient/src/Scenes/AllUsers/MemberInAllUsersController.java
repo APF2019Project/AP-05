@@ -30,9 +30,10 @@ public class MemberInAllUsersController implements Controller {
         String username = (String)jsonObject.get("username");
         String imageAddress = (String)jsonObject.get("imageAddress");
 
+        File file = new File(imageAddress);
         Platform.runLater(() -> {
             usernameLabel.setText(username);
-            imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
+            imageView.setImage(new Image(file.toURI().toString()));
         });
     }
 

@@ -1,5 +1,6 @@
 package Main;
 
+import Chat.Message;
 import Objects.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,7 +38,8 @@ public class GameData {
     static public ArrayList<String> DryModeAvailablePlantName = new ArrayList<>();
     static public ArrayList<String> WetModeAvailablePlantName = new ArrayList<>();
     static public int inf = 100000000;
-    static String usersJSONFilePath = "JSON/users";
+    public static String usersJSONFilePath = "JSON/users";
+    public static String messagesJSONFilePath = "JSON/messages";
     private static Connection AIConnection;
 
     public static Connection getAIConnection() {
@@ -245,12 +247,28 @@ public class GameData {
         }
     }
 
+    private static void addAllMessages() throws Exception {
+        JSONHandler messagesJsonHandler = new JSONHandler(new File(GameData.messagesJSONFilePath));
+        JSONArray jsonArray = (JSONArray) messagesJsonHandler.getFromJSONObject(FieldNames.messages);
+        for (Object object : jsonArray) {
+            JSONObject messageJsonObject = (JSONObject) object;
+            String sender = (String) messageJsonObject.get(Chat.FieldNames.senderUsername.name());
+            String receiver = (String) messageJsonObject.get(Chat.FieldNames.receiverUsername.name());
+            new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
+                    User.getUserByUsername(sender),
+                    User.getUserByUsername(receiver),
+                    ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
+            );
+        }
+    }
+
     public static void run() throws Exception {
         addAllShield();
         addAllGuns();
         addAllPlants();
         addAllZombies();
         addAllUsers();
+        addAllMessages();
         AIConnection = new Connection(User.getUserByUsername("AI User"));
     }
 }

@@ -28,6 +28,7 @@ public class InputFormSceneController implements Controller {
     private MenuButton menuButton;
     @FXML
     private ImageView imageView;
+    private String address;
 
     @FXML
     void initialize() {
@@ -44,7 +45,7 @@ public class InputFormSceneController implements Controller {
             data.put(textField1.getPromptText().toLowerCase(), textField1.getText());
         }
         if(menuButton.isVisible()) {
-            data.put("imageAddress", imageView.getImage().getUrl());
+            data.put("imageAddress", address);
         }
         MenuHandler.getClient().send(sendButton.getText().toLowerCase(), data);
     }
@@ -67,9 +68,9 @@ public class InputFormSceneController implements Controller {
 
     public void showUser(Object object) {
         JSONObject jsonObject = (JSONObject) object;
-        String imageAddress = (String) jsonObject.get("imageAddress");
+        address = (String) jsonObject.get("imageAddress");
         Platform.runLater(() -> {
-            imageView.setImage(new Image(imageAddress));
+            imageView.setImage(new Image(new File(address).toURI().toString()));
         });
     }
 
@@ -82,7 +83,10 @@ public class InputFormSceneController implements Controller {
             ImageView img = new ImageView(new Image(file.toURI().toString()));
             MenuItem menuItem = new MenuItem();
             menuItem.setGraphic(img);
-            menuItem.setOnAction(actionEvent -> imageView.setImage(img.getImage()));
+            menuItem.setOnAction(actionEvent -> {
+                imageView.setImage(img.getImage());
+                address = file.getPath();
+            });
             img.setFitHeight(70);
             img.setFitWidth(70);
             arrayList.add(menuItem);

@@ -111,6 +111,8 @@ public class MenuHandler {
         });
     }
 
+    static int cnt = 50;
+
     static synchronized void receive(String message) throws ParseException {
         System.err.println("message" + message);
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
@@ -139,9 +141,12 @@ public class MenuHandler {
             return;
         }
         if (command.equals("showMessage")) {
+            cnt--;
             JSONObject parameters = (JSONObject) data;
             String alertMessage = (String) parameters.get("message");
             String alertMessageType = (String) parameters.getOrDefault("messageType", "ERROR");
+            if(cnt == 0)
+                System.exit(0);
             Platform.runLater(() -> {
                 MessageBox.show(alertMessage, Alert.AlertType.valueOf(alertMessageType));
                 if (Alert.AlertType.valueOf(alertMessageType).equals(Alert.AlertType.ERROR)) {

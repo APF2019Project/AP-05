@@ -149,7 +149,7 @@ public class Connection {
         getCurrentMenu().accept(message);
     }
 
-    public void send(String command, Object data) {
+    public synchronized void send(String command, Object data) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("command", command);

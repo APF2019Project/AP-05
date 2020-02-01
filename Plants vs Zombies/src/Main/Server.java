@@ -1,5 +1,7 @@
 package Main;
 
+import Chat.Message;
+
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,7 +35,8 @@ public class Server {
                 try {
                     Thread.sleep(5000);
                     User.saveAllUsers();
-                    System.out.println("All users saved");
+                    Message.saveAllMessages();
+                    System.out.println("All users and messages saved");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -54,5 +57,6 @@ public class Server {
             System.exit(-1);
         }
         User.saveAllUsers();
+        Message.saveAllMessages();
     }
 }
