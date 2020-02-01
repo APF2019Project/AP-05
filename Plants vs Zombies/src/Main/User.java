@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class User {
     static private ArrayList<User> allUsers = new ArrayList<>();
@@ -17,6 +18,7 @@ public class User {
     private String username, password;
     private int killingEnemyCount;
     private Player player;
+    private String imageAddress = "../ProfilePictures/profile" + (new Random().nextInt(6) + 1) + ".png";
 
     public User(String username, String password, Void addFromFile) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
@@ -51,6 +53,7 @@ public class User {
             userJsonObject.put(FieldNames.unlockedCreatures.name(), unlockedCreaturesJsonArray);
             userJsonObject.put(FieldNames.killingEnemyCount.name(), user.getKillingEnemyCount());
             userJsonObject.put(FieldNames.coinForShop.name(), user.getCoinForShop());
+            userJsonObject.put(FieldNames.imageAddress.name(), user.getImageAddress());
             usersJsonArray.add(userJsonObject);
         }
         new JSONHandler(new File(GameData.usersJSONFilePath)).set(FieldNames.users, usersJsonArray);
@@ -89,6 +92,14 @@ public class User {
             if (user.getUsername().equals(username) && user.getPassword().equals(password))
                 return user;
         return null;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
     }
 
     public Player getPlayer() {

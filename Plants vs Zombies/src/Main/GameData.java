@@ -240,6 +240,7 @@ public class GameData {
                 }
                 user.getUnlockedCreatures().add(creature);
             }
+            user.setImageAddress((String) userJsonObject.get(FieldNames.imageAddress.name()));
         }
     }
 
