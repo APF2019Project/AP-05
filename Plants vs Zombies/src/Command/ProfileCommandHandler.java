@@ -1,6 +1,7 @@
 package Command;
 
 import Main.User;
+import org.json.simple.JSONObject;
 
 public class ProfileCommandHandler extends CommandHandler {
     {
@@ -14,7 +15,15 @@ public class ProfileCommandHandler extends CommandHandler {
                 new Command(this::createUser, "create account", "create account: To create " +
                         "a new user. Enter a username and a password in two different lines after this command"),
                 new Command(this::showUser, "show", "show: To see your username."),
+                new Command(this::changePicture, "change picture", ""),
         };
+    }
+
+    public void changePicture(InputCommand inputCommand) throws Exception {
+        String imageAddress = (String) inputCommand.getInputJsonObject().get("imageAddress");
+        menu.getConnection().getUser().setImageAddress(imageAddress);
+        menu.getConnection().send("showLog", "changePicture successfull");
+        menu.run();
     }
 
     public void changeUsernameAndPassword(InputCommand inputCommand) throws Exception {
@@ -50,6 +59,9 @@ public class ProfileCommandHandler extends CommandHandler {
     }
 
     public void showUser(InputCommand inputCommand) throws Exception {
-        menu.getConnection().send("showUser", menu.getConnection().getUser().getUsername());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", menu.getConnection().getUser().getUsername());
+        jsonObject.put("imageAddress", menu.getConnection().getUser().getImageAddress());
+        menu.getConnection().send("showUser", jsonObject);
     }
 }

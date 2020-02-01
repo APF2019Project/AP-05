@@ -49,6 +49,14 @@ public class GameData {
         rename.put("textField0.setPromptText", "Username");
         rename.put("sendButton.setText", "Rename");
         inputJsonForm.put("rename user", rename);
+
+        JSONObject changePicture = new JSONObject();
+        changePicture.put("menuFile", "InputForm");
+        changePicture.put("textField0.setVisible", false);
+        changePicture.put("textField1.setVisible", false);
+        changePicture.put("sendButton.setText", "Change Picture");
+        changePicture.put("menuButton.setVisible", true);
+        inputJsonForm.put("change picture", changePicture);
     }
 
     public static JSONObject getJson(String name) {
