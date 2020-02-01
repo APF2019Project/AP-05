@@ -49,8 +49,8 @@ public class MemberInShopListController implements Controller {
         else {
             boughtImageView.setVisible(false);
         }
-        if(Main.getImageAddressByCreatureName(creatureNameLabel.getText())!=null){
-        Image image = new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(creatureNameLabel.getText())));
+        if (Main.getImageAddressByCreatureName(creatureNameLabel.getText()) != null) {
+            Image image = new Image(Objects.requireNonNull(Main.getImageAddressByCreatureName(creatureNameLabel.getText())));
             Platform.runLater(() -> {
                 imageView.setImage(image);
             });

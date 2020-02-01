@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class User {
     static private ArrayList<User> allUsers = new ArrayList<>();
@@ -17,45 +18,7 @@ public class User {
     private String username, password;
     private int killingEnemyCount;
     private Player player;
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void gameEnded(boolean win) throws Exception {
-        killingEnemyCount+=player.getKillingEnemyCount();
-        if(win){
-            coinForShop+=GameData.winReward;
-        }
-        saveAllUsers();
-    }
-
-    public static synchronized void saveAllUsers() throws Exception {
-        JSONArray usersJsonArray = new JSONArray();
-        for (User user : allUsers) {
-            JSONObject userJsonObject = new JSONObject();
-            userJsonObject.put(FieldNames.username.name(), user.getUsername());
-            userJsonObject.put(FieldNames.password.name(), user.getPassword());
-            JSONArray unlockedCreaturesJsonArray = new JSONArray();
-            for (Creature unlockedCreature : user.getUnlockedCreatures()) {
-                unlockedCreaturesJsonArray.add(unlockedCreature.getName());
-            }
-            userJsonObject.put(FieldNames.unlockedCreatures.name(), unlockedCreaturesJsonArray);
-            userJsonObject.put(FieldNames.killingEnemyCount.name(), user.getKillingEnemyCount());
-            userJsonObject.put(FieldNames.coinForShop.name(), user.getCoinForShop());
-            usersJsonArray.add(userJsonObject);
-        }
-        new JSONHandler(new File(GameData.usersJSONFilePath)).set(FieldNames.users, usersJsonArray);
-    }
-
-    private void addFirstCreatures() {
-        unlockedCreatures.addAll(Plant.getFirstPlants());
-        unlockedCreatures.addAll(Zombie.getFirstZombies());
-    }
+    private String imageAddress = "../ProfilePictures/profile" + (new Random().nextInt(6) + 1) + ".png";
 
     public User(String username, String password, Void addFromFile) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
@@ -75,6 +38,25 @@ public class User {
         addFirstCreatures();
         allUsers.add(this);
         saveAllUsers();
+    }
+
+    public static synchronized void saveAllUsers() throws Exception {
+        JSONArray usersJsonArray = new JSONArray();
+        for (User user : allUsers) {
+            JSONObject userJsonObject = new JSONObject();
+            userJsonObject.put(FieldNames.username.name(), user.getUsername());
+            userJsonObject.put(FieldNames.password.name(), user.getPassword());
+            JSONArray unlockedCreaturesJsonArray = new JSONArray();
+            for (Creature unlockedCreature : user.getUnlockedCreatures()) {
+                unlockedCreaturesJsonArray.add(unlockedCreature.getName());
+            }
+            userJsonObject.put(FieldNames.unlockedCreatures.name(), unlockedCreaturesJsonArray);
+            userJsonObject.put(FieldNames.killingEnemyCount.name(), user.getKillingEnemyCount());
+            userJsonObject.put(FieldNames.coinForShop.name(), user.getCoinForShop());
+            userJsonObject.put(FieldNames.imageAddress.name(), user.getImageAddress());
+            usersJsonArray.add(userJsonObject);
+        }
+        new JSONHandler(new File(GameData.usersJSONFilePath)).set(FieldNames.users, usersJsonArray);
     }
 
     public static User login(String username, String password) throws Exception {
@@ -112,6 +94,35 @@ public class User {
         return null;
     }
 
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void gameEnded(boolean win) throws Exception {
+        killingEnemyCount += player.getKillingEnemyCount();
+        if (win) {
+            coinForShop += GameData.winReward;
+        }
+        saveAllUsers();
+    }
+
+    private void addFirstCreatures() {
+        unlockedCreatures.addAll(Plant.getFirstPlants());
+        unlockedCreatures.addAll(Zombie.getFirstZombies());
+    }
+
     public Creature getUnlockedCreatureByName(String creatureName) {
         for (Creature creature : unlockedCreatures) {
             if (creature.getName().equals(creatureName)) {
@@ -119,10 +130,6 @@ public class User {
             }
         }
         return null;
-    }
-
-    public void setKillingEnemyCount(int killingEnemyCount) throws Exception {
-        this.killingEnemyCount = killingEnemyCount;
     }
 
     public boolean buyCreatureFromShop(Creature creature) throws Exception {
@@ -192,6 +199,10 @@ public class User {
 
     public int getKillingEnemyCount() {
         return killingEnemyCount;
+    }
+
+    public void setKillingEnemyCount(int killingEnemyCount) throws Exception {
+        this.killingEnemyCount = killingEnemyCount;
     }
 
     public ArrayList<Creature> getUnlockedCreatures() {

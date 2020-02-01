@@ -7,12 +7,38 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
+    final private Player plantPlayer, zombiePlayer;
+    MapMode mapMode;
     private ArrayList<ActiveCard> activeCardArrayList = new ArrayList<>();
     private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
     private int row, col, numberOfRemainedWaves;
-    MapMode mapMode;
-    final private Player plantPlayer, zombiePlayer;
+
+    public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
+        this.row = row;
+        this.col = col;
+        this.plantPlayer = plantPlayer;
+        this.zombiePlayer = zombiePlayer;
+        this.mapMode = mapMode;
+        this.numberOfRemainedWaves = wavesNumber;
+        plantPlayer.setMap(this);
+        zombiePlayer.setMap(this);
+        if (mapMode.equals(MapMode.Water)) {
+            isWater = GameData.isWaterInWaterMapMode.clone();
+        }
+        else {
+            isWater = GameData.isWaterInDayMapMode.clone();
+        }
+        Creature creature = Creature.getCreatureByName("lawnmower");
+        for (int i = 0; i < row; i++) {
+            try {
+                ActiveCard activeCard = new ActiveCard(creature, 2, i, plantPlayer);
+                this.addActiveCard(activeCard);
+            } catch (Exception e) {
+                System.out.println("cannot add buchers");
+            }
+        }
+    }
 
     public ArrayList<GunShot> getGunShotArrayList() {
         return gunShotArrayList;
@@ -32,31 +58,6 @@ public class Map {
 
     public MapMode getMapMode() {
         return mapMode;
-    }
-
-    public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
-        this.row = row;
-        this.col = col;
-        this.plantPlayer = plantPlayer;
-        this.zombiePlayer = zombiePlayer;
-        this.mapMode = mapMode;
-        this.numberOfRemainedWaves = wavesNumber;
-        plantPlayer.setMap(this);
-        zombiePlayer.setMap(this);
-        if (mapMode.equals(MapMode.Water)) {
-            isWater = GameData.isWaterInWaterMapMode.clone();
-        } else {
-            isWater = GameData.isWaterInDayMapMode.clone();
-        }
-        Creature creature = Creature.getCreatureByName("lawnmower");
-        for (int i = 0; i < row; i++) {
-            try {
-                ActiveCard activeCard = new ActiveCard(creature, 2, i, plantPlayer);
-                this.addActiveCard(activeCard);
-            } catch (Exception e) {
-                System.out.println("cannot add buchers");
-            }
-        }
     }
 
     public int getRow() {
@@ -110,7 +111,8 @@ public class Map {
                             nearest = activeCard;
                         }
                     }
-                } else {
+                }
+                else {
                     if (xl <= activeCard.getX() && activeCard.getX() <= xl + vx) {
                         if (nearest == null || nearest.getX() > activeCard.getX()) {
                             nearest = activeCard;
@@ -142,7 +144,7 @@ public class Map {
             return false;
         }
         if (isWater(activeCard.getY()) && !activeCard.getCreature().isMarine(activeCard) &&
-        findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
+                findPlantIn(activeCard.getX(), activeCard.getY()) == null) {
             System.out.println("EEEEE1");
             return false;
         }
@@ -160,14 +162,15 @@ public class Map {
     public void addActiveCard(ActiveCard activeCard) throws Exception {
         if (activeCard.getCreature().getName().equals("bungee zombie")) {
             Random random = new Random();
-            activeCard.setX(random.nextInt(col));
+            activeCard.setX(random.nextInt(7)*GameData.slices+GameData.slices/2);
             activeCard.setY(random.nextInt(row));
         }
         if (activeCard.getCreature().getRemainingCoolDown() == 0 || mapMode.equals(MapMode.Rail)
                 || (mapMode.equals(MapMode.Zombie) && activeCard.getCreature() instanceof Plant)) {
             activeCardArrayList.add(activeCard);
             activeCard.getCreature().setRemainingCoolDown(activeCard.getCreature().getCoolDown());
-        } else {
+        }
+        else {
             throw new Exception("cool down is not 0");
             /// cool down is not handel:D
         }
@@ -267,10 +270,10 @@ public class Map {
             if (activeCard.getCreature() instanceof Zombie)
                 activeCard.doAction(this);
         }
-        if(mapMode.equals(MapMode.Zombie) && !isMapHasPlant()){
+        if (mapMode.equals(MapMode.Zombie) && !isMapHasPlant()) {
             return GameStatus.ZombiePlayerWins;
         }
-        if(!mapMode.equals(MapMode.Zombie)) {
+        if (!mapMode.equals(MapMode.Zombie)) {
             for (ActiveCard activeCard : activeCardArrayList) {
                 if (activeCard.getCreature() instanceof Zombie) {
                     if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
@@ -289,7 +292,7 @@ public class Map {
         }
 
         for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getRemainingHp() == 0 || !isInMap(activeCard.getX(),activeCard.getY())) {
+            if (activeCard.getRemainingHp() == 0 || !isInMap(activeCard.getX(), activeCard.getY())) {
                 dies.add(activeCard);
             }
         }
@@ -332,12 +335,13 @@ public class Map {
     }
 
     void mapSimpleShow() {
-        char jad[][] = new char[row][col];
+        char[][] jad = new char[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (isWater[i]) {
                     jad[i][j] = '~';
-                } else {
+                }
+                else {
                     jad[i][j] = '.';
                 }
             }
@@ -348,14 +352,15 @@ public class Map {
         for (ActiveCard activeCard : activeCardArrayList) {
             if (activeCard.getCreature() instanceof Zombie) {
                 jad[activeCard.getY()][activeCard.getX()] = 'Z';
-            } else {
+            }
+            else {
                 jad[activeCard.getY()][activeCard.getX()] = 'P';
             }
         }
         for (int i = 0; i < col; i++) {
             System.out.print("/");
         }
-        System.out.println("");
+        System.out.println();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 System.out.print(jad[i][j]);
@@ -365,6 +370,6 @@ public class Map {
         for (int i = 0; i < col; i++) {
             System.out.print("/");
         }
-        System.out.println("");
+        System.out.println();
     }
 }

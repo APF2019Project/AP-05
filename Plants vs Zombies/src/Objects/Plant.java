@@ -9,28 +9,27 @@ import java.util.ArrayList;
 
 public class Plant extends Creature {
     private final static ArrayList<Plant> allPlants = new ArrayList<>();
+    private final static ArrayList<Plant> firstPlants = new ArrayList<>();
+    private boolean cactus, peppery;
+    private boolean waterProof;
+    public Plant(JSONHandler jsonHandler) throws Exception {
+        super(jsonHandler);
+        this.cactus = jsonHandler.getBoolean(FieldNames.cactus);
+        this.peppery = jsonHandler.getBoolean(FieldNames.peppery);
+        this.waterProof = jsonHandler.getBoolean(FieldNames.waterProof);
+        allPlants.add(this);
+    }
 
     public static ArrayList<Plant> getFirstPlants() {
         return firstPlants;
     }
 
-    private final static ArrayList<Plant> firstPlants = new ArrayList<>();
-
-    private boolean cactus, peppery;
-    private boolean waterProof;
-
-    @Override
-    public int getPriceInShop() {
-        return this.getPrice() * this.getCoolDown() * this.getFullHp() + 1;
-    }
-
-    @Override
-    public int getKillingReward() {
-        return 10 * getFullHp();
-    }
-
     public static void addFirstPlant(Plant plant) {
         firstPlants.add(plant);
+    }
+
+    public static ArrayList<Plant> getAllPlants() {
+        return allPlants;
     }
 
     /*
@@ -43,18 +42,6 @@ public class Plant extends Creature {
         allPlants.add(this);
     }*/
 
-    public Plant(JSONHandler jsonHandler) throws Exception {
-        super(jsonHandler);
-        this.cactus = jsonHandler.getBoolean(FieldNames.cactus);
-        this.peppery = jsonHandler.getBoolean(FieldNames.peppery);
-        this.waterProof = jsonHandler.getBoolean(FieldNames.waterProof);
-        allPlants.add(this);
-    }
-
-    public static ArrayList<Plant> getAllPlants() {
-        return allPlants;
-    }
-
     public static Plant getPlantByName(String plantName) {
         for (Plant plant : allPlants) {
             if (plant.getName().equals(plantName)) {
@@ -63,10 +50,22 @@ public class Plant extends Creature {
         }
         return null;
     }
-    public  boolean isMarine(ActiveCard activeCard){
+
+    @Override
+    public int getPriceInShop() {
+        return this.getPrice() * this.getCoolDown() * this.getFullHp() + 1;
+    }
+
+    @Override
+    public int getKillingReward() {
+        return 10 * getFullHp();
+    }
+
+    public boolean isMarine(ActiveCard activeCard) {
         return waterProof;
     }
-    public boolean isOnshore(ActiveCard activeCard){
+
+    public boolean isOnshore(ActiveCard activeCard) {
         return !waterProof;
     }
 

@@ -1,6 +1,5 @@
 package Command;
 
-import Main.Main;
 import Main.User;
 
 public class ProfileCommandHandler extends CommandHandler {
@@ -23,7 +22,7 @@ public class ProfileCommandHandler extends CommandHandler {
         String password = (String) inputCommand.getInputJsonObject().get("password");
         menu.getConnection().getUser().changeUsername(username);
         menu.getConnection().getUser().changePassword(password);
-        menu.getConnection().send("showLog","changeUsernameAndPassword successful");
+        menu.getConnection().send("showLog", "changeUsernameAndPassword successful");
         menu.run();
     }
 
@@ -31,7 +30,7 @@ public class ProfileCommandHandler extends CommandHandler {
         String username = (String) inputCommand.getInputJsonObject().get("username");
         String password = (String) inputCommand.getInputJsonObject().get("password");
         User.deleteUser(username, password);
-        menu.getConnection().send("showLog","deleteUser successful");
+        menu.getConnection().send("showLog", "deleteUser successful");
         menu.run();
     }
 
@@ -45,7 +44,7 @@ public class ProfileCommandHandler extends CommandHandler {
         String username = (String) inputCommand.getInputJsonObject().get("username");
         String password = (String) inputCommand.getInputJsonObject().get("password");
         new User(username, password);
-        menu.getConnection().send("showLog","createUser successful");
+        menu.getConnection().send("showLog", "createUser successful");
         menu.run();
         // inja bayad current user avaz she???
     }

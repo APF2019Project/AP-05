@@ -1,8 +1,6 @@
 package Command;
 
 import Main.ActiveCard;
-import Main.GameData;
-import Main.Main;
 import Objects.Creature;
 import Objects.GunShot;
 import Objects.Plant;
@@ -11,25 +9,21 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
+    boolean shovelSelected = false;
     private Supplier<Void> supplier;
-
-    public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
-        this.supplier = supplier;
-    }
+    private int plantIndex = -1;
 
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "showHand: To see your current cards."),
-                new Command(this::select, "select" , "select [number]: To select " +
+                new Command(this::select, "select", "select [number]: To select " +
                         "number'th card."),
                 new Command(this::record, "record", "record: To see number of killed zombies."),
-                new Command(this::plant, "plant",
+                new Command(this::put, "put",
                         "plant [row],[column]: To plant your selected plant in the given coordination."),
-                new Command(this::remove, "remove " + GameData.positiveNumber + "," + GameData.positiveNumber,
+                new Command(this::remove, "remove",
                         "remove [row],[column]: To remove a plant from given coordination."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
@@ -37,7 +31,9 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         };
     }
 
-    private int plantIndex = -1;
+    public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
+        this.supplier = supplier;
+    }
     //private Plant selectedPlant = null;
 
     void showHand(InputCommand inputCommand) {
@@ -52,28 +48,35 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
         menu.getConnection().send("showHand", jsonObject);
     }
 
-    void select(InputCommand inputCommand) throws Exception {
-        plantIndex = ( (Long)inputCommand.getInputJsonObject().get("plantIndex")).intValue(); // input is 0-base
+    void select(InputCommand inputCommand) {
+        plantIndex = ((Long) inputCommand.getInputJsonObject().get("plantIndex")).intValue(); // input is 0-base
         menu.getConnection().send("selectCreature", plantIndex);
     }
 
     //not used
     void record(InputCommand inputCommand) {
-        menu.getConnection().send("record", String.valueOf(menu.getConnection().getUser().getPlayer().getKillingEnemyCount()));
+        menu.getConnection().send("record", String.valueOf(menu.getConnection().getUser().getPlayer()
+                .getKillingEnemyCount()));
     }
 
-    void plant(InputCommand inputCommand) throws Exception {
-        int x = (int) inputCommand.getInputJsonObject().get("x") - 1, y = (int) inputCommand.getInputJsonObject().get("y") - 1;
-        ActiveCard activeCard=new ActiveCard(
-                menu.getConnection().getUser().getPlayer().getCreaturesOnHand().get(plantIndex), x, y, menu.getConnection().getUser().getPlayer());
+    void put(InputCommand inputCommand) throws Exception {
+        System.err.println(inputCommand.getInputJsonObject());
+        if (plantIndex == 10) {
+            remove(inputCommand);
+            return;
+        }
+        int x = ((Long) inputCommand.getInputJsonObject().get("x")).intValue() - 1;
+        int y = ((Long) inputCommand.getInputJsonObject().get("y")).intValue() - 1;
+        ActiveCard activeCard = new ActiveCard(menu.getConnection().getUser().getPlayer().
+                getCreaturesOnHand().get(plantIndex), x, y, menu.getConnection().getUser().getPlayer());
         if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            throw new Exception("you can't your plant here");
+            throw new Exception("you can't put your plant here");
         }
         menu.getConnection().getUser().getPlayer().getMap()
                 .addActiveCard(activeCard);
         menu.getConnection().getUser().getPlayer().getCreaturesOnHand().remove(plantIndex);
         plantIndex = -1;
-        menu.getConnection().send("selectCreature",plantIndex);
+        menu.getConnection().send("selectCreature", plantIndex);
     }
 
     void remove(InputCommand inputCommand) throws Exception {
@@ -84,12 +87,13 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
             throw new Exception("there is no plant here to remove");
         }
         menu.getConnection().getUser().getPlayer().getMap().removeActiveCard(activeCard);
+        menu.getConnection().send("selectCreature", -1);
         show();
     }
 
     void endTurn(InputCommand inputCommand) throws Exception {
         supplier.get();
-    //    menu.exit();
+        //    menu.exit();
     }
 
     void showLawn(InputCommand inputCommand) {

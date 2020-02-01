@@ -1,6 +1,9 @@
 package Player;
 
-import Main.*;
+import Main.ActiveCard;
+import Main.Connection;
+import Main.GameData;
+import Main.Map;
 import Objects.Creature;
 import Objects.Plant;
 
@@ -37,19 +40,20 @@ public class PlantAIPlayer extends PlantPlayer {
         ArrayList<String> availablePlantName = new ArrayList<>();
         if (!map.hasWater()) {
             availablePlantName = GameData.DryModeAvailablePlantName;
-        } else {
+        }
+        else {
             availablePlantName = GameData.WetModeAvailablePlantName;
         }
         //ArrayList<Creature> availablePlant = map.getPlantPlayer().getCreaturesOnHand();
         this.setSunInGame(GameData.inf);
         System.out.println("KHOB MIRIM");
-        for(int i=0;i<availablePlantName.size();i++) {
+        for (int i = 0; i < availablePlantName.size(); i++) {
             System.out.println(availablePlantName.get(i));
             Plant plant = Plant.getPlantByName(availablePlantName.get(i));
-            for(int j=0;j<1000;j++) {
+            for (int j = 0; j < 1000; j++) {
                 int x = random.nextInt(3) * GameData.slices + GameData.slices / 2;
                 int y = random.nextInt(map.getRow());
-                System.out.println(x+":"+y);
+                System.out.println(x + ":" + y);
                 assert plant != null;
                 try {
                     ActiveCard activeCard = new ActiveCard(plant, x, y, this);
@@ -57,7 +61,7 @@ public class PlantAIPlayer extends PlantPlayer {
                     System.out.println("ACCEPT");
                     break;
                 } catch (Exception e) {
-                    System.out.println("faild"+e.getMessage());
+                    System.out.println("faild" + e.getMessage());
                     // its really should be empty
                 }
             }

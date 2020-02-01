@@ -1,10 +1,8 @@
 package Command;
 
 import Main.ActiveCard;
-import Main.GameData;
 import Objects.Creature;
 import Objects.GunShot;
-import Objects.Plant;
 import Objects.Zombie;
 import Player.ZombiePlayer;
 import org.json.simple.JSONArray;
@@ -14,6 +12,7 @@ import java.util.function.Supplier;
 
 public class ZombiePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
+    private Zombie selectedZombie;
 
     {
         this.commands = new Command[]{
@@ -31,7 +30,9 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         };
     }
 
-    private Zombie selectedZombie;
+    public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
+        this.supplier = supplier;
+    }
 
     private void showWaveStatus(InputCommand inputCommand) {
         menu.getConnection().send("showWaveStatus", ((ZombiePlayer) menu.getConnection()
@@ -55,19 +56,17 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         if (zombie.getRemainingCoolDown() > 0) {
             // for graphic
             showHand(null);
-        } else {
+        }
+        else {
             if (zombie.equals(selectedZombie)) {
                 selectedZombie = null;
                 menu.getConnection().send("selectCreature", null);
-            } else {
+            }
+            else {
                 selectedZombie = zombie;
                 menu.getConnection().send("selectCreature", selectedZombie.getName().toLowerCase());
             }
         }
-    }
-
-    public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
-        this.supplier = supplier;
     }
 
     void showHand(InputCommand inputCommand) throws Exception {
@@ -110,13 +109,9 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
         if (((ZombiePlayer) menu.getConnection().getUser().getPlayer()).pickCreature(zombie)) {
             ActiveCard activeCard = new ActiveCard(zombie, x, y, menu.getConnection().getUser().getPlayer());
             ((ZombiePlayer) menu.getConnection().getUser().getPlayer()).addZombieCardInThisWave(activeCard);
-        } else {
-            throw new Exception("you don't have Enough money");
         }
-
-        ActiveCard activeCard = new ActiveCard(zombie, x, y, menu.getConnection().getUser().getPlayer());
-        if (!menu.getConnection().getUser().getPlayer().getMap().canAddActiveCardAndBuy(activeCard)) {
-            menu.getConnection().getUser().getPlayer().getMap().addActiveCard(activeCard);
+        else {
+            throw new Exception("you don't have Enough money");
         }
         menu.getConnection().send("selectCreature", null);
         menu.getConnection().send("showLog", "put successful");
@@ -131,7 +126,7 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
 
     void endTurn(InputCommand inputCommand) throws Exception {
         supplier.get();
-    //    menu.getConnection().popMenuWithoutRun();
+        //    menu.getConnection().popMenuWithoutRun();
     }
 
     void showLawn(InputCommand inputCommand) {

@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 public abstract class CommandHandler {
     protected Command[] commands;
-    protected String firstLineDescription="";
+    protected String firstLineDescription = "";
     protected Menu menu;
 
     public void setFirstLineDescription() {
@@ -21,14 +21,14 @@ public abstract class CommandHandler {
             if (command.accept(jsonObject))
                 return;
         }
-        if(!(jsonObject.get("command")).equals("end turn")){
+        if (!(jsonObject.get("command")).equals("end turn")) {
             throw new Exception("invalid command");
         }
     }
 
     public String help() throws Exception {
         StringBuilder result = new StringBuilder();
-        if(!firstLineDescription.isEmpty()){
+        if (!firstLineDescription.isEmpty()) {
             result.append(firstLineDescription).append("\n");
         }
         result.append("Commands:\n");

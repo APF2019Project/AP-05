@@ -1,6 +1,6 @@
 package Main;
 
-import java.io.*;
+import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class Server {
 
     public static Connection getConnectionByUsername(String username) throws Exception {
         for (Connection connection : connections) {
-            if(connection.getUser()!=null && connection.getUser().getUsername().equals(username)){
+            if (connection.getUser() != null && connection.getUser().getUsername().equals(username)) {
                 return connection;
             }
         }
@@ -29,7 +29,7 @@ public class Server {
 
     public static void run(int port) throws Exception {
         new Thread(() -> {
-            while (true){
+            while (true) {
                 try {
                     Thread.sleep(5000);
                     User.saveAllUsers();

@@ -3,8 +3,8 @@ package Main;
 import org.json.simple.JSONObject;
 
 public class GameMenuSwitcher {
-    private Map map;
     private static GameStatus gameStatus = GameStatus.notInGame;
+    private Map map;
 
     public GameMenuSwitcher(Map map) {
         this.map = map;
@@ -37,7 +37,8 @@ public class GameMenuSwitcher {
                             }
                             if (gameStatus.equals(GameStatus.OnGame)) {
                                 runTurn();
-                            } else {
+                            }
+                            else {
                                 if (!gameStatus.equals(GameStatus.notInGame)) {
                                     JSONObject data = new JSONObject();
                                     data.put("message", GameData.winMessage);

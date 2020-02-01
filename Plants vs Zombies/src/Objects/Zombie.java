@@ -6,14 +6,21 @@ import java.util.ArrayList;
 
 
 public class Zombie extends Creature {
+    private final static ArrayList<Zombie> firstZombies = new ArrayList<>();
+    private static ArrayList<Zombie> allZombies = new ArrayList<>();
     private boolean swimmer, cactusHasEffect, peaHasEffect;
     private int speed, power, powerWithShield;
-    private static ArrayList<Zombie> allZombies = new ArrayList<>();
-    private final static ArrayList<Zombie> firstZombies = new ArrayList<>();
 
 
-    public static ArrayList<Zombie> getFirstZombies() {
-        return firstZombies;
+    public Zombie(JSONHandler jsonHandler) throws Exception {
+        super(jsonHandler);
+        this.swimmer = jsonHandler.getBoolean(FieldNames.swimmer);
+        this.cactusHasEffect = jsonHandler.getBoolean(FieldNames.cactusHasEffect);
+        this.peaHasEffect = jsonHandler.getBoolean(FieldNames.peaHasEffect);
+        this.speed = jsonHandler.getInt(FieldNames.speed);
+        this.power = jsonHandler.getInt(FieldNames.power);
+        this.powerWithShield = jsonHandler.getInt(FieldNames.powerWithShield);
+        allZombies.add(this);
     }
 
     /*
@@ -31,28 +38,16 @@ public class Zombie extends Creature {
         }
     */
 
+    public static ArrayList<Zombie> getFirstZombies() {
+        return firstZombies;
+    }
+
     public static void addFirstZombie(Zombie zombie) {
         firstZombies.add(zombie);
     }
 
-    public Zombie(JSONHandler jsonHandler) throws Exception {
-        super(jsonHandler);
-        this.swimmer = jsonHandler.getBoolean(FieldNames.swimmer);
-        this.cactusHasEffect = jsonHandler.getBoolean(FieldNames.cactusHasEffect);
-        this.peaHasEffect = jsonHandler.getBoolean(FieldNames.peaHasEffect);
-        this.speed = jsonHandler.getInt(FieldNames.speed);
-        this.power = jsonHandler.getInt(FieldNames.power);
-        this.powerWithShield = jsonHandler.getInt(FieldNames.powerWithShield);
-        allZombies.add(this);
-    }
-
     public static ArrayList<Zombie> getAllZombies() {
         return allZombies;
-    }
-
-    public int getPower(boolean hasShield) {
-        if (hasShield) return powerWithShield;
-        else return power;
     }
 
     public static Zombie getZombieByName(String plantName) {
@@ -62,6 +57,11 @@ public class Zombie extends Creature {
             }
         }
         return null;
+    }
+
+    public int getPower(boolean hasShield) {
+        if (hasShield) return powerWithShield;
+        else return power;
     }
 
     @Override

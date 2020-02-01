@@ -16,12 +16,13 @@ public class PlantOnDayAndWaterModePlayerSceneController extends GameController 
     }
 
 
-    public void showHand(Object object){
+    public void showHand(Object object) {
         JSONObject jsonObject = (JSONObject) object;
-        if((boolean)jsonObject.get("hasWater")) {
+        if ((boolean) jsonObject.get("hasWater")) {
             backgroundImageView.setImage(new Image(new File(
                     "src/Files/waterBackgroundCutSixLines.jpg").toURI().toString()));
-        }else {
+        }
+        else {
             backgroundImageView.setImage(new Image(new File(
                     "src/Files/dayBackgroundCutSixLines.jpg").toURI().toString()));
         }

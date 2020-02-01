@@ -27,7 +27,8 @@ public class JSONHandler {
     Object getFromJSONObject(FieldNames key) throws Exception {
         if (jsonObject.containsKey(key.name())) {
             return jsonObject.get(key.name());
-        } else {
+        }
+        else {
             throw new Exception("Key:" + key.name() + " doesn't exist in JsonObject");
         }
     }
@@ -45,17 +46,17 @@ public class JSONHandler {
         return (boolean) getFromJSONObject(key);
     }
 
-    void put(FieldNames key, Object value){
+    void put(FieldNames key, Object value) {
         jsonObject.put(key.name(), value);
     }
 
     void set(FieldNames key, Object value) throws Exception {
-        if(file==null){
+        if (file == null) {
             throw new Exception("File is null");
         }
         jsonObject.put(key.name(), value);
         //System.out.println(jsonObject.toJSONString());
-        FileWriter fileWriter=new FileWriter(file);
+        FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
     }

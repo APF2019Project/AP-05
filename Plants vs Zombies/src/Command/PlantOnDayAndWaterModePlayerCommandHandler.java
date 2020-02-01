@@ -1,22 +1,18 @@
 package Command;
 
 import Main.ActiveCard;
-import Main.GameData;
-import Main.Main;
 import Objects.Creature;
 import Objects.GunShot;
 import Objects.Plant;
 import Objects.Zombie;
-import Player.PlantOnDayAndWaterModeHumanPlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
+    private boolean shovelSelected;
 
     {
         this.commands = new Command[]{
@@ -29,10 +25,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
                         "remove [row],[column]: To remove a plant from given coordination."),
                 new Command(this::endTurn, "end turn", "end turn: To end turn."),
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
-                        "zombies and plants.")
+                        "zombies and plants."),
+                new Command(this::selectShovel, "select shovel", "")
         };
     }
-
 
     public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier) {
         this.supplier = supplier;
@@ -43,7 +39,6 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     private String selectedPlantName = null;
-
 
     void showHand(InputCommand inputCommand) throws Exception {
         JSONObject sendingJSONObject = new JSONObject();
@@ -63,6 +58,11 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
         menu.getConnection().send("showHand", sendingJSONObject);
     }
 
+    void selectShovel(InputCommand inputCommand) {
+        shovelSelected = true;
+        selectedPlantName = null;
+        menu.getConnection().send("selectCreature", "shovel");
+    }
 
     void select(InputCommand inputCommand) throws Exception {
         String plantName = (String) inputCommand.getInputJsonObject().get("creatureName");

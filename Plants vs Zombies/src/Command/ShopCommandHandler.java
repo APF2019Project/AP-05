@@ -1,6 +1,5 @@
 package Command;
 
-import Main.Main;
 import Objects.Creature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

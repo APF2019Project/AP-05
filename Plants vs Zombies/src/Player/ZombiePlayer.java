@@ -2,21 +2,19 @@ package Player;
 
 import Main.ActiveCard;
 import Main.Connection;
-import Main.User;
 import Objects.Creature;
 
 import java.util.ArrayList;
 
 public abstract class ZombiePlayer extends Player {
+    protected ArrayList<ActiveCard> zombieCardsInThisWave = new ArrayList<>();
+    protected boolean isWaveRunning;
+    private int freeTurns = 10;
     public ZombiePlayer(Connection connection) {
         super(connection);
     }
 
-    protected ArrayList<ActiveCard> zombieCardsInThisWave = new ArrayList<>();
-    protected boolean isWaveRunning;
-    private int freeTurns=10;
-
-    public void addZombieCardInThisWave(ActiveCard activeCard){
+    public void addZombieCardInThisWave(ActiveCard activeCard) {
         zombieCardsInThisWave.add(activeCard);
     }
 
@@ -25,7 +23,7 @@ public abstract class ZombiePlayer extends Player {
     }
 
     public boolean canStart() {
-        return !isWaveRunning && freeTurns>=10;
+        return !isWaveRunning && freeTurns >= 10;
     }
 
     public boolean isWaveRunning() {
@@ -47,23 +45,23 @@ public abstract class ZombiePlayer extends Player {
     }
 
     public void doAction() throws Exception {
-        if(zombieCardsInThisWave.isEmpty()){
-            isWaveRunning=false;
+        if (zombieCardsInThisWave.isEmpty()) {
+            isWaveRunning = false;
             freeTurns++;
             return;
         }
         if (isWaveRunning) {
-            freeTurns=0;
-            boolean[] added =new boolean[getMap().getRow()];
+            freeTurns = 0;
+            boolean[] added = new boolean[getMap().getRow()];
             ArrayList<ActiveCard> removedZombies = new ArrayList<>();
-            for(ActiveCard zombieCardInThisWave:zombieCardsInThisWave) {
-                if(!added[zombieCardInThisWave.getY()]){
-                    added[zombieCardInThisWave.getY()]=true;
+            for (ActiveCard zombieCardInThisWave : zombieCardsInThisWave) {
+                if (!added[zombieCardInThisWave.getY()]) {
+                    added[zombieCardInThisWave.getY()] = true;
                     getMap().addActiveCard(zombieCardInThisWave);
                     removedZombies.add(zombieCardInThisWave);
                 }
             }
-            for(ActiveCard zombieCardInThisWave:removedZombies) {
+            for (ActiveCard zombieCardInThisWave : removedZombies) {
                 zombieCardsInThisWave.remove(zombieCardInThisWave);
             }
         }

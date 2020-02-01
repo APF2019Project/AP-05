@@ -23,13 +23,13 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.beans.EventHandler;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class GameController implements Controller {
+    @FXML
+    protected AnchorPane mainAnchorPane;
     @FXML
     protected ImageView selectImageView, backgroundImageView;
     @FXML
@@ -41,8 +41,12 @@ public abstract class GameController implements Controller {
             new MemberInHandBoxController[GameData.creatureOnHandSize + 1]; //+1 is for shovel
     protected ImageView[][] imageViews;
     protected ArrayList<Pane> freeCreaturesPaneArrayList = new ArrayList<>();
-
+    @FXML
+    protected AnchorPane gamePane;
     private int mapRowCount, mapColCount, mapColCountWithSlice;
+    @FXML
+    private Label sunLabel;
+    private String creatureName;
 
     public GameController(int mapRowCount, int mapColCount) {
         this.mapRowCount = mapRowCount;
@@ -50,13 +54,6 @@ public abstract class GameController implements Controller {
         mapColCountWithSlice = mapColCount * GameData.slices + GameData.slices / 2;
         imageViews = new ImageView[mapColCount][];
     }
-
-    @FXML
-    private Label sunLabel;
-
-    @FXML
-    protected AnchorPane gamePane;
-    private String creatureName;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
@@ -145,13 +142,20 @@ public abstract class GameController implements Controller {
         try {
             int x = ((Long) jsonObject.get("x")).intValue();
             int y = ((Long) jsonObject.get("y")).intValue();
+            String name = (String) jsonObject.get("name");
             Pane pane = newPaneWithSize(getNormalWidth() * sizeRatio, (getNormalHeight() + 10) * sizeRatio);
             pane.setLayoutX(getZombieLayoutX(x) + dx);
             pane.setLayoutY(getZombieLayoutY(y) + dy);
 
             int speed = ((Long) jsonObject.getOrDefault("speed", 0L)).intValue();
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                    Main.getImageAddressByCreatureName((String) jsonObject.get("name")))));
+            ImageView imageView;
+            if (name.endsWith("gun")) {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName("peashooter gun"))));
+            } else {
+                imageView = new ImageView(new Image(Objects.requireNonNull(
+                        Main.getImageAddressByCreatureName(name))));
+            }
             imageView.setPreserveRatio(false);
             imageView.setFitWidth(getNormalWidth() * sizeRatio);
             imageView.setFitHeight((getNormalHeight() + 10) * sizeRatio);
@@ -256,6 +260,28 @@ public abstract class GameController implements Controller {
         MenuHandler.getClient().send("show lawn", null);
     }
 
+    private void handleShovel() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GameController.class.getResource("MemberInHandBox.fxml"));
+        final AnchorPane anchorPane = fxmlLoader.load();
+        onHandCardControllers[GameData.creatureOnHandSize] = fxmlLoader.getController();
+        anchorPane.setOnMouseClicked((actionEvent -> {
+            try {
+                MenuHandler.getClient().send("select shovel", null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+        final JSONObject shovel = new JSONObject();
+        shovel.put("name", "shovel");
+        Platform.runLater(() -> {
+            //System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            mainAnchorPane.getChildren().add(anchorPane);
+            onHandCardControllers[GameData.creatureOnHandSize].showHand(shovel);
+            anchorPane.setLayoutX(97.0);
+            anchorPane.setLayoutY(14.0);
+        });
+    }
+
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         for (int i = 0; i < GameData.creatureOnHandSize + 1; i++) {
@@ -264,8 +290,6 @@ public abstract class GameController implements Controller {
             onHandCardControllers[i] = fxmlLoader.getController();
             if (i < GameData.creatureOnHandSize) {
                 handBox.getChildren().add(anchorPane);
-            } else {
-                shovelPane.getChildren().add(anchorPane);
             }
             VBox.setMargin(anchorPane, new Insets(3, 3, 3, 3));
             final int index = i;
@@ -277,11 +301,7 @@ public abstract class GameController implements Controller {
                 }
             }));
         }
-        Platform.runLater(() -> {
-            JSONObject jObject = new JSONObject();
-            jObject.put("name", "shovel");
-            onHandCardControllers[GameData.creatureOnHandSize].showHand(jObject);
-        });
+        handleShovel();
         for (int i = 0; i < mapRowCount; i++) {
             imageViews[i] = new ImageView[mapColCount];
             for (int j = 0; j < mapColCount; j++) {

@@ -54,20 +54,22 @@ public class GunShot {
     }
 
     public void collision(ActiveCard activeCard) {
-        if(isUsed())return;
+        if (isUsed()) return;
         if (gun.isIcy()) {
             activeCard.collisionSlowingGunShot(GameData.iceSlowDownTime, GameData.iceSlowDownPercent);
         }
         if (gun.isSleepy()) {
             activeCard.collisionSlowingGunShot(GameData.sleepySlowDownTime, GameData.sleepySlowDownPercent);
         }
-        if (gun.isProjectile() || (activeCard.getCreature().getShield()!=null && activeCard.getCreature().getShield().isFullBodyShield())) {
+        if (gun.isProjectile() || (activeCard.getCreature().getShield() != null && activeCard.getCreature().getShield().isFullBodyShield())) {
             if (activeCard.getShieldRemainingHp() > 0) {
                 activeCard.setShieldRemainingHp(activeCard.getShieldRemainingHp() - gun.getDamage());
-            } else {
+            }
+            else {
                 activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
             }
-        } else {
+        }
+        else {
             activeCard.setRemainingHp(activeCard.getRemainingHp() - gun.getDamage());
         }
         destination = activeCard.getX();
@@ -77,7 +79,8 @@ public class GunShot {
         ActiveCard activeCard = map.getZombieIn(this.y, this.x, this.vx);
         if (activeCard == null) {
             this.x += this.vx;
-        } else {
+        }
+        else {
             collision(activeCard);
         }
     }
