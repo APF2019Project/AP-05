@@ -59,9 +59,15 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     void selectShovel(InputCommand inputCommand) {
-        shovelSelected = true;
-        selectedPlantName = null;
-        menu.getConnection().send("selectCreature", "shovel");
+        if(shovelSelected) {
+            shovelSelected = false;
+            selectedPlantName = null;
+            menu.getConnection().send("selectCreature", null);
+        }else{
+            shovelSelected = true;
+            selectedPlantName = null;
+            menu.getConnection().send("selectCreature", "shovel");
+        }
     }
 
     void select(InputCommand inputCommand) throws Exception {
