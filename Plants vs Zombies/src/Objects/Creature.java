@@ -1,9 +1,6 @@
 package Objects;
 
-import Main.ActiveCard;
-import Main.FieldNames;
-import Main.JSONHandler;
-import Main.Map;
+import Main.*;
 
 import java.util.ArrayList;
 
@@ -35,7 +32,7 @@ public abstract class Creature {
         this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.disposable = jsonHandler.getBoolean(FieldNames.disposable);
         this.coolDown = jsonHandler.getInt(FieldNames.coolDown);
-        this.fullHp = jsonHandler.getInt(FieldNames.fullHp);
+        this.fullHp = jsonHandler.getInt(FieldNames.fullHp)* GameData.slices/2;
         this.price = jsonHandler.getInt(FieldNames.price);
         this.reloadTime = jsonHandler.getInt(FieldNames.reloadTime);
         this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
