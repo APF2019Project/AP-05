@@ -13,6 +13,7 @@ public class AllUsersCommandHandler extends CommandHandler {
                 new Command(this::showAllUsers, "show all users", ""),
                 new Command(this::EnterChat, "enter chat", ""),
                 new Command(this::endTurn, "end turn", ""),
+                new Command(this::enterGlobalChat,"enter global chat","")
         };
     }
 
@@ -41,5 +42,8 @@ public class AllUsersCommandHandler extends CommandHandler {
         }
 
         new Menu(menu.getConnection(), new ChatCommandHandler(menu.getConnection().getUser(), otherUser)).run();
+    }
+    public void enterGlobalChat(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), new GlobalChatCommandHandler()).run();
     }
 }
