@@ -1,10 +1,12 @@
-package Scenes.AllUsers;
+package Scenes.GlobalChat;
 
 import Helper.Controller;
 import Helper.MenuHandler;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -14,20 +16,28 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AllUsersSceneController implements Controller, Refreshable {
+public class GlobalChatSceneController implements Controller, Refreshable{
     @FXML
-    private VBox usersBox;
+    private VBox chatBox;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private TextField textField;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
+
     @FXML
-    void onGlobalChatButtonMouseClicked() throws IOException {
-        MenuHandler.getClient().send("enter global chat", null);
-        MenuHandler.closeScene();
+    void onSendButtonMouseClicked() throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("content", textField.getText());
+        textField.setText("");
+        MenuHandler.getClient().send("send message", jsonObject);
     }
+
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         sendLoadRequest();
@@ -38,27 +48,28 @@ public class AllUsersSceneController implements Controller, Refreshable {
         sendLoadRequest();
     }
 
-    public void showAllUsers(Object object) {
+    public void showChat(Object object) {
         JSONArray jsonArray = (JSONArray) object;
         ArrayList<BorderPane> arrayList = new ArrayList<>();
-        for (Object object1 : jsonArray) {
-            JSONObject jsonObject = (JSONObject) object1;
+        for(Object otherObject : jsonArray) {
+            JSONObject jsonObject = (JSONObject) otherObject;
             try {
                 BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler(
-                        "Scenes/AllUsers/MemberInAllUsers.fxml", jsonObject);
+                        "Scenes/Chat/MemberInChat.fxml", jsonObject);
                 arrayList.add(borderPane);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         Platform.runLater(() -> {
-            usersBox.getChildren().clear();
-            usersBox.getChildren().addAll(arrayList);
+            chatBox.getChildren().clear();
+            chatBox.getChildren().addAll(arrayList);
+            scrollPane.setVvalue(1.0);
         });
     }
 
     @Override
     public void sendLoadRequest() throws IOException {
-        MenuHandler.getClient().send("show all users", null);
+        MenuHandler.getClient().send("show chat", null);
     }
 }
