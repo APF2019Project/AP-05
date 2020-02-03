@@ -24,6 +24,6 @@ public class GlobalChatCommandHandler extends CommandHandler {
     }
 
     public void showChat(InputCommand inputCommand) {
-        menu.getConnection().send("showChat", Message.getChatBetweenUsers(menu.getConnection().getUser(), null));
+        menu.getConnection().send("showChat", Message.getChatOfServer());
     }
 }

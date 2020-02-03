@@ -60,7 +60,16 @@ public class Message {
         chat.sort(Comparator.comparing(Message::getId));
         return chat;
     }
-
+    private static ArrayList<Message> getChatOfServerArray() {
+        ArrayList<Message> chat = new ArrayList<>();
+        for (Message message : allMessages) {
+            if( message.getReceiver() == null) {
+                chat.add(message);
+            }
+        }
+        chat.sort(Comparator.comparing(Message::getId));
+        return chat;
+    }
     public static JSONArray getChatBetweenUsers(User user1, User user2) {
         ArrayList<Message> arrayList = getChatBetweenUsersArray(user1, user2);
         JSONArray jsonArray = new JSONArray();
@@ -69,7 +78,14 @@ public class Message {
         }
         return jsonArray;
     }
-
+    public static JSONArray getChatOfServer() {
+        ArrayList<Message> arrayList = getChatOfServerArray();
+        JSONArray jsonArray = new JSONArray();
+        for(Message message : arrayList) {
+            jsonArray.add(message.toJsonObject());
+        }
+        return jsonArray;
+    }
     public synchronized static void saveAllMessages() throws Exception {
         JSONArray messageJsonArray = new JSONArray();
         for(Message message : allMessages) {
