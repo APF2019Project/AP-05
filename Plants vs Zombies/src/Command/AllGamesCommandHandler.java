@@ -59,7 +59,7 @@ public class AllGamesCommandHandler extends CommandHandler {
         if(chosenMap==null){
             throw new Exception("game doesn't exist anymore!");
         }
-        new Menu(menu.getConnection(), new GameWatcherCommandHandler(chosenMap)).run();
+       // new Menu(menu.getConnection(), new GameWatcherCommandHandler(chosenMap)).run();
         // to-do
         /*
         String otherUsername = (String) inputCommand.getInputJsonObject().get("username");
