@@ -16,15 +16,18 @@ public class MemberInChatController implements Controller {
     private ImageView imageView;
     @FXML
     private Label contentLabel;
+    @FXML
+    private Label usernameLabel;
 
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         String imageAddress = (String) jsonObject.get("senderImage");
         String content = (String) jsonObject.get("content");
-        System.out.println(imageAddress + "\n" + content);
+        String username = (String) jsonObject.get("senderUsername");
         Platform.runLater(() -> {
             imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
             contentLabel.setText(content);
+            usernameLabel.setText(username);
         });
     }
 

@@ -26,7 +26,7 @@ public class AllUsersSceneController implements Controller, Refreshable {
         MenuHandler.closeScene();
     }
     @FXML
-    void onGlobalChatButtonMouseClicked(MouseEvent mouseEvent) throws IOException {
+    void onGlobalChatButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("enter global chat", null);
     }
     @Override
