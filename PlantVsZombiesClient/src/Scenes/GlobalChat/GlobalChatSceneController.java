@@ -16,7 +16,7 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GlobalChatSceneController implements Controller, Refreshable{
+public class GlobalChatSceneController implements Controller,Refreshable {
     @FXML
     private VBox chatBox;
     @FXML
