@@ -74,11 +74,15 @@ public class MenuHandler {
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
+        System.out.println(!controllers.isEmpty() && getCurrentController() instanceof Refreshable);
         if (!controllers.isEmpty() && getCurrentController() instanceof Refreshable &&
                 getCurrentController().getClass().getSimpleName().equals(menuName + "SceneController")) {
+            System.out.println("HEEEEEEEEEEEEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYy");
             ((Refreshable) getCurrentController()).sendLoadRequest();
             return;
         }
+        else if(!controllers.isEmpty())
+            System.out.println(getCurrentController().getClass().getSimpleName() + " XXX " + menuName);
         String prefix = "../Scenes/";
         if (menuName.contains("Player")) {
             prefix = "../Scenes/Games/";
@@ -157,6 +161,7 @@ public class MenuHandler {
         }
         try {
             System.err.println(getCurrentController().getClass().getSimpleName());
+            System.err.println(command);
             Method method = getDeclaredMethod(getCurrentController().getClass(), command, Object.class);
             method.invoke(getCurrentController(), data);
         } catch (Exception e) {
