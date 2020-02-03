@@ -2,12 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.AllUsers.AllUsersSceneController">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.ChatSceneController">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
@@ -16,9 +17,9 @@
                   <Image url="@../../Files/plantsVsZombiesEmptyMiddle.jpg" />
                </image>
             </ImageView>
-            <ScrollPane layoutX="157.0" layoutY="58.0" opacity="0.82" prefHeight="370.0" prefWidth="465.0">
+            <ScrollPane fx:id="scrollPane" layoutX="192.0" layoutY="58.0" opacity="0.82" prefHeight="370.0" prefWidth="465.0">
                <content>
-                  <VBox fx:id="usersBox" prefHeight="426.0" prefWidth="1.0" />
+                  <VBox fx:id="chatBox" prefHeight="426.0" prefWidth="1.0" />
                </content>
             </ScrollPane>
             <Button mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
@@ -30,11 +31,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="658.0" layoutY="130.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="144.0">
+            <TextField fx:id="textField" layoutX="192.0" layoutY="440.0" prefHeight="30.0" prefWidth="411.0" promptText="send a message" />
+            <Button fx:id="sendButton" layoutX="611.0" layoutY="440.0" mnemonicParsing="false" onMouseClicked="#onSendButtonMouseClicked" prefHeight="24.0" prefWidth="46.0">
                <graphic>
-                  <ImageView fitHeight="120.0" fitWidth="152.0" onMouseClicked="#onGlobalChatButtonMouseClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Files/GlobalChat.png" />
+                        <Image url="@../../Files/sendIcon.png" />
                      </image>
                   </ImageView>
                </graphic>

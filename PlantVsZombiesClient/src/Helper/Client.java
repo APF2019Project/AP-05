@@ -1,6 +1,7 @@
 package Helper;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,6 +12,7 @@ public class Client {
     private Socket socket;
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
+    private String token;
 
     public Client(String address, int port) {
         try {
@@ -48,7 +50,9 @@ public class Client {
     public void startListening() {
         Thread thread = new Thread(() -> {
             try {
-                String line = "";
+                String line = dataInputStream.readUTF();
+                JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(line);
+                token=messageJsonObject.get("token").toString();
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
                     MenuHandler.receive(line);
@@ -72,6 +76,7 @@ public class Client {
         System.out.println(command);
         System.out.println(data);
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token",token);
         jsonObject.put("command", command);
         jsonObject.put("data", data);
         String message = jsonObject.toJSONString();

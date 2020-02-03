@@ -8,20 +8,38 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class Connection {
+    private static HashMap<String,Connection> allClientState=new HashMap<String,Connection>();
+
+
     private User user;
     private ArrayList<Menu> menus = new ArrayList<>();
     private DataOutputStream dataOutputStream;
     private Thread thread;
     private Socket socket;
+    private String token;
 
+    String tokenGenerator(){
+        Random random=new Random();
+        StringBuilder token= new StringBuilder();
+        for(int i=0;i<10;i++){
+            token.append(random.nextInt(26) + 'a');
+        }
+        return token.toString();
+    }
     // AI mode
     public Connection(User user) {
         this.user = user;
+        this.token=tokenGenerator();
+        allClientState.put(token,this);
     }
 
     public Connection(Socket socket, DataOutputStream dataOutputStream) {
+        this.token=tokenGenerator();
+        allClientState.put(token,this);
         this.socket = socket;
         this.dataOutputStream = dataOutputStream;
         Server.getDataOutputStreams().add(dataOutputStream);
@@ -29,7 +47,22 @@ public class Connection {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
+
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("token", token);
+                    String message = jsonObject.toJSONString();
+                    System.out.println("Server: " + message);
+                    dataOutputStream.writeUTF(message);
+                    dataOutputStream.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 dataInputStream = new DataInputStream(socket.getInputStream());
+
+
+
                 new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
                 String line = "";
@@ -65,6 +98,7 @@ public class Connection {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
         });
         thread.start();
