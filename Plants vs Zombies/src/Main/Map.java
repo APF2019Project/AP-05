@@ -13,8 +13,13 @@ public class Map {
     private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
     private int row, col, numberOfRemainedWaves;
+    private static ArrayList<Map> allRunningGame=new ArrayList<Map>();
 
+    public static ArrayList<Map> getAllRunningGame() {
+        return allRunningGame;
+    }
     public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
+        allRunningGame.add(this);
         this.row = row;
         this.col = col;
         this.plantPlayer = plantPlayer;
@@ -248,6 +253,9 @@ public class Map {
         }
         return false;
     }
+    public void gameIsFinish(){
+        allRunningGame.remove(this);
+    }
 
     public GameStatus run() throws Exception {
         for (Creature creature : plantPlayer.getCreaturesOnHand()) {
@@ -257,6 +265,7 @@ public class Map {
             creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
         }
         if (numberOfRemainedWaves < 0) {
+            gameIsFinish();
             return GameStatus.PlantPlayerWins;
         }
         for (GunShot gunShot : gunShotArrayList) {
@@ -271,12 +280,14 @@ public class Map {
                 activeCard.doAction(this);
         }
         if (mapMode.equals(MapMode.Zombie) && !isMapHasPlant()) {
+            gameIsFinish();
             return GameStatus.ZombiePlayerWins;
         }
         if (!mapMode.equals(MapMode.Zombie)) {
             for (ActiveCard activeCard : activeCardArrayList) {
                 if (activeCard.getCreature() instanceof Zombie) {
                     if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
+                        gameIsFinish();
                         return GameStatus.ZombiePlayerWins;
                     }
                 }
@@ -319,7 +330,6 @@ public class Map {
 
         return GameStatus.OnGame;
     }
-
     public ActiveCard getNearestZombie(ActiveCard activeCard) {
         ActiveCard nearestZombie = null;
         int distance = GameData.inf;
