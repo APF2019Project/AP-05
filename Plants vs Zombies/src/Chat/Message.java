@@ -112,6 +112,8 @@ public class Message {
         jsonObject.put("id", this.getId());
         jsonObject.put("content", this.getContent());
         jsonObject.put("senderImage", this.getSender().getImageAddress());
+        jsonObject.put("senderUsername", this.getSender().getUsername());
+
         if(repliedMessage != null)
             jsonObject.put("repliedMessageId", this.getRepliedMessage().getId());
         return jsonObject;

@@ -9,7 +9,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.AllUsers.AllUsersSceneController">
    <children>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <AnchorPane maxHeight="1.0" maxWidth="1.0" prefHeight="1.0" prefWidth="1.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,15 +30,9 @@
                   </ImageView>
                </graphic>
             </Button>
-<<<<<<< HEAD
-            <Button layoutX="658.0" layoutY="130.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="144.0">
-               <graphic>
-                  <ImageView fitHeight="120.0" fitWidth="152.0" onMouseClicked="#onGlobalChatButtonMouseClicked" pickOnBounds="true" preserveRatio="true">
-=======
             <Button layoutX="658.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#onGlobalChatButtonMouseClicked" prefHeight="120.0" prefWidth="144.0">
                <graphic>
                   <ImageView fitHeight="120.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
->>>>>>> 7859e94aa4716cdf44362b56a509b2e50a6d5f01
                      <image>
                         <Image url="@../../Files/GlobalChat.png" />
                      </image>
