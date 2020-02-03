@@ -77,7 +77,11 @@ public class Message {
             messageJsonObject.put(FieldNames.id.name() , message.getId());
             messageJsonObject.put(FieldNames.content.name(), message.getContent());
             messageJsonObject.put(FieldNames.senderUsername.name(), message.getSender().getUsername());
-            messageJsonObject.put(FieldNames.receiverUsername.name(), message.getReceiver().getUsername());
+            if(message.getReceiver()==null){
+                messageJsonObject.put(FieldNames.receiverUsername.name(), "GlobalChat");
+            }else {
+                messageJsonObject.put(FieldNames.receiverUsername.name(), message.getReceiver().getUsername());
+            }
             messageJsonArray.add(messageJsonObject);
         }
         new JSONHandler(new File(GameData.messagesJSONFilePath)).set(Main.FieldNames.messages, messageJsonArray);

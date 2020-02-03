@@ -254,11 +254,19 @@ public class GameData {
             JSONObject messageJsonObject = (JSONObject) object;
             String sender = (String) messageJsonObject.get(Chat.FieldNames.senderUsername.name());
             String receiver = (String) messageJsonObject.get(Chat.FieldNames.receiverUsername.name());
-            new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
-                    User.getUserByUsername(sender),
-                    User.getUserByUsername(receiver),
-                    ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
-            );
+            if(receiver.equals("GlobalChat")) {
+                new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
+                        User.getUserByUsername(sender),
+                        null,
+                        ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
+                );
+            }else {
+                new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
+                        User.getUserByUsername(sender),
+                        User.getUserByUsername(receiver),
+                        ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
+                );
+            }
         }
     }
 

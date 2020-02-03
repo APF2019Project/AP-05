@@ -1,5 +1,9 @@
-package Main;
+package Objects;
 
+import Main.ActiveCard;
+import Main.GameData;
+import Main.JSONHandler;
+import Main.Map;
 import Objects.Gun;
 import Objects.GunShot;
 
