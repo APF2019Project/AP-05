@@ -38,6 +38,10 @@ public class MainMenuSceneController implements Controller {
     void onProfileButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("profile", null);
     }
+    @FXML
+    void onAllGamesButtonMouseClicked() throws IOException {
+        MenuHandler.getClient().send("show all games", null);
+    }
 
     @FXML
     void onShopButtonMouseClicked() throws IOException {
