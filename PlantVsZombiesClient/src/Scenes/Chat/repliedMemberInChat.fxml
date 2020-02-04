@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -12,11 +13,11 @@
     <left>
       <VBox BorderPane.alignment="CENTER">
          <children>
-              <ImageView fx:id="imageView" fitHeight="89.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="imageView" fitHeight="65.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
                   <image>
             </image>
               </ImageView>
-             <Label fx:id="usernameLabel" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="106.0" text="Username" textAlignment="CENTER" wrapText="true">
+             <Label fx:id="usernameLabel" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="69.0" text="Username" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -39,4 +40,13 @@
     <bottom>
         <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
     </bottom>
+   <top>
+      <HBox fx:id="topHbox" prefHeight="32.0" prefWidth="341.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="repliedUsernameLabel" prefHeight="31.0" prefWidth="116.0" text="replied username" />
+            <Separator orientation="VERTICAL" prefHeight="32.0" prefWidth="56.0" />
+            <Label fx:id="repliedMessage" prefHeight="31.0" prefWidth="277.0" text="replied message1" />
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
