@@ -15,10 +15,6 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
     private Zombie selectedZombie;
 
     {
-
-    }
-
-    public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
         this.commands = new Command[]{
                 new Command(this::showWaveStatus, "show wave status", "show hand: To see selected cards."),
                 new Command(this::showHand, "show hand", "show hand: To see selected cards."),
@@ -32,37 +28,14 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
                         "zombies and plants"),
                 new Command(this::select, "select", ""),
         };
+    }
+
+    public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
 
-    public ZombiePlayerCommandHandler(Supplier<Void> supplier,  boolean isViewer) {
-        if(isViewer){
-            this.commands = new Command[]{
-                    new Command(this::showWaveStatus, "show wave status", "show hand: To see selected cards."),
-                    new Command(this::showHand, "show hand", "show hand: To see selected cards."),
-                    new Command(this::showLanes, "show lanes", "show lanes: To see " +
-                            "rows and zombies to go there."),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining \n" +
-                            "zombies and plants"),
-            };
-        }else{
-            this.commands = new Command[]{
-                    new Command(this::showWaveStatus, "show wave status", "show hand: To see selected cards."),
-                    new Command(this::showHand, "show hand", "show hand: To see selected cards."),
-                    new Command(this::showLanes, "show lanes", "show lanes: To see " +
-                            "rows and zombies to go there."),
-                    new Command(this::put, "put",
-                            "put [name],[number of zombies to put],[row]: to put zombies."),
-                    new Command(this::start, "start", "start: To start current wave."),
-                    new Command(this::endTurn, "end turn", "end turn: To end turn."),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining \n" +
-                            "zombies and plants"),
-                    new Command(this::select, "select", ""),
-            };
-        }
-        this.supplier = supplier;
 
-    }
 
     private void showWaveStatus(InputCommand inputCommand) {
         menu.getConnection().send("showWaveStatus", ((ZombiePlayer) menu.getConnection()

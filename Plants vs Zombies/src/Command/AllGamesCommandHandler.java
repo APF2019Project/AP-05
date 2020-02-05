@@ -61,15 +61,7 @@ public class AllGamesCommandHandler extends CommandHandler {
         if(chosenMap==null){
             throw new Exception("game doesn't exist anymore!");
         }
-       // new Menu(menu.getConnection(), new GameWatcherCommandHandler(chosenMap)).run();
-        // to-do
-        /*
-        String otherUsername = (String) inputCommand.getInputJsonObject().get("username");
-        User otherUser = User.getUserByUsername(otherUsername);
-        if (otherUser == null) {
-            throw new Exception("user doesn't exist anymore!");
-        }
 
-        new Menu(menu.getConnection(), new ChatCommandHandler(menu.getConnection().getUser(), otherUser)).run();*/
+        new Menu(menu.getConnection(), new watchGameCommandHandler(chosenMap)).run();
     }
 }
