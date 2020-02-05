@@ -13,9 +13,7 @@ import java.util.function.Supplier;
 public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
     private boolean shovelSelected;
-
-
-    public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier) {
+    {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To see your collection's " +
                         "remaining cooldown and other things"),
@@ -29,32 +27,10 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
                         "zombies and plants."),
                 new Command(this::selectShovel, "select shovel", "")
         };
-        this.supplier = supplier;
     }
 
-    public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier, boolean isViewer) {
-        if(isViewer){
-            this.commands = new Command[]{
-                    new Command(this::showHand, "show hand", "show hand: To see her collection's " +
-                            "remaining cooldown and other things"),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
-                            "zombies and plants.")
-            };
-        }else{
-            this.commands = new Command[]{
-                    new Command(this::showHand, "show hand", "show hand: To see your collection's " +
-                            "remaining cooldown and other things"),
-                    new Command(this::select, "select", "select [Plant Name]: To select a plant"),
-                    new Command(this::plant, "plant",
-                            "plant [row],[column]: To plant your selected plant in the given coordination."),
-                    new Command(this::remove, "remove",
-                            "remove [row],[column]: To remove a plant from given coordination."),
-                    new Command(this::endTurn, "end turn", "end turn: To end turn."),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
-                            "zombies and plants."),
-                    new Command(this::selectShovel, "select shovel", "")
-            };
-        }
+    public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
 

@@ -14,9 +14,7 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     boolean shovelSelected = false;
     private Supplier<Void> supplier;
     private int plantIndex = -1;
-
-
-    public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
+    {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "showHand: To see your current cards."),
                 new Command(this::select, "select", "select [number]: To select " +
@@ -30,33 +28,14 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
                         "zombies and plants.")
         };
+    }
+
+    public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
 
-    public PlantOnRailModePlayerCommandHandler( Supplier<Void> supplier, boolean isViewer) {
-        if(isViewer){
-            this.commands = new Command[]{
-                    new Command(this::showHand, "show hand", "showHand: To see your current cards."),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
-                            "zombies and plants.")
-            };
-        }else{
-            this.commands = new Command[]{
-                    new Command(this::showHand, "show hand", "showHand: To see your current cards."),
-                    new Command(this::select, "select", "select [number]: To select " +
-                            "number'th card."),
-                    new Command(this::record, "record", "record: To see number of killed zombies."),
-                    new Command(this::put, "put",
-                            "plant [row],[column]: To plant your selected plant in the given coordination."),
-                    new Command(this::remove, "remove",
-                            "remove [row],[column]: To remove a plant from given coordination."),
-                    new Command(this::endTurn, "end turn", "end turn: To end turn."),
-                    new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
-                            "zombies and plants.")
-            };
-        }
-        this.supplier = supplier;
-    }
+
 
 //private Plant selectedPlant = null;
 

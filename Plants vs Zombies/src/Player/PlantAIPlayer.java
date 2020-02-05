@@ -22,7 +22,6 @@ public class PlantAIPlayer extends PlantPlayer {
             supplier.get();
         }
     }
-
     @Override
     public void gameAction() {
 

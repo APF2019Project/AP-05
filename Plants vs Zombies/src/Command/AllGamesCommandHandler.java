@@ -12,7 +12,7 @@ public class AllGamesCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::showAllGames, "show all games", ""),
-                new Command(this::EnterGame, "enter games", ""),
+                new Command(this::EnterGame, "enter game", ""),
                 new Command(this::endTurn, "end turn", ""),
         };
     }
@@ -47,11 +47,13 @@ public class AllGamesCommandHandler extends CommandHandler {
     }
 
     public void EnterGame(InputCommand inputCommand) throws Exception {
-        String plantUsername = (String) inputCommand.getInputJsonObject().get("username");
+        String plantUsername = (String) inputCommand.getInputJsonObject().get("firstUsername");
+        String zombieUsername = (String) inputCommand.getInputJsonObject().get("secondUsername");
         ArrayList<Map> allGames = Map.getAllRunningGame();
         Map chosenMap=null;
         for(Map map :allGames){
-            if(map.getPlantPlayer().getConnection().getUser().getUsername().equals(plantUsername)){
+            if(map.getPlantPlayer().getConnection().getUser().getUsername().equals(plantUsername) &&
+                    map.getZombiePlayer().getConnection().getUser().getUsername().equals(zombieUsername)){
                 chosenMap=map;
                 break;
             }
@@ -59,15 +61,7 @@ public class AllGamesCommandHandler extends CommandHandler {
         if(chosenMap==null){
             throw new Exception("game doesn't exist anymore!");
         }
-       // new Menu(menu.getConnection(), new GameWatcherCommandHandler(chosenMap)).run();
-        // to-do
-        /*
-        String otherUsername = (String) inputCommand.getInputJsonObject().get("username");
-        User otherUser = User.getUserByUsername(otherUsername);
-        if (otherUser == null) {
-            throw new Exception("user doesn't exist anymore!");
-        }
 
-        new Menu(menu.getConnection(), new ChatCommandHandler(menu.getConnection().getUser(), otherUser)).run();*/
+        new Menu(menu.getConnection(), new watchGameCommandHandler(chosenMap)).run();
     }
 }

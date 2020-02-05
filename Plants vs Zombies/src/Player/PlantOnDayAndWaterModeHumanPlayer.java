@@ -21,6 +21,7 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
         plantOnDayAndWaterModePlayerMenu.run();
     }
 
+
     @Override
     public void gameAction() {
 
