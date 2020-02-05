@@ -2,6 +2,7 @@ package Main;
 
 import Command.FirstCommandHandler;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -182,7 +183,15 @@ public class Connection {
             dataOutputStream.close();
             socket.close();
         }
-        getCurrentMenu().accept(message);
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
+        String token=jsonObject.get("token").toString();
+        if(!token.equals(this.token)){
+            JSONObject data=new JSONObject();
+            data.put("error","wrong token. connection is'nt safe any more");
+            send("error",data);
+        }else {
+            getCurrentMenu().accept(message);
+        }
     }
 
     public synchronized void send(String command, Object data) {
