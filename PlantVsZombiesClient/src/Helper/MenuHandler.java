@@ -5,6 +5,7 @@ import Scenes.Games.PlantOnRailModePlayer.PlantOnRailModePlayerSceneController;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -168,6 +169,21 @@ public class MenuHandler {
             });
             return;
         }
+        if(command.equals("notification")) {
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            Platform.runLater(() -> {
+                try {
+                    showNotification((JSONObject) data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            return;
+        }
         try {
             System.err.println(getCurrentController().getClass().getSimpleName());
             System.err.println(command);
@@ -176,6 +192,19 @@ public class MenuHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void showNotification(JSONObject data) throws IOException {
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle("New Message!");
+
+        data.put("stage", stage);
+        BorderPane borderPane = getPaneWithDefaultParametersHandler(
+                "Scenes/Notification/NotificationScene.fxml", data);
+        Scene scene = new Scene(borderPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private static Method getDeclaredMethod(Class<?> cls, String name, Class<?>... parameters) {

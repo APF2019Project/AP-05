@@ -1,5 +1,6 @@
 package Main;
 
+import Chat.Message;
 import Command.CommandHandler;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -47,6 +48,18 @@ public class Menu {
                 }
                 getConnection().popMenuWithoutRun();
                 getConnection().getCurrentMenu().exit();
+                return;
+            }
+            if (command.equals("send notification message")) {
+                JSONObject data = (JSONObject) jsonObject.get("data");
+                String content = (String) data.get("content");
+                JSONObject message = (JSONObject) data.get("message");
+                int repliedId = ((Long) message.get("id")).intValue();
+                Message repliedMessage = Message.getMessageById(repliedId);
+                User receiver = null;
+                if(message.containsKey("receiverUsername"))
+                    receiver = User.getUserByUsername((String) message.get("senderUsername"));
+                new Message(content, getConnection().getUser() , receiver).setRepliedMessage(repliedMessage);
                 return;
             }
             commandHandler.accept(jsonObject);

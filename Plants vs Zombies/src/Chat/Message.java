@@ -2,6 +2,7 @@ package Chat;
 
 import Main.GameData;
 import Main.JSONHandler;
+import Main.Menu;
 import Main.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +21,15 @@ public class Message {
 
     public void setRepliedMessage(Message repliedMessage) {
         this.repliedMessage = repliedMessage;
+        try {
+            if (repliedMessage != null && /*repliedMessage.getSender() != this.getSender() &&*/
+                    repliedMessage.getSender().getConnection() != null) {
+                repliedMessage.getSender().getConnection().send("notification", this.toJsonObject());
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Message(String content, User sender, User receiver) {
@@ -120,6 +130,9 @@ public class Message {
         jsonObject.put("content", this.getContent());
         jsonObject.put("senderImage", this.getSender().getImageAddress());
         jsonObject.put("senderUsername", this.getSender().getUsername());
+
+        if(getReceiver() != null)
+            jsonObject.put("receiverUsername", getReceiver().getUsername());
 
         if(repliedMessage != null) {
             jsonObject.put("repliedUsername", this.getRepliedMessage().getSender().getUsername());

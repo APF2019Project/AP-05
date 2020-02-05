@@ -45,7 +45,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <SplitPane fx:id="replyPane" dividerPositions="0.5" layoutX="4.0" layoutY="441.0" prefHeight="15.0" prefWidth="188.0">
+            <SplitPane fx:id="replyPane" disable="true" dividerPositions="0.5" layoutX="4.0" layoutY="441.0" prefHeight="15.0" prefWidth="188.0">
                <items>
                   <HBox prefHeight="30.0" prefWidth="187.0">
                      <children>
