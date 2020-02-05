@@ -6,7 +6,6 @@ import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class AllGamesSceneController implements Controller, Refreshable {
     @FXML
-    private VBox usersBox;
+    private VBox gamesBox;
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
@@ -47,8 +46,8 @@ public class AllGamesSceneController implements Controller, Refreshable {
             }
         }
         Platform.runLater(() -> {
-            usersBox.getChildren().clear();
-            usersBox.getChildren().addAll(arrayList);
+            gamesBox.getChildren().clear();
+            gamesBox.getChildren().addAll(arrayList);
         });
     }
 
