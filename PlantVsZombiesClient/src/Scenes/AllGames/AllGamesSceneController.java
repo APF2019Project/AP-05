@@ -5,6 +5,7 @@ import Helper.MenuHandler;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.json.simple.JSONArray;
@@ -34,13 +35,13 @@ public class AllGamesSceneController implements Controller, Refreshable {
 
     public void showAllGames(Object object) {
         JSONArray jsonArray = (JSONArray) object;
-        ArrayList<BorderPane> arrayList = new ArrayList<>();
+        ArrayList<AnchorPane> arrayList = new ArrayList<>();
         for (Object object1 : jsonArray) {
             JSONObject jsonObject = (JSONObject) object1;
             try {
-                BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler(
+                AnchorPane anchorPane = MenuHandler.getAnchorPaneWithDefaultParametersHandler(
                         "Scenes/AllGames/GameInAllGames.fxml", jsonObject);
-                arrayList.add(borderPane);
+                arrayList.add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();
             }

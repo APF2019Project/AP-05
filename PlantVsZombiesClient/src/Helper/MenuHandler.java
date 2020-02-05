@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -71,6 +72,14 @@ public class MenuHandler {
         Controller controller = fxmlLoader.getController();
         controller.initJsonInput(parameters);
         return borderPane;
+    }
+
+    public static AnchorPane getAnchorPaneWithDefaultParametersHandler(String fileName, JSONObject parameters) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource("../" + fileName));
+        AnchorPane anchorPane = fxmlLoader.load();
+        Controller controller = fxmlLoader.getController();
+        controller.initJsonInput(parameters);
+        return anchorPane;
     }
 
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
