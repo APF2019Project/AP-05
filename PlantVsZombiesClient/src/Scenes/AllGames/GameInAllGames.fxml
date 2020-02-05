@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="282.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Files/fightVS.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="109.0" fitWidth="101.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="8.0" layoutY="122.0" prefHeight="38.0" prefWidth="114.0" text="Label" />
+      <ImageView fitHeight="109.0" fitWidth="101.0" layoutX="293.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="280.0" layoutY="95.0" prefHeight="38.0" prefWidth="114.0" text="Label" />
+   </children>
+</AnchorPane>
