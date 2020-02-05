@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Connection {
-    private static HashMap<String,Connection> allClientState=new HashMap<String,Connection>();
-
 
     private User user;
     private ArrayList<Menu> menus = new ArrayList<>();
@@ -35,13 +33,21 @@ public class Connection {
     public Connection(User user) {
         this.user = user;
         user.setConnection(this);
-        this.token=tokenGenerator();
-        allClientState.put(token,this);
     }
-
-    public Connection(Socket socket, DataOutputStream dataOutputStream) {
+    public void sendNewToken(){
         this.token=tokenGenerator();
-        allClientState.put(token,this);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token", token);
+            String message = jsonObject.toJSONString();
+            System.out.println("Server: " + message);
+            dataOutputStream.writeUTF(message);
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public Connection(Socket socket, DataOutputStream dataOutputStream) {
         this.socket = socket;
         this.dataOutputStream = dataOutputStream;
         Server.getDataOutputStreams().add(dataOutputStream);
@@ -49,21 +55,9 @@ public class Connection {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
-
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("token", token);
-                    String message = jsonObject.toJSONString();
-                    System.out.println("Server: " + message);
-                    dataOutputStream.writeUTF(message);
-                    dataOutputStream.flush();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                sendNewToken();
 
                 dataInputStream = new DataInputStream(socket.getInputStream());
-
-
 
                 new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
@@ -192,6 +186,7 @@ public class Connection {
             data.put("error","wrong token. connection is'nt safe any more");
             send("error",data);
         }else {
+            sendNewToken();
             getCurrentMenu().accept(message);
         }
     }

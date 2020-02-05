@@ -50,12 +50,15 @@ public class Client {
     public void startListening() {
         Thread thread = new Thread(() -> {
             try {
-                String line = dataInputStream.readUTF();
-                JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(line);
-                token=messageJsonObject.get("token").toString();
+                String line="";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
-                    MenuHandler.receive(line);
+                    JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(line);
+                    if(messageJsonObject.containsKey("token")){
+                        token=messageJsonObject.get("token").toString();
+                    }else {
+                        MenuHandler.receive(line);
+                    }
                 }
             } catch (Exception e) {
                 MessageBox.showErrorAndExit(e.getMessage());
