@@ -12,7 +12,7 @@ public class Client {
     private Socket socket;
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
-    private String token;
+    private String token="";
 
     public Client(String address, int port) {
         try {
@@ -50,6 +50,8 @@ public class Client {
     public void startListening() {
         Thread thread = new Thread(() -> {
             try {
+                JSONObject khali=new JSONObject();
+                send("hand shake",khali);
                 String line="";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();

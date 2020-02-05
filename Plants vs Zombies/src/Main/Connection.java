@@ -3,6 +3,7 @@ package Main;
 import Command.FirstCommandHandler;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,6 +21,7 @@ public class Connection {
     private Thread thread;
     private Socket socket;
     private String token;
+    private static HashMap<String,Connection> tokenToConnection=new HashMap<String,Connection>();
 
     String tokenGenerator(){
         Random random=new Random();
@@ -55,13 +57,12 @@ public class Connection {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
-                sendNewToken();
 
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
                 new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
-                String line = "";
+
                 new Thread(() -> {
                     while (!socket.isClosed()) {
                         try {
@@ -75,11 +76,17 @@ public class Connection {
                         }
                     }
                 }).start();
-                while (!line.equals("exit")) {
+                String line = "";
+                while (!isExit(line)) {
                     line = finalDataInputStream.readUTF();
                     System.out.println(line);
-                    if (!line.equals("exit")) {
-                        receive(line);
+                    JSONObject jsonObject = (JSONObject) new JSONParser().parse(line);
+                    if(jsonObject.get("command").toString().equals("hand shake")){
+                        sendNewToken();
+                    }else {
+                        if (!isExit(line)) {
+                            receive(line);
+                        }
                     }
                 }
                 System.out.println("Closing connection");
@@ -171,24 +178,21 @@ public class Connection {
         this.user = user;
         user.setConnection(this);
     }
-
-    void receive(String message) throws Exception {
+    static private Connection findConnectionByToken(String token){
+        return tokenToConnection.get(token);
+    }
+    static boolean isExit(String message) throws ParseException {
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
+        return (jsonObject.get("command").toString().equals("exit"));
+    }
+    static void receive(String message) throws Exception {
         System.out.println("Client: " + message);
-        if (message.equals("exit")) {
-            thread.wait();
-            dataOutputStream.close();
-            socket.close();
-        }
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
         String token=jsonObject.get("token").toString();
-        if(!token.equals(this.token)){
-            JSONObject data=new JSONObject();
-            data.put("error","wrong token. connection is'nt safe any more");
-            send("error",data);
-        }else {
-            sendNewToken();
-            getCurrentMenu().accept(message);
-        }
+        Connection connection=findConnectionByToken(token);
+        connection. sendNewToken();
+        connection.getCurrentMenu().accept(message);
+
     }
 
     public synchronized void send(String command, Object data) {
