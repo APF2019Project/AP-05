@@ -18,6 +18,10 @@ public class Message {
     private Message repliedMessage;
     private int id;
 
+    public void setRepliedMessage(Message repliedMessage) {
+        this.repliedMessage = repliedMessage;
+    }
+
     public Message(String content, User sender, User receiver) {
         this.content = content;
         this.sender = sender;
@@ -97,6 +101,9 @@ public class Message {
                 messageJsonObject.put(FieldNames.receiverUsername.name(), "GlobalChat");
             }else {
                 messageJsonObject.put(FieldNames.receiverUsername.name(), message.getReceiver().getUsername());
+            }
+            if(message.getRepliedMessage() != null) {
+                messageJsonObject.put(FieldNames.repliedId.name(), message.getRepliedMessage().getId());
             }
             messageJsonArray.add(messageJsonObject);
         }

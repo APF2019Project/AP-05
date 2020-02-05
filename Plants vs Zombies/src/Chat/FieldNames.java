@@ -1,5 +1,5 @@
 package Chat;
 
 public enum FieldNames {
-    id,senderUsername,receiverUsername,content
+    id,senderUsername,receiverUsername,content,repliedId
 }

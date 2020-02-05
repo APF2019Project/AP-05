@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="143.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.MemberInChatController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="143.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.MemberInChatController">
     <left>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -14,7 +16,7 @@
                   <image>
             </image>
               </ImageView>
-             <Label fx:id="usernameLabel" alignment="TOP_CENTER" text="Username" textAlignment="CENTER" wrapText="true">
+             <Label fx:id="usernameLabel" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="106.0" text="Username" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font></Label>

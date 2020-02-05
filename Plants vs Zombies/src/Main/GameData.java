@@ -242,7 +242,7 @@ public class GameData {
                 }
                 user.getUnlockedCreatures().add(creature);
             }
-            if(userJsonObject.get(FieldNames.imageAddress.name()) != null)
+            if (userJsonObject.get(FieldNames.imageAddress.name()) != null)
                 user.setImageAddress((String) userJsonObject.get(FieldNames.imageAddress.name()));
         }
     }
@@ -254,18 +254,24 @@ public class GameData {
             JSONObject messageJsonObject = (JSONObject) object;
             String sender = (String) messageJsonObject.get(Chat.FieldNames.senderUsername.name());
             String receiver = (String) messageJsonObject.get(Chat.FieldNames.receiverUsername.name());
-            if(receiver.equals("GlobalChat")) {
-                new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
+            Message message;
+            if (receiver.equals("GlobalChat")) {
+                message = new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
                         User.getUserByUsername(sender),
                         null,
                         ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
                 );
-            }else {
-                new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
+            }
+            else {
+                message = new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
                         User.getUserByUsername(sender),
                         User.getUserByUsername(receiver),
                         ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
                 );
+            }
+            if (messageJsonObject.containsKey("repliedId")) {
+                int repliedId = ((Long) messageJsonObject.get("repliedId")).intValue();
+                message.setRepliedMessage(Message.getMessageById(repliedId));
             }
         }
     }

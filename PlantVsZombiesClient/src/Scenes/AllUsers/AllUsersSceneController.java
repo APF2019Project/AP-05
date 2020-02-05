@@ -60,6 +60,6 @@ public class AllUsersSceneController implements Controller, Refreshable {
 
     @Override
     public void sendLoadRequest() throws IOException {
-        MenuHandler.getClient().send("show all users", null);
+        MenuHandler.getClient().send("show", null);
     }
 }
