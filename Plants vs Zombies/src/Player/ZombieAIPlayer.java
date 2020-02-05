@@ -24,7 +24,9 @@ public class ZombieAIPlayer extends ZombiePlayer {
         lastZombieDie = 0;
         whenPutZombie = random.nextInt(3) + 3;
     }
-
+    public void doAction(Supplier<Void> supplier, boolean isViewer) throws Exception {
+        doAction(supplier);
+    }
     public void doAction(Supplier<Void> supplier) throws Exception {
         super.doAction();
         if (connection.getUser().getPlayer().getMap().getMapMode().equals(MapMode.Rail)) {

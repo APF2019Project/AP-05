@@ -229,7 +229,7 @@ public class Map {
     public void gameActionForEachTurn() {
         if (!mapMode.equals(MapMode.Rail)) {
             Random random = new Random();
-            if (random.nextInt() % 3 == 0) {
+            if (random.nextInt() % 30 == 0) {
                 plantPlayer.addSun(random.nextInt(2) + 1);
             }
         }
@@ -326,8 +326,6 @@ public class Map {
 
         gameActionForEachTurn();
 
-        //mapSimpleShow();
-
         return GameStatus.OnGame;
     }
     public ActiveCard getNearestZombie(ActiveCard activeCard) {
@@ -342,44 +340,5 @@ public class Map {
             }
         }
         return nearestZombie;
-    }
-
-    void mapSimpleShow() {
-        char[][] jad = new char[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (isWater[i]) {
-                    jad[i][j] = '~';
-                }
-                else {
-                    jad[i][j] = '.';
-                }
-            }
-        }
-        for (GunShot gunShot : gunShotArrayList) {
-            jad[gunShot.getY()][gunShot.getX()] = '*';
-        }
-        for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getCreature() instanceof Zombie) {
-                jad[activeCard.getY()][activeCard.getX()] = 'Z';
-            }
-            else {
-                jad[activeCard.getY()][activeCard.getX()] = 'P';
-            }
-        }
-        for (int i = 0; i < col; i++) {
-            System.out.print("/");
-        }
-        System.out.println();
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                System.out.print(jad[i][j]);
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < col; i++) {
-            System.out.print("/");
-        }
-        System.out.println();
     }
 }

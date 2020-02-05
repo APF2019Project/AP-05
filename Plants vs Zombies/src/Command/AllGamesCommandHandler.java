@@ -12,7 +12,7 @@ public class AllGamesCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
                 new Command(this::showAllGames, "show all games", ""),
-                new Command(this::EnterGame, "enter games", ""),
+                new Command(this::EnterGame, "enter game", ""),
                 new Command(this::endTurn, "end turn", ""),
         };
     }
@@ -47,11 +47,13 @@ public class AllGamesCommandHandler extends CommandHandler {
     }
 
     public void EnterGame(InputCommand inputCommand) throws Exception {
-        String plantUsername = (String) inputCommand.getInputJsonObject().get("username");
+        String plantUsername = (String) inputCommand.getInputJsonObject().get("firstUsername");
+        String zombieUsername = (String) inputCommand.getInputJsonObject().get("secondUsername");
         ArrayList<Map> allGames = Map.getAllRunningGame();
         Map chosenMap=null;
         for(Map map :allGames){
-            if(map.getPlantPlayer().getConnection().getUser().getUsername().equals(plantUsername)){
+            if(map.getPlantPlayer().getConnection().getUser().getUsername().equals(plantUsername) &&
+                    map.getZombiePlayer().getConnection().getUser().getUsername().equals(zombieUsername)){
                 chosenMap=map;
                 break;
             }

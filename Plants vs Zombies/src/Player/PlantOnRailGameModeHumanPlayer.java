@@ -22,6 +22,10 @@ public class PlantOnRailGameModeHumanPlayer extends PlantPlayer {
         PlantOnRailModePlayerMenu.run();
     }
 
+    public void doAction(Supplier<Void> supplier, boolean isViewer) throws Exception {
+        Menu PlantOnRailModePlayerMenu = new Menu(connection, new PlantOnRailModePlayerCommandHandler(supplier,isViewer));
+        PlantOnRailModePlayerMenu.run();
+    }
     @Override
     public void gameAction() {
         Random random = new Random();

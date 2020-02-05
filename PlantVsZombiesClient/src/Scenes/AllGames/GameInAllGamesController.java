@@ -25,7 +25,10 @@ public class GameInAllGamesController implements Controller {
 
     @FXML
     public void onWatchGameMouseClicked() throws IOException {
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("firstUsername", firstPlayerUserName.getText());
+        jsonObject.put("secondUsername",secondPlayerUserName.getText());
+        MenuHandler.getClient().send("enter game", jsonObject);
     }
 
     @Override
