@@ -1,6 +1,5 @@
 package Main;
 
-import Chat.Message;
 import Objects.Creature;
 import Objects.Plant;
 import Objects.Zombie;
@@ -20,6 +19,7 @@ public class User {
     private int killingEnemyCount;
     private Player player;
     private String imageAddress = "../Profile Pictures/profile" + (new Random().nextInt(6) + 1) + ".png";
+    private Connection connection;
 
     public User(String username, String password, Void addFromFile) throws Exception {
         if (!validNewUsername(username) || !validNewPassword(password)) {
@@ -93,6 +93,14 @@ public class User {
             if (user.getUsername().equals(username) && user.getPassword().equals(password))
                 return user;
         return null;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
     public String getImageAddress() {

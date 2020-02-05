@@ -33,6 +33,7 @@ public class Connection {
     // AI mode
     public Connection(User user) {
         this.user = user;
+        user.setConnection(this);
         this.token=tokenGenerator();
         allClientState.put(token,this);
     }
@@ -173,6 +174,7 @@ public class Connection {
 
     public void setUser(User user) {
         this.user = user;
+        user.setConnection(this);
     }
 
     void receive(String message) throws Exception {
