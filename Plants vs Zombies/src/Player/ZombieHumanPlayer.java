@@ -21,14 +21,6 @@ public class ZombieHumanPlayer extends ZombiePlayer {
             ZombiePlayerMenu.run();
         }
     }
-    @Override
-    public void doAction(Supplier<Void> supplier, boolean isViewer) throws Exception {
-        super.doAction();
-        if (!isWaveRunning()) {
-            Menu ZombiePlayerMenu = new Menu(connection, new ZombiePlayerCommandHandler(supplier,isViewer));
-            ZombiePlayerMenu.run();
-        }
-    }
 
     @Override
     public void gameAction() {

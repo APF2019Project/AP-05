@@ -21,11 +21,6 @@ public class PlantOnDayAndWaterModeHumanPlayer extends PlantPlayer {
         plantOnDayAndWaterModePlayerMenu.run();
     }
 
-    @Override
-    public void doAction(Supplier<Void> supplier, boolean isViewer) throws Exception {
-        Menu plantOnDayAndWaterModePlayerMenu = new Menu(connection, new PlantOnDayAndWaterModePlayerCommandHandler(supplier,isViewer));
-        plantOnDayAndWaterModePlayerMenu.run();
-    }
 
     @Override
     public void gameAction() {
