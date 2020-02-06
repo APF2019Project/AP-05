@@ -50,6 +50,17 @@ public class Server {
         new Thread(() -> {
             while (true) {
                 try {
+                    Thread.sleep(6000);
+                 //   Map.checkAllMap();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        new Thread(() -> {
+            while (true) {
+                try {
                     Thread.sleep(10000);
                     HashMap<String, Boolean> allUserState= new HashMap<String,Boolean>();
                     for(User user:User.getAllUsers()){

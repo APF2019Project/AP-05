@@ -1,7 +1,7 @@
 package Main;
 
 import Objects.*;
-import Player.Player;
+import Player.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +15,21 @@ public class Map {
     private int row, col, numberOfRemainedWaves;
     private static ArrayList<Map> allRunningGame=new ArrayList<Map>();
 
+    public static void checkAllMap(){
+        for(Map map:allRunningGame){
+            try {
+                if (((map.getPlantPlayer() instanceof PlantOnDayAndWaterModeHumanPlayer
+                        || map.getPlantPlayer() instanceof PlantOnRailGameModeHumanPlayer) &&
+                        map.getPlantPlayer().getConnection().getUser().getPlayer().getMap()!=map) ||
+                        (map.getZombiePlayer() instanceof ZombieHumanPlayer &&
+                                map.getZombiePlayer().getConnection().getUser().getPlayer().getMap()!=map)){
+                    allRunningGame.remove(map);
+                }
+            }catch (Exception e){
+                allRunningGame.remove(map);
+            }
+        }
+    }
     public static ArrayList<Map> getAllRunningGame() {
         return allRunningGame;
     }
