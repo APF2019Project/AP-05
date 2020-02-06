@@ -22,10 +22,25 @@ public class Connection {
     private Thread thread;
     private Socket socket;
     private String token;
+    private int howManyTimeIgnoreEndTurn;
+
     private static HashMap<String,Connection> tokenToConnection=new HashMap<String,Connection>();
     static public Collection<Connection> getAllConnection(){
         return tokenToConnection.values();
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public int getHowManyTimeIgnoreEndTurn() {
+        return howManyTimeIgnoreEndTurn;
+    }
+
+    public void setHowManyTimeIgnoreEndTurn(int howManyTimeIgnoreEndTurn) {
+        this.howManyTimeIgnoreEndTurn = howManyTimeIgnoreEndTurn;
+    }
+
     String tokenGenerator(){
         Random random=new Random();
         StringBuilder token= new StringBuilder();
@@ -58,6 +73,7 @@ public class Connection {
         this.socket = socket;
         this.dataOutputStream = dataOutputStream;
         Server.getDataOutputStreams().add(dataOutputStream);
+        howManyTimeIgnoreEndTurn=2;
         thread = new Thread(() -> {
             DataInputStream dataInputStream = null;
             try {
@@ -67,28 +83,6 @@ public class Connection {
 
                 DataInputStream finalDataInputStream = dataInputStream;
 
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(1500);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    System.out.println("INJM RESID");
-                    while (!socket.isClosed()) {
-                        try {
-                            JSONObject jsonObject=new JSONObject();
-                            jsonObject.put("command","end turn");
-                            jsonObject.put("token",token);
-                            receive(jsonObject.toString());
-                            if(!getCurrentMenu().getCommandHandlerName().contains("Play"))
-                                Thread.sleep(2000);
-                            else
-                                Thread.sleep(1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
                 String line = "";
                 while (!isExit(line)) {
                     line = finalDataInputStream.readUTF();

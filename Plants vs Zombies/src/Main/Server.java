@@ -2,6 +2,7 @@ package Main;
 
 import Chat.Message;
 import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+import org.json.simple.JSONObject;
 
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
@@ -66,6 +67,35 @@ public class Server {
                         }else{
                             System.out.println(username+": OffLine");
                         }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    for(Connection connection:Connection.getAllConnection()){
+                        if(connection.getHowManyTimeIgnoreEndTurn()==0){
+                            try {
+                                JSONObject jsonObject=new JSONObject();
+                                jsonObject.put("command","end turn");
+                                jsonObject.put("token",connection.getToken());
+                                connection.receive(jsonObject.toString());
+                                if(!connection.getCurrentMenu().getCommandHandlerName().contains("Play"))
+                                    connection.setHowManyTimeIgnoreEndTurn(2);
+                                else
+                                    connection.setHowManyTimeIgnoreEndTurn(1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        connection.setHowManyTimeIgnoreEndTurn(connection.getHowManyTimeIgnoreEndTurn()-1);
+                        User user=connection.getUser();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
