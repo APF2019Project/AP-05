@@ -50,8 +50,7 @@ public class Client {
     public void startListening() {
         Thread thread = new Thread(() -> {
             try {
-                JSONObject khali=new JSONObject();
-                send("hand shake",khali);
+                send("hand shake",new JSONObject());
                 String line="";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
@@ -72,8 +71,7 @@ public class Client {
     }
 
     public synchronized void sendExit() throws IOException {
-        dataOutputStream.writeUTF("exit");
-        dataOutputStream.flush();
+        send("exit",new JSONObject());
     }
 
     public synchronized void send(String command, Object data) throws IOException {

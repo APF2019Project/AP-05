@@ -41,6 +41,8 @@ public class Connection {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("token", token);
+            tokenToConnection.remove(token);
+            tokenToConnection.put(token,this);
             String message = jsonObject.toJSONString();
             System.out.println("Server: " + message);
             dataOutputStream.writeUTF(message);
