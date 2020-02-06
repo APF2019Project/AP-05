@@ -19,6 +19,7 @@ public class watchGameCommandHandler extends CommandHandler  {
     }
     watchGameCommandHandler(Map map){
         this.map=map;
+        System.out.println("ma omadim injaa :))");
     }
 
     public void endTurn(InputCommand inputCommand) throws Exception {

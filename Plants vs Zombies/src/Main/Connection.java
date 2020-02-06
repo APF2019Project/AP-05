@@ -62,13 +62,21 @@ public class Connection {
 
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
-                new Menu(this, new FirstCommandHandler()).run();
                 DataInputStream finalDataInputStream = dataInputStream;
 
                 new Thread(() -> {
+                    try {
+                        Thread.sleep(1500);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    System.out.println("INJM RESID");
                     while (!socket.isClosed()) {
                         try {
-                            receive("{\"command\":\"end turn\"}");
+                            JSONObject jsonObject=new JSONObject();
+                            jsonObject.put("command","end turn");
+                            jsonObject.put("token",token);
+                            receive(jsonObject.toString());
                             if(!getCurrentMenu().getCommandHandlerName().contains("Play"))
                                 Thread.sleep(2000);
                             else
@@ -85,6 +93,8 @@ public class Connection {
                     JSONObject jsonObject = (JSONObject) new JSONParser().parse(line);
                     if(jsonObject.get("command").toString().equals("hand shake")){
                         sendNewToken();
+                        Thread.sleep(500);
+                        new Menu(this, new FirstCommandHandler()).run();
                     }else {
                         if (!isExit(line)) {
                             receive(line);
@@ -184,6 +194,7 @@ public class Connection {
         return tokenToConnection.get(token);
     }
     static boolean isExit(String message) throws ParseException {
+        if(message.equals(""))return false;
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
         return (jsonObject.get("command").toString().equals("exit"));
     }

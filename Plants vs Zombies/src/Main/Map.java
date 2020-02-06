@@ -229,7 +229,7 @@ public class Map {
     public void gameActionForEachTurn() {
         if (!mapMode.equals(MapMode.Rail)) {
             Random random = new Random();
-            if (random.nextInt() % 30 == 0) {
+            if (random.nextInt() % 6 == 0) {
                 plantPlayer.addSun(random.nextInt(2) + 1);
             }
         }
