@@ -3,7 +3,9 @@ package Command;
 import Main.ActiveCard;
 import Main.Map;
 import Main.Menu;
+import Objects.Creature;
 import Objects.GunShot;
+import Objects.Plant;
 import Objects.Zombie;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,6 +14,8 @@ public class watchGameCommandHandler extends CommandHandler  {
     private Map map;
     {
         this.commands = new Command[]{
+                new Command(this::showHand, "show hand", "show hand: To see your collection's " +
+                        "remaining cooldown and other things"),
                 new Command(this::showLawn, "show lawn", "show lawn: To see list of remaining " +
                         "zombies and plants."),
                 new Command(this::endTurn, "end turn", ""),
@@ -50,5 +54,22 @@ public class watchGameCommandHandler extends CommandHandler  {
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showLawn", jsonArray);
+    }
+    void showHand(InputCommand inputCommand) throws Exception {
+        JSONObject sendingJSONObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (Creature creature : map.getPlantPlayer().getCreaturesOnHand()) {
+            Plant plant = (Plant) creature;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", plant.getName());
+            jsonObject.put("price", plant.getPrice());
+            jsonObject.put("cool down", plant.getCoolDown());
+            jsonObject.put("remaining cool down", plant.getRemainingCoolDown());
+            jsonArray.add(jsonObject);
+        }
+        sendingJSONObject.put("hasWater", map.hasWater());
+        sendingJSONObject.put("sun", map.getPlantPlayer().getSunInGame());
+        sendingJSONObject.put("cards", jsonArray);
+        menu.getConnection().send("showHand", sendingJSONObject);
     }
 }
