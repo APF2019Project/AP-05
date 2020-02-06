@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,7 +23,9 @@ public class Connection {
     private Socket socket;
     private String token;
     private static HashMap<String,Connection> tokenToConnection=new HashMap<String,Connection>();
-
+    static public Collection<Connection> getAllConnection(){
+        return tokenToConnection.values();
+    }
     String tokenGenerator(){
         Random random=new Random();
         StringBuilder token= new StringBuilder();
