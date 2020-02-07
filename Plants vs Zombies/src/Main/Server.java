@@ -89,7 +89,7 @@ public class Server {
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(700);
                     for(Connection connection:Connection.getAllConnection()){
                         if(connection.getHowManyTimeIgnoreEndTurn()==0){
                             try {

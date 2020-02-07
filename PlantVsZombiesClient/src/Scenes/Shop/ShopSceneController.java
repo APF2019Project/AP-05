@@ -29,7 +29,11 @@ public class ShopSceneController implements Controller {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
-
+    @FXML
+    void onSellOrGiftMouseClicked() throws IOException {
+        MenuHandler.getClient().send("sellOrGift", null);
+        MenuHandler.closeScene();
+    }
     @FXML
     void initialize() throws IOException {
     }

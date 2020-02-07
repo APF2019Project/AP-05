@@ -1,5 +1,6 @@
 package Command;
 
+import Main.Menu;
 import Objects.Creature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,10 +13,13 @@ public class ShopCommandHandler extends CommandHandler {
                 new Command(this::showCollection, "show collection", "show collection: To see your " +
                         "bought cards."),
                 new Command(this::buy, "buy", "buy [name]: To buy card with given name."),
+                new Command(this::sellOrGift, "sellOrGift", "move to sellOrGift menu"),
                 new Command(this::money, "money", "money: To see your amount of coins.")
         };
     }
-
+    public void sellOrGift(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), new SellOrGiftCommandHandler()).run();
+    }
     public void showShop(InputCommand inputCommand) throws Exception {
         JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getLockedCreatures()) {
