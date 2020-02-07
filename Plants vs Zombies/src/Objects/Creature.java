@@ -15,6 +15,7 @@ public abstract class Creature {
     private int reloadTime;
     private int price;
     private Shield shield;
+    private int remainInShop;
 
     /*
     public Creature(String name, boolean disposable, int coolDown, int fullHp, int price, int reloadTime, Shield shield) {
@@ -28,12 +29,22 @@ public abstract class Creature {
         allCreatures.add(this);
     }
 */
+
+    public int getRemainInShop() {
+        return remainInShop;
+    }
+
+    public void setRemainInShop(int remainInShop) {
+        this.remainInShop = remainInShop;
+    }
+
     public Creature(JSONHandler jsonHandler) throws Exception {
         this.name = jsonHandler.getString(FieldNames.name).toLowerCase();
         this.disposable = jsonHandler.getBoolean(FieldNames.disposable);
         this.coolDown = jsonHandler.getInt(FieldNames.coolDown);
         this.fullHp = jsonHandler.getInt(FieldNames.fullHp)* GameData.slices/2;
         this.price = jsonHandler.getInt(FieldNames.price);
+        this.remainInShop=(coolDown+3)*5;// wtf?:D
         this.reloadTime = jsonHandler.getInt(FieldNames.reloadTime);
         this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
         allCreatures.add(this);

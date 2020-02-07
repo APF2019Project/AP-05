@@ -22,6 +22,7 @@ public class ShopCommandHandler extends CommandHandler {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("creature.getName", creature.getName());
             jsonObject.put("creature.getPriceInShop", creature.getPriceInShop());
+            jsonObject.put("creature.remainingInShop",creature.getRemainInShop());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showShop", jsonArray);
@@ -43,6 +44,9 @@ public class ShopCommandHandler extends CommandHandler {
         Creature creature = Creature.getCreatureByName(creatureName);
         if (creature == null || menu.getConnection().getUser().getUnlockedCreatureByName(creatureName) != null) {
             throw new Exception("invalid cardName");
+        }
+        if(creature.getRemainInShop()<=0){
+            throw new Exception("this card is finished");
         }
         if (!menu.getConnection().getUser().buyCreatureFromShop(creature)) {
             throw new Exception("you don't have enough money");

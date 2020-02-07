@@ -241,6 +241,7 @@ public class GameData {
                     throw new Exception("bug in addAllUser method");
                 }
                 user.getUnlockedCreatures().add(creature);
+                creature.setRemainInShop(creature.getRemainInShop()-1);
             }
             if (userJsonObject.get(FieldNames.imageAddress.name()) != null)
                 user.setImageAddress((String) userJsonObject.get(FieldNames.imageAddress.name()));

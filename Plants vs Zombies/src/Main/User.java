@@ -147,8 +147,25 @@ public class User {
         }
         setCoinForShop(getCoinForShop() - creature.getPriceInShop());
         unlockedCreatures.add(creature);
+        creature.setRemainInShop(creature.getRemainInShop()-1);
         return true;
     }
+    private void addCreatureToUnlocked(Creature creature){
+        unlockedCreatures.add(creature);
+    }
+    public void sellCreatureToShop(Creature creature) throws Exception {
+        setCoinForShop(getCoinForShop() + creature.getPriceInShop());
+        unlockedCreatures.remove(creature);;
+        creature.setRemainInShop(creature.getRemainInShop()+1);
+    }
+    public void moveCreature(Creature creature,User user) throws Exception {
+        if(user.getUnlockedCreatures().contains(creature)){
+            throw new Exception("user all ready has this creature");
+        }
+        unlockedCreatures.remove(creature);
+        user.addCreatureToUnlocked(creature);
+    }
+
 
     public ArrayList<Creature> getLockedCreatures() {
         ArrayList<Creature> lockedCreatures = new ArrayList<>();
