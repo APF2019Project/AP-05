@@ -38,6 +38,7 @@ public class ShopCommandHandler extends CommandHandler {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("creature.getName", creature.getName());
             jsonObject.put("creature.getPriceInShop", creature.getPriceInShop());
+            jsonObject.put("creature.remainingInShop",creature.getRemainInShop());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showCollection", jsonArray);

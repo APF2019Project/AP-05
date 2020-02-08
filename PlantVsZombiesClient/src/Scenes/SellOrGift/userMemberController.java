@@ -22,7 +22,12 @@ public class userMemberController implements Controller {
     public void onSendButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("herUserName", usernameLabel.getText());
-        jsonObject.put("creatureName", SellOrGiftSceneController.lastSellOrGiftSceneController.getSelectedName());
+        try{
+            jsonObject.put("creatureName", SellOrGiftSceneController.lastSellOrGiftSceneController.getSelectedName());
+        }catch (Exception e){
+            System.out.println("INA KE MA MIBINIM chie");
+            e.printStackTrace();
+        }
         MenuHandler.getClient().send("send gift card", jsonObject);
     }
 

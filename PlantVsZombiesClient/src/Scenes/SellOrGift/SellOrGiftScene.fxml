@@ -27,7 +27,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <ScrollPane fx:id="creatureScrollPane" layoutX="70.0" layoutY="46.0" opacity="0.85" prefHeight="422.0" prefWidth="312.0">
+                <ScrollPane fx:id="creatureScrollPane" layoutX="7.0" layoutY="53.0" opacity="0.85" prefHeight="422.0" prefWidth="414.0">
                     <content>
                         <VBox fx:id="creatureList" prefHeight="430.0" />
                     </content>
@@ -40,7 +40,7 @@
                         <Font size="19.0" />
                     </font>
                 </Button>
-            <ScrollPane fx:id="userScrollPane" layoutX="425.0" layoutY="53.0" opacity="0.85" prefHeight="204.0" prefWidth="312.0">
+            <ScrollPane fx:id="userScrollPane" layoutX="425.0" layoutY="53.0" opacity="0.85" prefHeight="315.0" prefWidth="436.0">
                <content>
                   <VBox fx:id="userList" prefHeight="430.0" />
                </content>
