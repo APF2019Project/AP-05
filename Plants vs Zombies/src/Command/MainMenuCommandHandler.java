@@ -10,8 +10,15 @@ public class MainMenuCommandHandler extends CommandHandler {
                 new Command(this::shop, "shop", "shop: To enter shop."),
                 new Command(this::allUsers, "show all users", ""),
                 new Command(this::allGames, "show all games", ""),
+                new Command(this::customCard, "custom card", ""),
         };
     }
+
+    private void customCard(InputCommand inputCommand) throws Exception {
+        String type = (String) inputCommand.getInputJsonObject().get("type");
+        new Menu(menu.getConnection(), new CustomCardSubclassesCommandHandler(type)).run();
+    }
+
     public void allGames(InputCommand inputCommand) throws Exception {
         new Menu(menu.getConnection(), new AllGamesCommandHandler()).run();
     }

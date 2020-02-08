@@ -57,6 +57,10 @@ public class GameData {
         changePicture.put("sendButton.setText", "Change Picture");
         changePicture.put("menuButton.setVisible", true);
         inputJsonForm.put("change picture", changePicture);
+
+        JSONObject customCard = new JSONObject();
+        customCard.put("menuFile", "SelectTypeOfCustom");
+        inputJsonForm.put("select type", customCard);
     }
 
     public static JSONObject getJson(String name) {

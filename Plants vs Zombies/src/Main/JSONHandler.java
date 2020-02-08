@@ -24,6 +24,10 @@ public class JSONHandler {
         jsonObject = (JSONObject) jsonParser.parse(string);
     }
 
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
     Object getFromJSONObject(FieldNames key) throws Exception {
         if (jsonObject.containsKey(key.name())) {
             return jsonObject.get(key.name());
@@ -34,16 +38,26 @@ public class JSONHandler {
     }
 
     public int getInt(FieldNames key) throws Exception {
-        return ((Long) getFromJSONObject(key)).intValue();
+        Object object = getFromJSONObject(key);
+        if (object instanceof String) {
+            return Integer.parseInt((String) object);
+        }
+        else {
+            return ((Long) getFromJSONObject(key)).intValue();
+        }
     }
 
     public String getString(FieldNames key) throws Exception {
         return (String) getFromJSONObject(key);
     }
 
-
     public boolean getBoolean(FieldNames key) throws Exception {
-        return (boolean) getFromJSONObject(key);
+        Object object = getFromJSONObject(key);
+        if (object instanceof String) {
+            return Boolean.parseBoolean((String) object);
+        }
+        else
+            return (boolean) object;
     }
 
     void put(FieldNames key, Object value) {

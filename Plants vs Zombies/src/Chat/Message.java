@@ -23,7 +23,7 @@ public class Message {
     public void setRepliedMessage(Message repliedMessage) {
         this.repliedMessage = repliedMessage;
         try {
-            if (repliedMessage != null && /*repliedMessage.getSender() != this.getSender() &&*/
+            if (repliedMessage != null && repliedMessage.getSender() != this.getSender() &&
                     repliedMessage.getSender().getConnection() != null) {
                 repliedMessage.getSender().getConnection().send("notification", this.toJsonObject());
             }
