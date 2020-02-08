@@ -19,6 +19,10 @@ public class JSONHandler {
         fileReader.close();
     }
 
+    public JSONHandler(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
     JSONHandler(String string) throws Exception {
         JSONParser jsonParser = new JSONParser();
         jsonObject = (JSONObject) jsonParser.parse(string);

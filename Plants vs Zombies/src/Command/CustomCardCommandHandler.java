@@ -24,7 +24,10 @@ public class CustomCardCommandHandler extends CommandHandler {
     private void create(InputCommand inputCommand) throws Exception {
         JSONObject jsonObject = inputCommand.getInputJsonObject();
         try {
-            String className = address.substring(address.indexOf('/') + 1);
+            String className = "Objects." + address.substring(address.indexOf('/') + 1);
+            if(className.equals("Objects.")) {
+                className = "Objects." + address.substring(0, address.length() - 1);
+            }
             System.out.println(className);
             System.out.println(className);
             System.out.println(className);
@@ -32,7 +35,7 @@ public class CustomCardCommandHandler extends CommandHandler {
             System.out.println(className);
 
             Class<?> clss = Class.forName(className);
-            clss.getConstructor(JSONObject.class).newInstance(jsonObject);
+            clss.getConstructor(JSONHandler.class).newInstance(new JSONHandler(jsonObject));
         } catch (Exception e) {
             e.printStackTrace();
         }
