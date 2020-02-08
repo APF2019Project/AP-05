@@ -90,26 +90,29 @@ public class Connection {
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
                 DataInputStream finalDataInputStream = dataInputStream;
-
                 new Thread(() -> {
-                    while (true) {
-                        try {
-                            Thread.sleep(1500);
+                    try {
+                        Thread.sleep(1500);
+                        while (true) {
                             try {
-                                JSONObject jsonObject = new JSONObject();
-                                jsonObject.put("command", "end turn");
-                                jsonObject.put("token", getToken());
-                                receive(jsonObject.toString());
-                                if (!getCurrentMenu().getCommandHandlerName().contains("Play"))
-                                    Thread.sleep(2000);
-                                else
-                                    Thread.sleep(1000);
+                                try {
+                                    JSONObject jsonObject = new JSONObject();
+                                    jsonObject.put("command", "end turn");
+                                    jsonObject.put("token", getToken());
+                                    receive(jsonObject.toString());
+                                    if (!getCurrentMenu().getCommandHandlerName().contains("Play"))
+                                        Thread.sleep(2000);
+                                    else
+                                        Thread.sleep(1000);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }).start();
 
