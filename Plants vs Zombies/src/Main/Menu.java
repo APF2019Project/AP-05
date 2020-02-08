@@ -57,9 +57,9 @@ public class Menu {
                 int repliedId = ((Long) message.get("id")).intValue();
                 Message repliedMessage = Message.getMessageById(repliedId);
                 User receiver = null;
-                if(message.containsKey("receiverUsername"))
+                if (message.containsKey("receiverUsername"))
                     receiver = User.getUserByUsername((String) message.get("senderUsername"));
-                new Message(content, getConnection().getUser() , receiver).setRepliedMessage(repliedMessage);
+                new Message(content, getConnection().getUser(), receiver, null).setRepliedMessage(repliedMessage);
                 return;
             }
             commandHandler.accept(jsonObject);

@@ -28,6 +28,8 @@ public class MemberInChatController implements Controller {
     @FXML
     private Label repliedMessage;
     @FXML
+    private ImageView dataImageView;
+    @FXML
     private HBox topHBox;
     private int id;
 
@@ -38,6 +40,12 @@ public class MemberInChatController implements Controller {
         String username = (String) jsonObject.get("senderUsername");
         this.id = ((Long) jsonObject.get("id")).intValue();
         Platform.runLater(() -> {
+            if(jsonObject.containsKey("photoPath")) {
+                String dataImageAddress = (String) jsonObject.get("photoPath");
+                dataImageView.setImage(new Image(new File(dataImageAddress).toURI().toString()));
+            }else {
+                borderPane.setTop(null);
+            }
             imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
             contentLabel.setText(content);
             usernameLabel.setText(username);

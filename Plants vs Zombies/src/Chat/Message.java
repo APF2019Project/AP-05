@@ -17,6 +17,7 @@ public class Message {
     private String content;
     private User sender, receiver;
     private Message repliedMessage;
+    private String photoPath;
     private int id;
 
     public void setRepliedMessage(Message repliedMessage) {
@@ -26,13 +27,13 @@ public class Message {
                     repliedMessage.getSender().getConnection() != null) {
                 repliedMessage.getSender().getConnection().send("notification", this.toJsonObject());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Message(String content, User sender, User receiver) {
+    public Message(String content, User sender, User receiver, String photoPath) {
+        this.photoPath=photoPath;
         this.content = content;
         this.sender = sender;
         this.receiver = receiver;
@@ -46,7 +47,8 @@ public class Message {
         }
     }
 
-    public Message(String content, User sender, User receiver, int id) {
+    public Message(String content, User sender, User receiver, String photoPath, int id) {
+        this.photoPath=photoPath;
         this.content = content;
         this.sender = sender;
         this.receiver = receiver;
@@ -74,45 +76,49 @@ public class Message {
         chat.sort(Comparator.comparing(Message::getId));
         return chat;
     }
+
     private static ArrayList<Message> getChatOfServerArray() {
         ArrayList<Message> chat = new ArrayList<>();
         for (Message message : allMessages) {
-            if( message.getReceiver() == null) {
+            if (message.getReceiver() == null) {
                 chat.add(message);
             }
         }
         chat.sort(Comparator.comparing(Message::getId));
         return chat;
     }
+
     public static JSONArray getChatBetweenUsers(User user1, User user2) {
         ArrayList<Message> arrayList = getChatBetweenUsersArray(user1, user2);
         JSONArray jsonArray = new JSONArray();
-        for(Message message : arrayList) {
+        for (Message message : arrayList) {
             jsonArray.add(message.toJsonObject());
         }
         return jsonArray;
     }
+
     public static JSONArray getChatOfServer() {
         ArrayList<Message> arrayList = getChatOfServerArray();
         JSONArray jsonArray = new JSONArray();
-        for(Message message : arrayList) {
+        for (Message message : arrayList) {
             jsonArray.add(message.toJsonObject());
         }
         return jsonArray;
     }
+
     public synchronized static void saveAllMessages() throws Exception {
         JSONArray messageJsonArray = new JSONArray();
-        for(Message message : allMessages) {
+        for (Message message : allMessages) {
             JSONObject messageJsonObject = new JSONObject();
-            messageJsonObject.put(FieldNames.id.name() , message.getId());
+            messageJsonObject.put(FieldNames.id.name(), message.getId());
             messageJsonObject.put(FieldNames.content.name(), message.getContent());
             messageJsonObject.put(FieldNames.senderUsername.name(), message.getSender().getUsername());
-            if(message.getReceiver()==null){
+            if (message.getReceiver() == null) {
                 messageJsonObject.put(FieldNames.receiverUsername.name(), "GlobalChat");
-            }else {
+            } else {
                 messageJsonObject.put(FieldNames.receiverUsername.name(), message.getReceiver().getUsername());
             }
-            if(message.getRepliedMessage() != null) {
+            if (message.getRepliedMessage() != null) {
                 messageJsonObject.put(FieldNames.repliedId.name(), message.getRepliedMessage().getId());
             }
             messageJsonArray.add(messageJsonObject);
@@ -131,10 +137,10 @@ public class Message {
         jsonObject.put("senderImage", this.getSender().getImageAddress());
         jsonObject.put("senderUsername", this.getSender().getUsername());
 
-        if(getReceiver() != null)
+        if (getReceiver() != null)
             jsonObject.put("receiverUsername", getReceiver().getUsername());
 
-        if(repliedMessage != null) {
+        if (repliedMessage != null) {
             jsonObject.put("repliedUsername", this.getRepliedMessage().getSender().getUsername());
             jsonObject.put("repliedMessage", this.getRepliedMessage().getContent());
         }

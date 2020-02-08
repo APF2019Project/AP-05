@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="143.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.MemberInChatController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Chat.MemberInChatController">
     <left>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -39,4 +39,7 @@
     <bottom>
         <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
     </bottom>
+   <top>
+      <ImageView fx:id="dataImageView" fitHeight="330.0" fitWidth="366.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>
