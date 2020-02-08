@@ -170,6 +170,7 @@ public class User {
     public ArrayList<Creature> getLockedCreatures() {
         ArrayList<Creature> lockedCreatures = new ArrayList<>();
         for (Creature creature : Creature.getAllCreatures()) {
+            System.out.println(creature.getName());
             if (getUnlockedCreatureByName(creature.getName()) == null) {
                 lockedCreatures.add(creature);
             }

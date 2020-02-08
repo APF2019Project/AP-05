@@ -47,6 +47,7 @@ public abstract class Creature {
         this.remainInShop=(coolDown+3)*5;// wtf?:D
         this.reloadTime = jsonHandler.getInt(FieldNames.reloadTime);
         this.shield = Shield.getShieldByName(jsonHandler.getString(FieldNames.shield));
+        System.out.println(this.getName());
         allCreatures.add(this);
     }
 

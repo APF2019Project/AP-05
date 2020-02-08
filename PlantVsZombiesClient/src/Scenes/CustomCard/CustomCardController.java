@@ -28,6 +28,8 @@ public class CustomCardController implements Controller {
             jsonObject.put(controller.getFieldnameLabel(), controller.getText());
         }
         MenuHandler.getClient().send("create", jsonObject);
+        MenuHandler.getClient().send("exitMenu", null);
+        MenuHandler.closeScene();
     }
 
     @FXML
@@ -47,8 +49,8 @@ public class CustomCardController implements Controller {
     }
 
     public void showFields(Object object) throws IOException {
-        this.jsonObject = jsonObject;
         JSONObject jsonObject = (JSONObject) object;
+        this.jsonObject = jsonObject;
         for(Object obj : jsonObject.keySet().toArray()) {
             String fieldName = (String) obj;
             if(jsonObject.get(obj) == null)

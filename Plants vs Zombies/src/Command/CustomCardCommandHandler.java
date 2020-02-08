@@ -1,5 +1,6 @@
 package Command;
 
+import Main.Connection;
 import Main.JSONHandler;
 import org.json.simple.JSONObject;
 
@@ -23,14 +24,21 @@ public class CustomCardCommandHandler extends CommandHandler {
     private void create(InputCommand inputCommand) throws Exception {
         JSONObject jsonObject = inputCommand.getInputJsonObject();
         try {
-            Class<?> clss = Class.forName(address.split("/")[1]);
+            String className = address.substring(address.indexOf('/') + 1);
+            System.out.println(className);
+            System.out.println(className);
+            System.out.println(className);
+            System.out.println(className);
+            System.out.println(className);
+
+            Class<?> clss = Class.forName(className);
             clss.getConstructor(JSONObject.class).newInstance(jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         String name = (String) jsonObject.get("name");
-        File file = new File(address + "/" + name);
+        File file = new File("JSON/" + address + "/" + name);
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
@@ -46,6 +54,7 @@ public class CustomCardCommandHandler extends CommandHandler {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
             }
         }
     }

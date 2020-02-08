@@ -20,6 +20,7 @@ public class Mine extends Plant {
         this.deltaX = jsonHandler.getInt(FieldNames.deltaX);
         this.deltaY = jsonHandler.getInt(FieldNames.deltaY);
         this.activeRange = jsonHandler.getInt(FieldNames.activeRange);
+        System.out.println(this.getName());
     }
 
     @Override

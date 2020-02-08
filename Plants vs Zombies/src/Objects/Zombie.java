@@ -20,6 +20,7 @@ public class Zombie extends Creature {
         this.speed = jsonHandler.getInt(FieldNames.speed);
         this.power = jsonHandler.getInt(FieldNames.power);
         this.powerWithShield = jsonHandler.getInt(FieldNames.powerWithShield);
+        System.out.println(this.getName());
         allZombies.add(this);
     }
 
