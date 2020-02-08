@@ -2,11 +2,14 @@ package Scenes.Profile;
 
 import Helper.Controller;
 import Helper.MenuHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProfileSceneController implements Controller {
@@ -40,9 +43,21 @@ public class ProfileSceneController implements Controller {
         MenuHandler.openSceneWithDefaultParameters("create account");
     }
 
+    @FXML
+    void onChangeProfilePictureButtonMouseClicked() throws IOException {
+        MenuHandler.openSceneWithDefaultParameters("change picture");
+    }
+
     public void showUser(Object object) {
-        String username = (String) object;
-        usernameLabel.setText(username);
+        JSONObject jsonObject = (JSONObject) object;
+        String username = (String) jsonObject.get("username");
+        String imageAddress = (String) jsonObject.get("imageAddress");
+
+        Platform.runLater(() -> {
+            usernameLabel.setText(username);
+            System.out.println(imageAddress);
+            imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
+        });
     }
 
     @FXML

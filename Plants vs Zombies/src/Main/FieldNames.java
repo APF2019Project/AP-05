@@ -8,5 +8,5 @@ public enum FieldNames {
     gunShotsPerRound, numberOfSuns, swimmer, cactusHasEffect,
     peaHasEffect, hasLadder, speed, power, powerWithShield,
     users, username, password, unlockedCreatures, coinForShop,
-    killingEnemyCount,imageAddress
+    killingEnemyCount,imageAddress,messages
 }

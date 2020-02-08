@@ -5,9 +5,14 @@ import org.json.simple.JSONObject;
 public class GameMenuSwitcher {
     private static GameStatus gameStatus = GameStatus.notInGame;
     private Map map;
-
+    private boolean isViewer;
     public GameMenuSwitcher(Map map) {
         this.map = map;
+        isViewer=false;
+    }
+    public GameMenuSwitcher(Map map,boolean isViewer){
+        this.map = map;
+        this.isViewer=isViewer;
     }
 
     public static GameStatus getGameStatus() {
@@ -73,21 +78,23 @@ public class GameMenuSwitcher {
 
     public void runGame() throws Exception {
         setGameStatus(GameStatus.OnGame);
-        map.getPlantPlayer().pickCards(() -> {
-            try {
-                map.getZombiePlayer().pickCards(() -> {
-                    try {
-                        System.out.println("end of picks");
-                        runTurn();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
+        if(!isViewer) {
+            map.getPlantPlayer().pickCards(() -> {
+                try {
+                    map.getZombiePlayer().pickCards(() -> {
+                        try {
+                            System.out.println("end of picks");
+                            runTurn();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            });
+        }
     }
 }

@@ -27,11 +27,10 @@ public class MemberInLeaderboardListController implements Controller {
 
     @Override
     public void initJsonInput(JSONObject jsonObject) {
-        Random random = new Random();
-        usernameLabel.setText((String) jsonObject.get("user.getUsername"));
-        killCountLabel.setText(String.valueOf(jsonObject.get("user.getKillingEnemyCount")));
-        File file = new File("../Profile Pictures/profile" + ((random.nextInt() % 6 + 6) % 6 + 1) + ".png");
+        File file = new File((String) jsonObject.get("imageAddress"));
         Platform.runLater(() -> {
+            usernameLabel.setText((String) jsonObject.get("user.getUsername"));
+            killCountLabel.setText(String.valueOf(jsonObject.get("user.getKillingEnemyCount")));
             imageView.setImage(new Image(file.toURI().toString()));
         });
     }

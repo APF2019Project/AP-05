@@ -1,6 +1,7 @@
 package Helper;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,6 +12,7 @@ public class Client {
     private Socket socket;
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
+    private String token="";
 
     public Client(String address, int port) {
         try {
@@ -48,10 +50,16 @@ public class Client {
     public void startListening() {
         Thread thread = new Thread(() -> {
             try {
-                String line = "";
+                send("hand shake",new JSONObject());
+                String line="";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
-                    MenuHandler.receive(line);
+                    JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(line);
+                    if(messageJsonObject.containsKey("token")){
+                        token=messageJsonObject.get("token").toString();
+                    }else {
+                        MenuHandler.receive(line);
+                    }
                 }
             } catch (Exception e) {
                 MessageBox.showErrorAndExit(e.getMessage());
@@ -63,8 +71,7 @@ public class Client {
     }
 
     public synchronized void sendExit() throws IOException {
-        dataOutputStream.writeUTF("exit");
-        dataOutputStream.flush();
+        send("exit",new JSONObject());
     }
 
     public synchronized void send(String command, Object data) throws IOException {
@@ -72,6 +79,7 @@ public class Client {
         System.out.println(command);
         System.out.println(data);
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token",token);
         jsonObject.put("command", command);
         jsonObject.put("data", data);
         String message = jsonObject.toJSONString();

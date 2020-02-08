@@ -1,7 +1,7 @@
 package Main;
 
 import Objects.*;
-import Player.Player;
+import Player.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,8 +13,28 @@ public class Map {
     private ArrayList<GunShot> gunShotArrayList = new ArrayList<>();
     private boolean[] isWater;
     private int row, col, numberOfRemainedWaves;
+    private static ArrayList<Map> allRunningGame=new ArrayList<Map>();
 
+    public static void checkAllMap(){
+        for(Map map:allRunningGame){
+            try {
+                if (((map.getPlantPlayer() instanceof PlantOnDayAndWaterModeHumanPlayer
+                        || map.getPlantPlayer() instanceof PlantOnRailGameModeHumanPlayer) &&
+                        map.getPlantPlayer().getConnection().getUser().getPlayer().getMap()!=map) ||
+                        (map.getZombiePlayer() instanceof ZombieHumanPlayer &&
+                                map.getZombiePlayer().getConnection().getUser().getPlayer().getMap()!=map)){
+                    allRunningGame.remove(map);
+                }
+            }catch (Exception e){
+                allRunningGame.remove(map);
+            }
+        }
+    }
+    public static ArrayList<Map> getAllRunningGame() {
+        return allRunningGame;
+    }
     public Map(int row, int col, MapMode mapMode, Player plantPlayer, Player zombiePlayer, int wavesNumber) {
+        allRunningGame.add(this);
         this.row = row;
         this.col = col;
         this.plantPlayer = plantPlayer;
@@ -224,7 +244,7 @@ public class Map {
     public void gameActionForEachTurn() {
         if (!mapMode.equals(MapMode.Rail)) {
             Random random = new Random();
-            if (random.nextInt() % 3 == 0) {
+            if (random.nextInt() % 6 == 0) {
                 plantPlayer.addSun(random.nextInt(2) + 1);
             }
         }
@@ -248,6 +268,9 @@ public class Map {
         }
         return false;
     }
+    public void gameIsFinish(){
+        allRunningGame.remove(this);
+    }
 
     public GameStatus run() throws Exception {
         for (Creature creature : plantPlayer.getCreaturesOnHand()) {
@@ -257,6 +280,7 @@ public class Map {
             creature.setRemainingCoolDown(Math.max(0, creature.getRemainingCoolDown() - 1));
         }
         if (numberOfRemainedWaves < 0) {
+            gameIsFinish();
             return GameStatus.PlantPlayerWins;
         }
         for (GunShot gunShot : gunShotArrayList) {
@@ -271,12 +295,14 @@ public class Map {
                 activeCard.doAction(this);
         }
         if (mapMode.equals(MapMode.Zombie) && !isMapHasPlant()) {
+            gameIsFinish();
             return GameStatus.ZombiePlayerWins;
         }
         if (!mapMode.equals(MapMode.Zombie)) {
             for (ActiveCard activeCard : activeCardArrayList) {
                 if (activeCard.getCreature() instanceof Zombie) {
                     if (((Zombie) activeCard.getCreature()).isWinning(activeCard)) {
+                        gameIsFinish();
                         return GameStatus.ZombiePlayerWins;
                     }
                 }
@@ -315,11 +341,8 @@ public class Map {
 
         gameActionForEachTurn();
 
-        //mapSimpleShow();
-
         return GameStatus.OnGame;
     }
-
     public ActiveCard getNearestZombie(ActiveCard activeCard) {
         ActiveCard nearestZombie = null;
         int distance = GameData.inf;
@@ -332,44 +355,5 @@ public class Map {
             }
         }
         return nearestZombie;
-    }
-
-    void mapSimpleShow() {
-        char[][] jad = new char[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (isWater[i]) {
-                    jad[i][j] = '~';
-                }
-                else {
-                    jad[i][j] = '.';
-                }
-            }
-        }
-        for (GunShot gunShot : gunShotArrayList) {
-            jad[gunShot.getY()][gunShot.getX()] = '*';
-        }
-        for (ActiveCard activeCard : activeCardArrayList) {
-            if (activeCard.getCreature() instanceof Zombie) {
-                jad[activeCard.getY()][activeCard.getX()] = 'Z';
-            }
-            else {
-                jad[activeCard.getY()][activeCard.getX()] = 'P';
-            }
-        }
-        for (int i = 0; i < col; i++) {
-            System.out.print("/");
-        }
-        System.out.println();
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                System.out.print(jad[i][j]);
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < col; i++) {
-            System.out.print("/");
-        }
-        System.out.println();
     }
 }

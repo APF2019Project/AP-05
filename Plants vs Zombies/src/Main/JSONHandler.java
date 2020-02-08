@@ -11,7 +11,7 @@ public class JSONHandler {
     private JSONObject jsonObject;
     private File file;
 
-    JSONHandler(File file) throws Exception {
+    public JSONHandler(File file) throws Exception {
         JSONParser jsonParser = new JSONParser();
         this.file = file;
         FileReader fileReader = new FileReader(file);
@@ -50,7 +50,7 @@ public class JSONHandler {
         jsonObject.put(key.name(), value);
     }
 
-    void set(FieldNames key, Object value) throws Exception {
+    public void set(FieldNames key, Object value) throws Exception {
         if (file == null) {
             throw new Exception("File is null");
         }

@@ -5,6 +5,8 @@ import Helper.MenuHandler;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -23,7 +25,10 @@ public class AllUsersSceneController implements Controller, Refreshable {
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
-
+    @FXML
+    void onGlobalChatButtonMouseClicked() throws IOException {
+        MenuHandler.getClient().send("enter global chat", null);
+    }
     @Override
     public void initJsonInput(JSONObject jsonObject) throws IOException {
         sendLoadRequest();
@@ -55,6 +60,6 @@ public class AllUsersSceneController implements Controller, Refreshable {
 
     @Override
     public void sendLoadRequest() throws IOException {
-        MenuHandler.getClient().send("show all users", null);
+        MenuHandler.getClient().send("show", null);
     }
 }

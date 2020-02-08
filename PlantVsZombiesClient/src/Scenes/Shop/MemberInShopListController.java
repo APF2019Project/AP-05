@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class MemberInShopListController implements Controller {
     @FXML
-    private Label creatureNameLabel, priceLabel;
+    private Label creatureNameLabel, priceLabel,remainNumber;
     @FXML
     private Button button;
     @FXML
@@ -43,6 +43,7 @@ public class MemberInShopListController implements Controller {
     public void initJsonInput(JSONObject jsonObject) {
         creatureNameLabel.setText((String) jsonObject.get("creature.getName"));
         priceLabel.setText(jsonObject.get("creature.getPriceInShop") + "$");
+        remainNumber.setText(jsonObject.get("creature.getPriceInShop").toString()+" number left");
         if ((boolean) jsonObject.get("bought")) {
             button.setVisible(false);
         }

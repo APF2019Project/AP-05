@@ -5,9 +5,11 @@ import Scenes.Games.PlantOnRailModePlayer.PlantOnRailModePlayerSceneController;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -73,12 +75,24 @@ public class MenuHandler {
         return borderPane;
     }
 
+    public static AnchorPane getAnchorPaneWithDefaultParametersHandler(String fileName, JSONObject parameters) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuHandler.class.getResource("../" + fileName));
+        AnchorPane anchorPane = fxmlLoader.load();
+        Controller controller = fxmlLoader.getController();
+        controller.initJsonInput(parameters);
+        return anchorPane;
+    }
+
     private static void openSceneWithDefaultParametersHandler(String menuName, JSONObject parameters) throws IOException {
+        System.out.println(!controllers.isEmpty() && getCurrentController() instanceof Refreshable);
         if (!controllers.isEmpty() && getCurrentController() instanceof Refreshable &&
                 getCurrentController().getClass().getSimpleName().equals(menuName + "SceneController")) {
+            System.out.println("HEEEEEEEEEEEEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYy");
             ((Refreshable) getCurrentController()).sendLoadRequest();
             return;
         }
+        else if(!controllers.isEmpty())
+            System.out.println(getCurrentController().getClass().getSimpleName() + " XXX " + menuName);
         String prefix = "../Scenes/";
         if (menuName.contains("Player")) {
             prefix = "../Scenes/Games/";
@@ -111,6 +125,8 @@ public class MenuHandler {
         });
     }
 
+    static int cnt = 50;
+
     static synchronized void receive(String message) throws ParseException {
         System.err.println("message" + message);
         JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(message);
@@ -139,9 +155,12 @@ public class MenuHandler {
             return;
         }
         if (command.equals("showMessage")) {
+            cnt--;
             JSONObject parameters = (JSONObject) data;
             String alertMessage = (String) parameters.get("message");
             String alertMessageType = (String) parameters.getOrDefault("messageType", "ERROR");
+            if(cnt == 0)
+                System.exit(0);
             Platform.runLater(() -> {
                 MessageBox.show(alertMessage, Alert.AlertType.valueOf(alertMessageType));
                 if (Alert.AlertType.valueOf(alertMessageType).equals(Alert.AlertType.ERROR)) {
@@ -150,13 +169,42 @@ public class MenuHandler {
             });
             return;
         }
+        if(command.equals("notification")) {
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println("HEREXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            Platform.runLater(() -> {
+                try {
+                    showNotification((JSONObject) data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            return;
+        }
         try {
             System.err.println(getCurrentController().getClass().getSimpleName());
+            System.err.println(command);
             Method method = getDeclaredMethod(getCurrentController().getClass(), command, Object.class);
             method.invoke(getCurrentController(), data);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void showNotification(JSONObject data) throws IOException {
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle("New Message!");
+
+        data.put("stage", stage);
+        BorderPane borderPane = getPaneWithDefaultParametersHandler(
+                "Scenes/Notification/NotificationScene.fxml", data);
+        Scene scene = new Scene(borderPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private static Method getDeclaredMethod(Class<?> cls, String name, Class<?>... parameters) {

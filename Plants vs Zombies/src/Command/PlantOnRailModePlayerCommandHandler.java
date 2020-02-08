@@ -14,7 +14,6 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     boolean shovelSelected = false;
     private Supplier<Void> supplier;
     private int plantIndex = -1;
-
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "showHand: To see your current cards."),
@@ -32,9 +31,13 @@ public class PlantOnRailModePlayerCommandHandler extends CommandHandler {
     }
 
     public PlantOnRailModePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
-    //private Plant selectedPlant = null;
+
+
+
+//private Plant selectedPlant = null;
 
     void showHand(InputCommand inputCommand) {
         JSONArray jsonArray = new JSONArray();

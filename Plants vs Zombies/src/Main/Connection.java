@@ -2,53 +2,100 @@ package Main;
 
 import Command.FirstCommandHandler;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Random;
 
 public class Connection {
+
     private User user;
     private ArrayList<Menu> menus = new ArrayList<>();
     private DataOutputStream dataOutputStream;
     private Thread thread;
     private Socket socket;
+    private String token;
+    private int howManyTimeIgnoreEndTurn;
 
+    private static HashMap<String,Connection> tokenToConnection=new HashMap<String,Connection>();
+    static public Collection<Connection> getAllConnection(){
+        return tokenToConnection.values();
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public int getHowManyTimeIgnoreEndTurn() {
+        return howManyTimeIgnoreEndTurn;
+    }
+
+    public void setHowManyTimeIgnoreEndTurn(int howManyTimeIgnoreEndTurn) {
+        this.howManyTimeIgnoreEndTurn = howManyTimeIgnoreEndTurn;
+    }
+
+    String tokenGenerator(){
+        Random random=new Random();
+        StringBuilder token= new StringBuilder();
+        for(int i=0;i<10;i++){
+            token.append(random.nextInt(26) + 'a');
+        }
+        return token.toString();
+    }
     // AI mode
     public Connection(User user) {
         this.user = user;
+        user.setConnection(this);
     }
-
+    public void sendNewToken(){
+        this.token=tokenGenerator();
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token", token);
+            tokenToConnection.remove(token);
+            tokenToConnection.put(token,this);
+            String message = jsonObject.toJSONString();
+            System.out.println("Server: " + message);
+            dataOutputStream.writeUTF(message);
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public Connection(Socket socket, DataOutputStream dataOutputStream) {
         this.socket = socket;
         this.dataOutputStream = dataOutputStream;
         Server.getDataOutputStreams().add(dataOutputStream);
+        howManyTimeIgnoreEndTurn=2;
         thread = new Thread(() -> {
             DataInputStream dataInputStream = null;
             try {
                 System.out.println("some Client accepted");
+
                 dataInputStream = new DataInputStream(socket.getInputStream());
-                new Menu(this, new FirstCommandHandler()).run();
+
                 DataInputStream finalDataInputStream = dataInputStream;
+
                 String line = "";
-                new Thread(() -> {
-                    while (!socket.isClosed()) {
-                        try {
-                            //if(!getCurrentMenu().getCommandHandlerName().contains("Zombie"))
-                            receive("{\"command\":\"end turn\"}");
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-                while (!line.equals("exit")) {
+                while (!isExit(line)) {
                     line = finalDataInputStream.readUTF();
                     System.out.println(line);
-                    if (!line.equals("exit")) {
-                        receive(line);
+                    JSONObject jsonObject = (JSONObject) new JSONParser().parse(line);
+                    if(jsonObject.get("command").toString().equals("hand shake")){
+                        sendNewToken();
+                        Thread.sleep(500);
+                        new Menu(this, new FirstCommandHandler()).run();
+                    }else {
+                        if (!isExit(line)) {
+                            receive(line);
+                        }
                     }
                 }
                 System.out.println("Closing connection");
@@ -65,6 +112,7 @@ public class Connection {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
         });
         thread.start();
@@ -137,19 +185,27 @@ public class Connection {
 
     public void setUser(User user) {
         this.user = user;
+        user.setConnection(this);
     }
-
-    void receive(String message) throws Exception {
+    static private Connection findConnectionByToken(String token){
+        return tokenToConnection.get(token);
+    }
+    static boolean isExit(String message) throws ParseException {
+        if(message.equals(""))return false;
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
+        return (jsonObject.get("command").toString().equals("exit"));
+    }
+    static void receive(String message) throws Exception {
         System.out.println("Client: " + message);
-        if (message.equals("exit")) {
-            thread.wait();
-            dataOutputStream.close();
-            socket.close();
-        }
-        getCurrentMenu().accept(message);
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(message);
+        String token=jsonObject.get("token").toString();
+        Connection connection=findConnectionByToken(token);
+        connection. sendNewToken();
+        connection.getCurrentMenu().accept(message);
+
     }
 
-    public void send(String command, Object data) {
+    public synchronized void send(String command, Object data) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("command", command);

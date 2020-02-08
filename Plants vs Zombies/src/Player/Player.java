@@ -69,7 +69,6 @@ public abstract class Player {
     }
 
     public abstract void doAction(Supplier<Void> supplier) throws Exception;
-
     public abstract void gameAction();
 
     public abstract boolean pickCreature(Creature creature) throws Exception;

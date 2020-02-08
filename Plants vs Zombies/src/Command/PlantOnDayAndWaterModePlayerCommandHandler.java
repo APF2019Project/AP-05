@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     private Supplier<Void> supplier;
     private boolean shovelSelected;
-
     {
         this.commands = new Command[]{
                 new Command(this::showHand, "show hand", "show hand: To see your collection's " +
@@ -31,6 +30,7 @@ public class PlantOnDayAndWaterModePlayerCommandHandler extends CommandHandler {
     }
 
     public PlantOnDayAndWaterModePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
 

@@ -17,7 +17,7 @@
                         <Image url="@../../Files/background.jpeg" />
                     </image>
                 </ImageView>
-                <Button layoutX="331.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#onProfileButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Profile">
+                <Button layoutX="434.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#onProfileButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Profile">
                     <font>
                         <Font size="20.0" />
                     </font>
@@ -27,12 +27,12 @@
                         <Font name="Ubuntu Bold" size="65.0" />
                     </font>
                 </Label>
-                <Button layoutX="332.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onPlayButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Play">
+                <Button layoutX="333.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onPlayButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Play">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Button>
-                <Button layoutX="231.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onShopButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Shop">
+                <Button layoutX="233.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#onShopButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Shop">
                     <font>
                         <Font size="20.0" />
                     </font>
@@ -47,6 +47,11 @@
                     </graphic>
                 </Button>
             <Button fx:id="allUsersButton" layoutX="433.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onAllUsersButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="All Users">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="232.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onAllGamesButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="All Games">
                <font>
                   <Font size="20.0" />
                </font>

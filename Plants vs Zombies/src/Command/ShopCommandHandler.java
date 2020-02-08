@@ -1,5 +1,6 @@
 package Command;
 
+import Main.Menu;
 import Objects.Creature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,16 +13,20 @@ public class ShopCommandHandler extends CommandHandler {
                 new Command(this::showCollection, "show collection", "show collection: To see your " +
                         "bought cards."),
                 new Command(this::buy, "buy", "buy [name]: To buy card with given name."),
+                new Command(this::sellOrGift, "sellOrGift", "move to sellOrGift menu"),
                 new Command(this::money, "money", "money: To see your amount of coins.")
         };
     }
-
+    public void sellOrGift(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), new SellOrGiftCommandHandler()).run();
+    }
     public void showShop(InputCommand inputCommand) throws Exception {
         JSONArray jsonArray = new JSONArray();
         for (Creature creature : menu.getConnection().getUser().getLockedCreatures()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("creature.getName", creature.getName());
             jsonObject.put("creature.getPriceInShop", creature.getPriceInShop());
+            jsonObject.put("creature.remainingInShop",creature.getRemainInShop());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("showShop", jsonArray);
@@ -43,6 +48,9 @@ public class ShopCommandHandler extends CommandHandler {
         Creature creature = Creature.getCreatureByName(creatureName);
         if (creature == null || menu.getConnection().getUser().getUnlockedCreatureByName(creatureName) != null) {
             throw new Exception("invalid cardName");
+        }
+        if(creature.getRemainInShop()<=0){
+            throw new Exception("this card is finished");
         }
         if (!menu.getConnection().getUser().buyCreatureFromShop(creature)) {
             throw new Exception("you don't have enough money");

@@ -18,6 +18,7 @@ public class LeaderboardCommandHandler extends CommandHandler {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("user.getUsername", user.getUsername());
             jsonObject.put("user.getKillingEnemyCount", user.getKillingEnemyCount());
+            jsonObject.put("imageAddress", user.getImageAddress());
             jsonArray.add(jsonObject);
         }
         menu.getConnection().send("leaderboard", jsonArray);

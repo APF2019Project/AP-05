@@ -31,8 +31,11 @@ public class ZombiePlayerCommandHandler extends CommandHandler {
     }
 
     public ZombiePlayerCommandHandler(Supplier<Void> supplier) {
+
         this.supplier = supplier;
     }
+
+
 
     private void showWaveStatus(InputCommand inputCommand) {
         menu.getConnection().send("showWaveStatus", ((ZombiePlayer) menu.getConnection()
