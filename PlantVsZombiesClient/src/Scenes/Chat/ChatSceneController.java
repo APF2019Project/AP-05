@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.json.simple.JSONArray;
@@ -92,5 +93,8 @@ public class ChatSceneController implements Controller, Refreshable {
     public void sendLoadRequest() throws IOException {
         Platform.runLater(() -> scrollPane.setVvalue(1.0));
         MenuHandler.getClient().send("show", null);
+    }
+
+    public void onGunButtonMouseClicked(MouseEvent mouseEvent) {
     }
 }

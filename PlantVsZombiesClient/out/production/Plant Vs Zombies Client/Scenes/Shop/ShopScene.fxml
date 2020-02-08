@@ -9,40 +9,43 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="Scenes.Shop.ShopSceneController">
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.Shop.ShopSceneController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
                 <ImageView fitHeight="489.0" fitWidth="863.0" pickOnBounds="true">
                     <image>
-                        <Image url="@../../Files/shopBackground.jpeg"/>
+                        <Image url="@../../Files/shopBackground.jpeg" />
                     </image>
                 </ImageView>
-                <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked"
-                        opacity="0.88">
+                <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonMouseClicked" opacity="0.88">
                     <graphic>
                         <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Files/back.png"/>
+                                <Image url="@../../Files/back.png" />
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <ScrollPane fx:id="scrollPane" layoutX="70.0" layoutY="53.0" opacity="0.85" prefHeight="415.0"
-                            prefWidth="530.0">
+                <ScrollPane fx:id="scrollPane" layoutX="70.0" layoutY="53.0" opacity="0.85" prefHeight="415.0" prefWidth="530.0">
                     <content>
-                        <VBox fx:id="creatureList" prefHeight="430.0"/>
+                        <VBox fx:id="creatureList" prefHeight="430.0" />
                     </content>
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                 </ScrollPane>
                 <Label fx:id="moneyLabel" layoutX="70.0" layoutY="14.0">
                     <font>
-                        <Font size="25.0"/>
+                        <Font size="25.0" />
                     </font>
                 </Label>
+            <Button layoutX="664.0" layoutY="415.0" mnemonicParsing="false" onMouseClicked="#onSellOrGiftMouseClicked" prefHeight="53.0" prefWidth="150.0" text="sell/send gift">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>

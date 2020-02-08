@@ -5,6 +5,7 @@ import Helper.MenuHandler;
 import Helper.PrettyLabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -56,5 +57,10 @@ public class MainMenuSceneController implements Controller {
     @Override
     public void initJsonInput(JSONObject jsonObject) {
 
+    }
+
+    @FXML
+    public void onCustomButtonMouseClicked() throws IOException {
+        MenuHandler.openSceneWithDefaultParameters("select type");
     }
 }

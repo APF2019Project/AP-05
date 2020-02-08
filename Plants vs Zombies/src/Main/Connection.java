@@ -25,8 +25,12 @@ public class Connection {
     private int howManyTimeIgnoreEndTurn;
 
     private static HashMap<String,Connection> tokenToConnection=new HashMap<String,Connection>();
-    static public Collection<Connection> getAllConnection(){
-        return tokenToConnection.values();
+
+    static public synchronized HashMap<String, Connection> getTokenToConnection() {
+        return tokenToConnection;
+    }
+    static public synchronized Collection<Connection> getAllConnection(){
+        return getTokenToConnection().values();
     }
 
     public String getToken() {
@@ -59,8 +63,8 @@ public class Connection {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("token", token);
-            tokenToConnection.remove(token);
-            tokenToConnection.put(token,this);
+            getTokenToConnection().remove(token);
+            getTokenToConnection().put(token,this);
             String message = jsonObject.toJSONString();
             System.out.println("Server: " + message);
             dataOutputStream.writeUTF(message);

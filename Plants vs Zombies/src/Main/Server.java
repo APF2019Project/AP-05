@@ -1,14 +1,13 @@
 package Main;
 
 import Chat.Message;
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import org.json.simple.JSONObject;
 
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Server {
@@ -51,7 +50,7 @@ public class Server {
             while (true) {
                 try {
                     Thread.sleep(6000);
-                 //   Map.checkAllMap();
+                    //   Map.checkAllMap();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -62,21 +61,22 @@ public class Server {
             while (true) {
                 try {
                     Thread.sleep(10000);
-                    HashMap<String, Boolean> allUserState= new HashMap<String,Boolean>();
-                    for(User user:User.getAllUsers()){
-                        allUserState.put(user.getUsername(),false);
+                    HashMap<String, Boolean> allUserState = new HashMap<String, Boolean>();
+                    for (User user : User.getAllUsers()) {
+                        allUserState.put(user.getUsername(), false);
                     }
-                    for(Connection connection:Connection.getAllConnection()){
-                        User user=connection.getUser();
-                        if(user!=null){
-                            allUserState.put(user.getUsername(),true);
+                    for (Connection connection : Connection.getAllConnection()) {
+                        User user = connection.getUser();
+                        if (user != null) {
+                            allUserState.put(user.getUsername(), true);
                         }
                     }
-                    for(String username:allUserState.keySet()){
-                        if(allUserState.get(username)){
-                            System.out.println(username+": Online");
-                        }else{
-                            System.out.println(username+": OffLine");
+                    for (String username : allUserState.keySet()) {
+                        if (allUserState.get(username)) {
+                            System.out.println(username + ": Online");
+                        }
+                        else {
+                            System.out.println(username + ": OffLine");
                         }
                     }
                 } catch (Exception e) {
@@ -90,14 +90,15 @@ public class Server {
             while (true) {
                 try {
                     Thread.sleep(700);
-                    for(Connection connection:Connection.getAllConnection()){
-                        if(connection.getHowManyTimeIgnoreEndTurn()==0){
+                    Collection<Connection> connections = Connection.getAllConnection();
+                    for (Connection connection : connections) {
+                        if (connection.getHowManyTimeIgnoreEndTurn() == 0) {
                             try {
-                                JSONObject jsonObject=new JSONObject();
-                                jsonObject.put("command","end turn");
-                                jsonObject.put("token",connection.getToken());
+                                JSONObject jsonObject = new JSONObject();
+                                jsonObject.put("command", "end turn");
+                                jsonObject.put("token", connection.getToken());
                                 connection.receive(jsonObject.toString());
-                                if(!connection.getCurrentMenu().getCommandHandlerName().contains("Play"))
+                                if (!connection.getCurrentMenu().getCommandHandlerName().contains("Play"))
                                     connection.setHowManyTimeIgnoreEndTurn(2);
                                 else
                                     connection.setHowManyTimeIgnoreEndTurn(1);
@@ -105,8 +106,8 @@ public class Server {
                                 e.printStackTrace();
                             }
                         }
-                        connection.setHowManyTimeIgnoreEndTurn(connection.getHowManyTimeIgnoreEndTurn()-1);
-                        User user=connection.getUser();
+                        connection.setHowManyTimeIgnoreEndTurn(connection.getHowManyTimeIgnoreEndTurn() - 1);
+                        User user = connection.getUser();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

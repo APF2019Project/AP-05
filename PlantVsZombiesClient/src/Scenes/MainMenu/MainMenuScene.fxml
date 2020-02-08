@@ -27,7 +27,7 @@
                         <Font name="Ubuntu Bold" size="65.0" />
                     </font>
                 </Label>
-                <Button layoutX="333.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onPlayButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Play">
+                <Button layoutX="233.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#onPlayButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Play">
                     <font>
                         <Font size="20.0" />
                     </font>
@@ -52,6 +52,11 @@
                </font>
             </Button>
             <Button layoutX="232.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onAllGamesButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="All Games">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="434.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#onCustomButtonMouseClicked" prefHeight="55.0" prefWidth="201.0" text="Custom Card">
                <font>
                   <Font size="20.0" />
                </font>
