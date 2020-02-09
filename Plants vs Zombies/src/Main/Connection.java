@@ -52,7 +52,8 @@ public class Connection {
                             jsonObject.put("command", "end turn");
                             jsonObject.put("token", getToken());
                             receive(jsonObject.toString());
-                            if (!getCurrentMenu().getCommandHandlerName().contains("Play"))
+                            if (!getCurrentMenu().getCommandHandlerName().contains("Play") &&
+                                    !getCurrentMenu().getCommandHandlerName().contains("watchGame"))
                                 Thread.sleep(2000);
                             else
                                 Thread.sleep(1000);
@@ -240,6 +241,10 @@ public class Connection {
             jsonObject.put("data", data);
             String message = jsonObject.toJSONString();
             System.out.println("Server: " + message);
+            if(message.equals("{\"data\":{\"messageType\":\"WARNING\",\"message\":\"invalid command\"},\"command\":\"showMessage\"}")){
+                System.out.println("ignore out put");
+                return;
+            }
             dataOutputStream.writeUTF(message);
             dataOutputStream.flush();
         } catch (Exception e) {
