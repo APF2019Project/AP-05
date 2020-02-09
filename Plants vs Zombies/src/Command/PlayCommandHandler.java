@@ -50,6 +50,7 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playPvPMode(InputCommand inputCommand) throws Exception {
+
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
         String opponentUsername = (String) inputCommand.getInputJsonObject().get("opponentUsername");
