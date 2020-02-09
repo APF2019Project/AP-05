@@ -32,10 +32,12 @@ public class PVPLobbyCommandHandler extends CommandHandler {
             }
         }
         for(User user:allOnlineUser){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("username", user.getUsername());
-            jsonObject.put("imageAddress", user.getImageAddress());
-            jsonArray.add(jsonObject);
+            if(user!=this.menu.getConnection().getUser()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("username", user.getUsername());
+                jsonObject.put("imageAddress", user.getImageAddress());
+                jsonArray.add(jsonObject);
+            }
         }
         menu.getConnection().send("showInLobbyUsers", jsonArray);
     }
