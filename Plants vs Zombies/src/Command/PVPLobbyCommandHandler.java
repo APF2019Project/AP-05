@@ -1,54 +1,59 @@
 package Command;
 
-import Main.Connection;
-import Main.User;
+import Main.*;
+import Player.PlantOnDayAndWaterModeHumanPlayer;
+import Player.ZombieHumanPlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class PVPLobbyCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::show, "show", ""),
-                new Command(this::wantEnterGame, "wantEnterGame", "")
+                new Command(this::showInLobbyUsers, "showInLobbyUsers", ""),
+                new Command(this::enterGame, "enter game", ""),
+                new Command(this::endTurn, "end turn", ""),
         };
     }
 
-    public void show(InputCommand inputCommand) throws Exception {
-        HashMap<String, Boolean> allUserState = new HashMap<String, Boolean>();
-        for (User user : User.getAllUsers()) {
-            allUserState.put(user.getUsername(), false);
-        }
+    public void endTurn(InputCommand inputCommand) throws Exception {
+        new Menu(menu.getConnection(), this).run();
+    }
+    public void showInLobbyUsers(InputCommand inputCommand) throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        HashSet<User> allOnlineUser= new HashSet<User>();
         for (Connection connection : Connection.getAllConnection()) {
             User user = connection.getUser();
-            if (user != null) {
-                allUserState.put(user.getUsername(), true);
+            if (user != null && connection.getCurrentMenu().getCommandHandlerName().equals(this.getClass().getSimpleName())) {
+                allOnlineUser.add(user);
             }
         }
-        JSONObject a = new JSONObject();
-        for (String username : allUserState.keySet()) {
-            if (allUserState.get(username)) {
-                User user=User.getUserByUsername(username);
-
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("username", user.getUsername());
-                    jsonObject.put("imageAddress", user.getImageAddress());
-
-
-
-                menu.getConnection().send("showAllUsers", jsonArray);
-                System.out.println(username + ": Online");
-            }
-            else {
-                System.out.println(username + ": OffLine");
-            }
+        for(User user:allOnlineUser){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("username", user.getUsername());
+            jsonObject.put("imageAddress", user.getImageAddress());
+            jsonArray.add(jsonObject);
         }
-
+        menu.getConnection().send("showInLobbyUsers", jsonArray);
     }
+    public void enterGame(InputCommand inputCommand) throws Exception {
+        User opponentUser=User.getUserByUsername ((String) inputCommand.getInputJsonObject().get("enemy username"));
+        if (opponentUser == null) {
+            throw new Exception("opponent not found!");
+        }
 
-    public void wantEnterGame(InputCommand inputCommand) throws Exception {
+        PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
+                new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
+        int numberOfWaves = 5;
 
+        ZombieHumanPlayer zombieHumanPlayer =
+                new ZombieHumanPlayer(Server.getConnectionByUsername(opponentUser.getUsername()));
+        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, plantOnDayAndWaterModeHumanPlayer,
+                zombieHumanPlayer, numberOfWaves);
+        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
+        gameMenuSwitcher.runGame();
     }
 }

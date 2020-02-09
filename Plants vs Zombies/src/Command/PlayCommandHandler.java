@@ -13,7 +13,6 @@ public class PlayCommandHandler extends CommandHandler {
                 new Command(this::playPvPMode, "pvp", "pvp: To enter multiPlayer type game."),
         };
     }
-
     public void playDayMode(InputCommand inputCommand) throws Exception {
         PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
                 new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
@@ -50,20 +49,6 @@ public class PlayCommandHandler extends CommandHandler {
     }
 
     public void playPvPMode(InputCommand inputCommand) throws Exception {
-
-        PlantOnDayAndWaterModeHumanPlayer plantOnDayAndWaterModeHumanPlayer =
-                new PlantOnDayAndWaterModeHumanPlayer(menu.getConnection());
-        String opponentUsername = (String) inputCommand.getInputJsonObject().get("opponentUsername");
-        int numberOfWaves = (int) inputCommand.getInputJsonObject().get("numberOfWaves");
-        User opponentUser = User.getUserByUsername(opponentUsername);
-        if (opponentUser == null) {
-            throw new Exception("opponent not found!");
-        }
-        ZombieHumanPlayer zombieHumanPlayer =
-                new ZombieHumanPlayer(Server.getConnectionByUsername(opponentUsername));
-        Map map = new Map(GameData.mapRowCount, GameData.mapColCount, MapMode.PvP, plantOnDayAndWaterModeHumanPlayer,
-                zombieHumanPlayer, numberOfWaves);
-        GameMenuSwitcher gameMenuSwitcher = new GameMenuSwitcher(map);
-        gameMenuSwitcher.runGame();
+        new Menu(menu.getConnection(), new PVPLobbyCommandHandler()).run();
     }
 }
