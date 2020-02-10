@@ -33,7 +33,8 @@ public class GlobalChatCommandHandler extends CommandHandler {
 
     public void sendMessage(InputCommand inputCommand) {
         String content = (String) inputCommand.getInputJsonObject().get("content");
-        new Message(content, menu.getConnection().getUser(), null)
+        String photoPath = (String) inputCommand.getInputJsonObject().get("photoPath");
+        new Message(content, menu.getConnection().getUser(), null, photoPath)
                 .setRepliedMessage(Message.getMessageById(replyId));
         replyId = -1;
         showChat(null);

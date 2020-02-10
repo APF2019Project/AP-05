@@ -260,6 +260,7 @@ public class GameData {
                 message = new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
                         User.getUserByUsername(sender),
                         null,
+                        ((String) messageJsonObject.get(Chat.FieldNames.photoPath.name())),
                         ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
                 );
             }
@@ -267,6 +268,7 @@ public class GameData {
                 message = new Message((String) messageJsonObject.get(Chat.FieldNames.content.name()),
                         User.getUserByUsername(sender),
                         User.getUserByUsername(receiver),
+                        ((String) messageJsonObject.get(Chat.FieldNames.photoPath.name())),
                         ((Long) messageJsonObject.get(Chat.FieldNames.id.name())).intValue()
                 );
             }

@@ -40,7 +40,8 @@ public class ChatCommandHandler extends CommandHandler {
 
     public void sendMessage(InputCommand inputCommand) {
         String content = (String) inputCommand.getInputJsonObject().get("content");
-        new Message(content, sender, receiver).setRepliedMessage(Message.getMessageById(replyId));
+        String photoPath = (String) inputCommand.getInputJsonObject().get("photoPath");
+        new Message(content, sender, receiver, photoPath).setRepliedMessage(Message.getMessageById(replyId));
         replyId = -1;
         showChat(null);
     }
