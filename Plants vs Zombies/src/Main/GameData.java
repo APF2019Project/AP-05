@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GameData {
@@ -54,7 +55,7 @@ public class GameData {
     }
 
     private static void addLilyPadClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/lilypad").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/LilyPad").listFiles())) {
             if (file.isFile()) {
                 new LilyPad(new JSONHandler(file));
             }
@@ -65,7 +66,7 @@ public class GameData {
     }
 
     private static void addMagnetShroomClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/magnetshroom").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/MagnetShroom").listFiles())) {
             if (file.isFile()) {
                 new MagnetShroom(new JSONHandler(file));
             }
@@ -73,7 +74,7 @@ public class GameData {
     }
 
     private static void addMineClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/mine").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/Mine").listFiles())) {
             if (file.isFile()) {
                 new Mine(new JSONHandler(file));
             }
@@ -81,7 +82,7 @@ public class GameData {
     }
 
     private static void addShooterClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/shooter").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/Shooter").listFiles())) {
             if (file.isFile()) {
                 new Shooter(new JSONHandler(file));
             }
@@ -89,7 +90,7 @@ public class GameData {
     }
 
     private static void addSunFlowerClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/sunflower").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/SunFlower").listFiles())) {
             if (file.isFile()) {
                 new SunFlower(new JSONHandler(file));
             }
@@ -165,7 +166,7 @@ public class GameData {
     }
 
     private static void addAllPlants() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/plants/").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Plant/").listFiles())) {
             if (file.isFile()) {
                 new Plant(new JSONHandler(file));
             }
@@ -179,7 +180,7 @@ public class GameData {
     }
 
     private static void addDoubleSidedGunClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/guns/doublesided").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Gun/DoubleSidedGun").listFiles())) {
             if (file.isFile()) {
                 new DoubleSidedGun(new JSONHandler(file));
             }
@@ -187,7 +188,7 @@ public class GameData {
     }
 
     private static void addThreeRowGunClass() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/guns/threerow").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Gun/ThreeRowGun").listFiles())) {
             if (file.isFile()) {
                 new ThreeRowGun(new JSONHandler(file));
             }
@@ -195,7 +196,7 @@ public class GameData {
     }
 
     private static void addAllGuns() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/guns/").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Gun/").listFiles())) {
             if (file.isFile()) {
                 new Gun(new JSONHandler(file));
             }
@@ -205,7 +206,7 @@ public class GameData {
     }
 
     private static void addAllShield() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/shield/").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Shield/").listFiles())) {
             if (file.isFile()) {
                 new Shield(new JSONHandler(file));
             }
@@ -213,7 +214,7 @@ public class GameData {
     }
 
     private static void addAllZombies() throws Exception {
-        for (File file : Objects.requireNonNull(new File("JSON/zombie/").listFiles())) {
+        for (File file : Objects.requireNonNull(new File("JSON/Zombie/").listFiles())) {
             if (file.isFile()) {
                 JSONHandler jsonHandler = new JSONHandler(file);
                 jsonHandler.put(FieldNames.price, jsonHandler.getInt(FieldNames.fullHp) * 5L);
@@ -278,7 +279,19 @@ public class GameData {
             }
         }
     }
+    static HashMap<String,String> className=new HashMap<String,String>();
+    public static String undoLowerCase(String name){
+        if(className.containsKey(name)){
+            return className.get(name);
+        }
+        return null;
+    }
+    private static void lowerCaseClassName(){
+        String[] allClassName={"sa ","ba"};
+        for(String s:allClassName){
 
+        }
+    }
     public static void run() throws Exception {
         addAllShield();
         addAllGuns();
@@ -286,6 +299,7 @@ public class GameData {
         addAllZombies();
         addAllUsers();
         addAllMessages();
+        lowerCaseClassName();
         AIConnection = new Connection(User.getUserByUsername("AI User"));
     }
 }

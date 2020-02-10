@@ -26,28 +26,28 @@ public class SelectTypeOfCustomController implements Controller {
     @FXML
     public void onZombieButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "zombie");
+        jsonObject.put("type", "Zombie");
         MenuHandler.getClient().send("custom card", jsonObject);
     }
 
     @FXML
     public void onShieldButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "shield");
+        jsonObject.put("type", "Shield");
         MenuHandler.getClient().send("custom card", jsonObject);
     }
 
     @FXML
     public void onGunButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "guns");
+        jsonObject.put("type", "Gun");
         MenuHandler.getClient().send("custom card", jsonObject);
     }
 
     @FXML
     public void onPlantButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "plants");
+        jsonObject.put("type", "Plant");
         MenuHandler.getClient().send("custom card", jsonObject);
     }
 }

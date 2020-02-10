@@ -85,36 +85,6 @@ public class Server {
             }
         }).start();
 
-
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(700);
-                    Collection<Connection> connections = Connection.getAllConnection();
-                    for (Connection connection : connections) {
-                        if (connection.getHowManyTimeIgnoreEndTurn() == 0) {
-                            try {
-                                JSONObject jsonObject = new JSONObject();
-                                jsonObject.put("command", "end turn");
-                                jsonObject.put("token", connection.getToken());
-                                connection.receive(jsonObject.toString());
-                                if (!connection.getCurrentMenu().getCommandHandlerName().contains("Play"))
-                                    connection.setHowManyTimeIgnoreEndTurn(2);
-                                else
-                                    connection.setHowManyTimeIgnoreEndTurn(1);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        connection.setHowManyTimeIgnoreEndTurn(connection.getHowManyTimeIgnoreEndTurn() - 1);
-                        User user = connection.getUser();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server started");

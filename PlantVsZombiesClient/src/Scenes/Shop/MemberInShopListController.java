@@ -43,7 +43,11 @@ public class MemberInShopListController implements Controller {
     public void initJsonInput(JSONObject jsonObject) {
         creatureNameLabel.setText((String) jsonObject.get("creature.getName"));
         priceLabel.setText(jsonObject.get("creature.getPriceInShop") + "$");
-        remainNumber.setText(jsonObject.get("creature.getPriceInShop").toString()+" number left");
+        if(Integer.valueOf(jsonObject.get("creature.remainingInShop").toString())<0){
+            remainNumber.setText("basic creature(yo cant buy it)");
+        }else {
+            remainNumber.setText(jsonObject.get("creature.remainingInShop").toString() + " number left");
+        }
         if ((boolean) jsonObject.get("bought")) {
             button.setVisible(false);
         }

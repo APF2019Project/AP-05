@@ -54,6 +54,7 @@ public class Client {
                 String line="";
                 while (!line.equals("exit")) {
                     line = dataInputStream.readUTF();
+                    System.out.println("server send:"+line);
                     JSONObject messageJsonObject = (JSONObject) new JSONParser().parse(line);
                     if(messageJsonObject.containsKey("token")){
                         token=messageJsonObject.get("token").toString();
@@ -83,6 +84,7 @@ public class Client {
         jsonObject.put("command", command);
         jsonObject.put("data", data);
         String message = jsonObject.toJSONString();
+        System.out.println("we send:"+message);
         dataOutputStream.writeUTF(message);
         dataOutputStream.flush();
     }

@@ -35,7 +35,7 @@ public class MemberInCollectionListController implements Controller {
     @FXML
     void onCheckBoxAction() throws IOException {
       //  String command = checkBox.isSelected() ? "select" : "remove";
-        SellOrGiftSceneController.lastSellOrGiftSceneController.refresh();
+       // SellOrGiftSceneController.lastSellOrGiftSceneController.refresh();
     }
 
     @Override

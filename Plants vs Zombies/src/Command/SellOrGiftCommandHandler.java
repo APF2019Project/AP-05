@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SellOrGiftCommandHandler extends CommandHandler {
     {
         this.commands = new Command[]{
-                new Command(this::showAll, "show", ""),
+                new Command(this::show, "show", ""),
                 new Command(this::endTurn, "end turn", ""),
                 new Command(this::sellCard, "sell creature", ""),
                 new Command(this::sendGiftCard,"send gift card","")
@@ -19,9 +19,9 @@ public class SellOrGiftCommandHandler extends CommandHandler {
     }
 
     public void endTurn(InputCommand inputCommand) throws Exception {
-        new Menu(menu.getConnection(), this).run();
+        //new Menu(menu.getConnection(), this).run();
     }
-    public void showAll(InputCommand inputCommand) throws Exception {
+    public void show(InputCommand inputCommand) throws Exception {
         ArrayList<User> allUsers = User.getAllUsers();
         JSONArray jsonArray1 = new JSONArray();
         for (User user : allUsers) {
@@ -41,7 +41,7 @@ public class SellOrGiftCommandHandler extends CommandHandler {
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("all users",jsonArray1);
         jsonObject.put("all cards",jsonArray2);
-        menu.getConnection().send("showAll", jsonObject);
+        menu.getConnection().send("show", jsonObject);
     }
     public void sendGiftCard(InputCommand inputCommand) throws Exception {
         String creatureName = (String) inputCommand.getInputJsonObject().get("creatureName");

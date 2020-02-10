@@ -4,8 +4,11 @@ import Helper.Controller;
 import Helper.MenuHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -27,17 +30,20 @@ public class SellOrGiftSceneController implements Controller {
 
     @FXML
     void onBackButtonMouseClicked() throws IOException {
-        allCheckBox.clear();
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
     }
-    private ArrayList<MemberInCollectionListController> allCheckBox=new ArrayList<MemberInCollectionListController>();
     static public SellOrGiftSceneController lastSellOrGiftSceneController ;
 
     @FXML
     void onSellToServerMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("creatureName",getSelectedName());
+        try {
+            jsonObject.put("creatureName", getSelectedName());
+        }catch (Exception e){
+            System.out.println("INA KE MA MIBINIM");
+            e.printStackTrace();
+        }
         MenuHandler.getClient().send("sell creature", jsonObject);
     }
 
@@ -52,41 +58,29 @@ public class SellOrGiftSceneController implements Controller {
 
     public SellOrGiftSceneController() {
         lastSellOrGiftSceneController=this;
-        userScrollPane.setVisible(false);
+//        userScrollPane.setVisible(false);
     }
 
-    public void refresh(){
-        if(getSelectedNumber()==1){
-            userScrollPane.setVisible(true);
-        }else{
-            userScrollPane.setVisible(false);
-        }
-    }
-    public int getSelectedNumber(){
-        int selectedNumber=0;
-        for(MemberInCollectionListController checkBox:allCheckBox){
-            if(checkBox.getCheckBox().isSelected()){
-                selectedNumber++;
+    public String getSelectedName() throws Exception{
+        for(Node a:creatureList.getChildren()){
+            BorderPane b=(BorderPane )a;
+            Label c=(Label)(b.getCenter());
+            VBox d=(VBox)(b.getRight());
+            CheckBox e=(CheckBox)(d.getChildren().get(0));
+            System.out.println(c.getText()+":"+e.isSelected());
+            if(e.isSelected()){
+                return c.getText();
             }
         }
-        return selectedNumber;
+        throw  new Exception("no creature was selected");
     }
-    public String getSelectedName(){
-        for(MemberInCollectionListController checkBox:allCheckBox){
-            if(checkBox.getCheckBox().isSelected()){
-                return checkBox.getCreatureNameLabel().getText();
-            }
-        }
-        return "";
-    }
-
-    public void showAll(Object object) throws IOException {
+    public void show(Object object) throws IOException {
         JSONObject jsonObject = (JSONObject) object;
         JSONArray userJsonArray = (JSONArray)jsonObject.get("all users");
         JSONArray cardJsonArray = (JSONArray)jsonObject.get("all cards");
         for (Object objectForCreature : cardJsonArray) {
             JSONObject jsonObjectForCreature = (JSONObject) objectForCreature;
-            jsonObjectForCreature.put("selected", true);
+            jsonObjectForCreature.put("selected", false);
             BorderPane borderPane = MenuHandler.getPaneWithDefaultParametersHandler(
                     "Scenes/SellOrGift/MemberInCollectionList.fxml", jsonObjectForCreature);
             Platform.runLater(() -> {
