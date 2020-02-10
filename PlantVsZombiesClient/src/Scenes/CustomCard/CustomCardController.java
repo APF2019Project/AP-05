@@ -13,8 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.json.simple.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -25,13 +24,28 @@ public class CustomCardController implements Controller {
     private ArrayList<MemberInCustomCardController> arrayList = new ArrayList<>();
     private String address;
 
+    void copy(File source, File dest) throws IOException {
+        dest.createNewFile();
+        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        }
+    }
+
     @FXML
     void onCreateButtonMouseClicked() throws IOException {
         for (MemberInCustomCardController controller : arrayList) {
             jsonObject.put(controller.getFieldnameLabel(), controller.getText());
         }
         System.out.println(address);
-   //     jsonObject.put("imageAddress", address);
+        jsonObject.put("imageAddress", address);
+        File file=new File(address);
+        new File(("../Gallery/")+jsonObject.get("name")).mkdir();
+        copy(file,new File(("../Gallery/")+jsonObject.get("name")+"/"+file.getName()));
+        jsonObject.put("imageAddress", address);
         MenuHandler.getClient().send("create", jsonObject);
         MenuHandler.getClient().send("exitMenu", null);
         MenuHandler.closeScene();
@@ -83,6 +97,7 @@ public class CustomCardController implements Controller {
                 for (File file : Objects.requireNonNull(directory.listFiles())) {
                     ImageView img = new ImageView(new Image(file.toURI().toString()));
                     MenuItem menuItem = new MenuItem();
+
                     menuItem.setGraphic(img);
                     menuItem.setOnAction(actionEvent -> address = file.getPath());
                     img.setFitHeight(70);
@@ -93,7 +108,7 @@ public class CustomCardController implements Controller {
         }
         Platform.runLater(() -> {
             menuButton.getItems().addAll(menuItems);
-   //         fieldBox.getChildren().add(menuButton);
+            fieldBox.getChildren().add(menuButton);
         });
     }
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class MemberInChatController implements Controller {
     @FXML
-    private BorderPane borderPane;
+    private BorderPane inBorder;
     @FXML
     private ImageView imageView;
     @FXML
@@ -40,12 +40,17 @@ public class MemberInChatController implements Controller {
         String username = (String) jsonObject.get("senderUsername");
         this.id = ((Long) jsonObject.get("id")).intValue();
         Platform.runLater(() -> {
-            if(jsonObject.containsKey("photoPath")) {
+            if(jsonObject.containsKey("photoPath") && jsonObject.get("photoPath")!=null) {
                 String dataImageAddress = (String) jsonObject.get("photoPath");
-                dataImageView.setImage(new Image(new File(dataImageAddress).toURI().toString()));
+                System.out.println("dataImage"+dataImageAddress);
+                Image image=new Image(dataImageAddress);
+                if(dataImageView!=null)
+                dataImageView.setImage(image);
             }else {
-                borderPane.setTop(null);
+                inBorder.setTop(null);
             }
+
+            System.out.println("SenderImage"+new File(imageAddress).toURI().toString());
             imageView.setImage(new Image(new File(imageAddress).toURI().toString()));
             contentLabel.setText(content);
             usernameLabel.setText(username);
@@ -54,7 +59,7 @@ public class MemberInChatController implements Controller {
                 repliedMessage.setText((String) jsonObject.get("repliedMessage"));
             }
             else {
-                borderPane.setTop(null);
+                inBorder.setCenter(null);
 //                topHbox.setVisible(false);
             }
         });

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.CustomCard.MemberInCustomCardController">
+   <left>
+      <Label fx:id="fieldNameLabel" prefHeight="82.0" prefWidth="125.0" text="field name" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </left>
+   <bottom>
+      <Separator prefHeight="17.0" prefWidth="442.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <TextField fx:id="textField" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </TextField>
+   </right>
+</BorderPane>

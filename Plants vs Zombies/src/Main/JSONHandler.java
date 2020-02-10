@@ -64,7 +64,7 @@ public class JSONHandler {
             return (boolean) object;
     }
 
-    void put(FieldNames key, Object value) {
+    public void put(FieldNames key, Object value) {
         jsonObject.put(key.name(), value);
     }
 

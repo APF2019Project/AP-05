@@ -5,16 +5,16 @@ import Helper.MenuHandler;
 import Scenes.Refreshable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,6 +32,9 @@ public class ChatSceneController implements Controller, Refreshable {
     private Label replyUsernameLabel, replyContentLabel;
 
     @FXML
+    private Button photoSelectButton;
+
+    @FXML
     void onRemoveReplyButtonMouseClicked() throws IOException {
         MenuHandler.getClient().send("remove reply", null);
     }
@@ -46,8 +49,13 @@ public class ChatSceneController implements Controller, Refreshable {
     void onSendButtonMouseClicked() throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("content", textField.getText());
+        if (photoSelectButton.getAccessibleText()!=null && !photoSelectButton.getAccessibleText().isEmpty()) {
+            jsonObject.put("photoPath", photoSelectButton.getAccessibleText());
+        }
+        //jsonObject.put("photoPath", photoSelectButton.getAccessibleText());
         textField.setText("");
         MenuHandler.getClient().send("send message", jsonObject);
+        photoSelectButton.setAccessibleText("");
     }
 
     @Override
@@ -58,6 +66,20 @@ public class ChatSceneController implements Controller, Refreshable {
     @Override
     public void initializeReOpen() throws IOException {
         sendLoadRequest();
+    }
+
+    public void onPhotoSelectButtonAction(){
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(MenuHandler.getCurrentStage());
+        if(file!=null && file.exists()) {
+            try {
+                photoSelectButton.setAccessibleText(file.toURI().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            photoSelectButton.setAccessibleText("");
+        }
     }
 
     public void showChat(Object object) {
@@ -80,8 +102,7 @@ public class ChatSceneController implements Controller, Refreshable {
                 replyPane.setVisible(true);
                 replyUsernameLabel.setText((String) jsonObject.get("senderUsername"));
                 replyContentLabel.setText((String) jsonObject.get("content"));
-            }
-            else
+            } else
                 replyPane.setVisible(false);
             chatBox.getChildren().clear();
             chatBox.getChildren().addAll(arrayList);

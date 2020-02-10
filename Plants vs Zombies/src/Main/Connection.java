@@ -25,6 +25,10 @@ public class Connection {
     private String token;
     private int howManyTimeIgnoreEndTurn;
 
+    public Socket getSocket(){
+        return socket;
+    }
+
     // AI mode
     public Connection(User user) {
         this.user = user;

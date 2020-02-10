@@ -20,6 +20,10 @@ public class Message {
     private String photoPath;
     private int id;
 
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
     public void setRepliedMessage(Message repliedMessage) {
         this.repliedMessage = repliedMessage;
         try {
@@ -113,6 +117,7 @@ public class Message {
             messageJsonObject.put(FieldNames.id.name(), message.getId());
             messageJsonObject.put(FieldNames.content.name(), message.getContent());
             messageJsonObject.put(FieldNames.senderUsername.name(), message.getSender().getUsername());
+            messageJsonObject.put(FieldNames.photoPath.name(), message.getPhotoPath());
             if (message.getReceiver() == null) {
                 messageJsonObject.put(FieldNames.receiverUsername.name(), "GlobalChat");
             } else {
@@ -136,6 +141,7 @@ public class Message {
         jsonObject.put("content", this.getContent());
         jsonObject.put("senderImage", this.getSender().getImageAddress());
         jsonObject.put("senderUsername", this.getSender().getUsername());
+        jsonObject.put("photoPath", this.getPhotoPath());
 
         if (getReceiver() != null)
             jsonObject.put("receiverUsername", getReceiver().getUsername());

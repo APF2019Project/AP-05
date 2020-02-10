@@ -67,7 +67,7 @@ public class Server {
                     }
                     for (Connection connection : Connection.getAllConnection()) {
                         User user = connection.getUser();
-                        if (user != null) {
+                        if (user != null && !connection.getSocket().isClosed()) {
                             allUserState.put(user.getUsername(), true);
                         }
                     }

@@ -26,6 +26,10 @@ public class MenuHandler {
     private static ArrayList<Scene> scenes = new ArrayList<>();
     private static ArrayList<Controller> controllers = new ArrayList<>();
 
+    public static Stage getCurrentStage(){
+        return currentStage;
+    }
+
     public static void closeScene() throws IOException {
         if (scenes.size() <= 1) {
             System.exit(0);

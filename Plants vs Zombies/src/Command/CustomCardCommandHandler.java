@@ -1,6 +1,7 @@
 package Command;
 
 import Main.Connection;
+import Main.FieldNames;
 import Main.JSONHandler;
 import org.json.simple.JSONObject;
 
@@ -28,6 +29,8 @@ public class CustomCardCommandHandler extends CommandHandler {
             if(className.equals("Objects.")) {
                 className = "Objects." + address.substring(0, address.length() - 1);
             }
+            JSONHandler jsonHandler=new JSONHandler(jsonObject);
+            jsonHandler.put(FieldNames.price, jsonHandler.getInt(FieldNames.fullHp) * 5L);
             System.out.println(className);
             System.out.println(className);
             System.out.println(className);
@@ -35,7 +38,7 @@ public class CustomCardCommandHandler extends CommandHandler {
             System.out.println(className);
 
             Class<?> clss = Class.forName(className);
-            clss.getConstructor(JSONHandler.class).newInstance(new JSONHandler(jsonObject));
+            clss.getConstructor(JSONHandler.class).newInstance(jsonHandler);
         } catch (Exception e) {
             e.printStackTrace();
         }
