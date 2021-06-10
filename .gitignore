@@ -1,1 +1,5 @@
 Plants vs Zombies/.idea/misc.xml
+.idea/
+Uml/.idea/
+*/.idea/*
+*/out/*
